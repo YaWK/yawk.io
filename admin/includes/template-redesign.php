@@ -321,29 +321,29 @@ echo"</section><!-- Main content -->
 /* page content start here */
 ?>
 <form id="template-edit-form" action="index.php?page=template-save&action=template-redesign&id=<?php echo $template->id; ?>" method="POST">
-<!-- title header -->
+    <!-- title header -->
     <!-- REDESIGN -->
-<div class="box">
-    <div class="box-body">
-        <div class="col-md-10">
-            <?php echo "<h4><i class=\"fa fa-paint-brush\"></i> &nbsp;$lang[DESIGN]  <small>$lang[DESIGN_DETAILS]</small></h4>"; ?>
-        </div>
-        <div class="col-md-2">
-            <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
+    <div class="box">
+        <div class="box-body">
+            <div class="col-md-10">
+                <?php echo "<h4><i class=\"fa fa-paint-brush\"></i> &nbsp;$lang[DESIGN]  <small>$lang[DESIGN_DETAILS]</small></h4>"; ?>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="box">
-    <div class="box-body">
+    <div class="box">
+        <div class="box-body">
 
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" id="undertabs">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" id="undertabs">
 
-            <?php
-            if ($template->bootstrapVersion == "3")
-            {
-                echo "
+                <?php
+                if ($template->bootstrapVersion == "3")
+                {
+                    echo "
             <li>
                 <a href=\"#menu\" aria-controls=\"menu\" data-toggle=\"tab\"><i class=\"fa fa-bars\"></i>
                     &nbsp; $lang[MENU]</a>
@@ -360,11 +360,11 @@ echo"</section><!-- Main content -->
                 <a href=\"#images\" aria-controls=\"images\" role=\"tab\" data-toggle=\"tab\"><i class=\"fa fa-picture-o\"></i>
                     &nbsp; $lang[IMAGES]</a>
             </li>";
-            }
-            elseif ($template->bootstrapVersion == "4")
-            {
-                echo
-                "<li>
+                }
+                elseif ($template->bootstrapVersion == "4")
+                {
+                    echo
+                    "<li>
                     <a href=\"#bs4-navbar\" aria-controls=\"bs4-navbar\" data-toggle=\"tab\"><i class=\"fa fa-bars\"></i>
                         &nbsp; $lang[NAVBAR]</a>
                 </li>
@@ -380,19 +380,19 @@ echo"</section><!-- Main content -->
                     <a href=\"#buttons\" aria-controls=\"buttons\" role=\"tab\" data-toggle=\"tab\"><i class=\"fa fa-toggle-on\"></i>
                         &nbsp; $lang[FORMS]</a>
                 </li>";
-            }
-            ?>
-            
-        </ul>
+                }
+                ?>
+
+            </ul>
 
 
-<!-- bootstrap -->
-<div class="tab-content">
+            <!-- bootstrap -->
+            <div class="tab-content">
 
-    <?php
-    if ($template->bootstrapVersion == "3")
-    {
-        echo "
+                <?php
+                if ($template->bootstrapVersion == "3")
+                {
+                    echo "
     <div class=\"tab-pane active fade in\" id=\"menu\">
     <h3>$lang[GLOBAL_MENU] <small>$lang[NAVBAR]</small></h3>
     <div class=\"row animated fadeIn\">
@@ -404,7 +404,7 @@ echo"</section><!-- Main content -->
                 <div class=\"box-body\">
                     <!-- menu font colors -menucolor -->";
                     $template->getFormElements($db, $templateSettings, 10, $lang, $user);
-                echo "</div>
+                    echo "</div>
             </div>
         </div>
 
@@ -416,7 +416,7 @@ echo"</section><!-- Main content -->
                 <div class=\"box-body\">
                     <!-- menu background color -menubgcolor -->";
                     $template->getFormElements($db, $templateSettings, 11, $lang, $user);
-                echo "</div>
+                    echo "</div>
             </div>
         </div>
 
@@ -666,10 +666,10 @@ echo"</section><!-- Main content -->
         </div>
     </div>
 </div>";
-    }
-    else if ($template->bootstrapVersion == "4")
-    {
-        echo"<!-- NAVBAR -->
+                }
+                else if ($template->bootstrapVersion == "4")
+                {
+                    echo"<!-- NAVBAR -->
 <div class=\"tab-pane fade in\" id=\"bs4-navbar\">
     <h3>$lang[NAVBAR] <small>$lang[GLOBALMENU] $lang[SETTINGS]</small></h3>
     <div class=\"row animated fadeIn\">
@@ -684,8 +684,8 @@ echo"</section><!-- Main content -->
             </div>
             <div class=\"box-body\">
                 <!-- menu font colors -menucolor -->";
-                $template->getFormElements($db, $templateSettings, 10, $lang, $user);
-            echo "</div>
+                    $template->getFormElements($db, $templateSettings, 10, $lang, $user);
+                    echo "</div>
         </div>
     </div>
 
@@ -696,8 +696,8 @@ echo"</section><!-- Main content -->
             </div>
             <div class=\"box-body\">
                 <!-- menu background color -menubgcolor -->";
-                $template->getFormElements($db, $templateSettings, 11, $lang, $user);
-            echo "</div>
+                    $template->getFormElements($db, $templateSettings, 11, $lang, $user);
+                    echo "</div>
         </div>
     </div>
 
@@ -708,8 +708,8 @@ echo"</section><!-- Main content -->
             </div>
             <div class=\"box-body\">
                 <!-- menu background color -menudropdowncolor -->";
-                $template->getFormElements($db, $templateSettings, 12, $lang, $user);
-                echo "
+                    $template->getFormElements($db, $templateSettings, 12, $lang, $user);
+                    echo "
             </div>
         </div>
     </div>
@@ -721,15 +721,15 @@ echo"</section><!-- Main content -->
             </div>
             <div class=\"box-body\">
                 <!-- menu navbar margin top -navbar-marginTop -->";
-                $template->getFormElements($db, $templateSettings, 13, $lang, $user);
-                echo "
+                    $template->getFormElements($db, $templateSettings, 13, $lang, $user);
+                    echo "
             </div>
         </div>
     </div>
     </div>
 </div>";
 
-        echo"<!-- IMAGES -->
+                    echo"<!-- IMAGES -->
 <div class=\"tab-pane fade in\" id=\"images\">
     <h3>$lang[IMAGE] <small>$lang[SETTINGS]</small></h3>
     <div class=\"row animated fadeIn\">
@@ -754,7 +754,7 @@ echo"</section><!-- Main content -->
                 <div class=\"box-body\">
                     <!-- jumbotron settings bs4 -->";
                     $template->getFormElements($db, $templateSettings, 16, $lang, $user);
-                echo"</div>
+                    echo"</div>
             </div>
         </div>
 
@@ -765,13 +765,13 @@ echo"</section><!-- Main content -->
                 </div>
                 <div class=\"box-body\">";
                     $template->getFormElements($db, $templateSettings, 15, $lang, $user);
-                echo"</div>
+                    echo"</div>
             </div>
         </div>
     </div>
 </div>";
-        
-       echo "<!-- CARDS TAB -->
+
+                    echo "<!-- CARDS TAB -->
 <div class=\"tab-pane fade in\" id=\"bs4-cards\">
     <h3>$lang[BOOTSTRAP4] <small>$lang[CARDS]</small></h3>
     <div class=\"row animated fadeIn\">
@@ -830,7 +830,7 @@ echo"</section><!-- Main content -->
 </div>";
 
 
-echo"<!-- BUTTONS -->
+                    echo"<!-- BUTTONS -->
 <div class=\"tab-pane fade in\" id=\"buttons\">
     <h3>$lang[FORMS] <small>$lang[AND] $lang[BUTTONS] </small></h3>
     <div class=\"row animated fadeIn\">
@@ -951,12 +951,12 @@ echo"<!-- BUTTONS -->
         </div>
     </div>
 </div>";
-    }
-    ?>
+                }
+                ?>
 
-</div>
+            </div>
 
 
+        </div>
     </div>
-</div>
 </form>

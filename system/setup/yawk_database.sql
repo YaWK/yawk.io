@@ -5,12 +5,12 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 CREATE TABLE `cms_assets` (
-  `id` int(11) NOT NULL,
-  `templateID` int(11) NOT NULL,
-  `type` varchar(11) NOT NULL,
-  `sortation` int(11) NOT NULL,
-  `asset` varchar(255) NOT NULL,
-  `link` varchar(255) NOT NULL
+`id` int(11) NOT NULL,
+`templateID` int(11) NOT NULL,
+`type` varchar(11) NOT NULL,
+`sortation` int(11) NOT NULL,
+`asset` varchar(255) NOT NULL,
+`link` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `link`) VALUES
@@ -20,16 +20,16 @@ INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `lin
 (4, 1, 'css', 6, 'Animate CSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css');
 
 CREATE TABLE `cms_assets_types` (
-  `id` int(11) NOT NULL,
-  `published` int(1) NOT NULL DEFAULT '1',
-  `type` int(1) NOT NULL,
-  `sortation` int(11) NOT NULL,
-  `asset` varchar(255) NOT NULL,
-  `property` varchar(128) NOT NULL,
-  `internal` varchar(255) NOT NULL,
-  `url1` varchar(255) NOT NULL,
-  `url2` varchar(255) NOT NULL,
-  `url3` varchar(255) NOT NULL
+`id` int(11) NOT NULL,
+`published` int(1) NOT NULL DEFAULT '1',
+`type` int(1) NOT NULL,
+`sortation` int(11) NOT NULL,
+`asset` varchar(255) NOT NULL,
+`property` varchar(128) NOT NULL,
+`internal` varchar(255) NOT NULL,
+`url1` varchar(255) NOT NULL,
+`url2` varchar(255) NOT NULL,
+`url3` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`, `property`, `internal`, `url1`, `url2`, `url3`) VALUES
@@ -52,99 +52,99 @@ INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`,
 (17, 1, 1, 8, 'Bootstrap 4 JS', 'bootstrap4-js', 'system/engines/bootstrap4/js/bootstrap.min.js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js', '');
 
 CREATE TABLE `cms_blog` (
-  `id` int(11) NOT NULL,
-  `sort` int(11) NOT NULL DEFAULT '1',
-  `published` int(1) NOT NULL DEFAULT '1',
-  `name` varchar(128) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `icon` varchar(64) NOT NULL,
-  `showtitle` int(1) NOT NULL DEFAULT '1',
-  `showdesc` int(1) NOT NULL DEFAULT '1',
-  `showdate` int(1) NOT NULL DEFAULT '0',
-  `showauthor` int(1) NOT NULL DEFAULT '0',
-  `sequence` int(1) NOT NULL DEFAULT '0',
-  `sortation` int(1) NOT NULL DEFAULT '0',
-  `footer` int(1) NOT NULL DEFAULT '0',
-  `comments` int(1) NOT NULL DEFAULT '0',
-  `gid` int(11) NOT NULL DEFAULT '1',
-  `permalink` int(1) NOT NULL DEFAULT '0',
-  `layout` int(1) NOT NULL DEFAULT '0',
-  `preview` int(1) NOT NULL DEFAULT '0',
-  `voting` int(1) NOT NULL DEFAULT '0',
-  `spacer` int(1) NOT NULL DEFAULT '0',
-  `limitEntries` int(1) NOT NULL DEFAULT '0',
-  `frontendIcon` int(1) NOT NULL DEFAULT '0',
-  `showTotalVotes` int(1) NOT NULL DEFAULT '0'
+`id` int(11) NOT NULL,
+`sort` int(11) NOT NULL DEFAULT '1',
+`published` int(1) NOT NULL DEFAULT '1',
+`name` varchar(128) NOT NULL,
+`description` varchar(255) NOT NULL,
+`icon` varchar(64) NOT NULL,
+`showtitle` int(1) NOT NULL DEFAULT '1',
+`showdesc` int(1) NOT NULL DEFAULT '1',
+`showdate` int(1) NOT NULL DEFAULT '0',
+`showauthor` int(1) NOT NULL DEFAULT '0',
+`sequence` int(1) NOT NULL DEFAULT '0',
+`sortation` int(1) NOT NULL DEFAULT '0',
+`footer` int(1) NOT NULL DEFAULT '0',
+`comments` int(1) NOT NULL DEFAULT '0',
+`gid` int(11) NOT NULL DEFAULT '1',
+`permalink` int(1) NOT NULL DEFAULT '0',
+`layout` int(1) NOT NULL DEFAULT '0',
+`preview` int(1) NOT NULL DEFAULT '0',
+`voting` int(1) NOT NULL DEFAULT '0',
+`spacer` int(1) NOT NULL DEFAULT '0',
+`limitEntries` int(1) NOT NULL DEFAULT '0',
+`frontendIcon` int(1) NOT NULL DEFAULT '0',
+`showTotalVotes` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_blog_comments` (
-  `id` int(11) NOT NULL,
-  `blogid` int(11) NOT NULL,
-  `itemid` int(11) NOT NULL DEFAULT '0',
-  `uid` int(11) DEFAULT NULL,
-  `gid` int(11) NOT NULL,
-  `ip` varchar(64) NOT NULL,
-  `published` int(1) NOT NULL DEFAULT '1',
-  `date_created` datetime DEFAULT NULL,
-  `name` varchar(64) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `comment` text NOT NULL,
-  `isParent` int(1) NOT NULL DEFAULT '0',
-  `isChild` int(1) NOT NULL DEFAULT '0',
-  `parentID` int(11) NOT NULL DEFAULT '0'
+`id` int(11) NOT NULL,
+`blogid` int(11) NOT NULL,
+`itemid` int(11) NOT NULL DEFAULT '0',
+`uid` int(11) DEFAULT NULL,
+`gid` int(11) NOT NULL,
+`ip` varchar(64) NOT NULL,
+`published` int(1) NOT NULL DEFAULT '1',
+`date_created` datetime DEFAULT NULL,
+`name` varchar(64) NOT NULL,
+`email` varchar(255) NOT NULL,
+`comment` text NOT NULL,
+`isParent` int(1) NOT NULL DEFAULT '0',
+`isChild` int(1) NOT NULL DEFAULT '0',
+`parentID` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_blog_items` (
-  `blogid` int(11) NOT NULL DEFAULT '1',
-  `id` int(11) NOT NULL,
-  `uid` int(11) NOT NULL,
-  `pageid` int(11) NOT NULL,
-  `sort` int(11) NOT NULL,
-  `published` int(1) NOT NULL DEFAULT '1',
-  `itemgid` int(2) NOT NULL DEFAULT '1',
-  `teaser` int(1) NOT NULL DEFAULT '0',
-  `title` varchar(255) NOT NULL,
-  `filename` varchar(255) NOT NULL,
-  `subtitle` varchar(255) NOT NULL,
-  `date_created` datetime DEFAULT NULL,
-  `date_changed` datetime DEFAULT NULL,
-  `date_publish` datetime DEFAULT NULL,
-  `date_unpublish` datetime DEFAULT NULL,
-  `teasertext` text NOT NULL,
-  `blogtext` text NOT NULL,
-  `author` varchar(255) NOT NULL,
-  `thumbnail` varchar(255) NOT NULL,
-  `youtubeUrl` varchar(255) NOT NULL,
-  `weblink` varchar(255) NOT NULL,
-  `itemlayout` int(4) NOT NULL DEFAULT '-1',
-  `itemcomments` int(1) NOT NULL DEFAULT '-1',
-  `voteUp` int(11) NOT NULL DEFAULT '0',
-  `voteDown` int(11) NOT NULL DEFAULT '0'
+`blogid` int(11) NOT NULL DEFAULT '1',
+`id` int(11) NOT NULL,
+`uid` int(11) NOT NULL,
+`pageid` int(11) NOT NULL,
+`sort` int(11) NOT NULL,
+`published` int(1) NOT NULL DEFAULT '1',
+`itemgid` int(2) NOT NULL DEFAULT '1',
+`teaser` int(1) NOT NULL DEFAULT '0',
+`title` varchar(255) NOT NULL,
+`filename` varchar(255) NOT NULL,
+`subtitle` varchar(255) NOT NULL,
+`date_created` datetime DEFAULT NULL,
+`date_changed` datetime DEFAULT NULL,
+`date_publish` datetime DEFAULT NULL,
+`date_unpublish` datetime DEFAULT NULL,
+`teasertext` text NOT NULL,
+`blogtext` text NOT NULL,
+`author` varchar(255) NOT NULL,
+`thumbnail` varchar(255) NOT NULL,
+`youtubeUrl` varchar(255) NOT NULL,
+`weblink` varchar(255) NOT NULL,
+`itemlayout` int(4) NOT NULL DEFAULT '-1',
+`itemcomments` int(1) NOT NULL DEFAULT '-1',
+`voteUp` int(11) NOT NULL DEFAULT '0',
+`voteDown` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_follower` (
-  `id` int(11) NOT NULL,
-  `requestDate` datetime DEFAULT NULL,
-  `follower` int(11) NOT NULL,
-  `hunted` int(11) NOT NULL
+`id` int(11) NOT NULL,
+`requestDate` datetime DEFAULT NULL,
+`follower` int(11) NOT NULL,
+`hunted` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_friends` (
-  `id` int(11) NOT NULL,
-  `requestDate` datetime DEFAULT NULL,
-  `confirmDate` datetime DEFAULT NULL,
-  `friendA` int(11) NOT NULL,
-  `friendB` int(11) NOT NULL,
-  `confirmed` int(1) NOT NULL DEFAULT '0',
-  `aborted` int(1) NOT NULL DEFAULT '0'
+`id` int(11) NOT NULL,
+`requestDate` datetime DEFAULT NULL,
+`confirmDate` datetime DEFAULT NULL,
+`friendA` int(11) NOT NULL,
+`friendB` int(11) NOT NULL,
+`confirmed` int(1) NOT NULL DEFAULT '0',
+`aborted` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_gfonts` (
-  `id` int(11) NOT NULL,
-  `font` varchar(128) NOT NULL,
-  `description` varchar(256) NOT NULL,
-  `setting` varchar(32) NOT NULL,
-  `activated` int(1) NOT NULL DEFAULT '1'
+`id` int(11) NOT NULL,
+`font` varchar(128) NOT NULL,
+`description` varchar(256) NOT NULL,
+`setting` varchar(32) NOT NULL,
+`activated` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_gfonts` (`id`, `font`, `description`, `setting`, `activated`) VALUES
@@ -230,14 +230,14 @@ INSERT INTO `cms_gfonts` (`id`, `font`, `description`, `setting`, `activated`) V
 (89, 'News Cycle', 'News Cycle, sans-serif', '', 1);
 
 CREATE TABLE `cms_logins` (
-  `id` int(11) NOT NULL,
-  `datetime` datetime DEFAULT NULL,
-  `location` varchar(64) NOT NULL,
-  `failed` int(11) NOT NULL DEFAULT '0',
-  `ip` varchar(255) NOT NULL,
-  `useragent` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+`id` int(11) NOT NULL,
+`datetime` datetime DEFAULT NULL,
+`location` varchar(64) NOT NULL,
+`failed` int(11) NOT NULL DEFAULT '0',
+`ip` varchar(255) NOT NULL,
+`useragent` varchar(255) NOT NULL,
+`username` varchar(255) NOT NULL,
+`password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -265,18 +265,18 @@ INSERT INTO `cms_menu` (`id`, `sort`, `gid`, `menuID`, `parentID`, `published`, 
 (1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome!', 'index.html', '_self', 0, 0, '');
 
 CREATE TABLE `cms_menu_names` (
-  `id` int(11) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `published` int(1) NOT NULL DEFAULT '1',
-  `menuLanguage` varchar(7) NOT NULL
+`id` int(11) NOT NULL,
+`name` varchar(30) NOT NULL,
+`published` int(1) NOT NULL DEFAULT '1',
+`menuLanguage` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_menu_names` (`id`, `name`, `published`, `menuLanguage`) VALUES
 (1, 'MainMenu', 1, '');
 
 CREATE TABLE `cms_meta_global` (
-  `name` varchar(255) NOT NULL,
-  `content` varchar(255) NOT NULL
+`name` varchar(255) NOT NULL,
+`content` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_meta_global` (`name`, `content`) VALUES
@@ -284,63 +284,70 @@ INSERT INTO `cms_meta_global` (`name`, `content`) VALUES
 ('description', 'This Text appears on search engines. It is the typical description of your page underneath the link or title of every search result.'),
 ('robots', 'all');
 
+CREATE TABLE `cms_meta_local` (
+`id` int(11) NOT NULL,
+`name` varchar(100) NOT NULL,
+`page` int(11) NOT NULL,
+`content` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `cms_newsletter` (
-  `id` int(11) NOT NULL,
-  `date_created` datetime DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `active` int(1) NOT NULL DEFAULT '1'
+`id` int(11) NOT NULL,
+`date_created` datetime DEFAULT NULL,
+`name` varchar(255) NOT NULL,
+`email` varchar(255) NOT NULL,
+`active` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_notifications` (
-  `log_id` int(11) NOT NULL,
-  `log_date` datetime DEFAULT NULL,
-  `log_category` int(11) NOT NULL DEFAULT '0',
-  `log_type` int(11) NOT NULL DEFAULT '0',
-  `msg_id` int(11) NOT NULL DEFAULT '0',
-  `fromUID` int(11) NOT NULL DEFAULT '0',
-  `toUID` int(11) NOT NULL DEFAULT '0',
-  `toGID` int(11) NOT NULL DEFAULT '0',
-  `seen` int(1) NOT NULL DEFAULT '0'
+`log_id` int(11) NOT NULL,
+`log_date` datetime DEFAULT NULL,
+`log_category` int(11) NOT NULL DEFAULT '0',
+`log_type` int(11) NOT NULL DEFAULT '0',
+`msg_id` int(11) NOT NULL DEFAULT '0',
+`fromUID` int(11) NOT NULL DEFAULT '0',
+`toUID` int(11) NOT NULL DEFAULT '0',
+`toGID` int(11) NOT NULL DEFAULT '0',
+`seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_notifications_msg` (
-  `id` int(11) NOT NULL,
-  `active` int(1) NOT NULL DEFAULT '1',
-  `type` int(11) NOT NULL,
-  `message` varchar(255) NOT NULL
+`id` int(11) NOT NULL,
+`active` int(1) NOT NULL DEFAULT '1',
+`type` int(11) NOT NULL,
+`message` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_pages` (
-  `id` int(11) NOT NULL,
-  `published` int(1) DEFAULT '0',
-  `gid` int(11) DEFAULT '1',
-  `date_created` datetime DEFAULT NULL,
-  `date_changed` datetime DEFAULT NULL,
-  `date_publish` datetime DEFAULT NULL,
-  `date_unpublish` datetime DEFAULT NULL,
-  `alias` varchar(255) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `bgimage` varchar(255) DEFAULT NULL,
-  `owner` int(11) DEFAULT '-1',
-  `menu` int(11) DEFAULT '0',
-  `locked` int(1) DEFAULT '0',
-  `blogid` int(11) DEFAULT '0',
-  `plugin` varchar(255) NOT NULL DEFAULT '0',
-  `lang` varchar(7) DEFAULT NULL,
-  `meta_local` varchar(255) DEFAULT NULL,
-  `meta_keywords` varchar(255) DEFAULT NULL
+`id` int(11) NOT NULL,
+`published` int(1) DEFAULT '0',
+`gid` int(11) DEFAULT '1',
+`date_created` datetime DEFAULT NULL,
+`date_changed` datetime DEFAULT NULL,
+`date_publish` datetime DEFAULT NULL,
+`date_unpublish` datetime DEFAULT NULL,
+`alias` varchar(255) DEFAULT NULL,
+`title` varchar(255) DEFAULT NULL,
+`bgimage` varchar(255) DEFAULT NULL,
+`owner` int(11) DEFAULT '-1',
+`menu` int(11) DEFAULT '0',
+`locked` int(1) DEFAULT '0',
+`blogid` int(11) DEFAULT '0',
+`plugin` varchar(255) NOT NULL DEFAULT '0',
+`lang` varchar(7) DEFAULT NULL,
+`meta_local` varchar(255) DEFAULT NULL,
+`meta_keywords` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`, `lang`, `meta_local`, `meta_keywords`) VALUES
 (1, 1, 1, '2018-03-08 00:00:00', '2018-03-08 00:00:00', '2018-03-08 00:00:00', NULL, 'index', 'Welcome to Yet another Web Kit!', '', -1, 0, 0, 0, '0', '', 'This is the home (index) page of the website  ', 'Home, Index, Keyword1, Keyword 2, ...');
 
 CREATE TABLE `cms_plugins` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `icon` varchar(128) NOT NULL,
-  `activated` int(1) NOT NULL DEFAULT '1'
+`id` int(11) NOT NULL,
+`name` varchar(255) NOT NULL,
+`description` varchar(255) NOT NULL,
+`icon` varchar(128) NOT NULL,
+`activated` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_plugins` (`id`, `name`, `description`, `icon`, `activated`) VALUES
@@ -354,116 +361,116 @@ INSERT INTO `cms_plugins` (`id`, `name`, `description`, `icon`, `activated`) VAL
 (8, 'gallery', 'Create and manage image and video galleries', 'fa fa-photo', 1);
 
 CREATE TABLE `cms_plugin_booking` (
-  `id` int(11) NOT NULL,
-  `uid` int(11) NOT NULL DEFAULT '0',
-  `gid` int(11) NOT NULL DEFAULT '1',
-  `date_created` datetime DEFAULT NULL,
-  `date_wish` datetime DEFAULT NULL,
-  `date_alternative` datetime DEFAULT NULL,
-  `confirmed` int(1) NOT NULL DEFAULT '0',
-  `name` varchar(128) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `phone` varchar(255) NOT NULL,
-  `text` text NOT NULL,
-  `todo` int(1) NOT NULL,
-  `success` int(1) NOT NULL DEFAULT '0',
-  `income` int(6) NOT NULL DEFAULT '0',
-  `grade` int(1) NOT NULL DEFAULT '0',
-  `visits` int(11) NOT NULL DEFAULT '0',
-  `comment` varchar(255) NOT NULL,
-  `ip` varchar(128) NOT NULL,
-  `useragent` varchar(255) NOT NULL,
-  `ban` int(1) NOT NULL DEFAULT '0',
-  `outdated` int(1) NOT NULL DEFAULT '0',
-  `referer` varchar(255) NOT NULL,
-  `cut` int(1) NOT NULL DEFAULT '0',
-  `invited` int(1) NOT NULL DEFAULT '0'
+`id` int(11) NOT NULL,
+`uid` int(11) NOT NULL DEFAULT '0',
+`gid` int(11) NOT NULL DEFAULT '1',
+`date_created` datetime DEFAULT NULL,
+`date_wish` datetime DEFAULT NULL,
+`date_alternative` datetime DEFAULT NULL,
+`confirmed` int(1) NOT NULL DEFAULT '0',
+`name` varchar(128) NOT NULL,
+`email` varchar(255) NOT NULL,
+`phone` varchar(255) NOT NULL,
+`text` text NOT NULL,
+`todo` int(1) NOT NULL,
+`success` int(1) NOT NULL DEFAULT '0',
+`income` int(6) NOT NULL DEFAULT '0',
+`grade` int(1) NOT NULL DEFAULT '0',
+`visits` int(11) NOT NULL DEFAULT '0',
+`comment` varchar(255) NOT NULL,
+`ip` varchar(128) NOT NULL,
+`useragent` varchar(255) NOT NULL,
+`ban` int(1) NOT NULL DEFAULT '0',
+`outdated` int(1) NOT NULL DEFAULT '0',
+`referer` varchar(255) NOT NULL,
+`cut` int(1) NOT NULL DEFAULT '0',
+`invited` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_plugin_faq` (
-  `id` int(11) NOT NULL,
-  `sort` int(11) NOT NULL,
-  `published` int(1) NOT NULL DEFAULT '1',
-  `cat` int(6) NOT NULL DEFAULT '1',
-  `question` text NOT NULL,
-  `answer` text NOT NULL
+`id` int(11) NOT NULL,
+`sort` int(11) NOT NULL,
+`published` int(1) NOT NULL DEFAULT '1',
+`cat` int(6) NOT NULL DEFAULT '1',
+`question` text NOT NULL,
+`answer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_plugin_gallery` (
-  `id` int(11) NOT NULL,
-  `sortItem` int(11) NOT NULL,
-  `folder` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `author` varchar(255) NOT NULL,
-  `authorUrl` varchar(255) NOT NULL,
-  `createThumbnails` int(1) NOT NULL,
-  `thumbnailWidth` int(6) NOT NULL,
-  `resizeImages` int(1) NOT NULL DEFAULT '0',
-  `resizeType` varchar(128) NOT NULL,
-  `imageWidth` int(6) NOT NULL,
-  `imageHeight` int(6) NOT NULL,
-  `watermark` varchar(255) NOT NULL,
-  `watermarkEnabled` int(1) NOT NULL DEFAULT '1',
-  `watermarkPosition` varchar(16) NOT NULL,
-  `watermarkImage` varchar(255) NOT NULL,
-  `offsetY` varchar(11) NOT NULL,
-  `offsetX` varchar(11) NOT NULL,
-  `watermarkFont` varchar(255) NOT NULL,
-  `watermarkTextSize` varchar(12) NOT NULL,
-  `watermarkOpacity` varchar(12) NOT NULL,
-  `watermarkColor` varchar(7) NOT NULL,
-  `watermarkBorderColor` varchar(7) NOT NULL,
-  `watermarkBorder` varchar(12) NOT NULL
+`id` int(11) NOT NULL,
+`sortItem` int(11) NOT NULL,
+`folder` varchar(255) NOT NULL,
+`title` varchar(255) NOT NULL,
+`description` varchar(255) NOT NULL,
+`author` varchar(255) NOT NULL,
+`authorUrl` varchar(255) NOT NULL,
+`createThumbnails` int(1) NOT NULL,
+`thumbnailWidth` int(6) NOT NULL,
+`resizeImages` int(1) NOT NULL DEFAULT '0',
+`resizeType` varchar(128) NOT NULL,
+`imageWidth` int(6) NOT NULL,
+`imageHeight` int(6) NOT NULL,
+`watermark` varchar(255) NOT NULL,
+`watermarkEnabled` int(1) NOT NULL DEFAULT '1',
+`watermarkPosition` varchar(16) NOT NULL,
+`watermarkImage` varchar(255) NOT NULL,
+`offsetY` varchar(11) NOT NULL,
+`offsetX` varchar(11) NOT NULL,
+`watermarkFont` varchar(255) NOT NULL,
+`watermarkTextSize` varchar(12) NOT NULL,
+`watermarkOpacity` varchar(12) NOT NULL,
+`watermarkColor` varchar(7) NOT NULL,
+`watermarkBorderColor` varchar(7) NOT NULL,
+`watermarkBorder` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_plugin_gallery_items` (
-  `id` int(11) NOT NULL,
-  `galleryID` int(11) NOT NULL,
-  `sort` int(11) NOT NULL,
-  `filename` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `author` varchar(255) NOT NULL,
-  `authorUrl` varchar(255) NOT NULL
+`id` int(11) NOT NULL,
+`galleryID` int(11) NOT NULL,
+`sort` int(11) NOT NULL,
+`filename` varchar(255) NOT NULL,
+`title` varchar(255) NOT NULL,
+`author` varchar(255) NOT NULL,
+`authorUrl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_plugin_msg` (
-  `msg_id` int(11) NOT NULL,
-  `parentID` int(11) NOT NULL,
-  `msg_date` datetime NOT NULL,
-  `fromUID` int(11) NOT NULL,
-  `toUID` int(11) NOT NULL,
-  `msg_body` text NOT NULL,
-  `msg_read` int(1) NOT NULL DEFAULT '0',
-  `trash` int(1) NOT NULL,
-  `spam` int(1) NOT NULL
+`msg_id` int(11) NOT NULL,
+`parentID` int(11) NOT NULL,
+`msg_date` datetime NOT NULL,
+`fromUID` int(11) NOT NULL,
+`toUID` int(11) NOT NULL,
+`msg_body` text NOT NULL,
+`msg_read` int(1) NOT NULL DEFAULT '0',
+`trash` int(1) NOT NULL,
+`spam` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_plugin_tourdates` (
-  `id` int(11) NOT NULL,
-  `date` datetime DEFAULT NULL,
-  `band` varchar(128) NOT NULL,
-  `venue` varchar(128) NOT NULL,
-  `published` int(1) NOT NULL DEFAULT '1',
-  `fburl` varchar(255) NOT NULL
+`id` int(11) NOT NULL,
+`date` datetime DEFAULT NULL,
+`band` varchar(128) NOT NULL,
+`venue` varchar(128) NOT NULL,
+`published` int(1) NOT NULL DEFAULT '1',
+`fburl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_settings` (
-  `property` varchar(255) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  `longValue` text NOT NULL,
-  `type` int(11) NOT NULL DEFAULT '1',
-  `sortation` int(11) NOT NULL,
-  `activated` int(1) NOT NULL DEFAULT '1',
-  `label` varchar(255) NOT NULL,
-  `icon` varchar(255) NOT NULL,
-  `heading` varchar(255) NOT NULL,
-  `subtext` varchar(255) NOT NULL,
-  `fieldClass` varchar(128) NOT NULL DEFAULT 'form-control',
-  `fieldType` varchar(64) NOT NULL,
-  `placeholder` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `options` text NOT NULL
+`property` varchar(255) NOT NULL,
+`value` varchar(255) NOT NULL,
+`longValue` text NOT NULL,
+`type` int(11) NOT NULL DEFAULT '1',
+`sortation` int(11) NOT NULL,
+`activated` int(1) NOT NULL DEFAULT '1',
+`label` varchar(255) NOT NULL,
+`icon` varchar(255) NOT NULL,
+`heading` varchar(255) NOT NULL,
+`subtext` varchar(255) NOT NULL,
+`fieldClass` varchar(128) NOT NULL DEFAULT 'form-control',
+`fieldType` varchar(64) NOT NULL,
+`placeholder` varchar(255) NOT NULL,
+`description` varchar(255) NOT NULL,
+`options` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation`, `activated`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `description`, `options`) VALUES
@@ -476,7 +483,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('backendFXtime', '820', '', 20, 7, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFXtype', 'fadeIn In', '', 20, 6, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
 ('backendLanguage', 'de-DE', '', 19, 4, 1, 'BACKENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
-('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
+('backendLayout', 'sidebar-collapse sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
 ('backendLogoSubText', '.io', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendLogoText', '', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
 ('backendLogoUrl', '1', '', 12, 3, 1, 'BACKENDLOGOURL_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
@@ -550,7 +557,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('signup_tospage', 'terms-of-service', '', 5, 0, 1, 'terms of service filename', '', '', '', 'form-control', '', '', '', ''),
 ('signup_tostext', 'Terms of service', '', 5, 0, 1, 'terms of service description', '', '', '', 'form-control', '', '', '', ''),
 ('signup_zipcode', '0', '', 5, 0, 1, 'require zipcode to signup', '', '', '', 'form-control', '', '', '', ''),
-('siteauthor', 'YaWK Yet another Web Kit', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
+('siteauthor', 'made with YaWK', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
 ('sitename', 'Yet another Web Kit CMS', '', 9, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('statsEnable', '1', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
 ('syslogEnable', '1', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
@@ -609,8 +616,8 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
 
 CREATE TABLE `cms_settings_types` (
-  `id` int(11) NOT NULL,
-  `value` varchar(64) NOT NULL
+`id` int(11) NOT NULL,
+`value` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
@@ -640,43 +647,43 @@ INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
 (24, 'webmail-settings');
 
 CREATE TABLE `cms_stats` (
-  `id` int(11) NOT NULL,
-  `uid` int(11) NOT NULL,
-  `gid` int(11) NOT NULL,
-  `logged_in` int(1) NOT NULL,
-  `acceptLanguage` varchar(128) NOT NULL,
-  `remoteAddr` varchar(128) NOT NULL,
-  `userAgent` varchar(255) NOT NULL,
-  `device` varchar(255) NOT NULL,
-  `deviceType` varchar(255) NOT NULL,
-  `os` varchar(255) NOT NULL,
-  `osVersion` varchar(64) NOT NULL,
-  `browser` varchar(255) NOT NULL,
-  `browserVersion` varchar(64) NOT NULL,
-  `date_created` datetime DEFAULT NULL,
-  `referer` varchar(255) NOT NULL,
-  `page` varchar(255) NOT NULL
+`id` int(11) NOT NULL,
+`uid` int(11) NOT NULL,
+`gid` int(11) NOT NULL,
+`logged_in` int(1) NOT NULL,
+`acceptLanguage` varchar(128) NOT NULL,
+`remoteAddr` varchar(128) NOT NULL,
+`userAgent` varchar(255) NOT NULL,
+`device` varchar(255) NOT NULL,
+`deviceType` varchar(255) NOT NULL,
+`os` varchar(255) NOT NULL,
+`osVersion` varchar(64) NOT NULL,
+`browser` varchar(255) NOT NULL,
+`browserVersion` varchar(64) NOT NULL,
+`date_created` datetime DEFAULT NULL,
+`referer` varchar(255) NOT NULL,
+`page` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_syslog` (
-  `log_id` int(11) NOT NULL,
-  `log_date` datetime DEFAULT NULL,
-  `log_category` int(11) NOT NULL DEFAULT '0',
-  `log_type` int(11) NOT NULL DEFAULT '0',
-  `message` varchar(255) NOT NULL,
-  `fromUID` int(11) NOT NULL DEFAULT '0',
-  `toUID` int(11) NOT NULL DEFAULT '0',
-  `toGID` int(11) NOT NULL DEFAULT '0',
-  `seen` int(1) NOT NULL DEFAULT '0'
+`log_id` int(11) NOT NULL,
+`log_date` datetime DEFAULT NULL,
+`log_category` int(11) NOT NULL DEFAULT '0',
+`log_type` int(11) NOT NULL DEFAULT '0',
+`message` varchar(255) NOT NULL,
+`fromUID` int(11) NOT NULL DEFAULT '0',
+`toUID` int(11) NOT NULL DEFAULT '0',
+`toGID` int(11) NOT NULL DEFAULT '0',
+`seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_syslog_categories` (
-  `id` int(11) NOT NULL,
-  `active` int(1) NOT NULL DEFAULT '1',
-  `property` varchar(255) NOT NULL,
-  `icon` varchar(128) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `notify` int(1) NOT NULL DEFAULT '1'
+`id` int(11) NOT NULL,
+`active` int(1) NOT NULL DEFAULT '1',
+`property` varchar(255) NOT NULL,
+`icon` varchar(128) NOT NULL,
+`type` varchar(255) NOT NULL,
+`notify` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_syslog_categories` (`id`, `active`, `property`, `icon`, `type`, `notify`) VALUES
@@ -734,45 +741,45 @@ INSERT INTO `cms_syslog_categories` (`id`, `active`, `property`, `icon`, `type`,
 (52, 1, 'backup-error', 'fa fa-hdd-o', 'text-default', 1);
 
 CREATE TABLE `cms_templates` (
-  `id` int(11) NOT NULL,
-  `active` int(1) NOT NULL DEFAULT '0',
-  `name` varchar(128) NOT NULL,
-  `positions` text NOT NULL,
-  `description` text NOT NULL,
-  `releaseDate` datetime DEFAULT NULL,
-  `author` varchar(255) NOT NULL,
-  `authorUrl` varchar(255) NOT NULL,
-  `weblink` varchar(255) NOT NULL,
-  `subAuthor` varchar(255) NOT NULL,
-  `subAuthorUrl` varchar(255) NOT NULL,
-  `modifyDate` datetime DEFAULT NULL,
-  `version` varchar(64) NOT NULL,
-  `framework` varchar(64) NOT NULL,
-  `license` varchar(128) NOT NULL
+`id` int(11) NOT NULL,
+`active` int(1) NOT NULL DEFAULT '0',
+`name` varchar(128) NOT NULL,
+`positions` text NOT NULL,
+`description` text NOT NULL,
+`releaseDate` datetime DEFAULT NULL,
+`author` varchar(255) NOT NULL,
+`authorUrl` varchar(255) NOT NULL,
+`weblink` varchar(255) NOT NULL,
+`subAuthor` varchar(255) NOT NULL,
+`subAuthorUrl` varchar(255) NOT NULL,
+`modifyDate` datetime DEFAULT NULL,
+`version` varchar(64) NOT NULL,
+`framework` varchar(64) NOT NULL,
+`license` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `framework`, `license`) VALUES
 (1, 1, 'YaWK-bootstrap4', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 4 Default Theme.', '2019-01-13 00:15:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'https://www.yawk.io', 'Daniel Retzl', '', '2019-01-13 00:15:00', '1.0.0', 'bootstrap4', 'MIT');
 
 CREATE TABLE `cms_template_settings` (
-  `id` int(11) NOT NULL,
-  `templateID` int(11) NOT NULL,
-  `property` varchar(256) NOT NULL,
-  `value` varchar(256) NOT NULL,
-  `valueDefault` varchar(255) NOT NULL,
-  `longValue` text NOT NULL,
-  `type` int(11) NOT NULL,
-  `activated` int(1) DEFAULT '1',
-  `sort` int(11) DEFAULT NULL,
-  `label` varchar(256) NOT NULL,
-  `fieldClass` varchar(128) NOT NULL,
-  `fieldType` varchar(64) NOT NULL,
-  `options` varchar(255) DEFAULT NULL,
-  `placeholder` varchar(256) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `icon` varchar(128) NOT NULL,
-  `heading` varchar(255) NOT NULL,
-  `subtext` varchar(255) NOT NULL
+`id` int(11) NOT NULL,
+`templateID` int(11) NOT NULL,
+`property` varchar(256) NOT NULL,
+`value` varchar(256) NOT NULL,
+`valueDefault` varchar(255) NOT NULL,
+`longValue` text NOT NULL,
+`type` int(11) NOT NULL,
+`activated` int(1) DEFAULT '1',
+`sort` int(11) DEFAULT NULL,
+`label` varchar(256) NOT NULL,
+`fieldClass` varchar(128) NOT NULL,
+`fieldType` varchar(64) NOT NULL,
+`options` varchar(255) DEFAULT NULL,
+`placeholder` varchar(256) NOT NULL,
+`description` varchar(255) NOT NULL,
+`icon` varchar(128) NOT NULL,
+`heading` varchar(255) NOT NULL,
+`subtext` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `type`, `activated`, `sort`, `label`, `fieldClass`, `fieldType`, `options`, `placeholder`, `description`, `icon`, `heading`, `subtext`) VALUES
@@ -1841,12 +1848,15 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1069, 1, 'navbar-vertical-divider', '0', '0', '', 10, 1, 11, 'NAVBAR_V_DIVIDER', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (1070, 1, 'card-footer-border-top', '1px solid', '1px solid', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER', 'form-control', '', '', 'TPL_CARD_FOOTER_BORDER_PH', '', '', '', ''),
 (1071, 1, 'card-footer-border-top-color', 'D9D9D9', '#d9d9d9', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_FOOTER_BORDER_COLOR_PH', '', '', '', ''),
-(1072, 1, 'toggle-menubgcolor', 'F8F8F8', 'F8F8F8', '', 11, 1, 5, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', '', '', '', '', '');
+(1072, 1, 'toggle-menubgcolor', 'F8F8F8', 'F8F8F8', '', 11, 1, 5, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(1073, 1, 'frontendSwitch', '1',  '0',  '', 10, 1, 12, 'TPL_FRONTEND_SWITCH',  'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(1074, 1, 'darkThemeID',  '', 'none', '', 10, 1, 13, 'TPL_DARKTHEME_LABEL',  'form-control', 'select template', '', '', 'TPL_DARKTHEME_DESC', '', '', ''),
+(1075, 1, 'lightThemeID', '', 'none', '', 10, 1, 14, 'TPL_LIGHTTHEME_LABEL', 'form-control', 'select template', '', '', 'TPL_LIGHTTHEME_DESC', '', '', '');
 
 
 CREATE TABLE `cms_template_settings_types` (
-  `id` int(11) NOT NULL,
-  `type` varchar(64) NOT NULL
+`id` int(11) NOT NULL,
+`type` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
@@ -1913,11 +1923,11 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 (61, 'bs4-footer');
 
 CREATE TABLE `cms_tips` (
-  `id` int(11) NOT NULL,
-  `published` int(1) NOT NULL,
-  `tipHeading` varchar(255) NOT NULL,
-  `tipText` varchar(255) NOT NULL,
-  `tipLink` varchar(255) NOT NULL
+`id` int(11) NOT NULL,
+`published` int(1) NOT NULL,
+`tipHeading` varchar(255) NOT NULL,
+`tipText` varchar(255) NOT NULL,
+`tipLink` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_tips` (`id`, `published`, `tipHeading`, `tipText`, `tipLink`) VALUES
@@ -1928,52 +1938,52 @@ INSERT INTO `cms_tips` (`id`, `published`, `tipHeading`, `tipText`, `tipLink`) V
 (5, 1, 'TOD_5_H', 'TOD_5_T', '');
 
 CREATE TABLE `cms_users` (
-  `id` int(11) NOT NULL,
-  `blocked` int(1) NOT NULL DEFAULT '0',
-  `privacy` int(1) NOT NULL DEFAULT '0',
-  `online` int(1) NOT NULL DEFAULT '0',
-  `gid` int(11) NOT NULL DEFAULT '4',
-  `terms` int(1) NOT NULL DEFAULT '1',
-  `username` varchar(48) DEFAULT NULL,
-  `password` varchar(48) DEFAULT NULL,
-  `date_created` datetime DEFAULT NULL,
-  `date_changed` datetime DEFAULT NULL,
-  `date_expired` datetime DEFAULT NULL,
-  `date_lastlogin` datetime DEFAULT NULL,
-  `login_count` int(11) NOT NULL DEFAULT '0',
-  `email` varchar(128) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  `twitter` varchar(255) DEFAULT NULL,
-  `facebook` varchar(255) DEFAULT NULL,
-  `firstname` varchar(128) DEFAULT NULL,
-  `lastname` varchar(128) DEFAULT NULL,
-  `street` varchar(128) DEFAULT NULL,
-  `zipcode` varchar(12) DEFAULT NULL,
-  `city` varchar(128) DEFAULT NULL,
-  `country` varchar(128) DEFAULT NULL,
-  `state` varchar(128) DEFAULT NULL,
-  `logged_in` int(1) NOT NULL DEFAULT '0',
-  `public_email` int(1) NOT NULL DEFAULT '0',
-  `terminatedByUser` int(1) NOT NULL DEFAULT '0',
-  `job` varchar(255) DEFAULT NULL,
-  `likes` int(11) NOT NULL DEFAULT '0',
-  `overrideTemplate` int(1) NOT NULL DEFAULT '1',
-  `templateID` int(6) NOT NULL DEFAULT '1',
-  `hashValue` varchar(255) DEFAULT NULL
+`id` int(11) NOT NULL,
+`blocked` int(1) NOT NULL DEFAULT '0',
+`privacy` int(1) NOT NULL DEFAULT '0',
+`online` int(1) NOT NULL DEFAULT '0',
+`gid` int(11) NOT NULL DEFAULT '4',
+`terms` int(1) NOT NULL DEFAULT '1',
+`username` varchar(48) DEFAULT NULL,
+`password` varchar(48) DEFAULT NULL,
+`date_created` datetime DEFAULT NULL,
+`date_changed` datetime DEFAULT NULL,
+`date_expired` datetime DEFAULT NULL,
+`date_lastlogin` datetime DEFAULT NULL,
+`login_count` int(11) NOT NULL DEFAULT '0',
+`email` varchar(128) DEFAULT NULL,
+`url` varchar(255) DEFAULT NULL,
+`twitter` varchar(255) DEFAULT NULL,
+`facebook` varchar(255) DEFAULT NULL,
+`firstname` varchar(128) DEFAULT NULL,
+`lastname` varchar(128) DEFAULT NULL,
+`street` varchar(128) DEFAULT NULL,
+`zipcode` varchar(12) DEFAULT NULL,
+`city` varchar(128) DEFAULT NULL,
+`country` varchar(128) DEFAULT NULL,
+`state` varchar(128) DEFAULT NULL,
+`logged_in` int(1) NOT NULL DEFAULT '0',
+`public_email` int(1) NOT NULL DEFAULT '0',
+`terminatedByUser` int(1) NOT NULL DEFAULT '0',
+`job` varchar(255) DEFAULT NULL,
+`likes` int(11) NOT NULL DEFAULT '0',
+`overrideTemplate` int(1) NOT NULL DEFAULT '1',
+`templateID` int(6) NOT NULL DEFAULT '1',
+`hashValue` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_users_online` (
-  `uid` int(11) NOT NULL,
-  `phpSessionID` varchar(128) NOT NULL,
-  `currentTimeStamp` varchar(64) NOT NULL
+`uid` int(11) NOT NULL,
+`phpSessionID` varchar(128) NOT NULL,
+`currentTimeStamp` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_user_groups` (
-  `id` int(11) NOT NULL,
-  `value` varchar(32) NOT NULL,
-  `color` varchar(64) NOT NULL,
-  `signup_allowed` int(1) NOT NULL DEFAULT '0',
-  `backend_allowed` int(1) NOT NULL DEFAULT '0'
+`id` int(11) NOT NULL,
+`value` varchar(32) NOT NULL,
+`color` varchar(64) NOT NULL,
+`signup_allowed` int(1) NOT NULL DEFAULT '0',
+`backend_allowed` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_user_groups` (`id`, `value`, `color`, `signup_allowed`, `backend_allowed`) VALUES
@@ -1984,37 +1994,37 @@ INSERT INTO `cms_user_groups` (`id`, `value`, `color`, `signup_allowed`, `backen
 (5, 'Root', 'danger', 0, 1);
 
 CREATE TABLE `cms_widgets` (
-  `id` int(11) NOT NULL,
-  `published` int(1) NOT NULL DEFAULT '1',
-  `widgetType` int(11) NOT NULL,
-  `pageID` int(11) NOT NULL,
-  `sort` int(11) DEFAULT NULL,
-  `position` varchar(128) DEFAULT NULL,
-  `marginTop` int(11) DEFAULT NULL,
-  `marginBottom` int(11) DEFAULT NULL,
-  `date_publish` datetime DEFAULT NULL,
-  `date_unpublish` datetime DEFAULT NULL,
-  `widgetTitle` varchar(255) DEFAULT NULL
+`id` int(11) NOT NULL,
+`published` int(1) NOT NULL DEFAULT '1',
+`widgetType` int(11) NOT NULL,
+`pageID` int(11) NOT NULL,
+`sort` int(11) DEFAULT NULL,
+`position` varchar(128) DEFAULT NULL,
+`marginTop` int(11) DEFAULT NULL,
+`marginBottom` int(11) DEFAULT NULL,
+`date_publish` datetime DEFAULT NULL,
+`date_unpublish` datetime DEFAULT NULL,
+`widgetTitle` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`, `marginTop`, `marginBottom`, `date_publish`, `date_unpublish`, `widgetTitle`) VALUES
 (1, 1, 10, 0, 1, 'intro', 0, 0, '2019-08-13 19:00:56', NULL, 'Bootstrap Carousel (above globalmenu)');
 
 CREATE TABLE `cms_widget_defaults` (
-  `property` varchar(256) NOT NULL,
-  `value` text NOT NULL,
-  `widgetType` int(11) NOT NULL,
-  `activated` int(1) NOT NULL DEFAULT '1',
-  `sortation` int(11) NOT NULL DEFAULT '0',
-  `label` varchar(255) NOT NULL,
-  `icon` varchar(255) NOT NULL,
-  `heading` varchar(255) NOT NULL,
-  `subtext` varchar(255) NOT NULL,
-  `description` varchar(256) NOT NULL,
-  `fieldClass` varchar(128) NOT NULL,
-  `fieldType` varchar(128) NOT NULL,
-  `placeholder` varchar(255) NOT NULL,
-  `options` text NOT NULL,
-  `id` int(11) NOT NULL
+`property` varchar(256) NOT NULL,
+`value` text NOT NULL,
+`widgetType` int(11) NOT NULL,
+`activated` int(1) NOT NULL DEFAULT '1',
+`sortation` int(11) NOT NULL DEFAULT '0',
+`label` varchar(255) NOT NULL,
+`icon` varchar(255) NOT NULL,
+`heading` varchar(255) NOT NULL,
+`subtext` varchar(255) NOT NULL,
+`description` varchar(256) NOT NULL,
+`fieldClass` varchar(128) NOT NULL,
+`fieldType` varchar(128) NOT NULL,
+`placeholder` varchar(255) NOT NULL,
+`options` text NOT NULL,
+`id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `description`, `fieldClass`, `fieldType`, `placeholder`, `options`, `id`) VALUES
@@ -2387,291 +2397,296 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbEventsLimit', '5', 39, 1, 21, 'LABEL_FB_EVENTS_LIMIT', '', '', '', 'DESC_FB_EVENTS_LIMIT', 'form-control', '', '', '', 377);
 
 CREATE TABLE `cms_widget_settings` (
-  `id` int(11) NOT NULL,
-  `widgetID` int(11) NOT NULL,
-  `property` varchar(256) NOT NULL,
-  `value` text NOT NULL,
-  `widgetType` int(11) NOT NULL,
-  `activated` int(1) NOT NULL DEFAULT '1',
-  `sortation` int(11) NOT NULL DEFAULT '0',
-  `label` varchar(255) NOT NULL,
-  `icon` varchar(255) NOT NULL,
-  `heading` varchar(255) NOT NULL,
-  `subtext` varchar(255) NOT NULL,
-  `fieldClass` varchar(255) NOT NULL,
-  `fieldType` varchar(128) NOT NULL,
-  `placeholder` varchar(255) NOT NULL,
-  `options` text NOT NULL,
-  `description` varchar(255) NOT NULL
+`id` int(11) NOT NULL,
+`widgetID` int(11) NOT NULL,
+`property` varchar(256) NOT NULL,
+`value` text NOT NULL,
+`widgetType` int(11) NOT NULL,
+`activated` int(1) NOT NULL DEFAULT '1',
+`sortation` int(11) NOT NULL DEFAULT '0',
+`label` varchar(255) NOT NULL,
+`icon` varchar(255) NOT NULL,
+`heading` varchar(255) NOT NULL,
+`subtext` varchar(255) NOT NULL,
+`fieldClass` varchar(255) NOT NULL,
+`fieldType` varchar(128) NOT NULL,
+`placeholder` varchar(255) NOT NULL,
+`options` text NOT NULL,
+`description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `options`, `description`) VALUES
 (1, 1, 'customHtmlCode', '<div id=\"carouselExampleIndicators\" class=\"carousel slide\" data-ride=\"carousel\">\r\n  <ol class=\"carousel-indicators\">\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"0\" class=\"active\"></li>\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"1\"></li>\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"2\"></li>\r\n  </ol>\r\n  <div class=\"carousel-inner\">\r\n    <div class=\"carousel-item active\">\r\n      <img class=\"d-block w-100\" src=\"https://picsum.photos/1920/600\" alt=\"First slide\">\r\n    </div>\r\n    <div class=\"carousel-item\">\r\n      <img class=\"d-block w-100\" src=\"https://picsum.photos/1920/600\" alt=\"Second slide\">\r\n    </div>\r\n    <div class=\"carousel-item\">\r\n      <img class=\"d-block w-100\" src=\"https://picsum.photos/1920/600\" alt=\"Third slide\">\r\n    </div>\r\n  </div>\r\n  <a class=\"carousel-control-prev\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"prev\">\r\n    <span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>\r\n    <span class=\"sr-only\">Previous</span>\r\n  </a>\r\n  <a class=\"carousel-control-next\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"next\">\r\n    <span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>\r\n    <span class=\"sr-only\">Next</span>\r\n  </a>\r\n</div>', 10, 1, 0, 'LABEL_CUSTOM_HTML_CODE_CONTENT', '', '', '', 'form-control', 'editor', 'PH_CUSTOM_HTML_CODE_CONTENT', '', 'DESC_CUSTOM_HTML_CODE_CONTENT');
 
 CREATE TABLE `cms_widget_types` (
-  `id` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `name` varchar(128) NOT NULL,
-  `folder` varchar(128) NOT NULL,
-  `description` text NOT NULL,
-  `icon` varchar(128) NOT NULL,
-  `color` varchar(6) NOT NULL DEFAULT 'cccccc'
+`id` int(11) NOT NULL,
+`status` int(11) NOT NULL DEFAULT '1',
+`name` varchar(128) NOT NULL,
+`folder` varchar(128) NOT NULL,
+`description` text NOT NULL,
+`icon` varchar(128) NOT NULL,
+`color` varchar(6) NOT NULL DEFAULT 'cccccc'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`, `icon`, `color`) VALUES
-(1,	1,	'Loginbox',	'loginbox',	'Display a User Login Box',	'fa fa-user-circle-o',	''),
-(2,	1,	'Simple Contact Form',	'form_simple',	'A Simple Contact Form',	'fa fa-wpforms',	''),
-(3,	1,	'Prezi',	'prezi',	'Embed Prezi',	'fa fa-magic',	''),
-(4,	1,	'Facebook Page',	'fb_like_page',	'Embed a Facebook Page',	'fa fa-facebook',	'4267B2'),
-(5,	1,	'Facebook Like Button',	'fb_like_button',	'Embed a Facebook Like Button (outdated',	'fa fa-facebook',	'4267B2'),
-(6,	1,	'Google Analytics',	'googleAnalytics',	'Embed Google Analytics',	'fa fa-google',	'34a853'),
-(7,	1,	'SimpleUpload',	'simple_upload',	'Simple File Upload',	'fa fa-upload',	''),
-(8,	1,	'Clock',	'clock',	'A simple digital clock',	'fa fa-clock-o',	''),
-(9,	1,	'Signup',	'signup',	'Display a SignUp form to allow user registration on your page',	'fa fa-pencil',	''),
-(10,	1,	'Custom HTML Code',	'custom_html',	'Embed any custom HTML Code Snippet',	'fa fa-code',	''),
-(11,	1,	'Blog Widget',	'blogWidget',	'Corresponding Widget to the Blog Plugin',	'fa fa-wordpress',	''),
-(12,	1,	'Newsletter',	'newsletter',	'Newsletter Widget',	'fa fa-newspaper-o',	''),
-(13,	1,	'Gallery',	'gallery',	'Display a gallery at any position',	'fa fa-picture-o',	''),
-(14,	1,	'Twitch Stream',	'twitch',	'Embed Twitch Stream',	'fa fa-twitch',	'9146ff'),
-(15,	1,	'Sub Menu',	'submenu',	'Embed a Menu as Submenu at any position',	'fa fa-bars',	''),
-(16,	1,	'Youtube Video',	'youtube',	'Embed any public YouTube Video',	'fa fa-youtube',	'FF0000'),
-(17,	1,	'Chaturbate Stream',	'chaturbate',	'Embed Chaturbate Cam Room',	'fa fa-video-camera',	'fcaf1e'),
-(18,	1,	'Google Maps',	'googleMaps',	'Embed Google Maps',	'fa fa-google',	'34a853'),
-(19,	1,	'Cultural Broadcasting Archive',	'culturalbroadcasting',	'Embed Cultural Broadcasting Archive',	'fa fa-podcast',	'2B3287'),
-(20,	1,	'Instagram Posting',	'instagram',	'Embed public Instagram Posting',	'fa fa-instagram',	'405de6'),
-(21,	1,	'Spotify',	'spotify',	'Embed Spotify stream',	'fa fa-spotify',	'1db954'),
-(22,	1,	'Facebook Posting',	'fb_post',	'Embed any public Facebook Posting',	'fa fa-facebook',	'4267B2'),
-(23,	1,	'Facebook Video',	'fb_video',	'Embed any public Facebook Video',	'fa fa-facebook',	'4267B2'),
-(24,	1,	'Twitter (Tweet)',	'twitter_tweet',	'Embed any single Tweet',	'fa fa-twitter',	'1DA1F2'),
-(25,	1,	'Twitter (Timeline)',	'twitter_timeline',	'Embed the timeline of any Twitter user (feed view)',	'fa fa-twitter',	'1DA1F2'),
-(26,	1,	'Twitter (Grid)',	'twitter_grid',	'Embed the timeline of any Twitter user (grid view)',	'fa fa-twitter',	'1DA1F2'),
-(27,	1,	'Twitter Button',	'twitter_tweetbutton',	'Embed Tweet button to let users drop a tweet.',	'fa fa-twitter',	'1DA1F2'),
-(28,	1,	'Pinterest Profile',	'pinterest_profile',	'Embed any Pinterest Profile',	'fa fa-pinterest',	'e60023'),
-(29,	1,	'Pinterest Pin',	'pinterest_pin',	'Embed any Pinterest Pin',	'fa fa-pinterest',	'e60023'),
-(30,	1,	'Pinterest Follow Button',	'pinterest_follow',	'Embed Pinterest Follow Button',	'fa fa-pinterest',	'e60023'),
-(31,	1,	'Bubbl.us Mindmap',	'bubblus',	'Embed Bubbl.us Mindmap',	'fa fa-lightbulb-o',	'277bb3'),
-(32,	1,	'jPlayer Audio',	'jplayer',	'jPlayer Audio Player with playlist feature',	'fa fa-volume-up',	''),
-(33,	1,	'jPlayer Video',	'jplayer_video',	'jPlayer Video Player with playlist feature',	'fa fa-video-camera',	''),
-(34,	1,	'Plyr HTML5 Player',	'plyr',	'A simple, accessible HTML5 media player by @sam_potts',	'fa fa-html5',	''),
-(35,	1,	'Social Bar',	'socialBar',	'Display icons and links to your social media profiles',	'fa fa-users',	''),
-(36,	1,	'AdBlock Blocker',	'fuckadblock',	'Detect and block AdBlocker',	'fa fa-ban',	'be1718'),
-(37,	1,	'Content Animator',	'contentAnimator',	'Enable Slide Animations for your content',	'fa fa-paper-plane-o',	''),
-(38,	1,	'Embed Static Page',	'embed_page',	'Embed any of your static pages',	'fa fa-file-word-o',	''),
-(39,	1,	'Facebook Events',	'fb_events',	'Embed Facebook Events from your Facebook page',	'fa fa-facebook',	'4267B2'),
-(40,	1,	'Facebook Graph Explorer',	'fb_example',	'Use the Facebook Graph API to get data - this is for demo and development purpose only!',	'fa fa-facebook',	'4267B2'),
-(41,	1,	'Facebook Gallery',	'fb_gallery',	'Embed photo albums from your Facebook page',	'fa fa-facebook',	'4267B2'),
-(42,	1,	'Facebook Cover',	'fb_cover',	'Embed current cover image from your Facebook page',	'fa fa-facebook',	'4267B2'),
-(43,	1,	'SoundCloud',	'soundcloud',	'Embed any soundcloud song or playlist',	'fa fa-soundcloud',	'ff8800'),
-(44,	1,	'Example Widget',	'example',	'Empty widget (for DEMO and development purpose)',	'fa fa-question',	''),
-(45,	1,	'Booking Widget',	'booking',	'Booking widget (corresponding to the booking plugin)',	'fa fa-address-card-o',	''),
-(46,	1,	'Facebook Feed',	'fb_feed',	'Embed the feed (latest x postings) of your Facebook page',	'fa fa-facebook',	'4267B2');
+(1, 1,  'Loginbox', 'loginbox', 'Display a User Login Box', 'fa fa-user-circle-o',  ''),
+(2, 1,  'Simple Contact Form',  'form_simple',  'A Simple Contact Form',  'fa fa-wpforms',  ''),
+(3, 1,  'Prezi',  'prezi',  'Embed Prezi',  'fa fa-magic',  ''),
+(4, 1,  'Facebook Page',  'fb_like_page', 'Embed a Facebook Page',  'fa fa-facebook', '4267B2'),
+(5, 1,  'Facebook Like Button', 'fb_like_button', 'Embed a Facebook Like Button (outdated', 'fa fa-facebook', '4267B2'),
+(6, 1,  'Google Analytics', 'googleAnalytics',  'Embed Google Analytics', 'fa fa-google', '34a853'),
+(7, 1,  'SimpleUpload', 'simple_upload',  'Simple File Upload', 'fa fa-upload', ''),
+(8, 1,  'Clock',  'clock',  'A simple digital clock', 'fa fa-clock-o',  ''),
+(9, 1,  'Signup', 'signup', 'Display a SignUp form to allow user registration on your page',  'fa fa-pencil', ''),
+(10,  1,  'Custom HTML Code', 'custom_html',  'Embed any custom HTML Code Snippet', 'fa fa-code', ''),
+(11,  1,  'Blog Widget',  'blogWidget', 'Corresponding Widget to the Blog Plugin',  'fa fa-wordpress',  ''),
+(12,  1,  'Newsletter', 'newsletter', 'Newsletter Widget',  'fa fa-newspaper-o',  ''),
+(13,  1,  'Gallery',  'gallery',  'Display a gallery at any position',  'fa fa-picture-o',  ''),
+(14,  1,  'Twitch Stream',  'twitch', 'Embed Twitch Stream',  'fa fa-twitch', '9146ff'),
+(15,  1,  'Sub Menu', 'submenu',  'Embed a Menu as Submenu at any position',  'fa fa-bars', ''),
+(16,  1,  'Youtube Video',  'youtube',  'Embed any public YouTube Video', 'fa fa-youtube',  'FF0000'),
+(17,  1,  'Chaturbate Stream',  'chaturbate', 'Embed Chaturbate Cam Room',  'fa fa-video-camera', 'fcaf1e'),
+(18,  1,  'Google Maps',  'googleMaps', 'Embed Google Maps',  'fa fa-google', '34a853'),
+(19,  1,  'Cultural Broadcasting Archive',  'culturalbroadcasting', 'Embed Cultural Broadcasting Archive',  'fa fa-podcast',  '2B3287'),
+(20,  1,  'Instagram Posting',  'instagram',  'Embed public Instagram Posting', 'fa fa-instagram',  '405de6'),
+(21,  1,  'Spotify',  'spotify',  'Embed Spotify stream', 'fa fa-spotify',  '1db954'),
+(22,  1,  'Facebook Posting', 'fb_post',  'Embed any public Facebook Posting',  'fa fa-facebook', '4267B2'),
+(23,  1,  'Facebook Video', 'fb_video', 'Embed any public Facebook Video',  'fa fa-facebook', '4267B2'),
+(24,  1,  'Twitter (Tweet)',  'twitter_tweet',  'Embed any single Tweet', 'fa fa-twitter',  '1DA1F2'),
+(25,  1,  'Twitter (Timeline)', 'twitter_timeline', 'Embed the timeline of any Twitter user (feed view)', 'fa fa-twitter',  '1DA1F2'),
+(26,  1,  'Twitter (Grid)', 'twitter_grid', 'Embed the timeline of any Twitter user (grid view)', 'fa fa-twitter',  '1DA1F2'),
+(27,  1,  'Twitter Button', 'twitter_tweetbutton',  'Embed Tweet button to let users drop a tweet.',  'fa fa-twitter',  '1DA1F2'),
+(28,  1,  'Pinterest Profile',  'pinterest_profile',  'Embed any Pinterest Profile',  'fa fa-pinterest',  'e60023'),
+(29,  1,  'Pinterest Pin',  'pinterest_pin',  'Embed any Pinterest Pin',  'fa fa-pinterest',  'e60023'),
+(30,  1,  'Pinterest Follow Button',  'pinterest_follow', 'Embed Pinterest Follow Button',  'fa fa-pinterest',  'e60023'),
+(31,  1,  'Bubbl.us Mindmap', 'bubblus',  'Embed Bubbl.us Mindmap', 'fa fa-lightbulb-o',  '277bb3'),
+(32,  1,  'jPlayer Audio',  'jplayer',  'jPlayer Audio Player with playlist feature', 'fa fa-volume-up',  ''),
+(33,  1,  'jPlayer Video',  'jplayer_video',  'jPlayer Video Player with playlist feature', 'fa fa-video-camera', ''),
+(34,  1,  'Plyr HTML5 Player',  'plyr', 'A simple, accessible HTML5 media player by @sam_potts',  'fa fa-html5',  ''),
+(35,  1,  'Social Bar', 'socialBar',  'Display icons and links to your social media profiles',  'fa fa-users',  ''),
+(36,  1,  'AdBlock Blocker',  'fuckadblock',  'Detect and block AdBlocker', 'fa fa-ban',  'be1718'),
+(37,  1,  'Content Animator', 'contentAnimator',  'Enable Slide Animations for your content', 'fa fa-paper-plane-o',  ''),
+(38,  1,  'Embed Static Page',  'embed_page', 'Embed any of your static pages', 'fa fa-file-word-o',  ''),
+(39,  1,  'Facebook Events',  'fb_events',  'Embed Facebook Events from your Facebook page',  'fa fa-facebook', '4267B2'),
+(40,  1,  'Facebook Graph Explorer',  'fb_example', 'Use the Facebook Graph API to get data - this is for demo and development purpose only!',  'fa fa-facebook', '4267B2'),
+(41,  1,  'Facebook Gallery', 'fb_gallery', 'Embed photo albums from your Facebook page', 'fa fa-facebook', '4267B2'),
+(42,  1,  'Facebook Cover', 'fb_cover', 'Embed current cover image from your Facebook page',  'fa fa-facebook', '4267B2'),
+(43,  1,  'SoundCloud', 'soundcloud', 'Embed any soundcloud song or playlist',  'fa fa-soundcloud', 'ff8800'),
+(44,  1,  'Example Widget', 'example',  'Empty widget (for DEMO and development purpose)',  'fa fa-question', ''),
+(45,  1,  'Booking Widget', 'booking',  'Booking widget (corresponding to the booking plugin)', 'fa fa-address-card-o', ''),
+(46,  1,  'Facebook Feed',  'fb_feed',  'Embed the feed (latest x postings) of your Facebook page', 'fa fa-facebook', '4267B2');
 
 ALTER TABLE `cms_assets`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_assets_types`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_blog`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
+ADD PRIMARY KEY (`id`),
+ADD KEY `id` (`id`);
 
 ALTER TABLE `cms_blog_comments`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
+ADD PRIMARY KEY (`id`),
+ADD KEY `id` (`id`);
 
 ALTER TABLE `cms_blog_items`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_follower`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`,`follower`,`hunted`);
+ADD PRIMARY KEY (`id`),
+ADD KEY `id` (`id`,`follower`,`hunted`);
 
 ALTER TABLE `cms_friends`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`,`friendA`,`friendB`,`confirmed`,`aborted`);
+ADD PRIMARY KEY (`id`),
+ADD KEY `id` (`id`,`friendA`,`friendB`,`confirmed`,`aborted`);
 
 ALTER TABLE `cms_gfonts`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_logins`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_menu`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`,`sort`,`gid`,`menuID`,`parentID`,`published`,`date_created`,`date_changed`,`date_publish`,`date_unpublish`,`text`,`href`);
+ADD PRIMARY KEY (`id`),
+ADD KEY `id` (`id`,`sort`,`gid`,`menuID`,`parentID`,`published`,`date_created`,`date_changed`,`date_publish`,`date_unpublish`,`text`,`href`);
 
 ALTER TABLE `cms_menu_names`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_meta_global`
-  ADD PRIMARY KEY (`name`);
+ADD PRIMARY KEY (`name`);
+
+ALTER TABLE `cms_meta_local`
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_newsletter`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_notifications`
-  ADD PRIMARY KEY (`log_id`),
-  ADD KEY `id` (`log_id`,`fromUID`),
-  ADD KEY `event_date` (`log_date`),
-  ADD KEY `toUID` (`toUID`,`toGID`),
-  ADD KEY `msg_read` (`seen`),
-  ADD KEY `type` (`log_type`),
-  ADD KEY `msg_id` (`msg_id`);
+ADD PRIMARY KEY (`log_id`),
+ADD KEY `id` (`log_id`,`fromUID`),
+ADD KEY `event_date` (`log_date`),
+ADD KEY `toUID` (`toUID`,`toGID`),
+ADD KEY `msg_read` (`seen`),
+ADD KEY `type` (`log_type`),
+ADD KEY `msg_id` (`msg_id`);
 
 ALTER TABLE `cms_notifications_msg`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`,`active`,`type`);
+ADD PRIMARY KEY (`id`),
+ADD KEY `id` (`id`,`active`,`type`);
 
 ALTER TABLE `cms_pages`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
+ADD PRIMARY KEY (`id`),
+ADD KEY `id` (`id`);
 
 ALTER TABLE `cms_plugins`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_plugin_booking`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`,`uid`,`gid`,`date_created`,`date_wish`,`date_alternative`,`confirmed`,`todo`,`success`,`grade`,`visits`,`ban`,`outdated`,`cut`,`invited`),
-  ADD KEY `name` (`name`,`email`),
-  ADD KEY `ip` (`ip`);
+ADD PRIMARY KEY (`id`),
+ADD KEY `id` (`id`,`uid`,`gid`,`date_created`,`date_wish`,`date_alternative`,`confirmed`,`todo`,`success`,`grade`,`visits`,`ban`,`outdated`,`cut`,`invited`),
+ADD KEY `name` (`name`,`email`),
+ADD KEY `ip` (`ip`);
 
 ALTER TABLE `cms_plugin_faq`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_plugin_gallery`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_plugin_gallery_items`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_plugin_msg`
-  ADD PRIMARY KEY (`msg_id`),
-  ADD KEY `id` (`msg_id`),
-  ADD KEY `id_2` (`msg_id`),
-  ADD KEY `parentID` (`parentID`),
-  ADD KEY `msg_date` (`msg_date`),
-  ADD KEY `msg_read` (`msg_read`,`trash`,`spam`);
+ADD PRIMARY KEY (`msg_id`),
+ADD KEY `id` (`msg_id`),
+ADD KEY `id_2` (`msg_id`),
+ADD KEY `parentID` (`parentID`),
+ADD KEY `msg_date` (`msg_date`),
+ADD KEY `msg_read` (`msg_read`,`trash`,`spam`);
 ALTER TABLE `cms_plugin_msg` ADD FULLTEXT KEY `msg_body` (`msg_body`);
 
 ALTER TABLE `cms_plugin_tourdates`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_settings`
-  ADD PRIMARY KEY (`property`),
-  ADD KEY `property` (`property`),
-  ADD KEY `value` (`value`),
-  ADD KEY `type` (`type`);
+ADD PRIMARY KEY (`property`),
+ADD KEY `property` (`property`),
+ADD KEY `value` (`value`),
+ADD KEY `type` (`type`);
 
 ALTER TABLE `cms_settings_types`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_stats`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
+ADD PRIMARY KEY (`id`),
+ADD KEY `id` (`id`);
 
 ALTER TABLE `cms_syslog`
-  ADD PRIMARY KEY `log_id` (`log_id`),
-  ADD KEY `log_id` (`log_id`);
+ADD PRIMARY KEY `log_id` (`log_id`),
+ADD KEY `log_id` (`log_id`);
 
 ALTER TABLE `cms_syslog_categories`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_templates`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
+ADD PRIMARY KEY (`id`),
+ADD KEY `id` (`id`);
 
 ALTER TABLE `cms_template_settings`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_template_settings_types`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_tips`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_users`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_user_groups`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_widgets`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_widget_defaults`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_widget_settings`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_widget_types`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_assets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 ALTER TABLE `cms_assets_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 ALTER TABLE `cms_blog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_blog_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_blog_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_follower`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_friends`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_logins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_menu_names`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `cms_meta_local`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_newsletter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_notifications`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_notifications_msg`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_plugins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 ALTER TABLE `cms_plugin_booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_plugin_faq`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_plugin_gallery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_plugin_gallery_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_plugin_msg`
-  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_plugin_tourdates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_stats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_settings_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 ALTER TABLE `cms_syslog`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_syslog_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 ALTER TABLE `cms_templates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1063;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1075;
 ALTER TABLE `cms_template_settings_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 ALTER TABLE `cms_tips`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 ALTER TABLE `cms_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_user_groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 ALTER TABLE `cms_widgets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_widget_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;

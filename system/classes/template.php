@@ -1268,7 +1268,6 @@ namespace YAWK {
                                     echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
                                 }
                                 echo "</select>";
-
                             }
 
                             /* RADIO BUTTTONS */
@@ -1376,7 +1375,7 @@ namespace YAWK {
                                 }
                                 echo "<label for=\"$setting[property]\">$setting[label]</label>&nbsp;$setting[description]&nbsp;
                                   <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-                     value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                                  value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                             }
                             /* INPUT TEXT FIELD */
                             else if ($setting['fieldType'] === "input")
@@ -1390,7 +1389,7 @@ namespace YAWK {
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-                     value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                                  value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                             }
 
                             /* COLOR TEXT FIELD */
@@ -1404,7 +1403,33 @@ namespace YAWK {
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-                     value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                                  value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                            }
+
+                            /* TEMPLATE SELECT FIELD */
+                            else if ($setting['fieldType'] === "select template")
+                            {   // display icon, heading and subtext, if its set
+
+                                $templateArray = \YAWK\template::getTemplateIds($db);
+                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                                {
+                                    echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                                }
+                                // begin draw select
+                                echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
+                                  <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
+                                  <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                                $activeTemplateName = \YAWK\template::getTemplateNameById($db, $setting['value']);
+                                echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $activeTemplateName</option>";
+                                // explode option string into array
+                                $optionValues = explode(":", $setting['options']);
+                                foreach ($templateArray as $template)
+                                {
+                                    if ($setting['value'] != $template['id']) {
+                                        echo "<option value=\"".$template['id']."\"".$markup.">".$template['name']."</option>";
+                                    }
+                                }
+                                echo "</select>";
                             }
                             else
                             {

@@ -765,20 +765,45 @@ namespace YAWK {
                 // echo "<pre>";print_r($menu);echo"</pre>"; exit;
                 $navBarBrand = '';
                 $navbar_center = template::getTemplateSetting($db, "value", "navbar-center", $user, $template);
+                $navbar_brand = template::getTemplateSetting($db, "value", "navbar-brand", $user, $template);
+                $frontendSwitch = template::getTemplateSetting($db, "value", "frontendSwitch", $user, $template);
+
                 if ($navbar_center == "1") { $navbar_center = " w-100 justify-content-center"; }
                 else { $navbar_center = ""; }
 
-                // get menu title
-                $res = $db->query("SELECT name FROM {menu_names} WHERE id='" . $id . "'");
-                $row = mysqli_fetch_row($res);
-                $menuName = $row[0];
-                if (!empty($menuName))
+                if (!empty($navbar_brand) && ($navbar_brand == 1))
                 {
-                    $navBarBrand = "<a class=\"navbar-brand\" id=\"navbar-brand\" href=\"index.html\">" . $menuName . "</a>";
+                    // get menu title
+                    $res = $db->query("SELECT name FROM {menu_names} WHERE id='" . $id . "'");
+                    $row = mysqli_fetch_row($res);
+                    $menuName = $row[0];
+                    if (!empty($menuName))
+                    {
+                        $navBarBrand = "<a class=\"navbar-brand\" id=\"navbar-brand\" href=\"index.html\">" . $menuName . "</a>";
+                    }
+                    else
+                    {
+                        $navBarBrand = "";
+                    }
                 }
                 else
                 {
                     $navBarBrand = "";
+                }
+
+                // User is able to switch template from frontend (typically to use a dark/lightmode).
+                if (!empty($frontendSwitch) && ($frontendSwitch == 1))
+                {
+                    // get template IDs for light/dark theme (will be set on admin/template-redesign)
+                    $darkThemeID = template::getTemplateSetting($db, "value", "darkThemeID", $user, $template);
+                    $lightThemeID = template::getTemplateSetting($db, "value", "lightThemeID", $user, $template);
+                    if (!empty($darkThemeID) && !empty($lightThemeID))
+                    {   // html markup that draws our darkmode switch
+                        $templateSwitchMarkup = "<div id=\"frontendSwitch\" class=\"pull-right\">
+                        <a href=\"index.php?templateID=".$darkThemeID."\"><i id=\"darkMode\" data-id=\"".$darkThemeID."\" class=\"fa fa-moon-o\"></i></a> 
+                            <span style=\"color:#ccc; margin-left:5px; margin-right:5px;\">|</span> 
+                        <a href=\"index.php?templateID=".$lightThemeID."\"><i id=\"lightMode\" data-id=\"".$lightThemeID."\" class=\"fa fa-sun-o\"></i></a></div>";
+                    }
                 }
 
                 // DRAW BOOTSTRAP 4 MENU
@@ -789,7 +814,6 @@ namespace YAWK {
 
 <nav id=\"navbar\" class=\"navbar navbar-expand-lg navbar-light navbar-bg-custom\" style=\"z-index: 9999;\">
 ".$navBarBrand."
-
   <button class=\"navbar-toggler custom-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
     <span class=\"navbar-toggler-icon\"></span>
   </button>
@@ -850,6 +874,7 @@ namespace YAWK {
                     }
 
                     $html.="
+
     </ul>";
 
                     // logout menu link - display only if user is logged in
@@ -872,7 +897,9 @@ namespace YAWK {
                         $html .= "</li></ul>";
                     }
 
-                    $html .= "</div>
+                    $html .= "                    
+</div>
+".$templateSwitchMarkup."
 </nav>
 
 <script>

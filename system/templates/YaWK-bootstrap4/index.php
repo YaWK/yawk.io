@@ -29,11 +29,12 @@
     /** @var $user user */
     /* template object */
     /** @var $template template */
+    /* page object */
+    /** @var $page page */
 
     use YAWK\db;
     use YAWK\language;
-    use YAWK\settings;
-    use YAWK\sys;
+    use YAWK\page;
     use YAWK\template;
     use YAWK\user;
 
@@ -41,9 +42,13 @@
     ?>
     <!-- To ensure proper rendering and touch zooming on phones and tablets -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <!-- import meta tags -->
+    <meta name="author" content="<?php echo YAWK\settings::getSetting($db, "siteauthor"); ?>">
+
     <!-- set Meta Tags for this page -->
     <?php $metaTags = $page::getMetaTagsArray($db, $page->id); ?>
-    <meta name="generator" content="<?php echo settings::getSetting($db, "siteauthor"); ?>">
+    <meta name="keywords" content="<?php echo $metaTags['meta_keywords']; ?>">
+    <meta name="description" content="<?php echo $metaTags['meta_local']; ?>">
     <meta charset="utf-8">
     <!-- apple touch icons
     <link rel="apple-touch-icon" sizes="120x120" href="media/images/apple-touch-icon-120x120-precomposed.png">
@@ -51,9 +56,9 @@
     -->
     <?php
     // get current host
-    $host = sys::addTrailingSlash(settings::getSetting($db, "host"));
+    $host = \YAWK\sys::addTrailingSlash(\YAWK\settings::getSetting($db, "host"));
     // include additional html header stuff & local meta tags
-    sys::includeHeader($db, $host);
+    \YAWK\sys::includeHeader($db, $host);
     // load active google font code
     template::loadGoogleFonts($db);
     // load position stats (0|1)
@@ -67,7 +72,7 @@
     {   // take just the first 2 chars (use global language tag)
         $languageFolder = mb_substr($_GET['language'], 0,2);
         // set language cookie via JS
-        echo "<script>document.cookie = \"userSelectedLanguage=$languageFolder; expires=Thu, 04 Nov 2021 12:00:00 UTC\"; </script>";
+        echo "<script>document.cookie = \"userSelectedLanguage=$languageFolder; expires=Thu, 02 Nov 2023 12:00:00 UTC\"; </script>";
         // set PHP cookie var
         $_COOKIE['userSelectedLanguage'] = $languageFolder;
     }

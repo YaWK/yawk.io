@@ -1126,7 +1126,7 @@ namespace YAWK {
          * @brief Returns an array of all widgets that are linked with given page->id
          * @param object $db database
          * @param object $page the current page object
-         * @return array|bool return all widgets that are connected with this page
+         * @return array return all widgets that are connected with this page
          */
         static function loadWidgetsOfPage($db, $page)
         {
@@ -1155,7 +1155,7 @@ namespace YAWK {
         /**
          * @brief Return all widget types as associative array
          * @param object $db database
-         * @return array|bool return all widgets types from database
+         * @return array return all widgets types from database
          */
         public static function getAllWidgetTypes($db)
         {

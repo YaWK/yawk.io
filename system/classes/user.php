@@ -950,7 +950,12 @@ namespace YAWK {
 	                                WHERE username = '".$user."'"))
             {
                 $row = $res->fetch_row();
-                return $row[0];
+                if (!empty($row[0])){
+                    return $row[0];
+                }
+                else {
+                    return false;
+                }
             }
             // q failed
             return false;

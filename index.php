@@ -129,8 +129,8 @@ if (isset($_GET['include']) && (!empty($_GET['include'])))
                 if (isset($_POST['loginboxRedirect']) && (!empty($_POST['loginboxRedirect'])))
                 {   // redirect to custom url
                     if (isset($_POST['loginboxRedirectTime'])
-                    && (!empty($_POST['loginboxRedirectTime'])
-                    && (is_numeric($_POST['loginboxRedirectTime']))))
+                        && (!empty($_POST['loginboxRedirectTime'])
+                            && (is_numeric($_POST['loginboxRedirectTime']))))
                     {   // delay before redirect
                         sys::setTimeout($_POST['loginboxRedirect'], $_POST['loginboxRedirectTime']);
                     }
@@ -158,10 +158,17 @@ else
     // and load properties for it
     $page->loadProperties($db, $db->quote($_GET['include']));
 }
-
+if (!empty($_GET['templateID'])){
+    $template->id = $_GET['templateID'];
+}
+else {
 // get global selected template ID
-$template->id = settings::getSetting($db, "selectedTemplate");
+    $template->id = settings::getSetting($db, "selectedTemplate");
+}
+
+// set template
 $template->selectedTemplate = $template->id;
+
 // set template loading mechanism, depending on state and settings (user is logged in, allowed to override etc...)
 if (user::isAnybodyThere($db))
 {   // user seems to be logged in...
@@ -170,8 +177,15 @@ if (user::isAnybodyThere($db))
 
     // check if user is allowed to overrule selectedTemplate
     if ($user->overrideTemplate == 1)
-    {   // set user template ID to session
+    {
+        // frontendSwitch (dark / light mode)
+        if (isset($_COOKIE["frontendSwitchID"])){
+            $user->templateID = json_decode(stripslashes($_COOKIE['frontendSwitchID']));
+        }
+
+        // set user template ID to session
         $_SESSION['userTemplateID'] = $user->templateID;
+
         // get template by user templateID
         $template->name = template::getTemplateNameById($db, $user->templateID);
         // include page, based on user templateID
@@ -192,6 +206,13 @@ if (user::isAnybodyThere($db))
     else
     {   // DEFAULT (GLOBAL) TEMPLATE
         // user is not allowed to overrule template, show global default (selectedTemplate) instead.
+
+        // frontendSwitch (dark / light mode)
+        if (isset($_COOKIE["frontendSwitchID"]))
+        {   // set user selected template from dark/light mode frontendSwitch
+            $template->selectedTemplate = json_decode(stripslashes($_COOKIE['frontendSwitchID']));
+        }
+        // get template name and build path
         $template->name = template::getTemplateNameById($db, $template->selectedTemplate);
         $tplPath = "system/templates/".$template->name."/index.php";
         if (is_file($tplPath))
@@ -208,6 +229,12 @@ if (user::isAnybodyThere($db))
 }
 else
 {   // user is NOT logged in, load default template (selectedTemplate) from settings db
+    // frontendSwitch (dark / light mode)
+    if (isset($_COOKIE["frontendSwitchID"]))
+    {   // set user selected template from dark/light mode frontendSwitch
+        $template->selectedTemplate = json_decode(stripslashes($_COOKIE['frontendSwitchID']));
+    }
+
     $template->name = template::getTemplateNameById($db, $template->selectedTemplate);
     $tplPath = "system/templates/".$template->name."/index.php";
 
