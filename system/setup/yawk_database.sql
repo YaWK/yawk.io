@@ -18,7 +18,8 @@ INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `lin
 (2, 1, 'css', 5, 'Bootstrap 4 CSS', 'system/engines/bootstrap4/css/bootstrap.min.css'),
 (3, 1, 'js', 6, 'Bootstrap 4 JS', 'system/engines/bootstrap4/js/bootstrap.min.js'),
 (4, 1, 'css', 6, 'Animate CSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css'),
-(5,	1, 'css', 8, 'Font Awesome Icons',	'system/engines/font-awesome/css/font-awesome.min.css');
+(5, 1, 'css',8, 'Font Awesome Icons', 'system/engines/font-awesome/css/font-awesome.min.css');
+
 
 CREATE TABLE `cms_assets_types` (
 `id` int(11) NOT NULL,
