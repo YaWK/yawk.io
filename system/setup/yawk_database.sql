@@ -17,7 +17,8 @@ INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `lin
 (1, 1, 'js', 1, 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
 (2, 1, 'css', 5, 'Bootstrap 4 CSS', 'system/engines/bootstrap4/css/bootstrap.min.css'),
 (3, 1, 'js', 6, 'Bootstrap 4 JS', 'system/engines/bootstrap4/js/bootstrap.min.js'),
-(4, 1, 'css', 6, 'Animate CSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css');
+(4, 1, 'css', 6, 'Animate CSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css'),
+(5,	1, 'css', 8, 'Font Awesome Icons',	'system/engines/font-awesome/css/font-awesome.min.css');
 
 CREATE TABLE `cms_assets_types` (
 `id` int(11) NOT NULL,
@@ -2621,7 +2622,7 @@ ALTER TABLE `cms_widget_types`
 ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_assets`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 ALTER TABLE `cms_assets_types`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 ALTER TABLE `cms_blog`
