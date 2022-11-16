@@ -182,7 +182,7 @@ namespace YAWK {
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
-                        echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
+                            echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
                               <label for=\"$setting[property]\">&nbsp; $setting[label] $setting[description]</label><br>";
                         }
@@ -239,26 +239,26 @@ namespace YAWK {
                                 echo "</select>";
                             }
                             else
-                                {   // begin draw select
-                                    echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
+                            {   // begin draw select
+                                echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                           <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
-                                    echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
-                                    // explode option string into array
-                                    $optionValues = explode(":", $setting['options']);
-                                    foreach ($optionValues as $value)
-                                    {
-                                        // extract value from option setting string
-                                        // $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
-                                        // extract description from option setting
-                                        $optionDesc = preg_replace('/.*,(.*)/','$1', $value);
-                                        $optionValue = preg_split("/,[a-zA-Z0-9]*/", $value);
+                                echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
+                                // explode option string into array
+                                $optionValues = explode(":", $setting['options']);
+                                foreach ($optionValues as $value)
+                                {
+                                    // extract value from option setting string
+                                    // $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
+                                    // extract description from option setting
+                                    $optionDesc = preg_replace('/.*,(.*)/','$1', $value);
+                                    $optionValue = preg_split("/,[a-zA-Z0-9]*/", $value);
 
-                                        echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
-                                        // echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
-                                       // echo "<option value=\"$value\">$value</option>";
-                                    }
-                                    echo "</select>";
+                                    echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
+                                    // echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
+                                    // echo "<option value=\"$value\">$value</option>";
                                 }
+                                echo "</select>";
+                            }
                         }
 
                         /* TEXTAREA */
@@ -387,10 +387,10 @@ namespace YAWK {
                     }
                 }
                 else
-                    {   // no type was set, try to fetch editor type failed.
-                        \YAWK\sys::setSyslog($db, 35, 1, "failed to get editor settings from database ", 0, 0, 0, 0);
-                        \YAWK\alert::draw("danger", "Could not fetch editor settings.", "Settings type not set. Tried to fetch, but it seems that there is no setting type called editor.", "", 6500);
-                    }
+                {   // no type was set, try to fetch editor type failed.
+                    \YAWK\sys::setSyslog($db, 35, 1, "failed to get editor settings from database ", 0, 0, 0, 0);
+                    \YAWK\alert::draw("danger", "Could not fetch editor settings.", "Settings type not set. Tried to fetch, but it seems that there is no setting type called editor.", "", 6500);
+                }
             }
             // ok, now we got the type, lets go: fetch editor settings
             if ($res = $db->query("SELECT * FROM {settings} WHERE type = $typeID"))
@@ -479,9 +479,9 @@ namespace YAWK {
                     return $row[0];
                 }
                 else
-                    {
-                        return false;
-                    }
+                {
+                    return false;
+                }
             }
             else
             {   // q failed, throw error

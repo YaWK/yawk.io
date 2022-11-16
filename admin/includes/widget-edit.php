@@ -30,8 +30,15 @@
             $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
         });
     });
+
+
 </script>
+<!-- color picker -->
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
+<!-- Bootstrap toggle css -->
+<link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
+<!-- Bootstrap toggle js -->
+<script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 <?php
 
 use YAWK\alert;
@@ -63,7 +70,7 @@ else
 // USER CLICKED ON SAVE
 if(isset($_POST['save']))
 {     // escape form vars
-    $widget->published = isset($_POST['publish']);
+    $widget->published = $db->quote($_POST['publish']);
     $widget->pageID = $db->quote($_POST['pageID']);
     $widget->widgetType = $db->quote($_POST['widgetType']);
     $widget->sort = $db->quote($_POST['sort']);
@@ -74,6 +81,7 @@ if(isset($_POST['save']))
     $widget->date_unpublish = $db->quote($_POST['date_unpublish']);
     $widget->widgetTitle = $db->quote($_POST['widgetTitle']);
     $widget->blocked = isset($_POST['mystatus']);
+
     // if date publish is not set, set it to current datetime
     if (empty($widget->date_publish)) { $widget->date_publish = sys::now(); }
 
@@ -233,9 +241,13 @@ echo"<ol class=\"breadcrumb\">
                     <br>
 
                     <!-- PUBLISHED / UNPUBLISHED CHECKBOX -->
-                    <?php if ($widget->published == "1") { $checkedHtml="checked=\"checked\""; } else $checkedHtml = ''; ?>
-                    <input id="publish" name="publish" value="1" type="checkbox" <?php echo $checkedHtml ?>> <label for="publish"><?php echo "$lang[PUBLISHED]"; ?>
+                    <?php if ($widget->published == "1") { $checkedHtml=" checked"; $value=1; } else { $checkedHtml = ''; $value =0; } ?>
+                    <input type="hidden" name="publish" value="0">
+                    <input type="checkbox" data-on="<?php echo $lang['ON_'];?>" data-off="<?php echo $lang['OFF_'];?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" id="publish" name="publish" value="1"<?php echo $checkedHtml;?>>
+                    <label for="publish">&nbsp;<?php echo "$lang[PUBLISHED]"; ?>
                         <?php echo backend::printTooltip($lang['TT_WIDGET_PUBLISH']); ?></label>
+
+
                 </div>
             </div>
         </div> <!-- end left col -->
