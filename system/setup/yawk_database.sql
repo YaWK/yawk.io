@@ -17,7 +17,8 @@ INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `lin
 (1, 1, 'js', 1, 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
 (2, 1, 'css', 5, 'Bootstrap 4 CSS', 'system/engines/bootstrap4/css/bootstrap.min.css'),
 (3, 1, 'js', 6, 'Bootstrap 4 JS', 'system/engines/bootstrap4/js/bootstrap.min.js'),
-(4, 1, 'css', 6, 'Animate CSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css');
+(4, 1, 'css', 6, 'Animate CSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css'),
+(5,	1, 'css', 8, 'Font Awesome Icons', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 
 CREATE TABLE `cms_assets_types` (
 `id` int(11) NOT NULL,
@@ -483,7 +484,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('backendFXtime', '820', '', 20, 7, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFXtype', 'fadeIn In', '', 20, 6, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
 ('backendLanguage', 'de-DE', '', 19, 4, 1, 'BACKENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
-('backendLayout', 'sidebar-collapse sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
+('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
 ('backendLogoSubText', '.io', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendLogoText', '', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
 ('backendLogoUrl', '1', '', 12, 3, 1, 'BACKENDLOGOURL_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
@@ -2623,7 +2624,7 @@ ALTER TABLE `cms_widget_types`
 ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_assets`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 ALTER TABLE `cms_assets_types`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 ALTER TABLE `cms_blog`
