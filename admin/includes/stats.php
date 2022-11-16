@@ -79,10 +79,10 @@ echo"<ol class=\"breadcrumb\">
 <div class="box">
     <div class="box-body">
         <form action="index.php?page=stats" method="post" class="form-inline">
-        <div class="col-md-4">
-            <?php echo "<h4><i class=\"fa fa-line-chart\"></i> &nbsp;$lang[STATS]</h4>"; ?>
-        </div>
-        <div class="col-md-8">
+            <div class="col-md-4">
+                <?php echo "<h4><i class=\"fa fa-line-chart\"></i> &nbsp;$lang[STATS]</h4>"; ?>
+            </div>
+            <div class="col-md-8">
 
                 <label for="interval"><?php echo $lang['SHOW_DATA_OF']; ?>&nbsp;</label>
                 <select id="interval" name="interval" class="form-control">
@@ -163,91 +163,91 @@ echo"<ol class=\"breadcrumb\">
                     <option value="YEAR"><?php echo $lang['YEARS']; ?></option>
                 </select>
                 <button type="submit" id="refresh" name="refresh" class="btn btn-success" title="<?php echo $lang['REFRESH_STATS']; ?>"><i class="glyphicon glyphicon-refresh"></i>&nbsp; <?php echo "$lang[STATS]"; ?></button>
-        </div>
-    </form>
-</div>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div class="box">
     <div class="box-body">
 
-<ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home"><i class="fa fa-pie-chart"></i> &nbsp;<?php echo $lang['OVERVIEW']; ?></a></li>
-    <li><a data-toggle="tab" href="#devices"><i class="fa fa-tablet"></i> &nbsp;<?php echo $lang['DEVICES']; ?></a></li>
-    <li><a data-toggle="tab" href="#browser"><i class="fa fa-firefox"></i> &nbsp;<?php echo $lang['BROWSER']; ?></a></li>
-    <li><a data-toggle="tab" href="#users"><i class="fa fa-users"></i> &nbsp;<?php echo $lang['USERS']; ?></a></li>
-    <li><a data-toggle="tab" href="#os"><i class="fa fa-windows"></i> &nbsp;<?php echo $lang['OPERATING_SYSTEMS']; ?></a></li>
-    <li><a data-toggle="tab" href="#pages"><i class="fa fa-file"></i> &nbsp;<?php echo $lang['PAGES']; ?></a></li>
-</ul>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#home"><i class="fa fa-pie-chart"></i> &nbsp;<?php echo $lang['OVERVIEW']; ?></a></li>
+            <li><a data-toggle="tab" href="#devices"><i class="fa fa-tablet"></i> &nbsp;<?php echo $lang['DEVICES']; ?></a></li>
+            <li><a data-toggle="tab" href="#browser"><i class="fa fa-firefox"></i> &nbsp;<?php echo $lang['BROWSER']; ?></a></li>
+            <li><a data-toggle="tab" href="#users"><i class="fa fa-users"></i> &nbsp;<?php echo $lang['USERS']; ?></a></li>
+            <li><a data-toggle="tab" href="#os"><i class="fa fa-windows"></i> &nbsp;<?php echo $lang['OPERATING_SYSTEMS']; ?></a></li>
+            <li><a data-toggle="tab" href="#pages"><i class="fa fa-file"></i> &nbsp;<?php echo $lang['PAGES']; ?></a></li>
+        </ul>
 
-    <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
-            <h3><i class="fa fa-pie-chart"></i>&nbsp;<?php echo $lang['OVERVIEW']; ?></h3>
-            <div class="col-md-8">
-                <!-- box -->
-                <?php $stats->drawOverviewBox($lang); ?>
-                <!-- / box -->
-                <br>
-                <?php $stats->drawWeekdayBox($db, $data, $lang, 0); ?>
-                <br>
-                <?php $stats->getDaysOfMonthBox($lang); ?>
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <h3><i class="fa fa-pie-chart"></i>&nbsp;<?php echo $lang['OVERVIEW']; ?></h3>
+                <div class="col-md-8">
+                    <!-- box -->
+                    <?php $stats->drawOverviewBox($lang); ?>
+                    <!-- / box -->
+                    <br>
+                    <?php $stats->drawWeekdayBox($db, $data, $lang, 0); ?>
+                    <br>
+                    <?php $stats->getDaysOfMonthBox($lang); ?>
+                </div>
+                <div class="col-md-4">
+                    <!-- box -->
+                    <?php $stats->drawDaytimeBox($db, $data, $lang); ?>
+                    <!-- / box -->
+                </div>
             </div>
-            <div class="col-md-4">
-                <!-- box -->
-                <?php $stats->drawDaytimeBox($db, $data, $lang); ?>
-                <!-- / box -->
+            <div id="devices" class="tab-pane">
+                <h3><i class="fa fa-tablet"></i> &nbsp;<?php echo $lang['DEVICES']; ?></h3>
+                <div class="col-md-8">
+                    <!-- device type box -->
+                    <?php $stats->drawDeviceTypeBox($db, $data, $lang); ?>
+                    <!-- /device type box -->
+                </div>
+                <div class="col-md-4">
+                    <!-- device type box -->
+                    <?php $stats->drawOsBox($db, $data, $lang); ?>
+                    <!-- /device type box -->
+                </div>
+            </div>
+            <div id="browser" class="tab-pane fade in">
+                <h3><i class="fa fa-firefox"></i> &nbsp;<?php echo $lang['BROWSER']; ?></h3>
+                <div class="col-md-6">
+                    <!-- browser box -->
+                    <?php $stats->drawBrowserBox($db, $data, $lang); ?>
+                    <!-- /browser box -->
+                </div>
+                <div class="col-md-6">
+                    ...
+                </div>
+            </div>
+            <div id="users" class="tab-pane fade in">
+                <h3><i class="fa fa-users"></i> &nbsp;<?php echo $lang['USERS']; ?></h3>
+                <div class="col-md-6">
+                    <!-- login box -->
+                    <?php $stats->drawLoginBox($db, $lang); ?>
+                    <!-- / login box -->
+                </div>
+                <div class="col-md-6">
+                    <!-- latest users box -->
+                    <?php dashboard::drawLatestUsers($db, 8, $lang); ?>
+                    <!-- / latest users box -->
+                </div>
+            </div>
+            <div id="os" class="tab-pane fade in">
+                <h3><i class="fa fa-windows"></i> &nbsp;<?php echo $lang['OPERATING_SYSTEMS']; ?></h3>
+                <div class="col-md-12">
+                    <!-- device type box -->
+                    <?php $stats->drawOsVersionBox($db, $data, $lang); ?>
+                    <!-- /device type box -->
+                </div>
+            </div>
+            <div id="pages" class="tab-pane fade in">
+                <h3><i class="fa fa-file"></i> &nbsp;<?php echo $lang['PAGES']; ?></h3>
+                <?php $stats->drawPagesBox($data, $lang); ?>
             </div>
         </div>
-        <div id="devices" class="tab-pane">
-            <h3><i class="fa fa-tablet"></i> &nbsp;<?php echo $lang['DEVICES']; ?></h3>
-            <div class="col-md-8">
-                <!-- device type box -->
-                <?php $stats->drawDeviceTypeBox($db, $data, $lang); ?>
-                <!-- /device type box -->
-            </div>
-            <div class="col-md-4">
-                <!-- device type box -->
-                <?php $stats->drawOsBox($db, $data, $lang); ?>
-                <!-- /device type box -->
-            </div>
-        </div>
-        <div id="browser" class="tab-pane fade in">
-            <h3><i class="fa fa-firefox"></i> &nbsp;<?php echo $lang['BROWSER']; ?></h3>
-            <div class="col-md-6">
-                <!-- browser box -->
-                <?php $stats->drawBrowserBox($db, $data, $lang); ?>
-                <!-- /browser box -->
-            </div>
-            <div class="col-md-6">
-                ...
-            </div>
-        </div>
-        <div id="users" class="tab-pane fade in">
-            <h3><i class="fa fa-users"></i> &nbsp;<?php echo $lang['USERS']; ?></h3>
-            <div class="col-md-6">
-                <!-- login box -->
-                <?php $stats->drawLoginBox($db, $lang); ?>
-                <!-- / login box -->
-            </div>
-            <div class="col-md-6">
-                <!-- latest users box -->
-                <?php dashboard::drawLatestUsers($db, 8, $lang); ?>
-                <!-- / latest users box -->
-            </div>
-        </div>
-        <div id="os" class="tab-pane fade in">
-            <h3><i class="fa fa-windows"></i> &nbsp;<?php echo $lang['OPERATING_SYSTEMS']; ?></h3>
-            <div class="col-md-12">
-                <!-- device type box -->
-                <?php $stats->drawOsVersionBox($db, $data, $lang); ?>
-                <!-- /device type box -->
-            </div>
-        </div>
-        <div id="pages" class="tab-pane fade in">
-            <h3><i class="fa fa-file"></i> &nbsp;<?php echo $lang['PAGES']; ?></h3>
-            <?php $stats->drawPagesBox($data, $lang); ?>
-        </div>
-    </div>
     </div>
 </div>
 
@@ -276,23 +276,23 @@ echo"<ol class=\"breadcrumb\">
         let intervalSelect = $( "#interval" );
         // submit btn
         let submitBtn = $( "#refresh" );
-/*
-        // on change of interval select option
-        $(intervalSelect).on('change', function() {
-            // current selected value
-            intervalSelectValue = this.value;
-            // save current intervalSelectValue to localStorage
-            localStorage.setItem('intervalSelect', intervalSelectValue);
-        });
+        /*
+                // on change of interval select option
+                $(intervalSelect).on('change', function() {
+                    // current selected value
+                    intervalSelectValue = this.value;
+                    // save current intervalSelectValue to localStorage
+                    localStorage.setItem('intervalSelect', intervalSelectValue);
+                });
 
-        // on change of period select option
-        $(periodSelect).on('change', function() {
-            // current selected value
-            periodSelectValue = this.value;
-            // save current periodSelectValue to localStorage
-            localStorage.setItem('periodSelect', periodSelectValue);
-        });
-*/
+                // on change of period select option
+                $(periodSelect).on('change', function() {
+                    // current selected value
+                    periodSelectValue = this.value;
+                    // save current periodSelectValue to localStorage
+                    localStorage.setItem('periodSelect', periodSelectValue);
+                });
+        */
         // on change of period select option
         $(submitBtn).on('click', function() {
             // current periodValue

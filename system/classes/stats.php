@@ -9,7 +9,7 @@ namespace YAWK
      */
     class stats
     {
-         /** * @param int id for every entry */
+        /** * @param int id for every entry */
         public $id;
         /** * @param int uid (user id) who affected this entry */
         public $uid = 0;
@@ -85,6 +85,10 @@ namespace YAWK
         public $i_osUnknown = 0;
 
         // os versions
+        /** * @param int how many users came with windows11? */
+        public $i_windows11 = 0;
+        /** * @param int how many users came with windows10? */
+        public $i_windows10 = 0;
         /** * @param int how many users came with windows8? */
         public $i_windows8 = 0;
         /** * @param int how many users came with windows7? */
@@ -245,9 +249,9 @@ namespace YAWK
                 return $i;
             }
             else
-                {
-                    return null;
-                }
+            {
+                return null;
+            }
         }
 
         /**
@@ -287,7 +291,7 @@ namespace YAWK
             if (!isset($_SESSION['uid']) || (empty($_SESSION['uid'])))
             { $this->uid = 0; }
             else
-                { $this->uid = $_SESSION['uid']; }
+            { $this->uid = $_SESSION['uid']; }
 
             // check, if phpSessionID and currentTimeStamp is set
             if (isset($this->phpSessionID) && (isset($this->currentTimeStamp)))
@@ -309,10 +313,10 @@ namespace YAWK
                             // user updated
                         }
                         else
-                            {
-                                // could not update user status
-                                // todo: add syslog entry
-                            }
+                        {
+                            // could not update user status
+                            // todo: add syslog entry
+                        }
                     }
                     else
                     {   // failed to fetch data, add new phpSessionID and currentTimeStamp
@@ -349,10 +353,10 @@ namespace YAWK
                 }
             }
             else
-                {
-                    // session ID or currentTimeStamp are not set
-                    // todo: add syslog entry
-                }
+            {
+                // session ID or currentTimeStamp are not set
+                // todo: add syslog entry
+            }
 
             return true;
         }
@@ -409,12 +413,12 @@ namespace YAWK
                 }
             }
             else
-                {   // no session is set
-                    // user is a guest - or obviously not logged in
-                    $this->uid = 0;
-                    $this->gid = 0;
-                    $this->logged_in = 0;
-                }
+            {   // no session is set
+                // user is a guest - or obviously not logged in
+                $this->uid = 0;
+                $this->gid = 0;
+                $this->logged_in = 0;
+            }
             // user IP address
             $this->remoteAddr = $_SERVER['REMOTE_ADDR'];
             // user client username
@@ -458,26 +462,26 @@ namespace YAWK
                 $this->osVersion = \YAWK\sys::getOS($this->userAgent);
             }
 
-                // detect wheter its a phone, pad or pod
-                if ( $detect->version('iPhone') ) {
-                    $this->device = "iPhone";
-                    $this->os = "iOS";
-                    $this->osVersion = $detect->version('iPhone');
-                }
-                if ( $detect->version('iPad') ) {
-                    $this->device = "iPad";
-                    $this->os = "iOS";
-                    $this->osVersion = $detect->version('iPad');
-                }
-                if ( $detect->version('iPod') ) {
-                    $this->device = "iPod";
-                    $this->os = "iOS";
-                    $this->osVersion = $detect->version('iPod');
-                }
-                if( $detect->version('Android') ){
-                        $this->os = "Android";
-                        $this->osVersion = $detect->version('Android');
-                }
+            // detect wheter its a phone, pad or pod
+            if ( $detect->version('iPhone') ) {
+                $this->device = "iPhone";
+                $this->os = "iOS";
+                $this->osVersion = $detect->version('iPhone');
+            }
+            if ( $detect->version('iPad') ) {
+                $this->device = "iPad";
+                $this->os = "iOS";
+                $this->osVersion = $detect->version('iPad');
+            }
+            if ( $detect->version('iPod') ) {
+                $this->device = "iPod";
+                $this->os = "iOS";
+                $this->osVersion = $detect->version('iPod');
+            }
+            if( $detect->version('Android') ){
+                $this->os = "Android";
+                $this->osVersion = $detect->version('Android');
+            }
 
 
             // set remote user
@@ -489,18 +493,18 @@ namespace YAWK
                 $this->referer = '';
             }
             else
-                {   // set referer
-                    $this->referer = $_SERVER['HTTP_REFERER'];
-                }
+            {   // set referer
+                $this->referer = $_SERVER['HTTP_REFERER'];
+            }
             // check if include (page request) is set
             if (!isset($_GET['include']) || (empty($_GET['include'])))
             {   // if no page is set, take server variable
                 $this->page = $_SERVER['REQUEST_URI'];
             }
             else
-                {   // set requested page
-                    $this->page = $_GET['include'];
-                }
+            {   // set requested page
+                $this->page = $_GET['include'];
+            }
 
             // current datetime
             $this->date_created = \YAWK\sys::now();
@@ -521,10 +525,10 @@ namespace YAWK
                 return $messageCount[0];
             }
             else
-                {
-                    $messageCount = "db error: could not count messages";
-                    return $messageCount;
-                }
+            {
+                $messageCount = "db error: could not count messages";
+                return $messageCount;
+            }
         }
 
         /**
@@ -557,9 +561,9 @@ namespace YAWK
                 return true;
             }
             else
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
         }
 
 
@@ -599,9 +603,9 @@ namespace YAWK
                             $this->i_loginFrontendFailed++;
                         }
                         else
-                            {   // frontend login success +1
-                                $this->i_loginFrontendSuccess++;
-                            }
+                        {   // frontend login success +1
+                            $this->i_loginFrontendSuccess++;
+                        }
                     }
                     // count backend logins
                     if ($row['location'] === "backend")
@@ -612,9 +616,9 @@ namespace YAWK
                             $this->i_loginBackendFailed++;
                         }
                         else
-                            {   // backend login success +1
-                                $this->i_loginBackendSuccess++;
-                            }
+                        {   // backend login success +1
+                            $this->i_loginBackendSuccess++;
+                        }
                     }
                     // total success logins +1
                     if ($row['failed'] === "0")
@@ -731,9 +735,9 @@ namespace YAWK
                 // only failed + successful logins, exclude all other values
                 if ($daytime !== ("$lang[TOTAL]") &&
                     ($daytime === ("$lang[MORNING]") ||
-                    ($daytime === ("$lang[AFTERNOON]") ||
-                    ($daytime === ("$lang[EVENING]") ||
-                    ($daytime === ("$lang[NIGHT]"))))))
+                        ($daytime === ("$lang[AFTERNOON]") ||
+                            ($daytime === ("$lang[EVENING]") ||
+                                ($daytime === ("$lang[NIGHT]"))))))
                 {
                     $jsonData .= "
                             {
@@ -819,7 +823,7 @@ namespace YAWK
          */
         public function getJsonWeekdayBarChart($lang)
         {   /* @param $db \YAWK\db */
-             $jsonData = "labels: ['$lang[MONDAY]', '$lang[TUESDAY]', '$lang[WEDNESDAY]', '$lang[THURSDAY]', '$lang[FRIDAY]', '$lang[SATURDAY]', '$lang[SUNDAY]'],
+            $jsonData = "labels: ['$lang[MONDAY]', '$lang[TUESDAY]', '$lang[WEDNESDAY]', '$lang[THURSDAY]', '$lang[FRIDAY]', '$lang[SATURDAY]', '$lang[SUNDAY]'],
             datasets: [
                 {
                   label: 'Hits',
@@ -946,6 +950,7 @@ namespace YAWK
                 // init textcolor
                 $textcolor = '';
                 // set different colors for each OS version
+                if ($osVersion === "Windows 11") { $textcolor = "#00c0ef"; }
                 if ($osVersion === "Windows 10") { $textcolor = "#00c0ef"; }
                 if ($osVersion === "Windows 8") { $textcolor = "#00c0ef"; }
                 if ($osVersion === "Windows 7") { $textcolor = "#00A0C7"; }
@@ -1281,9 +1286,9 @@ namespace YAWK
                 $limitSql = '';
             }
             else
-                {
-                    $limitSql = ' LIMIT '.$limit;
-                }
+            {
+                $limitSql = ' LIMIT '.$limit;
+            }
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
@@ -1354,12 +1359,12 @@ namespace YAWK
 
             // count daytimes
             $this->i_totalDays = $this->i_monday
-                    +$this->i_tuesday
-                    +$this->i_wednesday
-                    +$this->i_thursday
-                    +$this->i_friday
-                    +$this->i_saturday
-                    +$this->i_sunday;
+                +$this->i_tuesday
+                +$this->i_wednesday
+                +$this->i_thursday
+                +$this->i_friday
+                +$this->i_saturday
+                +$this->i_sunday;
 
             // build an array, cointaining the daytimes
             $weekdays = array(
@@ -1410,9 +1415,9 @@ namespace YAWK
                 return $weekdaysPercent;
             }
             else
-                {
-                    return null;
-                }
+            {
+                return null;
+            }
         }
 
 
@@ -1426,13 +1431,13 @@ namespace YAWK
         public function countDaytime($db, $data, $lang)
         {   /* @param $db \YAWK\db */
 
-        /*
-            // check if limit (i) is set
-            if (!isset($limit) || (empty($limit)))
-            {   // set default value
-                $limit = 100;
-            }
-        */
+            /*
+                // check if limit (i) is set
+                if (!isset($limit) || (empty($limit)))
+                {   // set default value
+                    $limit = 100;
+                }
+            */
 
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
@@ -1553,9 +1558,9 @@ namespace YAWK
                 return $dayTimesPercent;
             }
             else
-                {
-                    return null;
-                }
+            {
+                return null;
+            }
         }
 
 
@@ -1569,13 +1574,13 @@ namespace YAWK
         public function countBrowsers($db, $data)
         {   /* @param $db \YAWK\db */
 
-        /*
-            // check if limit (i) is set
-            if (!isset($limit) || (empty($limit)))
-            {   // set default value
-                $limit = 100;
-            }
-        */
+            /*
+                // check if limit (i) is set
+                if (!isset($limit) || (empty($limit)))
+                {   // set default value
+                    $limit = 100;
+                }
+            */
 
             // this vars stores the counting for each browser
             $n_msie = 0;
@@ -1601,9 +1606,9 @@ namespace YAWK
                     }
                 }
                 else
-                    {   // data array not set and unable to get data from db
-                        return false;
-                    }
+                {   // data array not set and unable to get data from db
+                    return false;
+                }
             }
 
             /*
@@ -1636,8 +1641,8 @@ namespace YAWK
                         $n_netscape++;
                         break;
                     default:
-                    $n_others++;
-                    }
+                        $n_others++;
+                }
             }
             // get the sum of all detected browsers
             $total = $n_chrome+$n_msie+$n_firefox+$n_safari+$n_opera+$n_netscape+$n_others;
@@ -1739,9 +1744,9 @@ namespace YAWK
                 return $deviceTypes;
             }
             else
-                {   // no result,
-                    return null;
-                }
+            {   // no result,
+                return null;
+            }
         }
 
 
@@ -1755,13 +1760,13 @@ namespace YAWK
         public function countOS($db, $data)
         {   /* @param $db \YAWK\db */
 
-        /*
-            // check if limit (i) is set
-            if (!isset($limit) || (empty($limit)))
-            {   // set default value
-                $limit = 100;
-            }
-        */
+            /*
+                // check if limit (i) is set
+                if (!isset($limit) || (empty($limit)))
+                {   // set default value
+                    $limit = 100;
+                }
+            */
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
@@ -1838,13 +1843,13 @@ namespace YAWK
         public function countOSVersions($db, $data)
         {   /* @param $db \YAWK\db */
 
-        /*
-            // check if limit (i) is set
-            if (!isset($limit) || (empty($limit)))
-            {   // set default value
-                $limit = 100;
-            }
-        */
+            /*
+                // check if limit (i) is set
+                if (!isset($limit) || (empty($limit)))
+                {   // set default value
+                    $limit = 100;
+                }
+            */
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
@@ -1856,6 +1861,7 @@ namespace YAWK
                     {   // add data to array
                         $data[] = $row;
                     }
+                    return $data;
                 }
                 else
                 {   // data array not set and unable to get data from db
@@ -1880,6 +1886,12 @@ namespace YAWK
                 }
                 switch ($osVersion['osVersion'])
                 {
+                    case "Windows 11";
+                        $this->i_windows11++;
+                        break;
+                    case "Windows 10";
+                        $this->i_windows10++;
+                        break;
                     case "Windows 8";
                         $this->i_windows8++;
                         break;
@@ -1948,29 +1960,33 @@ namespace YAWK
             }
 
             // count OS Versions
-            $total = $this->i_windows8
-                    +$this->i_windows7
-                    +$this->i_windowsVista
-                    +$this->i_windowsServer
-                    +$this->i_windows2000
-                    +$this->i_windowsXP
-                    +$this->i_windowsME
-                    +$this->i_windows98
-                    +$this->i_windows95
-                    +$this->i_windows311
-                    +$this->i_macosX
-                    +$this->i_macos9
-                    +$this->i_linux
-                    +$this->i_ubuntu
-                    +$this->i_iPhone
-                    +$this->i_iPad
-                    +$this->i_iPod
-                    +$this->i_android
-                    +$this->i_blackberry
-                    +$this->i_mobile
-                    +$this->i_others;
+            $total = $this->i_windows11
+                +$this->i_windows10
+                +$this->i_windows8
+                +$this->i_windows7
+                +$this->i_windowsVista
+                +$this->i_windowsServer
+                +$this->i_windows2000
+                +$this->i_windowsXP
+                +$this->i_windowsME
+                +$this->i_windows98
+                +$this->i_windows95
+                +$this->i_windows311
+                +$this->i_macosX
+                +$this->i_macos9
+                +$this->i_linux
+                +$this->i_ubuntu
+                +$this->i_iPhone
+                +$this->i_iPad
+                +$this->i_iPod
+                +$this->i_android
+                +$this->i_blackberry
+                +$this->i_mobile
+                +$this->i_others;
             // build an array, cointaining the counted OS Versions and the sum overall
             $osVersions = array(
+                "Windows 11" => $this->i_windows11,
+                "Windows 10" => $this->i_windows10,
                 "Windows 8" => $this->i_windows8,
                 "Windows 7" => $this->i_windows7,
                 "Windows Vista" => $this->i_windowsVista,
@@ -2040,9 +2056,9 @@ namespace YAWK
                 }
             }
             else
-                {   // in any other case leave empty and get all data
-                    $intervalQuery = '';
-                }
+            {   // in any other case leave empty and get all data
+                $intervalQuery = '';
+            }
 
             // get stats data from database feat. prepared string
             if ($res = $db->query("SELECT * FROM {stats} $intervalQuery ORDER BY date_created DESC"))
@@ -2068,9 +2084,9 @@ namespace YAWK
                 return $statsArray;
             }
             else
-                {   // stats array is not an array or empty - in this case
-                    return null;
-                }
+            {   // stats array is not an array or empty - in this case
+                return null;
+            }
         }
 
 
@@ -2167,9 +2183,9 @@ namespace YAWK
                 return true;
             }
             else
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
         }
 
 
@@ -2245,7 +2261,7 @@ namespace YAWK
                                 // get browsers array
                                 // output js data with php function getJsonBrowsers
                                 var PieData = "; echo $this->getJsonOS($db, $oss);
-                                echo"
+            echo"
                                 var pieOptions = {
                                     //Boolean - Whether we should show a stroke on each segment
                                     segmentShowStroke: true,
@@ -2464,6 +2480,7 @@ namespace YAWK
         public function drawOsVersionBox($db, $data, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
+
             $osVersions = $this->countOSVersions($db, $data);
 
             echo "<!-- donut box:  -->
@@ -2500,7 +2517,7 @@ namespace YAWK
                                 // get browsers array
                                 // output js data with php function getJsonBrowsers
                                 var PieData = "; echo $this->getJsonOSVersions($db, $osVersions);
-                                echo"
+            echo"
                                 var pieOptions = {
                                     //Boolean - Whether we should show a stroke on each segment
                                     segmentShowStroke: true,
@@ -2836,16 +2853,16 @@ namespace YAWK
                         $spacerEnd ="</small>";
                     }
                     else
-                        {
-                            $spacer = '';
-                            $spacerEnd = '';
-                        }
-                        if ($login !== "FailedPercentage" && ($login !== "SuccessPercentage"))
-                        {
-                            echo "<li><a href=\"#\" class=\"$textcolor\">$spacer$login$spacerEnd
+                    {
+                        $spacer = '';
+                        $spacerEnd = '';
+                    }
+                    if ($login !== "FailedPercentage" && ($login !== "SuccessPercentage"))
+                    {
+                        echo "<li><a href=\"#\" class=\"$textcolor\">$spacer$login$spacerEnd
                             <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
 
-                        }
+                    }
                 }
             }
 
@@ -2914,7 +2931,7 @@ namespace YAWK
                                 // get browsers array
                                 // output js data with php function getJsonBrowsers
                                 var PieData = ";echo $this->getJsonDaytimePieChart($db, $dayTimes, $lang);
-                                echo "
+            echo "
                                 var pieOptions = {
                                     //Boolean - Whether we should show a stroke on each segment
                                     segmentShowStroke: true,
@@ -2950,7 +2967,7 @@ namespace YAWK
                                 </script>";
 
 
-                        echo"<script>
+            echo"<script>
                             //-------------
                             //- BAR CHART -
                             //-------------
@@ -2994,7 +3011,7 @@ namespace YAWK
                         </script>";
 
 
-                            echo "<script> 
+            echo "<script> 
                                 //------------------
                                 // LINE CHART
                                 //------------------
@@ -3114,7 +3131,7 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @param object $lang language array
          */
-            public function drawWeekdayBox($db, $data, $lang, $limit)
+        public function drawWeekdayBox($db, $data, $lang, $limit)
         {   /** @var $db \YAWK\db */
             // get data for this box
             $weekdays = $this->countWeekdays($db, $data, $lang, $limit);
@@ -3125,9 +3142,9 @@ namespace YAWK
                 $heading = $lang['WHOLE_PERIOD'];
             }
             else
-                {
-                    $heading = "$lang[THE_LATEST] $limit $lang[DAYS]";
-                }
+            {
+                $heading = "$lang[THE_LATEST] $limit $lang[DAYS]";
+            }
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
@@ -3214,7 +3231,7 @@ namespace YAWK
                 }
             }
 
-                        echo"</ul>
+            echo"</ul>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -3240,9 +3257,9 @@ namespace YAWK
                 <h3 class=\"box-title\">$lang[STATS] <small>$lang[HITS_AND_USER_BEHAVIOR] </small></h3>
             </div>
             <div class=\"box-body\">";
-                $this->i_hits = number_format($this->i_hits, 0, '.', '.');
+            $this->i_hits = number_format($this->i_hits, 0, '.', '.');
 
-                echo "$lang[ACTIVE_SESSIONS]: <b>$this->currentOnline</b><br>
+            echo "$lang[ACTIVE_SESSIONS]: <b>$this->currentOnline</b><br>
                 $lang[HITS] $lang[OVERALL]:<b> $this->i_hits</b><br>
                 $lang[GUESTS]: <b> $this->i_publicUsersPercentage</b> % <small>($this->i_publicUsers)</small><br>
                 $lang[MEMBERS]: <b> $this->i_loggedUsersPercentage</b> % <small>($this->i_loggedUsers)</small><br>
@@ -3266,22 +3283,22 @@ namespace YAWK
             <div class=\"box-header with-border\">
                 <h3 class=\"box-title\">$lang[PAGE_VIEWS] <small> $lang[HITS_FROM_MOST_TO_LEAST]</small></h3>
             </div>";
-                    $res = array();
-                    if (is_array($data))
-                    {
-                        // $data = array_slice($data, 0, $limit, true);
-                        foreach ($data AS $page => $value)
-                        {
-                            $res[] = $value['page'];
-                        }
-                    }
+            $res = array();
+            if (is_array($data))
+            {
+                // $data = array_slice($data, 0, $limit, true);
+                foreach ($data AS $page => $value)
+                {
+                    $res[] = $value['page'];
+                }
+            }
 
-                    $res = (array_count_values($res));
-                    arsort($res);
-                echo "<div class=\"box-footer no-padding\">
+            $res = (array_count_values($res));
+            arsort($res);
+            echo "<div class=\"box-footer no-padding\">
                 <ul class=\"nav nav-pills nav-stacked\">";
 
-             // walk through array and display pages as nav pills
+            // walk through array and display pages as nav pills
             foreach ($res as $page => $value)
             {   // show only items where browser got a value
                 if ($value !== 0 && $page !== 0)
