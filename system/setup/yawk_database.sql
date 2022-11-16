@@ -1850,7 +1850,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1070, 1, 'card-footer-border-top', '1px solid', '1px solid', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER', 'form-control', '', '', 'TPL_CARD_FOOTER_BORDER_PH', '', '', '', ''),
 (1071, 1, 'card-footer-border-top-color', 'D9D9D9', '#d9d9d9', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_FOOTER_BORDER_COLOR_PH', '', '', '', ''),
 (1072, 1, 'toggle-menubgcolor', 'F8F8F8', 'F8F8F8', '', 11, 1, 5, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', '', '', '', '', ''),
-(1073, 1, 'frontendSwitch', '1',  '0',  '', 10, 1, 12, 'TPL_FRONTEND_SWITCH',  'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(1073, 1, 'frontendSwitch', '0',  '0',  '', 10, 1, 12, 'TPL_FRONTEND_SWITCH',  'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (1074, 1, 'darkThemeID',  '', 'none', '', 10, 1, 13, 'TPL_DARKTHEME_LABEL',  'form-control', 'select template', '', '', 'TPL_DARKTHEME_DESC', '', '', ''),
 (1075, 1, 'lightThemeID', '', 'none', '', 10, 1, 14, 'TPL_LIGHTTHEME_LABEL', 'form-control', 'select template', '', '', 'TPL_LIGHTTHEME_DESC', '', '', ''),
 (1076, 1, 'body-overflow-y',	'scroll',	'scroll',	'',	54,	1,	1,	'TPL_BODY_OVERFLOW_Y',	'form-control',	'',	'',	'TPL_BODY_OVERFLOW_Y_PH',	'TPL_BODY_OVERFLOW_Y_DESC',	'',	'',	''),
