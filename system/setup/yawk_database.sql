@@ -17,9 +17,7 @@ INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `lin
 (1, 1, 'js', 1, 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
 (2, 1, 'css', 5, 'Bootstrap 4 CSS', 'system/engines/bootstrap4/css/bootstrap.min.css'),
 (3, 1, 'js', 6, 'Bootstrap 4 JS', 'system/engines/bootstrap4/js/bootstrap.min.js'),
-(4, 1, 'css', 6, 'Animate CSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css'),
-(5, 1, 'css',8, 'Font Awesome Icons', 'system/engines/font-awesome/css/font-awesome.min.css');
-
+(4, 1, 'css', 6, 'Animate CSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css');
 
 CREATE TABLE `cms_assets_types` (
 `id` int(11) NOT NULL,
@@ -485,7 +483,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('backendFXtime', '820', '', 20, 7, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFXtype', 'fadeIn In', '', 20, 6, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
 ('backendLanguage', 'de-DE', '', 19, 4, 1, 'BACKENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
-('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
+('backendLayout', 'sidebar-collapse sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
 ('backendLogoSubText', '.io', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendLogoText', '', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
 ('backendLogoUrl', '1', '', 12, 3, 1, 'BACKENDLOGOURL_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
@@ -1851,9 +1849,11 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1070, 1, 'card-footer-border-top', '1px solid', '1px solid', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER', 'form-control', '', '', 'TPL_CARD_FOOTER_BORDER_PH', '', '', '', ''),
 (1071, 1, 'card-footer-border-top-color', 'D9D9D9', '#d9d9d9', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_FOOTER_BORDER_COLOR_PH', '', '', '', ''),
 (1072, 1, 'toggle-menubgcolor', 'F8F8F8', 'F8F8F8', '', 11, 1, 5, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', '', '', '', '', ''),
-(1073, 1, 'frontendSwitch', '0',  '0',  '', 10, 1, 12, 'TPL_FRONTEND_SWITCH',  'form-control', 'checkbox toggle', '', '', '', '', '', ''),
-(1074, 1, 'darkThemeID',  '1', 'none', '', 10, 1, 13, 'TPL_DARKTHEME_LABEL',  'form-control', 'select template', '', '', 'TPL_DARKTHEME_DESC', '', '', ''),
-(1075, 1, 'lightThemeID', '1', 'none', '', 10, 1, 14, 'TPL_LIGHTTHEME_LABEL', 'form-control', 'select template', '', '', 'TPL_LIGHTTHEME_DESC', '', '', '');
+(1073, 1, 'frontendSwitch', '1',  '0',  '', 10, 1, 12, 'TPL_FRONTEND_SWITCH',  'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(1074, 1, 'darkThemeID',  '', 'none', '', 10, 1, 13, 'TPL_DARKTHEME_LABEL',  'form-control', 'select template', '', '', 'TPL_DARKTHEME_DESC', '', '', ''),
+(1075, 1, 'lightThemeID', '', 'none', '', 10, 1, 14, 'TPL_LIGHTTHEME_LABEL', 'form-control', 'select template', '', '', 'TPL_LIGHTTHEME_DESC', '', '', ''),
+(1076, 1, 'body-overflow-y',	'scroll',	'scroll',	'',	54,	1,	1,	'TPL_BODY_OVERFLOW_Y',	'form-control',	'',	'',	'TPL_BODY_OVERFLOW_Y_PH',	'TPL_BODY_OVERFLOW_Y_DESC',	'',	'',	''),
+(1077, 1, 'body-overflow-x',	'hidden',	'hidden',	'',	54,	1,	1,	'TPL_BODY_OVERFLOW_X',	'form-control',	'',	'',	'TPL_BODY_OVERFLOW_X_PH',	'TPL_BODY_OVERFLOW_X_DESC',	'',	'',	'');
 
 
 CREATE TABLE `cms_template_settings_types` (
@@ -2623,7 +2623,7 @@ ALTER TABLE `cms_widget_types`
 ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_assets`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 ALTER TABLE `cms_assets_types`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 ALTER TABLE `cms_blog`
@@ -2675,7 +2675,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 ALTER TABLE `cms_templates`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_template_settings`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1075;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1077;
 ALTER TABLE `cms_template_settings_types`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 ALTER TABLE `cms_tips`

@@ -122,6 +122,8 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
     body 
     {           
         /* BODY SETTINGS */
+        overflow-y: ".$tplSettings['body-overflow-y'].";
+        overflow-x: ".$tplSettings['body-overflow-x'].";
         background-color: #".$tplSettings['body-bg-color'].";
         margin-top: ".$tplSettings['body-margin-top'].";
         margin-bottom: ".$tplSettings['body-margin-bottom'].";
