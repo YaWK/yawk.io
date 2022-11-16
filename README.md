@@ -68,9 +68,9 @@ ATTENTION: Files must be accessible by webserver user & group. Make sure to chec
     <u>If you're using a webhost:</u> Download the .zip package, extract it on your computer and upload the extracted files to your webserver. Use any FTP client and upload the files to the root directory of your webserver.
 </li>
 </ol>
-<h4>Minimum Server / Webhosting Requirements:</h4>
+<h4>Minimum Server / Web-hosting Requirements:</h4>
 <ul>
-<li>PHP 5.6+ (PHP 7+ recommended)</li>
+<li>PHP 5.6+ (PHP 7+ supported, 8.x is recommended)</li>
 <li>MySQL 5.x</li>
 <li>Apache 2.x Webserver</li>
 <li>MOD_REWRITE enabled</li>
