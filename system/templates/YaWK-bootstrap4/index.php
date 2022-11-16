@@ -43,6 +43,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <!-- set Meta Tags for this page -->
     <?php $metaTags = $page::getMetaTagsArray($db, $page->id); ?>
+    <meta name="keywords" content="<?php echo $metaTags['meta_keywords']; ?>">
+    <meta name="description" content="<?php echo $metaTags['meta_local']; ?>">
     <meta name="generator" content="<?php echo settings::getSetting($db, "siteauthor"); ?>">
     <meta charset="utf-8">
     <!-- apple touch icons
