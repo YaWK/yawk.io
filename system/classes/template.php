@@ -8,7 +8,7 @@ namespace YAWK {
      * See Methods Summary for Details!</i></p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl
+     * @copyright  2009-2022 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @brief The template controller - get and set template settings.
      */
@@ -106,30 +106,30 @@ namespace YAWK {
                 // if there are no rows
                 if($result->num_rows == 0)
                 {   // template not found in database...
-                    \YAWK\sys::setSyslog($db, 45, 0, "template $name not found in database", 0, 0, 0, 0);
+                    sys::setSyslog($db, 45, 0, "template $name not found in database", 0, 0, 0, 0);
                     return false;
                 }
                 else
                 {   // template exists in database
-                    \YAWK\sys::setSyslog($db, 45, 0, "template $name updated", 0, 0, 0, 0);
+                    sys::setSyslog($db, 45, 0, "template $name updated", 0, 0, 0, 0);
                     return true;
                 }
             }
             else
             {   // template param not set, empty or wrong type
-                \YAWK\sys::setSyslog($db, 45, 0, "template param $name not set or wrong type", 0, 0, 0, 0);
+                sys::setSyslog($db, 45, 0, "template param $name not set or wrong type", 0, 0, 0, 0);
                 return false;
             }
         }
 
         /**
          * @brief switch all positions indicators on or off
-         * @param int    $templateID ID of the affected template
-         * @param int    $status value to set (0|1)
+         * @param int $templateID ID of the affected template
+         * @param int $status value to set (0|1)
          * @param object $db
          * @return bool true|false
          */
-        public function switchPositionIndicators($db, $templateID, $status)
+        public function switchPositionIndicators(object $db, int $templateID, int $status): bool
         {
             // if template param is not set
             if (!isset($templateID) || (!is_numeric($templateID))) {   // get current active template ID
@@ -157,9 +157,9 @@ namespace YAWK {
         /**
          * @brief fetch positions of current (active) template, explode string and return positions array
          * @param object $db
-         * @return array|bool|mixed|string
+         * @return array|bool
          */
-        static function getTemplatePositions($db)
+        static function getTemplatePositions(object $db)
         {
             /** @var $db \YAWK\db */
             $res = '';
@@ -181,7 +181,7 @@ namespace YAWK {
                 return $positions;
             } else {
                 // q failed
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to get template positions of template id: <b>$tpl_id</b> ", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to get template positions of template id: <b>$tpl_id</b> ", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -199,7 +199,7 @@ namespace YAWK {
          * @param string $license
          * @return bool
          */
-        public function saveAs($db)
+        public function saveAs(object $db): bool
         {
             /** @param \YAWK\db $db */
             // prepare vars
@@ -213,7 +213,7 @@ namespace YAWK {
             // final check: just numbers and chars are allowed
             $this->name = preg_replace("/[^a-z0-9\-\/]/i", "", $this->name);
             // get current timestamp
-            $now = \YAWK\sys::now();
+            $now = sys::now();
 
             // copy new template into database
             if ($res = $db->query("INSERT INTO {templates} (name, positions, description, releaseDate, author, authorUrl, weblink, subAuthor, subAuthorUrl, modifyDate, version, framework, license)
@@ -235,7 +235,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to save <b>$this->newTplName</b> as new template", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to save <b>$this->newTplName</b> as new template", 0, 0, 0, 0);
                 // \YAWK\alert::draw("warning", "Warning!", "Could not insert your template $new_template into database.", "", 6200);
                 return false;
             }
@@ -244,14 +244,14 @@ namespace YAWK {
             if (is_dir(dirname("../system/templates/$this->name")))
             {
                 // ok, start to copy template from source to new destination
-                \YAWK\sys::xcopy("../system/templates/$this->name", "../system/templates/$this->newTplName");
-                \YAWK\sys::setSyslog($db, 47, 1, "copy template folder from ../system/templates/$this->name to ../system/templates/$this->newTplName", 0, 0, 0, 0);
+                sys::xcopy("../system/templates/$this->name", "../system/templates/$this->newTplName");
+                sys::setSyslog($db, 47, 1, "copy template folder from ../system/templates/$this->name to ../system/templates/$this->newTplName", 0, 0, 0, 0);
                 return true;
             }
             else
             {   // template folder does not exist
                 // what should we copy if nothing exists?
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to copy template - template name $this->name does not exist", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to copy template - template name $this->name does not exist", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -282,10 +282,10 @@ namespace YAWK {
                 $this->version = $row['version'];
                 $this->framework = $row['framework'];
                 $this->license = $row['license'];
-                $this->selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
+                $this->selectedTemplate = settings::getSetting($db, "selectedTemplate");
                 return true;
             } else {   // could not fetch tpl properties, throw error...
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to load properties of template <b>$this->name</b> (id: <b>$id</b>)", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to load properties of template <b>$this->name</b> (id: <b>$id</b>)", 0, 0, 0, 0);
                 // \YAWK\alert::draw("danger", "Warning!", "Could not fetch template properties. Expect a buggy view.", "", 3000);
                 return false;
             }
@@ -295,10 +295,10 @@ namespace YAWK {
         /**
          * @brief load template properties and return as array
          * @param object $db database object
-         * @param int    $id template id to load
-         * @return bool true or false
+         * @param int $id template id to load
+         * @return bool|array true or false
          */
-        public function loadPropertiesIntoArray($db, $id)
+        public function loadPropertiesIntoArray(object $db, int $id)
         {
             /** @param $db \YAWK\db $res */
             $res = $db->query("SELECT * FROM {templates} WHERE id = '" . $id . "'");
@@ -315,7 +315,7 @@ namespace YAWK {
             }
             else
             {   // could not fetch tpl properties, throw error...
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to load properties of template id <b>$id</b> into array", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to load properties of template id <b>$id</b> into array", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -323,10 +323,10 @@ namespace YAWK {
         /**
          * @brief load template settings of ID and return as array
          * @param object $db database object
-         * @param int    $id template id to load
+         * @param int $id template id to load
          * @return array|false
          */
-        public function loadAllSettingsIntoArray($db, $id)
+        public function loadAllSettingsIntoArray(object $db, int $id)
         {
             /** @param $db \YAWK\db $res */
             $res = $db->query("SELECT * FROM {template_settings} WHERE templateID = '" . $id . "'");
@@ -341,7 +341,7 @@ namespace YAWK {
             }
             else
             {   // could not fetch tpl properties, throw error...
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to load template_settings of template id <b>$id</b> into array", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to load template_settings of template id <b>$id</b> into array", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -349,18 +349,18 @@ namespace YAWK {
         /**
          * @brief save new template properties into database
          * @param object $db database object
-         * @param int    $id template id to save
-         * @param array  $data post data from form (new settings)
-         * @param array  $oldTplSettings template settings array (old settings)
+         * @param int $id template id to save
+         * @param array $data post data from form (new settings)
+         * @param array $oldTplSettings template settings array (old settings)
          * @return bool true or false
          */
-        public function saveProperties($db, $id, $data, $oldTplSettings)
+        public function saveProperties(object $db, int $id, array $data, array $oldTplSettings): bool
         {
             // check if data is set set
             if (!isset($data) || (!isset($id))) {   // if not, abort
                 return false;
             }
-            if (!isset($oldTplSettings) || (empty($oldTplSettings)))
+            if (empty($oldTplSettings))
             {
                 $oldTplSettings = array();
             }
@@ -397,10 +397,9 @@ namespace YAWK {
         /**
          * @brief load template_settings_types and return as array
          * @param object $db database object
-         * @param int    $id template id to load
          * @return array|false
          */
-        public function loadSettingsTypesIntoArray($db)
+        public function loadSettingsTypesIntoArray(object $db)
         {
             /** @param $db \YAWK\db $res */
             $res = $db->query("SELECT * FROM {template_settings_types}");
@@ -414,7 +413,7 @@ namespace YAWK {
             }
             else
             {   // could not fetch tpl properties, throw error...
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to load template_settings_types into array", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to load template_settings_types into array", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -425,7 +424,7 @@ namespace YAWK {
          * @param object $db database
          * @return array|bool
          */
-        static function getTemplateIds($db)
+        static function getTemplateIds(object $db)
         {
             /** @param \YAWK\db $db */
             // returns an array with all template IDs
@@ -438,7 +437,7 @@ namespace YAWK {
             if (!empty($res)) {   // yey, return array
                 return $res;
             } else {   // could not fetch array
-                \YAWK\sys::setSyslog($db, 47, 1, "failed get template id and name ", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed get template id and name ", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -446,30 +445,29 @@ namespace YAWK {
         /**
          * @brief count and return how many settings got this: template ID
          * @param object $db database
-         * @param int    $templateID affected template ID
+         * @param int $templateID affected template ID
          * @return int the number of settings for this template
          */
-        static function countTemplateSettings($db, $templateID)
+        static function countTemplateSettings(object $db, int $templateID): int
         {
             /** @var $db \YAWK\db */
             // count + return settings from given tpl ID
             $res = $db->query("SELECT id FROM {template_settings}
                                         WHERE templateID = '" . $templateID . "'");
-            $i_tplsettings = mysqli_num_rows($res);
-            return $i_tplsettings;
+            return mysqli_num_rows($res);
         }
 
         /**
          * @brief return template name for given ID
          * @param object $db database
-         * @param int    $templateID affected template ID
+         * @param int $templateID affected template ID
          * @return string|null
          */
-        public static function getTemplateNameById($db, $templateID)
+        public static function getTemplateNameById(object $db, int $templateID): ?string
         {
             /** @var $db \YAWK\db */
             if (!isset($templateID) || (empty($templateID))) {   // template id is not set, try to get current template
-                $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+                $templateID = settings::getSetting($db, "selectedTemplate");
             }
             // query template name
             if ($res = $db->query("SELECT name from {templates} WHERE id = $templateID")) {   // fetch data
@@ -477,7 +475,7 @@ namespace YAWK {
                     return $row[0];
                 }
             } else {   // exit and throw error
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to get template name by id <b>$templateID</b> ", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to get template name by id <b>$templateID</b> ", 0, 0, 0, 0);
                 // die ("Please check database connection.");
             }
             return null;
@@ -490,7 +488,7 @@ namespace YAWK {
          * @param string $name affected template name
          * @return int|null
          */
-        public static function getTemplateIdByName($db, $name)
+        public static function getTemplateIdByName(object $db, string $name): ?int
         {
             /** @var $db \YAWK\db */
             if (!isset($name) || (empty($name)))
@@ -508,7 +506,7 @@ namespace YAWK {
             else
             {
                 // exit and throw error
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to get template ID by name <b>$name</b> ", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to get template ID by name <b>$name</b> ", 0, 0, 0, 0);
                 return null;
             }
             // any other case is an error
@@ -519,10 +517,10 @@ namespace YAWK {
          * @brief return current active template name
          * @param object $db database
          * @param string $location frontend or backend
-         * @param int    $templateID affected template ID
+         * @param int $templateID affected template ID
          * @return bool|string
          */
-        public static function getCurrentTemplateName($db, $location, $templateID)
+        public static function getCurrentTemplateName(object $db, string $location, int $templateID)
         {
             /** @var $db \YAWK\db */
             if (!isset($location) || (empty($location))) {   // if location is empty, set frontend as default
@@ -540,7 +538,7 @@ namespace YAWK {
                 // check if user has its own template
                 // $userTemplateID = \YAWK\user::getUserTemplateID($db, )
                 // no templateID sent via param, set current selected template ID
-                $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+                $templateID = settings::getSetting($db, "selectedTemplate");
             }
             // get current template name from database
             $tpldir = $prefix . "system/templates/";
@@ -549,7 +547,7 @@ namespace YAWK {
             ) {   // fetch data
                 if ($row = mysqli_fetch_row($res)) {   // check if selected tpl exists
                     if (!$dir = @opendir("$tpldir" . $row[0])) {   // if directory could not be opened: throw error
-                        \YAWK\sys::setSyslog($db, 47, 1, "failed to load template directory of template id: <b>$templateID</b>", 0, 0, 0, 0);
+                        sys::setSyslog($db, 47, 1, "failed to load template directory of template id: <b>$templateID</b>", 0, 0, 0, 0);
                         return "<b>Oh-oh! There was a big error. . .</b> <u>you shall not see this!</u><br><br>Unable to load template " . $row[0] . ".&nbsp; I am deeply sorry.<br> I am sure my administrator is hurry to fix that problem.<br> yours,<br>YaWK <i><small>(Yet another Web Kit)</i></small>";
                     } else {   // return template name
                         return $row[0];
@@ -567,12 +565,12 @@ namespace YAWK {
         /**
          * @brief get, set and minify template css file
          * @param object $db database
-         * @param int    $tplId affected template ID
+         * @param int $tplId affected template ID
          * @param string $content contains the css file content
-         * @param int    $minify 0|1 if 1, file gets minified before saving.
+         * @param int $minify 0|1 if 1, file gets minified before saving.
          * @return bool
          */
-        public function writeTemplateCssFile($db, $tplId, $content, $minify)
+        public function writeTemplateCssFile(object $db, int $tplId, string $content, int $minify): bool
         {
             /** @var $db \YAWK\db */
             // check whether templateID is not set or empty
@@ -586,25 +584,25 @@ namespace YAWK {
                 if ($minify === 1) {   // create a minified version: template/css/custom.min.css (for production include)
                     $filename = substr($filename, 0, -4);
                     $filename = "$filename.min.css";
-                    $content = \YAWK\sys::minifyCSS($content);
+                    $content = sys::minifyCSS($content);
                 } else {   // failed to minify, insert syslog
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to minify template css <b>$filename</b>", 0, 0, 0, 0);
+                    sys::setSyslog($db, 47, 1, "failed to minify template css <b>$filename</b>", 0, 0, 0, 0);
                 }
             }
             // do all the file stuff, open, write, close and chmod to set permissions.
             $handle = fopen($filename, "wb");
 
             if (!fwrite($handle, $content)) {   // write failed, throw error
-                \YAWK\sys::setSyslog($db, 48, 2, "failed to write <b>$filename</b> Please check file / folder owner or group permissions", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger", "Error!", "Could not template CSS file $filename<br>Please check your file / owner or group permissions.", "", 4200);
+                sys::setSyslog($db, 48, 2, "failed to write <b>$filename</b> Please check file / folder owner or group permissions", 0, 0, 0, 0);
+                alert::draw("danger", "Error!", "Could not template CSS file $filename<br>Please check your file / owner or group permissions.", "", 4200);
             }
             if (!fclose($handle)) {   // close failed, throw error
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to close <b>$filename</b>", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Warning!", "Failed to template CSS file close $filename<br>Please try again and / or expect some errors.", "", 4200);
+                sys::setSyslog($db, 47, 1, "failed to close <b>$filename</b>", 0, 0, 0, 0);
+                alert::draw("warning", "Warning!", "Failed to template CSS file close $filename<br>Please try again and / or expect some errors.", "", 4200);
             }
             if (!chmod($filename, 0775)) {   // chmod failed, throw error
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to chmod 775 to template CSS file <b>$filename</b>", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Warning!", "Failed to chmod(775) $filename<br>Please check file / folder / owner / group permissions!", "", 4200);
+                sys::setSyslog($db, 47, 1, "failed to chmod 775 to template CSS file <b>$filename</b>", 0, 0, 0, 0);
+                alert::draw("warning", "Warning!", "Failed to chmod(775) $filename<br>Please check file / folder / owner / group permissions!", "", 4200);
             }
             // after all....
             return true;
@@ -614,11 +612,11 @@ namespace YAWK {
          * @brief get, set and minify custom.css file
          * @param object $db database
          * @param string $content contains the css file content
-         * @param int    $minify 0|1 if 1, the file gets minified before saving.
-         * @param int    $templateID affected template ID
+         * @param int $minify 0|1 if 1, the file gets minified before saving.
+         * @param int $templateID affected template ID
          * @return bool
          */
-        public function setCustomCssFile($db, $content, $minify, $templateID)
+        public function setCustomCssFile(object $db, string $content, int $minify, int $templateID): bool
         {
             /** @var $db \YAWK\db */
             // create template/css/custom.css (for development purpose in backend)
@@ -629,23 +627,23 @@ namespace YAWK {
                 if ($minify === 1) {   // create a minified version: template/css/custom.min.css (for production include)
                     $filename = substr($filename, 0, -4);
                     $filename = "$filename.min.css";
-                    $content = \YAWK\sys::minifyCSS($content);
+                    $content = sys::minifyCSS($content);
                 } else {
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to minify file <b>$filename</b>", 0, 0, 0, 0);
+                    sys::setSyslog($db, 47, 1, "failed to minify file <b>$filename</b>", 0, 0, 0, 0);
                 }
             }
             // do all the file stuff, open, write, close and chmod to set permissions.
             $handle = fopen($filename, "wb");
             //$content = \YAWK\sys::replaceCarriageReturns("\n\r", $content);
-            $content = \YAWK\sys::replacePreTags("\n\r", $content);
+            $content = sys::replacePreTags("\n\r", $content);
             if (!fwrite($handle, $content)) {   // write failed, throw error
-                \YAWK\alert::draw("danger", "Error!", "Could not write custom css $filename<br>Please check your file / owner or group permissions.", "", 4200);
+                alert::draw("danger", "Error!", "Could not write custom css $filename<br>Please check your file / owner or group permissions.", "", 4200);
             }
             if (!fclose($handle)) {   // close failed, throw error
-                \YAWK\alert::draw("warning", "Warning!", "Failed to close custom css $filename<br>Please try again and / or expect some errors.", "", 4200);
+                alert::draw("warning", "Warning!", "Failed to close custom css $filename<br>Please try again and / or expect some errors.", "", 4200);
             }
             if (!chmod($filename, 0775)) {   // chmod failed, throw error
-                \YAWK\alert::draw("warning", "Warning!", "Failed to chmod(775) custom css $filename<br>Please check file / folder / owner / group permissions!", "", 4200);
+                alert::draw("warning", "Warning!", "Failed to chmod(775) custom css $filename<br>Please check file / folder / owner / group permissions!", "", 4200);
             }
             // after all....
             return true;
@@ -655,11 +653,11 @@ namespace YAWK {
          * @brief get, set and minify custom.js file
          * @param object $db database
          * @param string $content contains the js file content
-         * @param int    $minify 0|1 if 1, the file gets minified before saving.
-         * @param int    $templateID affected template ID
+         * @param int $minify 0|1 if 1, the file gets minified before saving.
+         * @param int $templateID affected template ID
          * @return bool
          */
-        public function setCustomJsFile($db, $content, $minify, $templateID)
+        public function setCustomJsFile(object $db, string $content, int $minify, int $templateID): bool
         {
             /** @var $db \YAWK\db */
             // create template/css/custom.css (for development purpose in backend)
@@ -670,23 +668,23 @@ namespace YAWK {
                 if ($minify === 1) {   // create a minified version: template/js/custom.min.js (for production include)
                     $filename = substr($filename, 0, -3);
                     $filename = "$filename.min.js";
-                    $content = \YAWK\sys::minifyJs($content);
+                    $content = sys::minifyJs($content);
                 } else {
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to minify file <b>$filename</b>", 0, 0, 0, 0);
+                    sys::setSyslog($db, 47, 1, "failed to minify file <b>$filename</b>", 0, 0, 0, 0);
                 }
             }
             // do all the file stuff, open, write, close and chmod to set permissions.
             $handle = fopen($filename, "wb");
             //$content = \YAWK\sys::replaceCarriageReturns("\n\r", $content);
-            $content = \YAWK\sys::replacePreTags("\n\r", $content);
+            $content = sys::replacePreTags("\n\r", $content);
             if (!fwrite($handle, $content)) {   // write failed, throw error
-                \YAWK\alert::draw("danger", "Error!", "failed to write file $filename<br>Please check your file / owner or group permissions.", "", 4200);
+                alert::draw("danger", "Error!", "failed to write file $filename<br>Please check your file / owner or group permissions.", "", 4200);
             }
             if (!fclose($handle)) {   // close failed, throw error
-                \YAWK\alert::draw("warning", "Warning!", "Failed to close custom js $filename<br>Please try again and / or expect some errors.", "", 4200);
+                alert::draw("warning", "Warning!", "Failed to close custom js $filename<br>Please try again and / or expect some errors.", "", 4200);
             }
             if (!chmod($filename, 0775)) {   // chmod failed, throw error
-                \YAWK\alert::draw("warning", "Warning!", "Failed to chmod(775) custom js $filename<br>Please check file / folder / owner / group permissions!", "", 4200);
+                alert::draw("warning", "Warning!", "Failed to chmod(775) custom js $filename<br>Please check file / folder / owner / group permissions!", "", 4200);
             }
             // after all....
             return true;
@@ -695,37 +693,35 @@ namespace YAWK {
         /**
          * @brief return the content of custom.css
          * @param object $db database
-         * @param int    $templateID affected template ID
+         * @param int $templateID affected template ID
          * @return string the content of custom.css
          */
-        public function getCustomCSSFile($db, $templateID)
+        public function getCustomCSSFile(object $db, int $templateID): string
         {   // get the content from custom.css
             $filename = self::getCustomCSSFilename($db, "backend", $templateID);
-            $content = file_get_contents($filename);
-            return $content;
+            return file_get_contents($filename);
         }
 
         /**
          * @brief return the content of custom.js
          * @param object $db database
-         * @param int    $templateID affected template ID
+         * @param int $templateID affected template ID
          * @return string the content of custom.css
          */
-        public function getCustomJSFile($db, $templateID)
+        public function getCustomJSFile(object $db, int $templateID): string
         {   // get the content from custom.css
             $filename = self::getCustomJSFilename($db, "backend", $templateID);
-            $content = file_get_contents($filename);
-            return $content;
+            return file_get_contents($filename);
         }
 
         /**
          * @brief return filename of template css file
          * @param object $db database
          * @param string $location frontend or backend
-         * @param int    $templateID affected template ID
+         * @param int $templateID affected template ID
          * @return string the template's css filename, including path
          */
-        public function getSettingsCSSFilename($db, $location, $templateID)
+        public function getSettingsCSSFilename(object $db, string $location, int $templateID): string
         {
             /** @var $db \YAWK\db */
             // prepare vars... path + filename
@@ -737,7 +733,7 @@ namespace YAWK {
             }
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "settings"; // set CSS file name
-            $filename = "../system/templates/$tplName/css/" . $alias . ".css";
+            $filename = __dir__."../system/templates/$tplName/css/" . $alias . ".css";
             return $filename;
         }
 
@@ -745,16 +741,16 @@ namespace YAWK {
          * @brief return filename of custom css file
          * @param object $db database
          * @param string $location frontend or backend
-         * @param int    $templateID affected template ID
+         * @param int $templateID affected template ID
          * @return string the template's custom css filename, including path
          */
-        public function getCustomCSSFilename($db, $location, $templateID)
+        public function getCustomCSSFilename(object $db, string $location, int $templateID): string
         {
             /** @var $db \YAWK\db */
             // prepare vars... path + filename
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "custom"; // set CSS file name
-            $filename = "../system/templates/$tplName/css/" . $alias . ".css";
+            $filename = __dir__."../system/templates/$tplName/css/" . $alias . ".css";
             return $filename;
         }
 
@@ -771,7 +767,7 @@ namespace YAWK {
             // prepare vars... path + filename
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "custom"; // set JS file name
-            $filename = "../system/templates/$tplName/js/" . $alias . ".js";
+            $filename = __dir__."../system/templates/$tplName/js/" . $alias . ".js";
             return $filename;
         }
 
@@ -788,7 +784,7 @@ namespace YAWK {
                 if ($row = mysqli_fetch_row($res)) {
                     return $row[0];
                 } else {
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to get MAX(id) from template db", 0, 0, 0, 0);
+                    sys::setSyslog($db, 47, 1, "failed to get MAX(id) from template db", 0, 0, 0, 0);
                     return false;
                 }
             } else {
@@ -809,14 +805,14 @@ namespace YAWK {
             // we want the settings.css file to be overridden, so check if file exists and delete it if needed.
             if (file_exists($filename)) {   // if there is a file, delete it.
                 if (!unlink($filename)) {   // delete failed, throw error
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to delete file <b>$filename</b>", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger", "Error!", "Failed to unlink $filename<br>Please delete this file and check file / folder / owner or group permissions!", "", 6200);
+                    sys::setSyslog($db, 47, 1, "failed to delete file <b>$filename</b>", 0, 0, 0, 0);
+                    alert::draw("danger", "Error!", "Failed to unlink $filename<br>Please delete this file and check file / folder / owner or group permissions!", "", 6200);
                     return false;
                 } else {   // delete worked
                     return true;
                 }
             } else {   // file does not exist
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to delete settings css file because it does not exist.", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to delete settings css file because it does not exist.", 0, 0, 0, 0);
                 return true;
             }
         }
@@ -850,7 +846,7 @@ namespace YAWK {
             ) {   // success
                 return true;
             } else {   // q failed
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to set template #$id setting <b>$value</b> of <b>$property</b> ", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to set template #$id setting <b>$value</b> of <b>$property</b> ", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -866,7 +862,7 @@ namespace YAWK {
         {
             /** @var $db \YAWK\db */
             if (!isset($templateID) && (empty($templateID))) {   // if template id is not set, get it from database
-                $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+                $templateID = settings::getSetting($db, "selectedTemplate");
             }
             // null active template in table
             if (!$res = $db->query("UPDATE {templates} SET active = 0 WHERE active != 0")) {   // error: abort.
@@ -878,7 +874,7 @@ namespace YAWK {
             ) {   // success
                 return true;
             } else {   // q failed
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to set template #$templateID active ", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to set template #$templateID active ", 0, 0, 0, 0);
                 return false;
             }
 
@@ -903,17 +899,17 @@ namespace YAWK {
         WHERE templateID = '" . $templateID . "'");
 
             if (!$res) {
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to copy template settings of template #$templateID ", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger", "Could not copy settings", "please try again.", "", 5000);
+                sys::setSyslog($db, 47, 1, "failed to copy template settings of template #$templateID ", 0, 0, 0, 0);
+                alert::draw("danger", "Could not copy settings", "please try again.", "", 5000);
             } else {
-                \YAWK\alert::draw("success", "Settings copied", "successful", "", 5000);
+                alert::draw("success", "Settings copied", "successful", "", 5000);
 
                 $update = $db->query("UPDATE {template_settings} SET templateID='" . $newID . "' WHERE templateID=0");
                 if ($update) {
-                    \YAWK\alert::draw("success", "Settings are set-up", "successful", "", 5000);
+                    alert::draw("success", "Settings are set-up", "successful", "", 5000);
                 } else {
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to set new template settings of template #$templateID ", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning", "Could not set new template settings", "unable to alter IDs.", "", 5000);
+                    sys::setSyslog($db, 47, 1, "failed to set new template settings of template #$templateID ", 0, 0, 0, 0);
+                    alert::draw("warning", "Could not set new template settings", "unable to alter IDs.", "", 5000);
                 }
             }
         }
@@ -945,7 +941,7 @@ namespace YAWK {
             /** @var $db \YAWK\db */
             $active = 1;
             $sort = 0;
-            $templateID = \YAWK\settings::getSetting($db, "selectedTemplate"); // self::getCurrentTemplateId($db);
+            $templateID = settings::getSetting($db, "selectedTemplate"); // self::getCurrentTemplateId($db);
 
             $property = $db->quote($property);
             $value = $db->quote($value);
@@ -958,7 +954,7 @@ namespace YAWK {
             ) {   // success
                 return true;
             } else {   // q failed
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to add template setting $property:$value ", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to add template setting $property:$value ", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -978,7 +974,7 @@ namespace YAWK {
             if ($res = $db->query("UPDATE {templates} SET description = '" . $description . "', subAuthor = '" . $author . "', subAuthorUrl = '" . $authorUrl . "' WHERE id = '" . $id . "'")) {   // template details updated...
                 return true;
             } else {   // could not save template details
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to set template details", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to set template details", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -994,7 +990,7 @@ namespace YAWK {
             /** @var $db \YAWK\db */
             if (!isset($templateID) && (empty($templateID)))
             {   // no templateID is set...
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template because templateID was missing.", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to delete template because templateID was missing.", 0, 0, 0, 0);
                 return false;
             }
 
@@ -1006,12 +1002,12 @@ namespace YAWK {
             $templateFolder = template::getCurrentTemplateName($db, "backend", $templateID);
 
             // check if template folder exists...
-            if (is_dir(dirname("../system/templates/".$templateFolder."")))
+            if (is_dir(dirname(__dir__."../system/templates/".$templateFolder."")))
             {
                 // delete template folder from disk
-                if (!\YAWK\sys::recurseRmdir("../system/templates/$templateFolder"))
+                if (!sys::recurseRmdir(__dir__."../system/templates/$templateFolder"))
                 {   // booh, deleting recurse did not work
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to delete recursive ../system/templates/$templateFolder", 0, 0, 0, 0);
+                    sys::setSyslog($db, 47, 1, "failed to delete recursive ../system/templates/$templateFolder", 0, 0, 0, 0);
                     return false;
                 }
             }
@@ -1020,21 +1016,21 @@ namespace YAWK {
             // delete template settings of requested templateID
             if (!$res = $db->query("DELETE FROM {template_settings} WHERE templateID = $templateID"))
             {   // delete settings failed...
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template settings of ID: $templateID", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to delete template settings of ID: $templateID", 0, 0, 0, 0);
                 return false;
             }
 
             // delete assets of requested templateID
             if (!$res = $db->query("DELETE FROM {assets} WHERE templateID = $templateID"))
             {   // delete settings failed...
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template assets of ID: $templateID", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to delete template assets of ID: $templateID", 0, 0, 0, 0);
                 return false;
             }
 
             // delete template from database {templates}
             if (!$res = $db->query("DELETE FROM {templates} WHERE id = $templateID"))
             {   // failed to delete from database
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template ID: $templateID from database", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to delete template ID: $templateID from database", 0, 0, 0, 0);
                 return false;
             }
             else
@@ -1045,7 +1041,7 @@ namespace YAWK {
                     $row = mysqli_fetch_row($res);
                     if (!$res = $db->query("ALTER TABLE {templates} AUTO_INCREMENT $row[0]"))
                     {   // could not select auto increment
-                        \YAWK\sys::setSyslog($db, 47, 1, "failed alter auto increment templates table ", 0, 0, 0, 0);
+                        sys::setSyslog($db, 47, 1, "failed alter auto increment templates table ", 0, 0, 0, 0);
                         return false;
                     }
                 }
@@ -1086,7 +1082,7 @@ namespace YAWK {
                                        ORDER BY ts.sort";
                 }
             } else {
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to get template settings array - user is not set or empty", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to get template settings array - user is not set or empty", 0, 0, 0, 0);
                 return false;
             }
 
@@ -1098,7 +1094,7 @@ namespace YAWK {
                     $settingsArray[$row['property']] = $row;
                 }
             } else {   // q failed, throw error
-                \YAWK\sys::setSyslog($db, 5, 1, "failed to query template settings", 0, 0, 0, 0);
+                sys::setSyslog($db, 5, 1, "failed to query template settings", 0, 0, 0, 0);
                 // \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSettingsArray failed.","","4800");
                 return false;
             }
@@ -1773,7 +1769,7 @@ namespace YAWK {
                                        LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort";
                 }
             } else {
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to get template setting - user is not set or empty.", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to get template setting - user is not set or empty.", 0, 0, 0, 0);
                 return false;
             }
 
@@ -1823,7 +1819,7 @@ namespace YAWK {
                     echo "</div></label>";
                 }
             } else {   // q failed
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to query template setting ", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to query template setting ", 0, 0, 0, 0);
                 return false;
             }
             // all good, fin
@@ -2039,7 +2035,7 @@ namespace YAWK {
                 }
                 echo "</div>";
             } else {   // q failed;
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to get google fonts from database ", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to get google fonts from database ", 0, 0, 0, 0);
                 return false;
             }
             // fin
@@ -2067,7 +2063,7 @@ namespace YAWK {
                     ) {   // success
                         return true;
                     } else {   // q failed
-                        \YAWK\sys::setSyslog($db, 47, 1, "failed to delete google font ID: $gfontid ", 0, 0, 0, 0);
+                        sys::setSyslog($db, 47, 1, "failed to delete google font ID: $gfontid ", 0, 0, 0, 0);
                         return false;
                     }
                 }
@@ -2077,7 +2073,7 @@ namespace YAWK {
                 ) {   // success
                     return true;
                 } else {   // q failed
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to delete google font ID: $gfontid ", 0, 0, 0, 0);
+                    sys::setSyslog($db, 47, 1, "failed to delete google font ID: $gfontid ", 0, 0, 0, 0);
                     return false;
                 }
             }
@@ -2111,11 +2107,11 @@ namespace YAWK {
                 ) {   // success
                     return true;
                 } else {   // fetch failed
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to insert new google font to database", 0, 0, 0, 0);
+                    sys::setSyslog($db, 47, 1, "failed to insert new google font to database", 0, 0, 0, 0);
                     return false;
                 }
             } else {   // q failed
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to get MAX(id) from google fonts database", 0, 0, 0, 0);
+                sys::setSyslog($db, 47, 1, "failed to get MAX(id) from google fonts database", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -2654,7 +2650,7 @@ namespace YAWK {
             /** @param \YAWK\db $db */
             global $currentpage;
             $i = 1;
-            $host = \YAWK\settings::getSetting($db, "host");
+            $host = settings::getSetting($db, "host");
             echo "<title>" . $currentpage->title . "</title>
       <meta http-equiv=\"Content-Type\" content=\"text/html; charset=\"utf-8\">
       <link rel=\"shortcut icon\" href=\"favicon.ico\" type=\"image/x-icon\">
@@ -2912,7 +2908,7 @@ namespace YAWK {
             /* @var \YAWK\db $db */
             // if no template ID is set
             if (!isset($templateID) || (empty($templateID))) {   // get current ID from database
-                $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+                $templateID = settings::getSetting($db, "selectedTemplate");
             }
             if ($res = $db->query("SELECT asset, link FROM {assets} 
                                           WHERE templateID = '" . $templateID . "' 
@@ -2958,7 +2954,7 @@ namespace YAWK {
             // check if templateID is set
             if (!isset($templateID) || (empty($templateID))) {
                 // get current template ID
-                $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+                $templateID = settings::getSetting($db, "selectedTemplate");
             }
 
             // get assets, depending on type from database
@@ -3130,21 +3126,21 @@ namespace YAWK {
 
             if (!$res)
             {
-                \YAWK\sys::setSyslog($db, 48, 2, "failed to copy assets of template #$templateID", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger", "Could not copy assets", "please try again.", "", 5000);
+                sys::setSyslog($db, 48, 2, "failed to copy assets of template #$templateID", 0, 0, 0, 0);
+                alert::draw("danger", "Could not copy assets", "please try again.", "", 5000);
             }
             else
             {
-                \YAWK\alert::draw("success", "Assets copied", "successful", "", 5000);
+                alert::draw("success", "Assets copied", "successful", "", 5000);
 
 
                 $update = $db->query("UPDATE {assets} SET templateID='" . $newID . "' WHERE templateID=0");
 
                 if ($update) {
-                    \YAWK\alert::draw("success", "Assets are set-up", "successful", "", 5000);
+                    alert::draw("success", "Assets are set-up", "successful", "", 5000);
                 } else {
-                    \YAWK\sys::setSyslog($db, 48, 2, "failed to copy assets of template #$templateID", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning", "Could not copy template assets", "unable to alter IDs.", "", 5000);
+                    sys::setSyslog($db, 48, 2, "failed to copy assets of template #$templateID", 0, 0, 0, 0);
+                    alert::draw("warning", "Could not copy template assets", "unable to alter IDs.", "", 5000);
                 }
 
             }
@@ -3219,7 +3215,7 @@ namespace YAWK {
                     if (strstr($asset[0][0], "3")) {   // Bootstrap 3 (is required and loaded)
                         return "3";
                     } else {   // wrong framework loaded - set syslog entry
-                        \YAWK\sys::setSyslog($db, 48, 2, "wrong Bootstrap version loaded - template <b>$this->name</b> requires <b>$this->framework</b>", $_SESSION['uid'], 0, 0, 0);
+                        sys::setSyslog($db, 48, 2, "wrong Bootstrap version loaded - template <b>$this->name</b> requires <b>$this->framework</b>", $_SESSION['uid'], 0, 0, 0);
                         return null;
                     }
                 } // if boostrap 4 is required
@@ -3228,16 +3224,16 @@ namespace YAWK {
                     if (strstr($asset[0][0], "4")) {   // Bootstrap 4 (is required and loaded)
                         return "4";
                     } else {   // wrong framework loaded - set syslog entry
-                        \YAWK\sys::setSyslog($db, 48, 2, "wrong Bootstrap version loaded - template <b>$this->name</b> requires <b>$this->framework</b>", $_SESSION['uid'], 0, 0, 0);
+                        sys::setSyslog($db, 48, 2, "wrong Bootstrap version loaded - template <b>$this->name</b> requires <b>$this->framework</b>", $_SESSION['uid'], 0, 0, 0);
                         return null;
                     }
                 } else {   // unknown framework
-                    \YAWK\sys::setSyslog($db, 48, 2, "template <b>$this->name</b> requires framework: [<b>$this->framework</b>] - UNABLE TO DETECT CURRENT FRAMEWORK.", $_SESSION['uid'], 0, 0, 0);
+                    sys::setSyslog($db, 48, 2, "template <b>$this->name</b> requires framework: [<b>$this->framework</b>] - UNABLE TO DETECT CURRENT FRAMEWORK.", $_SESSION['uid'], 0, 0, 0);
                     return "0";
                 }
             } // asset not set, no array or empty
             else {   // it seems that no Bootstrap css is loaded
-                \YAWK\sys::setSyslog($db, 48, 2, "template <b>$this->name</b> requires <b>$this->framework</b>, but no corresponding asset is loaded.", $_SESSION['uid'], 0, 0, 0);
+                sys::setSyslog($db, 48, 2, "template <b>$this->name</b> requires <b>$this->framework</b>, but no corresponding asset is loaded.", $_SESSION['uid'], 0, 0, 0);
                 return "0";
             }
         }
@@ -3306,14 +3302,14 @@ namespace YAWK {
                     // check for errors
                     if ($postFiles['templateFile']['error'] !== 0)
                     {   // unknown error - upload failed
-                        \YAWK\sys::setSyslog($db, 48, 2, "failed to upload file - unknown error (".$postFiles['templateFile']['error'].") processing file ".$postFiles['templateFile']['name']."", 0, 0, 0, 0);
+                        sys::setSyslog($db, 48, 2, "failed to upload file - unknown error (".$postFiles['templateFile']['error'].") processing file ".$postFiles['templateFile']['name']."", 0, 0, 0, 0);
                         // echo \YAWK\alert::draw("warning", $lang['ERROR'], $lang['FILE_UPLOAD_FAILED'], "", 4800);
                     }
                     else
                     {   // try to move uploaded file
                         if (!move_uploaded_file($postFiles['templateFile']['tmp_name'], $this->uploadFile))
                         {   // throw error msg
-                            \YAWK\sys::setSyslog($db, 48, 2, "failed to move upload file $this->uploadFile to folder ".$postFiles['templateFile']['tmp_name']."", 0, 0, 0, 0);
+                            sys::setSyslog($db, 48, 2, "failed to move upload file $this->uploadFile to folder ".$postFiles['templateFile']['tmp_name']."", 0, 0, 0, 0);
                             // echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$this->uploadFile - $lang[FILE_UPLOAD_ERROR]","","4800");
                         }
                         else
@@ -3340,13 +3336,13 @@ namespace YAWK {
                                     // try to parse ini file into array
                                     if (!$iniFile = parse_ini_file($this->tmpFolder."template.ini"))
                                     {   // error: unable to parse ini file
-                                        \YAWK\sys::setSyslog($db, 48, 2, "failed to parse ini file ".$this->tmpFolder."template.ini ", 0, 0, 0, 0);
+                                        sys::setSyslog($db, 48, 2, "failed to parse ini file ".$this->tmpFolder."template.ini ", 0, 0, 0, 0);
                                         return false;
                                     }
                                 }
                                 else
                                 {   // error: ini file not there
-                                    \YAWK\sys::setSyslog($db, 48, 2, "failed to parse ini file ".$this->tmpFolder."template.ini - file not found", 0, 0, 0, 0);
+                                    sys::setSyslog($db, 48, 2, "failed to parse ini file ".$this->tmpFolder."template.ini - file not found", 0, 0, 0, 0);
                                     return false;
                                 }
 
@@ -3363,7 +3359,7 @@ namespace YAWK {
                                 else
                                 {   // assets.json not found
                                     $assets = '';
-                                    \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."assets.json - file not found", 0, 0, 0, 0);
+                                    sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."assets.json - file not found", 0, 0, 0, 0);
                                 }
 
                                 // read template settings into array
@@ -3374,7 +3370,7 @@ namespace YAWK {
                                 else
                                 {   // template_settings.json not found
                                     $templateSettings = '';
-                                    \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."template_settings.json - file not found", 0, 0, 0, 0);
+                                    sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."template_settings.json - file not found", 0, 0, 0, 0);
                                 }
 
                                 // read template_settings_types into array
@@ -3385,7 +3381,7 @@ namespace YAWK {
                                 else
                                 {   // template_settings_types json file not found
                                     $templateSettingsTypes = '';
-                                    \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."template_settings_types.json - file not found", 0, 0, 0, 0);
+                                    sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."template_settings_types.json - file not found", 0, 0, 0, 0);
                                 }
 
                                 // read templates.json into array
@@ -3396,7 +3392,7 @@ namespace YAWK {
                                 else
                                 {   // templates.json file not found
                                     $templates = '';
-                                    \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."templates.json - file not found", 0, 0, 0, 0);
+                                    sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."templates.json - file not found", 0, 0, 0, 0);
                                 }
 
                                 // check if template with same name exists
@@ -3454,7 +3450,7 @@ namespace YAWK {
                                     }
                                     else
                                     {   // error: failed to update templates db
-                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to update template $iniFile[NAME] - templates db NOT updated", 0, 0, 0, 0);
+                                        sys::setSyslog($db, 47, 0, "failed to update template $iniFile[NAME] - templates db NOT updated", 0, 0, 0, 0);
                                     }
 
                                     // update assets database
@@ -3473,7 +3469,7 @@ namespace YAWK {
                                         }
                                         else
                                         {   // error: failed to update templates db
-                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to update template $iniFile[NAME] - assets db NOT updated", 0, 0, 0, 0);
+                                            sys::setSyslog($db, 47, 0, "failed to update template $iniFile[NAME] - assets db NOT updated", 0, 0, 0, 0);
                                         }
                                         // process asset data
                                     }
@@ -3507,7 +3503,7 @@ namespace YAWK {
                                         }
                                         else
                                         {   // error: failed to update templates db
-                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to update property $templateSetting[property] of template $iniFile[NAME] - template_settings db NOT updated", 0, 0, 0, 0);
+                                            sys::setSyslog($db, 47, 0, "failed to update property $templateSetting[property] of template $iniFile[NAME] - template_settings db NOT updated", 0, 0, 0, 0);
                                         }
                                     }
 
@@ -3523,35 +3519,35 @@ namespace YAWK {
                                         }
                                         else
                                         {   // error: failed to update templates db
-                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to update type $templateSettingsType[type] - template_settings_types db NOT updated", 0, 0, 0, 0);
+                                            sys::setSyslog($db, 47, 0, "failed to update type $templateSettingsType[type] - template_settings_types db NOT updated", 0, 0, 0, 0);
                                         }
                                     }
 
                                     // delete unwanted json files - they are not needed anymore
                                     if (!unlink ($this->tmpFolder.$this->subFolder."assets.json"))
                                     {
-                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."assets.json", 0, 0, 0, 0);
+                                        sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."assets.json", 0, 0, 0, 0);
                                     }
                                     if (!unlink ($this->tmpFolder.$this->subFolder."template_settings.json"))
                                     {
-                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings.json", 0, 0, 0, 0);
+                                        sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings.json", 0, 0, 0, 0);
                                     }
                                     if (!unlink ($this->tmpFolder.$this->subFolder."template_settings_types.json"))
                                     {
-                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings_types.json", 0, 0, 0, 0);
+                                        sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings_types.json", 0, 0, 0, 0);
                                     }
                                     if (!unlink ($this->tmpFolder.$this->subFolder."templates.json"))
                                     {
-                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."templates.json", 0, 0, 0, 0);
+                                        sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."templates.json", 0, 0, 0, 0);
                                     }
 
                                     // copy template folder
-                                    \YAWK\sys::xcopy($this->tmpFolder.$this->subFolder, $this->folder.$this->subFolder);
+                                    sys::xcopy($this->tmpFolder.$this->subFolder, $this->folder.$this->subFolder);
 
                                     // remove tmp folder
                                     if (!\YAWK\filemanager::recursiveRemoveDirectory($this->tmpFolder))
                                     {   // failed to remove tmp folder
-                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to remove tmp folder $this->tmpFolder", 0, 0, 0, 0);
+                                        sys::setSyslog($db, 47, 0, "failed to remove tmp folder $this->tmpFolder", 0, 0, 0, 0);
                                     }
 
                                     // create a fresh, empty tmp folder
@@ -3634,41 +3630,41 @@ namespace YAWK {
                                         // delete unwanted json files - they are not needed anymore
                                         if (!unlink ($this->tmpFolder.$this->subFolder."assets.json"))
                                         {
-                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."assets.json", 0, 0, 0, 0);
+                                            sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."assets.json", 0, 0, 0, 0);
                                         }
                                         if (!unlink ($this->tmpFolder.$this->subFolder."template_settings.json"))
                                         {
-                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings.json", 0, 0, 0, 0);
+                                            sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings.json", 0, 0, 0, 0);
                                         }
                                         if (!unlink ($this->tmpFolder.$this->subFolder."template_settings_types.json"))
                                         {
-                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings_types.json", 0, 0, 0, 0);
+                                            sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings_types.json", 0, 0, 0, 0);
                                         }
                                         if (!unlink ($this->tmpFolder.$this->subFolder."templates.json"))
                                         {
-                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."templates.json", 0, 0, 0, 0);
+                                            sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."templates.json", 0, 0, 0, 0);
                                         }
 
                                         // copy template folder
-                                        \YAWK\sys::xcopy($this->tmpFolder.$this->subFolder, $this->folder.$this->subFolder);
+                                        sys::xcopy($this->tmpFolder.$this->subFolder, $this->folder.$this->subFolder);
 
                                         // remove tmp folder
                                         if (!\YAWK\filemanager::recursiveRemoveDirectory($this->tmpFolder))
                                         {   // failed to remove tmp folder
-                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to remove tmp folder $this->tmpFolder", 0, 0, 0, 0);
+                                            sys::setSyslog($db, 47, 0, "failed to remove tmp folder $this->tmpFolder", 0, 0, 0, 0);
                                         }
 
                                         // create a fresh, empty tmp folder
                                         mkdir($this->tmpFolder);
 
                                         // success: updated templates database
-                                        \YAWK\sys::setSyslog($db, 45, 0, "added template <b>$iniFile[NAME] ID: ".$this->id."</b> to templates db", 0, 0, 0, 0);
+                                        sys::setSyslog($db, 45, 0, "added template <b>$iniFile[NAME] ID: ".$this->id."</b> to templates db", 0, 0, 0, 0);
                                         return true;
 
                                     }
                                     else
                                     {   // error: failed to insert new template into db
-                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to insert new template: $iniFile[NAME] - templates db NOT updated", 0, 0, 0, 0);
+                                        sys::setSyslog($db, 47, 0, "failed to insert new template: $iniFile[NAME] - templates db NOT updated", 0, 0, 0, 0);
                                     }
 
                                 }
@@ -3677,24 +3673,24 @@ namespace YAWK {
                                 //  recursive delete tmp folder
 
                                 // throw success message
-                                \YAWK\sys::setSyslog($db, 46, 3, "uploaded template package $this->uploadFile successfully", 0, 0, 0, 0);
+                                sys::setSyslog($db, 46, 3, "uploaded template package $this->uploadFile successfully", 0, 0, 0, 0);
                             }
                             else
                             {   // failed to check uploaded file - file not found
-                                \YAWK\sys::setSyslog($db, 48, 1, "failed to check uploaded file upload file: $this->uploadFile not found", 0, 0, 0, 0);
+                                sys::setSyslog($db, 48, 1, "failed to check uploaded file upload file: $this->uploadFile not found", 0, 0, 0, 0);
                             }
                         }
                     }
                 }
                 else
                 {   // tmp folder does not exist
-                    \YAWK\sys::setSyslog($db, 48, 1, "failed to uploaded tempalte: ../system/templates/tmp/ does not exist or is not accessable", 0, 0, 0, 0);
+                    sys::setSyslog($db, 48, 1, "failed to uploaded tempalte: ../system/templates/tmp/ does not exist or is not accessable", 0, 0, 0, 0);
                     return false;
                 }
             }
             else
             {   // tmp folder is not writeable
-                \YAWK\sys::setSyslog($db, 48, 1, "failed to uploaded template: $this->folder is not writeable", 0, 0, 0, 0);
+                sys::setSyslog($db, 48, 1, "failed to uploaded template: $this->folder is not writeable", 0, 0, 0, 0);
                 return false;
             }
 
@@ -3753,15 +3749,15 @@ namespace YAWK {
                     // check if tmp directory exists...
                     if (!mkdir(dirname($this->tmpFolder.$this->subFolder)))
                     {   // failed to create tmp sub folder
-                        \YAWK\sys::setSyslog($db, 47, 0, "failed to create ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
+                        sys::setSyslog($db, 47, 0, "failed to create ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
                         return false;
                     }
                 }
 
                 // next step is to copy the whole template folder into tmp folder
-                if (\YAWK\sys::xcopy($this->folder.$this->subFolder."/", $this->tmpFolder.$this->subFolder) === false)
+                if (sys::xcopy($this->folder.$this->subFolder."/", $this->tmpFolder.$this->subFolder) === false)
                 {   // failed to copy template into tmp folder
-                    \YAWK\sys::setSyslog($db, 47, 0, "failed to copy template into tmp folder: ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
+                    sys::setSyslog($db, 47, 0, "failed to copy template into tmp folder: ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
                     return false;
                 }
 
@@ -3785,22 +3781,22 @@ namespace YAWK {
                     // write templates.json
                     if (!file_put_contents($this->tmpFolder.$this->subFolder."/"."templates.json", $templateData))
                     {   // error writing templates.json
-                        \YAWK\sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."templates.json", 0, 0, 0, 0);
+                        sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."templates.json", 0, 0, 0, 0);
                     }
                     // write assets.json
                     if (!file_put_contents($this->tmpFolder.$this->name."/"."assets.json", $templateAssets))
                     {   // error writing assets.json
-                        \YAWK\sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."assets.json", 0, 0, 0, 0);
+                        sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."assets.json", 0, 0, 0, 0);
                     }
                     // write template_settings.json
                     if (!file_put_contents($this->tmpFolder.$this->name."/"."template_settings.json", $templateSettings))
                     {   // error writing template_settings.json
-                        \YAWK\sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."template_settings.json", 0, 0, 0, 0);
+                        sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."template_settings.json", 0, 0, 0, 0);
                     }
                     // write template_settings_types.json
                     if (!file_put_contents($this->tmpFolder.$this->name."/"."template_settings_types.json", $templateSettingsTypes))
                     {   // error writing template_settings_types.json
-                        \YAWK\sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."template_settings_types.json", 0, 0, 0, 0);
+                        sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."template_settings_types.json", 0, 0, 0, 0);
                     }
 
                     // get template properties
@@ -3814,7 +3810,7 @@ namespace YAWK {
                     // write license file
                     if ($license->writeLicenseFile() === false)
                     {   // failed to write license file
-                        \YAWK\sys::setSyslog($db, 47, 0, "failed to write license file ($this->license license) to ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
+                        sys::setSyslog($db, 47, 0, "failed to write license file ($this->license license) to ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
                     }
                 }
 
@@ -3832,7 +3828,7 @@ namespace YAWK {
                     $destination = $this->tmpFolder.$this->name.'.zip';
 
                     // set data for ini file
-                    $iniData['DATE'] = \YAWK\sys::now();
+                    $iniData['DATE'] = sys::now();
                     $iniData['NAME'] = $this->name;
                     $iniData['FOLDER'] = $this->folder;
                     $iniData['SUBFOLDER'] = $this->subFolder;
@@ -3849,10 +3845,10 @@ namespace YAWK {
                     $iniData['LICENSE'] = $this->license;
 
                     // write ini file
-                    if (\YAWK\sys::writeIniFile($iniData, $this->tmpFolder."template.ini") === false)
+                    if (sys::writeIniFile($iniData, $this->tmpFolder."template.ini") === false)
                     {
                         // failed to write ini file:
-                        \YAWK\sys::setSyslog($db, 47, 0, "failed to write ".$this->tmpFolder."template.ini ", 0, 0, 0, 0);
+                        sys::setSyslog($db, 47, 0, "failed to write ".$this->tmpFolder."template.ini ", 0, 0, 0, 0);
                         return false;
                     }
 
@@ -3925,7 +3921,7 @@ namespace YAWK {
                             // delete all files from tmp folder - except the created zipfile
                             if (\YAWK\filemanager::recursiveRemoveDirectory($this->tmpFolder.$this->subFolder) === false)
                             {   // warning: failed to delete tmp files
-                                \YAWK\sys::setSyslog($db, 47, 0, "failed to delete tmp folder ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
+                                sys::setSyslog($db, 47, 0, "failed to delete tmp folder ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
                                 // return false;
                             }
 
@@ -3954,25 +3950,25 @@ namespace YAWK {
                         }
                         else
                         {   // zip not generated
-                            \YAWK\sys::setSyslog($db, 52, 2, "failed to create template $this->name.zip package - zip file not there", 0, 0, 0, 0);
+                            sys::setSyslog($db, 52, 2, "failed to create template $this->name.zip package - zip file not there", 0, 0, 0, 0);
                             return false;
                         }
                     }
                     else
                     {   // zip extension is not loaded
-                        \YAWK\sys::setSyslog($db, 52, 2, "failed to create template .zip package: PHP zip extension not loaded.", 0, 0, 0, 0);
+                        sys::setSyslog($db, 52, 2, "failed to create template .zip package: PHP zip extension not loaded.", 0, 0, 0, 0);
                         return false;
                     }
                 }
                 else
                 {   // .sql files not written
-                    \YAWK\sys::setSyslog($db, 52, 2, ".json files missing: $this->folder$this->subFolder/*.json not found", 0, 0, 0, 0);
+                    sys::setSyslog($db, 52, 2, ".json files missing: $this->folder$this->subFolder/*.json not found", 0, 0, 0, 0);
                     return false;
                 }
             }
             else
             {   // unable to include class
-                \YAWK\sys::setSyslog($db, 52, 2, "create template .zip package failed: folder $this->folder is not writeable. Please check folder group permissions", 0, 0, 0, 0);
+                sys::setSyslog($db, 52, 2, "create template .zip package failed: folder $this->folder is not writeable. Please check folder group permissions", 0, 0, 0, 0);
                 return false;
             }
         }
