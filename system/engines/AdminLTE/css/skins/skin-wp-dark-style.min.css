@@ -276,3 +276,65 @@ label
 .table-hover tbody tr:hover {
   background-color: #32373C;
 }
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  border-top: 1px solid #444;
+}
+
+.info-box {
+  display: block;
+  min-height: 90px;
+  background: #23282D;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  margin-bottom: 15px;
+}
+
+.info-box-text {
+  display: block;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color:#ccc;
+}
+
+.box-footer {
+  background-color: #23282D;
+}
+
+.box-header > .fa,
+.box-header > .glyphicon,
+.box-header > .ion,
+.box-header .box-title {
+  display: inline-block;
+  font-size: 18px;
+  margin: 0;
+  line-height: 1;
+  color:#ccc;
+}
+
+
+.main-footer {
+  background: #23282D;
+  padding: 15px;
+  color: #888;
+  border-top: 1px solid #444;
+}
+.content-header > h1 > small {
+  color:#ccc;
+}
+
+.products-list > .item {
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  background: #23282D;
+}

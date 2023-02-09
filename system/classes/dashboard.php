@@ -1,6 +1,9 @@
 <?php
 namespace YAWK\BACKEND
 {
+
+    use YAWK\template;
+
     /**
      * @details <b>Admin LTE Dashboard Class</b>
      *
@@ -66,7 +69,7 @@ namespace YAWK\BACKEND
                             <a href=\"index.php?page=page-edit&alias=$property[alias]&id=$property[id]\" class=\"product-title\">$property[title]
                                 <span class=\"label label-$color pull-right\">$text</span></a>
                         <span class=\"product-description\">
-                          <small>$lang[PUBLISHED] $since<br><small>$property[date_publish]</small></small>
+                          <small>$lang[PUBLISHED] $since &nbsp;"; \YAWK\backend::printTooltip($property['date_publish']); echo"</small>
                         </span>
                         </div>
                     </li>";
