@@ -207,7 +207,7 @@ namespace YAWK {
                                <select class=\"form-control\" id=\"selectedTemplate\" name=\"selectedTemplate\">
                                <label for id=\"selectedTemplate\">$description</label>
                                  <option value=\""; echo \YAWK\template::getCurrentTemplateId($db); echo "\">";
-            echo \YAWK\template::getCurrentTemplateName($db, "backend", "");
+            echo \YAWK\template::getCurrentTemplateName($db, "backend", 0);
             echo"</option>";
             /* foreach to fetch template select fields */
             foreach(\YAWK\template::getTemplateIds($db) as $template)

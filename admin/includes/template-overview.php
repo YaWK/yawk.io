@@ -488,7 +488,7 @@ echo"</section><!-- Main content -->
                     $activeBoldEnd = ''; // indicate active template (end bold)
                     $statusText = ''; // online/offline tooltip
                     // get active tpl name
-                    $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "backend", "");
+                    $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "backend", 0);
                     $userTemplateID = \YAWK\user::getUserTemplateID($db, $user->id);
                     if ($res = $db->query("SELECT * FROM {templates} ORDER BY active DESC"))
                     {

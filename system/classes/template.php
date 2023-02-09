@@ -534,7 +534,7 @@ namespace YAWK {
                 }
             }
             // NO TEMPLATE ID IS SET...
-            if (!isset($templateID) || (empty($templateID))) {
+            if (empty($templateID) || ($templateID == 0)) {
                 // check if user has its own template
                 // $userTemplateID = \YAWK\user::getUserTemplateID($db, )
                 // no templateID sent via param, set current selected template ID
@@ -733,7 +733,7 @@ namespace YAWK {
             }
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "settings"; // set CSS file name
-            $filename = __dir__."../system/templates/$tplName/css/" . $alias . ".css";
+            $filename = "../system/templates/$tplName/css/" . $alias . ".css";
             return $filename;
         }
 
@@ -750,7 +750,7 @@ namespace YAWK {
             // prepare vars... path + filename
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "custom"; // set CSS file name
-            $filename = __dir__."../system/templates/$tplName/css/" . $alias . ".css";
+            $filename = "../system/templates/$tplName/css/" . $alias . ".css";
             return $filename;
         }
 
@@ -767,7 +767,7 @@ namespace YAWK {
             // prepare vars... path + filename
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "custom"; // set JS file name
-            $filename = __dir__."../system/templates/$tplName/js/" . $alias . ".js";
+            $filename = "../system/templates/$tplName/js/" . $alias . ".js";
             return $filename;
         }
 
