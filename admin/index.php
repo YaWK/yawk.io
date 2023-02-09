@@ -142,7 +142,7 @@ if (!isset($AdminLTE))
   {
       // user is not logged in - set a basic body markup and display login box
       // body markup
-      echo "<body style=\"background-color: #ecf0f5\">";
+      echo "<body>";
 
       // reset password email request
       if (isset($_POST['resetPasswordRequest']) && ($_POST['resetPasswordRequest'] == "true"))

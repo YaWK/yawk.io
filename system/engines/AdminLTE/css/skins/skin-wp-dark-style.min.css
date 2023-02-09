@@ -175,6 +175,9 @@ a:hover
   background-color: #32373c;
   border: 1px solid #9ca1a6;
 }
+.form-control::placeholder{
+  color: #666;
+}
 label
 {
   color: #9ca1a6;
@@ -337,4 +340,36 @@ label
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   padding: 10px 0;
   background: #23282D;
+}
+
+h3 {
+  color:#ccc;
+}
+body{
+  background-color: #191e23;
+}
+
+
+.modal {
+  background-color: #23282D; !important;
+}
+
+.modal-content {
+  border-radius: 0;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
+  border: 0;
+  background-color: #191e23; !important;
+}
+.modal-title{
+  color:#ccc;
+}
+.modal-body{
+  color:#ccc;
+}
+.modal-footer{
+  color: #ccc;
+}
+.close{
+  color: #ccc;
 }

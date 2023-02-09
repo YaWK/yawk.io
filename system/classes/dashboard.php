@@ -2,8 +2,6 @@
 namespace YAWK\BACKEND
 {
 
-    use YAWK\template;
-
     /**
      * @details <b>Admin LTE Dashboard Class</b>
      *
