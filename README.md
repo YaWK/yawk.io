@@ -15,7 +15,7 @@ and <a href="https://github.com/YaWK/yawk.io/projects" target="_blank">current o
 to 
 see what's going on and what has been done over the past few days, weeks, months and years.
 <hr>
-<h3><u>R O A D M A P for 2022: <small></small></u></h3>
+<h3><u>R O A D M A P for 2023: <small></small></u></h3>
 <b>Currently in development:</b>
 <ul>
 <li>Codebase update to ensure PHP 8 compatibility ✓</li>
@@ -23,11 +23,11 @@ see what's going on and what has been done over the past few days, weeks, months
 <li>Add support for multilingual FrontEnd (Content) Pages and Menus ✓</li>
 <li>Major Updates of all Assets and Social Widgets </li>
 <li>Update CSS Framework to completely support Bootstrap 4.x</li>
-<li>Add templates and demo pages <i><small>(scheduled until end of 2022)</small></i></li>
+<li>Add templates and demo pages <i><small>(scheduled until end of 2023)</small></i></li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
 
-<h3><u>PLANNED FOR 2023:</u></h3>
+<h3><u>ALSO PLANNED FOR 2023:</u></h3>
 <b>Update official website https://yawk.io </b>
 <ul>
 <li>Update https://test.yawk.io to current version</li>
