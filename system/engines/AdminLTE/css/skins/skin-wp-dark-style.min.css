@@ -105,7 +105,7 @@
 .skin-wp-dark-style .sidebar-form input[type="text"],
 .skin-wp-dark-style .sidebar-form .btn {
   box-shadow: none;
-  background-color: #FFFFFD;
+  background-color: #191E23;
   border: 1px solid transparent;
   height: 35px;
 }
@@ -118,8 +118,9 @@
 }
 .skin-wp-dark-style .sidebar-form input[type="text"]:focus,
 .skin-wp-dark-style .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
-  background-color: #fff;
-  color: #666;
+  background-color: #191E23;
+  border-color: #666;
+  color: #888;
 }
 .skin-wp-dark-style .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
   border-left-color: #fff;
@@ -196,13 +197,13 @@ label
   border-bottom-color: #0073aa;
 }
 .box-header {
-  color: #9ca1a6;
+  color: #222;
   display: block;
   padding: 10px;
   position: relative;
 }
 .box-header.with-border {
-  border-bottom: 1px solid #0073aa;;
+  border-bottom: 1px solid #0073aa;
 }
 .box-body {
   border-top-left-radius: 0;
@@ -262,4 +263,16 @@ label
 }
 .control-sidebar-dark .control-sidebar-menu > li > a .menu-info > p {
   color: #72777c;
+}
+.content-header > .breadcrumb > li > a {
+  color: #ccc;
+  display: inline-block;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color:#191e23;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #32373C;
 }

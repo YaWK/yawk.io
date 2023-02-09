@@ -56,24 +56,14 @@ namespace YAWK\BACKEND {
 
                 $paceLoaderColor = "background: #". settings::getSetting($db, "paceLoaderColor").";";
                 $paceLoaderHeight = "height: ". settings::getSetting($db, "paceLoaderHeight");
-                if (isset($paceLoaderColor) || (!empty($paceLoaderColor)))
-                {
-                    $this->paceLoader .= "
-                        <style>
-                            .pace .pace-progress {
-                            ".$paceLoaderColor."";
-                }
-                if (isset($paceLoaderHeight) || (!empty($paceLoaderHeight)))
-                {
+                $this->paceLoader .= "
+                <style>
+                    .pace .pace-progress {
+                    ".$paceLoaderColor."";
                     $this->paceLoader .= "
                             ".$paceLoaderHeight."
                             }
                             </style>";
-                }
-                else
-                {
-                    $this->paceLoader .= "}</style>";
-                }
             }
             else
             {
