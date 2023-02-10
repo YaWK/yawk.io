@@ -279,7 +279,7 @@ label
 .table-hover tbody tr:hover {
   background-color: #32373C;
 }
-
+/* Table Settings */
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
@@ -342,6 +342,7 @@ label
   background: #23282D;
 }
 
+/* general body stuff */
 h3 {
   color:#ccc;
 }
@@ -349,7 +350,7 @@ body{
   background-color: #191e23;
 }
 
-
+/* Modal */
 .modal {
   background-color: #23282D; !important;
 }
@@ -372,4 +373,59 @@ body{
 }
 .close{
   color: #ccc;
+}
+
+/* Buttons */
+.btn-default {
+  color: #ccc;
+  background-color: #23282D;
+  border-color: #444;
+}
+.btn-default:focus,
+.btn-default.focus {
+  color: #ccc;
+  background-color: #191e23;
+  border-color: #8c8c8c;
+}
+.btn-default:hover {
+  color: #fff;
+  background-color: #191e23;
+  border-color: #666;
+}
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  color: #333;
+  background-color: #23282D;
+  border-color: #adadad;
+}
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+  color: #333;
+  background-color: #23282D;
+  border-color: #8c8c8c;
+}
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  background-image: none;
+}
+.btn-default.disabled:hover,
+.btn-default[disabled]:hover,
+fieldset[disabled] .btn-default:hover,
+.btn-default.disabled:focus,
+.btn-default[disabled]:focus,
+fieldset[disabled] .btn-default:focus,
+.btn-default.disabled.focus,
+.btn-default[disabled].focus,
+fieldset[disabled] .btn-default.focus {
+  background-color: #23282D;
+  border-color: #ccc;
 }
