@@ -286,7 +286,7 @@ label
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-  border-top: 1px solid #444;
+  border: 1px solid #444;
 }
 
 .info-box {
@@ -431,4 +431,64 @@ fieldset[disabled] .btn-default.focus {
 }
 .form-control:read-only {
   background-color: #191e23;
+}
+
+.list-group-item {
+  background-color: #23282D;
+}
+
+.dropdown-menu {
+  background-color: #23282D;
+  color:#fff;
+  border-color: #444;
+}
+
+.navbar-nav>.user-menu>.dropdown-menu>.user-footer {
+  background-color: #23282D;
+  color:#fff;
+  padding: 10px;
+}
+
+.navbar-nav>.user-menu>.dropdown-menu>.user-body {
+  background-color: #8c8c8c;
+  color:#fff; !important;
+}
+
+.navbar-nav>.notifications-menu>.dropdown-menu>li .menu>li>a {
+  color: #ccc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 10px;
+}
+.navbar-nav>.notifications-menu>.dropdown-menu>li .menu>li>a, .navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a, .navbar-nav>.tasks-menu>.dropdown-menu>li .menu>li>a {
+  display: block;
+  white-space: nowrap;
+  border-bottom: 1px solid #444;
+}
+
+.navbar-nav>.notifications-menu>.dropdown-menu>li.header, .navbar-nav>.messages-menu>.dropdown-menu>li.header, .navbar-nav>.tasks-menu>.dropdown-menu>li.header{
+  background-color: #23282d;
+  color: #ccc;
+  border-bottom: 1px solid #444;
+}
+
+.navbar-nav>.notifications-menu>.dropdown-menu>li.footer>a, .navbar-nav>.messages-menu>.dropdown-menu>li.footer>a, .navbar-nav>.tasks-menu>.dropdown-menu>li.footer>a {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  font-size: 12px;
+  background-color: #23282d;
+  padding: 7px 10px;
+  border-bottom: 1px solid #444;
+  color: #fff !important;
+  text-align: center;
+}
+
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a:hover,
+.navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a:hover,
+.navbar-nav > .tasks-menu > .dropdown-menu > li .menu > li > a:hover {
+  background: #191e23;
+  text-decoration: none;
+  font-weight:bold;
 }

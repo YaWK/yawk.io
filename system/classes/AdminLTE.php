@@ -107,6 +107,7 @@ namespace YAWK\BACKEND {
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
+    <!-- AdminLTE custom backend skin -->
     <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/css/skins/$this->backendSkin.min.css\">
 
     <!-- include custom css -->
@@ -831,7 +832,7 @@ namespace YAWK\BACKEND {
                   <!-- Menu Footer-->
                   <li class=\"user-footer\">
                     <div class=\"pull-left\">
-                      <a href=\"index.php?page=user-edit&user=$user->username\" class=\"btn btn-default btn-flat\" title=\"edit $user->username profile\">Profile</a>
+                      <a href=\"index.php?page=user-edit&user=$user->username\" class=\"btn btn-light\" title=\"edit $user->username profile\">Profile</a>
                     </div>
                     <div class=\"pull-right\">
                       <a href=\"index.php?page=logout\" class=\"btn btn-danger\"><i class=\"fa fa-power-off\"></i> &nbsp;Sign out</a>
