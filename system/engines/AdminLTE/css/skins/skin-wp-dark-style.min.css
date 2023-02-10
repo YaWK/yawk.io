@@ -429,3 +429,6 @@ fieldset[disabled] .btn-default.focus {
   background-color: #23282D;
   border-color: #ccc;
 }
+.form-control:read-only {
+  background-color: #191e23;
+}
