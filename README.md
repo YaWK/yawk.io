@@ -18,6 +18,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <h3><u>R O A D M A P for 2023: <small></small></u></h3>
 <b>Currently in development:</b>
 <ul>
+<li>Installer / Improve Setup process</li>
 <li>Codebase update to ensure PHP 8 compatibility ✓</li>
 <li>Migrate all code docs to doxygen because APIGEN is outdated ✓</li>
 <li>Add support for multilingual FrontEnd (Content) Pages and Menus ✓</li>
