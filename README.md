@@ -84,8 +84,7 @@ YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>
 After spending a lot of my lifetime on this project, I decided to follow my friends - I've uploaded it to GitHub and kept the repository private until the status of the project has got to a level where others can make use out of it. Though all efforts of "getting it to the point", this project is not finished yet - and never will be. It will stay in development, as long as I or somebody else take care about it.
 <hr>
 <h3>Do you want to be  part of this project?</h3>
-If you want to put your manpower and knowledge into this project, you're welcome! Please feel free to contact me via Email. danielretzl@gmail.com Tell me how you think you can help this project. Your input will be welcome - everything will get better - particularly
-with a little help from some friends.
+If you want to put your manpower and knowledge into this project, you're welcome! Please feel free to contact me. Tell me how you think you can help this project. Your input will be welcome - everything will get better - particularly with a little help from some friends.
 <hr>
 <h4><i>Check back again soon and stay tuned for upcoming website and project updates!</i></h4>
 <br><br>
