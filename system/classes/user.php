@@ -292,37 +292,29 @@ namespace YAWK {
                     {
                         // get full url to build the link
                         $url = \YAWK\sys::getHost($db);
-                        if (filter_var($url, FILTER_VALIDATE_URL))
-                        {
-                            // append token and generate complete url
-                            $firstCharOfUrl = mb_substr($url, 0,-1);
-                            if ($firstCharOfUrl === "/")
-                            {   // url missing trailing slash, append it
-                                $tokenLink = $url."/index.php?resetPassword=true&token=$token";
-                            }
-                            else
-                            {   // url still got a slash
-                                $tokenLink = $url."index.php?resetPassword=true&token=$token";
-                            }
 
-                            $mailBody = "$lang[HELLO] $username!\n\r$lang[PASSWORD_RESET_REQUESTED]\n\r$lang[PASSWORD_RESET_MAILBODY]\n\r".$tokenLink."\n\r$lang[PASSWORD_RESET_REQUEST_WARNING].";
-                            if (\YAWK\email::sendEmail($from, $to, "", "$lang[PASSWORD_RESET] $url", $mailBody) === true)
-                            {   // reset password email sent
-                                \YAWK\sys::setSyslog($db, 9, 0, "reset password email requested from $username ($to)", $uid, 0, 0, 0);
-                                $_SESSION['passwordFail'] = 0;
-                                return true;
-                            }
-                            else
-                            {   // FAILED to send password reset email
-                                \YAWK\alert::draw("warning", $lang['ERROR'], "$lang[EMAIL_NOT_SENT] <br>(from: $from)<br>(to: $to)", "", 3800);
-                                \YAWK\sys::setSyslog($db, 11, 1, "failed to send reset password email to $username ($to)", $uid, 0, 0, 0);
-                                return false;
-                            }
+                        // append token and generate complete url
+                        $firstCharOfUrl = mb_substr($url, 0,-1);
+                        if ($firstCharOfUrl === "/")
+                        {   // url missing trailing slash, append it
+                            $tokenLink = $url."/index.php?resetPassword=true&token=$token";
                         }
                         else
-                        {   // URL seems to be invalid, unable to generate token URL
-                            \YAWK\alert::draw("warning", $lang['ERROR'], "$lang[PASSWORD_RESET_URL_INVALID] (url: $url)", "", 3800);
-                            \YAWK\sys::setSyslog($db, 12, 2, "failed to reset password due invalid token URL", $uid, 0, 0, 0);
+                        {   // url still got a slash
+                            $tokenLink = $url."index.php?resetPassword=true&token=$token";
+                        }
+
+                        $mailBody = "$lang[HELLO] $username!\n\r$lang[PASSWORD_RESET_REQUESTED]\n\r$lang[PASSWORD_RESET_MAILBODY]\n\r".$tokenLink."\n\r$lang[PASSWORD_RESET_REQUEST_WARNING].";
+                        if (\YAWK\email::sendEmail($from, $to, "", "$lang[PASSWORD_RESET] $url", $mailBody) === true)
+                        {   // reset password email sent
+                            \YAWK\sys::setSyslog($db, 9, 0, "reset password email requested from $username ($to)", $uid, 0, 0, 0);
+                            $_SESSION['passwordFail'] = 0;
+                            return true;
+                        }
+                        else
+                        {   // FAILED to send password reset email
+                            \YAWK\alert::draw("warning", $lang['ERROR'], "$lang[EMAIL_NOT_SENT] <br>(from: $from)<br>(to: $to)", "", 3800);
+                            \YAWK\sys::setSyslog($db, 11, 1, "failed to send reset password email to $username ($to)", $uid, 0, 0, 0);
                             return false;
                         }
                     }
