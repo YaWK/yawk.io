@@ -153,7 +153,7 @@ if(isset($_POST['add'])) {
       $params['gid'] = $db->quote($params['gid']);
       $params['published'] = $db->quote($params['published']);
       if (isset($params['parentID']) && (!empty($params['parentID'])))
-      { $params['parentID'] = $db->quote($params['parentID']); }
+      { $params['parentID'] = $db->quote($params['parentID']); } else { $params['parentID'] = 0; }
       $params['target'] = $db->quote($params['target']);
       YAWK\menu::editEntry($db,
           $_GET['menu'],
