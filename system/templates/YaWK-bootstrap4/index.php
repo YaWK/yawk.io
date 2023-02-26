@@ -62,7 +62,7 @@
     $positions = template::getPositionStatesArray($db, $template->id);
     // load position indicators
     $indicators = template::getPositionIndicatorStatusArray($db, $template->id);
-    // load active assets for this template
+    // load active css assets for this template
     $template->loadActiveAssets($db, $template->id, $host);
     // check if language is set
     if (isset($_GET['language']) && (!empty($_GET['language'])))
@@ -85,8 +85,6 @@
 <script src="<?php echo $host; ?>system/engines/jquery/1.3.0-respond.min.js"></script>
 <![endif]-->
 
-    <!-- import yawk app: custom js -->
-    <script src="<?php echo $host; ?>system/templates/<?php echo $template->name; ?>/js/custom.min.js"></script>
 </head>
 
 <body style="<?php echo YAWK\template::getActiveBodyFont($db, $user, $template); ?>" ondragstart="return false">
@@ -419,10 +417,10 @@ $col = '';
         template::getPositionDivBox($db, $lang, "outerBottom", 0, "col-md-12", $positions, $indicators, $user, $template);
         ?>
     </div>
-</div>
+</div> <!-- LAYOUT END -->
 
-<!-- LAYOUT END -->
-
+<!-- import yawk app: custom js -->
+<script src="<?php echo $host; ?>system/templates/<?php echo $template->name; ?>/js/custom.min.js"></script>
 <script>
 
 
@@ -459,6 +457,5 @@ $col = '';
 })
 */
 </script>
-
 </body>
 </html>

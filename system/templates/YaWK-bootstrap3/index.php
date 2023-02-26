@@ -56,7 +56,7 @@ $positions = \YAWK\template::getPositionStatesArray($db, $template->id);
 // load position indicators
 $indicators = \YAWK\template::getPositionIndicatorStatusArray($db, $template->id);
 // load active assets for this template
-$template->loadActiveAssets($db, $template->id, $host);
+$template->loadActiveAssets($db, $template->id, $host, 'css');
 ?>
 
 <!-- SETTINGS.MIN.CSS YaWK template settings: Bootstrap core CSS override -->
@@ -443,6 +443,10 @@ $col = '';
           })
           */
       </script>
-
- </body>
+<?php
+// load active css assets for this template
+$template->loadActiveAssets($db, $template->id, $host, 'js'); ?>
+<!-- import yawk app: custom js -->
+<script src="<?php echo $host; ?>system/templates/<?php echo $template->name; ?>/js/custom.min.js"></script>
+</body>
 </html>
