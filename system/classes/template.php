@@ -1415,7 +1415,7 @@ namespace YAWK {
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
                                   <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
-                                $activeTemplateName = \YAWK\template::getTemplateNameById($db, $setting['value']);
+                                $activeTemplateName = \YAWK\template::getTemplateNameById($db, (int)$setting['value']);
                                 echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $activeTemplateName</option>";
                                 // explode option string into array
                                 $optionValues = explode(":", $setting['options']);
@@ -3036,44 +3036,45 @@ namespace YAWK {
          * @param $db object db connection
          * @param $templateID int the current template ID
          * @param $host string host URL will be used by internal assets to avoid relative paths
+         * @param $type string css|js to detect which assets to load
          * @return null
          */
         public function loadActiveAssets($db, $templateID, $host)
         {
             /* @var \YAWK\db $db */
 
-            if (isset($templateID) && (!empty($templateID))) {
+            // check if templateID is set
+            if (isset($templateID) && (!empty($templateID)))
+            {
                 echo "
 <!-- ASSETS -->";
+                // get assets from database for this template
                 if ($res = $db->query("SELECT type, asset, link FROM {assets} WHERE templateID = '" . $templateID . "' ORDER BY sortation ASC"))
                 {
+                    // loop through assets
                     while ($row = mysqli_fetch_assoc($res))
                     {
                         // make sure, host will only be added for relative url assets
-                        if(stristr($row['link'], 'http://') || (stristr($row['link'], 'https://')) === FALSE)
-                        {
+                        if (stristr($row['link'], 'http://') || (stristr($row['link'], 'https://')) === FALSE) {
                             // echo "".$row['link']." internal:";
-                            $url = $host.$row['link'];
+                            $url = $host . $row['link'];
                             // do nothing
-                        }
-                        else
-                        {   // external URL, do not prepend host string to link
+                        } else {   // external URL, do not prepend host string to link
                             // echo "".$row['link']." ext:";
                             $url = $row['link'];
                         }
 
-                        // JS
-                        if ($row['type'] === "js") {   // load js asset
-                            echo "
- <!-- load JS: $row[asset] -->
- <script src=\"".$url."\"></script>";
+                        if ($row['type'] === "js")
+                        {   // load js asset
+                                echo "
+<!--load JS: $row[asset] -->
+<script src = \"" . $url . "\"></script>";
                         }
-
-                        // CSS
-                        if ($row['type'] === "css") {   // load css asset
-                            echo "
- <!-- load CSS: $row[asset] -->
- <link rel=\"stylesheet\" href=\"".$url."\" type=\"text/css\" media=\"all\">";
+                        else if ($row['type'] === "css")
+                        {   // load css asset
+                                echo "
+<!-- load CSS: $row[asset] -->
+<link rel=\"stylesheet\" href=\"" . $url . "\" type=\"text/css\" media=\"all\">";
                         }
                     }
                 }
