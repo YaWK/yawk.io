@@ -18,6 +18,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <h3><u>R O A D M A P for 2023: <small></small></u></h3>
 <b>Currently in development:</b>
 <ul>
+<li>Installer / Improve Setup process</li>
 <li>Codebase update to ensure PHP 8 compatibility ✓</li>
 <li>Migrate all code docs to doxygen because APIGEN is outdated ✓</li>
 <li>Add support for multilingual FrontEnd (Content) Pages and Menus ✓</li>
@@ -45,7 +46,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <h3>Download Notes:</h3>
 <u><b>Please remember:</b></u> before you download this pre-release version: YaWK is currently in active development and <b>NOT YET RELEASED</b>.
 If you like, you can get a sneak peek - feel free to download the latest current development version from GitHub: <br>
-<br><b>https://github.com/YaWK/yawk.io/archive/master.zip</b>
+<br><b>https://github.com/YaWK/yawk.io/archive/refs/heads/master.zip</b>
 <br><br>
 But please consider - YaWK is in constant development and underlies <i>nearly daily changes</i>. Due this fact it can not be guaranteed that everything work in this test version as expected. You may <i>possibly</i> encounter some major or minor warnings or bugs.
 <br><br>
@@ -84,8 +85,7 @@ YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>
 After spending a lot of my lifetime on this project, I decided to follow my friends - I've uploaded it to GitHub and kept the repository private until the status of the project has got to a level where others can make use out of it. Though all efforts of "getting it to the point", this project is not finished yet - and never will be. It will stay in development, as long as I or somebody else take care about it.
 <hr>
 <h3>Do you want to be  part of this project?</h3>
-If you want to put your manpower and knowledge into this project, you're welcome! Please feel free to contact me via Email. danielretzl@gmail.com Tell me how you think you can help this project. Your input will be welcome - everything will get better - particularly
-with a little help from some friends.
+If you want to put your manpower and knowledge into this project, you're welcome! Please feel free to contact me. Tell me how you think you can help this project. Your input will be welcome - everything will get better - particularly with a little help from some friends.
 <hr>
 <h4><i>Check back again soon and stay tuned for upcoming website and project updates!</i></h4>
 <br><br>
