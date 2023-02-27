@@ -21,13 +21,42 @@ const form = document.getElementById('installerForm');
                 if (data.success) {
                     // Credentials are valid, continue with installation
                     form.submit();
+                    $.notify({
+                        // options
+                        title: '<h4><i class=\"fa fa-database\"></i>&nbsp; '+data.message+'</h4>',
+                        message: '<b>'+data.importmsg+'</b>',
+                    }, {
+                        // settings
+                        type: 'success',
+                        element: 'body',
+                        position: null,
+                        allow_dismiss: 'false',
+                        newest_on_top: 'true',
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        },
+                        offset: {
+                            x: 10,
+                            y: 62
+                        },
+                        spacing: 10,
+                        z_index: 9999,
+                        delay: 6200,
+                        timer: 420,
+                        mouse_over: 'pause',
+                        animate: {
+                            enter: 'animated fadeInDown',
+                            exit: 'animated fadeOutUp'
+                        }
+                    });
                 }
                 else
                 {   // Credentials are invalid, display error message
                     $.notify({
                         // options
-                        title: '<h4><i class=\"fa fa-database\"></i>&nbsp; SERVER RETURNED AN ERROR:</h4>',
-                        message: '<b>'+data.message+'</b><br><br>Please check whether your data is correct and try again.',
+                        title: '<h4><i class=\"fa fa-database\"></i>&nbsp; '+data.message+'</h4>',
+                        message: '<b>'+data.subline+'</b>',
                     }, {
                         // settings
                         type: 'danger',
@@ -57,7 +86,7 @@ const form = document.getElementById('installerForm');
                     // store save button in variable
                     var saveBtn = $("#savebutton");
                     // change button text and icon
-                    $(saveBtn).html('2/5 Test Connection Again &nbsp;<i id="savebuttonIcon" class="fa fa-refresh"></i>').removeClass().addClass('btn btn-success pull-right');
+                    $(saveBtn).html('2/5 '+data.checkagain+' &nbsp;<i id="savebuttonIcon" class="fa fa-refresh"></i>').removeClass().addClass('btn btn-success pull-right');
                 }
             })
             .catch(error => {
