@@ -1,8 +1,7 @@
-$(document).ready(function() {
-console.log('setupHelper.js loaded');
+$(document).ready(function() {  // wait until document is ready
+// This file is a helper to check the database credentials via xhr
 // Get the form element
 const form = document.getElementById('installerForm');
-
 // Add an event listener to the form submit event
     form.addEventListener('submit', (event) => {
         event.preventDefault(); // prevent the form from submitting
@@ -15,6 +14,7 @@ const form = document.getElementById('installerForm');
             method: 'POST',
             body: formData
         })
+            // Get the response as JSON
             .then(response => response.json()) // Parse the JSON response
             .then(data => {
                 // Handle the response data
@@ -23,8 +23,7 @@ const form = document.getElementById('installerForm');
                     form.submit();
                 }
                 else
-                {
-                    // Credentials are invalid, display error message
+                {   // Credentials are invalid, display error message
                     $.notify({
                         // options
                         title: '<h4><i class=\"fa fa-database\"></i>&nbsp; SERVER RETURNED AN ERROR:</h4>',
@@ -55,8 +54,9 @@ const form = document.getElementById('installerForm');
                         }
                     });
 
+                    // store save button in variable
                     var saveBtn = $("#savebutton");
-//                    $(saveBtn).setAttribute('class', 'btn btn-danger pull-right');
+                    // change button text and icon
                     $(saveBtn).html('2/5 Test Connection Again &nbsp;<i id="savebuttonIcon" class="fa fa-refresh"></i>').removeClass().addClass('btn btn-success pull-right');
                 }
             })
@@ -65,5 +65,4 @@ const form = document.getElementById('installerForm');
                 console.error(error);
             });
     });
-
 });
