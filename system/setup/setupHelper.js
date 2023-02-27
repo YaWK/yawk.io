@@ -6,6 +6,9 @@ const form = document.getElementById('installerForm');
     form.addEventListener('submit', (event) => {
         event.preventDefault(); // prevent the form from submitting
 
+        // store save button in variable
+        var saveBtn = $("#savebutton");
+
         // Get the form data
         const formData = new FormData(form);
 
@@ -21,6 +24,11 @@ const form = document.getElementById('installerForm');
                 if (data.success) {
                     // Credentials are valid, continue with installation
                     form.submit();
+
+                    // disable save button to prevent double submit
+                    $(saveBtn).prop('disabled', true);
+
+                    // credentials are valid, display success message
                     $.notify({
                         // options
                         title: '<h4><i class=\"fa fa-database\"></i>&nbsp; '+data.message+'</h4>',
@@ -83,8 +91,6 @@ const form = document.getElementById('installerForm');
                         }
                     });
 
-                    // store save button in variable
-                    var saveBtn = $("#savebutton");
                     // change button text and icon
                     $(saveBtn).html('2/5 '+data.checkagain+' &nbsp;<i id="savebuttonIcon" class="fa fa-refresh"></i>').removeClass().addClass('btn btn-success pull-right');
                 }

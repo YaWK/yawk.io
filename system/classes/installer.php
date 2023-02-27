@@ -28,7 +28,7 @@ namespace YAWK {
         /** * @param bool $phpVersionStatus PHP Version */
         public $phpVersionStatus;
         /** * @param string $phpVersionRequired required PHP version */
-        public $phpVersionRequired = "5.1.0";
+        public $phpVersionRequired = "8.x";
         /** * @param string $phpCheckIcon php version icon: depending on true or false, check or times */
         public $phpCheckIcon;
         /** * @param string $apacheStatus Apache Version */
@@ -43,8 +43,10 @@ namespace YAWK {
         public $modRewriteStatus;
         /** * @param string $modRewriteCheckIcon mod_rewrite icon depending on true or false, check or times */
         public $modRewriteCheckIcon;
-        /** * @param string $serverRequirements does the server fulfil requirements? true or false */
+        /** * @param bool $serverRequirements does the server fulfil requirements? true or false */
         public $serverRequirements;
+        /** * @param string $serverRequirementCount how many requirements were met? */
+        public $serverRequirementCount;
 
         /**
          * @brief installer constructor.
@@ -322,7 +324,7 @@ namespace YAWK {
                                 <input type=\"password\" class=\"form-control\" name=\"DB_PASS\" id=\"DB_PASS\" placeholder=\"$setup[DB_PASS]\"><br>";
 
 
-            if ($this->serverRequirements === "true")
+            if ($this->serverRequirements === true)
             {
                 echo "<button type=\"submit\" name=\"save\" id=\"savebutton\" class=\"btn btn-success pull-right\"><small>$_POST[step]/5</small> &nbsp;$lang[CHECK_DB] &nbsp;<i id=\"savebuttonIcon\" class=\"fa fa-arrow-right\"></i></button>";
             }
@@ -360,22 +362,22 @@ namespace YAWK {
                                 <br><br><br>
                                 <h4>$lang[SYS_REQ]</h4>
                                 <ul class=\"list-unstyled\">
+                                    <li>$this->apacheCheckIcon <b>Apache 2.x</b> or <b>nginx</b></li>
                                     <li>$this->phpCheckIcon PHP $this->phpVersionRequired <small><i><small>($lang[USES]: ".phpversion().")</small></i></small></li>
-                                    <li>$this->apacheCheckIcon Apache 2.x <small><i><small>($lang[AVAILABLE]: ".$this->apacheStatus.")</small></i></small></li>
+                                    
                                         <ul class=\"list-unstyled small\">
                                             <li>&nbsp;&nbsp;&nbsp;&nbsp;$this->zlibCheckIcon +mod_gzip <small><i>($lang[AVAILABLE]: ".$this->zlib.") </i></small></li>
                                             <li>&nbsp;&nbsp;&nbsp;&nbsp;$this->modRewriteCheckIcon +mod_rewrite <small><i>($lang[AVAILABLE]: ".$this->modRewriteStatus.") </i></small></li>
                                         </ul>
                                 </ul><br>";
 
-            if ($this->serverRequirements === "true")
+            if ($this->phpVersionStatus == "true")
             {   // server requirements met
                 echo "<h4 class=\"text-success\" id=\"ajaxMessage\">$lang[SERVER_REQ_TRUE]</h4>";
             }
             else
             {   // server does not fulfill requirements, draw error
-                \YAWK\alert::draw("danger", "$lang[SYS_REQ]", "$lang[SERVER_REQ_FALSE]", '', '');
-                echo "<h4 class=\"text-danger\" id=\"ajaxMessage\">$lang[SERVER_REQ_FALSE]</h4>";
+                \YAWK\alert::draw("warning", "$lang[SYS_REQ]", "$lang[SERVER_REQ_FALSE]", '', '');
             }
             echo"<br><h4>$lang[DATA_PACKAGES]</h4>
                                      <input type=\"checkbox\" id=\"installCoreData\" name=\"installCoreData\" checked disabled>
@@ -909,36 +911,27 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         {
             $i = 0;
             self::checkPhpVersion();
-            self::checkApacheVersion();
+            //self::checkApacheVersion();
             self::checkZlib();
             self::checkModRewrite();
 
             // check PHP status
             if ($this->phpVersionStatus === "true")
             {   // ok
-                $i++;
+                $this->serverRequirementCount++;
                 $this->phpCheckIcon = "<i class=\"fa fa-check text-success\"></i>";
             }
             else
             {   // PHP failed
                 $this->phpCheckIcon = "<i class=\"fa fa-times text-danger\"></i>";
-            }
-
-            // check APACHE status
-            if ($this->apacheStatus === "true")
-            {   // ok
-                $i++;
-                $this->apacheCheckIcon = "<i class=\"fa fa-check text-success\"></i>";
-            }
-            else
-            {   // apache failed
-                $this->apacheCheckIcon = "<i class=\"fa fa-times text-danger\"></i>";
+                $this->serverRequirementCount = 0;
             }
 
             // check zlib status
             if ($this->zlib === "true")
             {   // ok
                 $this->zlibCheckIcon = "<i class=\"fa fa-check text-success\"></i>";
+                $this->serverRequirementCount++;
             }
             else
             {   // zlib failed
@@ -949,6 +942,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
             if ($this->modRewriteStatus === "true")
             {   // ok
                 $this->modRewriteCheckIcon = "<i class=\"fa fa-check text-success\"></i>";
+                $this->serverRequirementCount++;
             }
             else
             {   // failed
@@ -956,13 +950,13 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
             }
 
             // check if
-            if ($i < 2)
+            if ($this->serverRequirementCount == 0)
             {
-                $this->serverRequirements = "false";
+                $this->serverRequirements = false;
             }
             else
             {
-                $this->serverRequirements = "true";
+                $this->serverRequirements = true;
             }
         }
 
@@ -1029,7 +1023,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
                 }
                 else
                     {   //
-                        if ($this->apacheStatus == apache_get_version())
+                        if ($this->apacheStatus = apache_get_version())
                         {
                             $this->apacheStatus = "true";
                             return true;
@@ -1044,7 +1038,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
             }
             else
                 {
-                    if ($this->apacheStatus == apache_get_version())
+                    if ($this->apacheStatus = apache_get_version())
                     {
                         $this->apacheStatus = "true";
                         return true;
