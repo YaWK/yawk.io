@@ -1,6 +1,9 @@
 <?php
 namespace YAWK
 {
+
+    use Exception;
+
     /**
      * @details <b>Database class - connect to mysqli and return connection object</b>
      * <p>This class establish the database connection if none already exists.
@@ -31,34 +34,38 @@ namespace YAWK
         /**
          * @brief Connect to the database
          * @return object|bool false on failure / mysqli MySQLi object instance on success
+         * @throws Exception
          */
         public function connect()
         {
             // if connection is not set
             if (!isset($this->connection))
             {
-                // create new database object
-                if ($this->connection = new \mysqli(
+                try {
+                    // create new database object
+                    $this->connection = new \mysqli(
                         $this->config['server'],
                         $this->config['username'],
                         $this->config['password'],
                         $this->config['dbname'],
-                        $this->config['port']))
-                {
+                        $this->config['port']
+                    );
                     // connection established successfully
                     return $this->connection;
+                } catch (\mysqli_sql_exception $e) {
+                    // failed to connect to database (wrong credentials?)
+                    throw new Exception('Failed to connect to database: ' . $e->getMessage());
+                } catch (Exception $e) {
+                    throw new Exception('Database connection error: ' . $e->getMessage());
                 }
-                else
-                    {   // failed to connect to database
-                        // (wrong credentials?)
-                        return false;
-                    }
             }
             else
-                {   // connection already established...
-                    return $this->connection;
-                }
+            {
+                // connection already established...
+                return $this->connection;
+            }
         }
+
 
         /**
          * @brief Execute any sql query

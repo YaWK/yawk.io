@@ -55,43 +55,43 @@ namespace YAWK {
          */
         function __construct()
         {
-            echo "
+            echo '
 <html>
     <head>
-        <meta charset=\"utf-8\">
-        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>SETUP YaWK | Yet another Web Kit</title>
         <!-- Tell the browser to be responsive to screen width -->
-        <meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\" name=\"viewport\">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- favicon -->
-        <link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"favicon.ico\">
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
         <!-- Bootstrap 3.3.5 -->
-        <link rel=\"stylesheet\" href=\"system/engines/bootstrap3/dist/css/bootstrap.min.css\">
+        <link rel="stylesheet" href="system/engines/bootstrap3/dist/css/bootstrap.min.css">
         <!-- Animate CSS -->
-        <link rel=\"stylesheet\" href=\"system/engines/animateCSS/animate.min.css\">
+        <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css">
         <!-- Font Awesome -->
-        <link rel=\"stylesheet\" href=\"system/engines/font-awesome/css/font-awesome.min.css\">
+        <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css">
         <!-- Admin LTE -->
-        <link rel=\"stylesheet\" href=\"system/engines/AdminLTE/css/AdminLTE.min.css\">
+        <link rel="stylesheet" href="system/engines/AdminLTE/css/AdminLTE.min.css">
         
         <!-- jQuery 2.1.4 -->
-        <script type=\"text/javascript\" src=\"system/engines/jquery/jquery-2.2.3.min.js\"></script>
+        <script type="text/javascript" src="system/engines/jquery/jquery-2.2.3.min.js"></script>
         
         <!-- jQuery validation plugin -->
-        <script type=\"text/javascript\" src=\"system/engines/jquery/jquery.validate.min.js\"></script>
+        <script type="text/javascript" src="system/engines/jquery/jquery.validate.min.js"></script>
     
         <!-- Notify JS -->
-        <script src=\"system/engines/jquery/notify/bootstrap-notify.min.js\"></script>
+        <script src="system/engines/jquery/notify/bootstrap-notify.min.js"></script>
         
         <!-- pace JS -->
-        <script src=\"system/engines/pace/pace.min.js\"></script>
-        <link rel=\"stylesheet\" href=\"system/engines/pace/pace-minimal-installer.css\">
-                
+        <script src="system/engines/pace/pace.min.js"></script>
+        <link rel="stylesheet" href="system/engines/pace/pace-minimal-installer.css">
+                       
     </head>
-    <body style=\"background-color: #ebebeb;\">
-    <div class=\"container-fluid animated fadeIn\">
-    <form method=\"POST\">
-    ";
+    <body style="background-color: #ebebeb;">
+    <div class="container-fluid animated fadeIn">
+    <form method="POST" id="installerForm">
+    ';
         }
 
         /**
@@ -101,7 +101,7 @@ namespace YAWK {
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          */
-        public function init()
+        public function init(): void
         {
             $_SESSION['SETUP'] = TRUE;
             /* CHECK + SET LANGUAGE */
@@ -109,9 +109,9 @@ namespace YAWK {
             $language = '';
             require_once ('system/classes/language.php');
             /* check if language object is set*/
-            if (!isset($lang) || (empty($lang)))
+            if ((empty($lang)))
             {   // set new language object
-                $language = new \YAWK\language();
+                $language = new language();
                 // default language if detection not works
                 $language->defaultLanguage = "en-EN";
                 // set the path to the language file
@@ -298,6 +298,9 @@ namespace YAWK {
                     });
                 });
             </script>";
+            echo '
+        <!-- YaWK Setup Helper -->
+        <script src="system/setup/setupHelper.js"></script>';
             echo "
                     <div class=\"row\">
                         <div class=\"jumbotron\">
@@ -361,12 +364,12 @@ namespace YAWK {
 
             if ($this->serverRequirements === "true")
             {   // server requirements met
-                echo "<h4 class=\"text-success\">$lang[SERVER_REQ_TRUE]</h4>";
+                echo "<h4 class=\"text-success\" id=\"ajaxMessage\">$lang[SERVER_REQ_TRUE]</h4>";
             }
             else
             {   // server does not fulfill requirements, draw error
                 \YAWK\alert::draw("danger", "$lang[SYS_REQ]", "$lang[SERVER_REQ_FALSE]", '', '');
-                echo "<h4 class=\"text-danger\">$lang[SERVER_REQ_FALSE]</h4>";
+                echo "<h4 class=\"text-danger\" id=\"ajaxMessage\">$lang[SERVER_REQ_FALSE]</h4>";
             }
             echo"<br><h4>$lang[DATA_PACKAGES]</h4>
                                      <input type=\"checkbox\" id=\"installCoreData\" name=\"installCoreData\" checked disabled>
@@ -384,8 +387,9 @@ namespace YAWK {
          * @param array $setup installation settings
          * @param object $language language object
          * @param array $lang language data array
-         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @throws \Exception
          * @license    https://opensource.org/licenses/MIT
+         * @author Daniel Retzl <danielretzl@gmail.com>
          */
         public function step3($setup, $language, $lang)
         {
@@ -440,8 +444,7 @@ namespace YAWK {
                                 {   // delete filepointer, start again at next try
                                     unlink($this->filePointer);
                                     $this->step2($setup, $language, $lang);
-                                    \YAWK\alert::draw("danger", "$lang[DB_IMPORT]", "$lang[DB_IMPORT_FAILED]", "", 6000);
-                                    exit;
+                                    \YAWK\alert::draw("danger", "$lang[DB_IMPORT]", "$lang[DB_IMPORT_FAILED]", "setup.php", 6000);
                                 }
                         }
                         else
@@ -1126,11 +1129,12 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
          */
         function __destruct()
         {
-                $this->footer();
-                echo"
-                </form>
-                </body>
-                </html>";
+            $this->footer();
+            echo '
+            <div id="ajaxMessages" class="text-center" style="height:400px;"><div>
+        </form>
+    </body>
+</html>';
         }
     } // end class installer
 } // end namespace
