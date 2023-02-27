@@ -196,7 +196,7 @@ namespace YAWK {
                 // if INSTALL is set to true
                 if ($setup['INSTALL'] === "true")
                 {   // if no step variable is set, setup run for the first time
-                    if (!isset($_POST['step']) || (empty($_POST['step'])))
+                    if (empty($_POST['step']))
                     {   // STEP 1 -- LANGUAGE SELECTION
                         $_POST['step'] = 1;
                         // STEP 1 - language selector
@@ -249,7 +249,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step1($language, $lang)
+        public function step1(object $language, array $lang)
         {
             $this->step = 1;
             echo "<div class=\"row\">
@@ -283,7 +283,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step2($setup, $language, $lang)
+        public function step2(array $setup, object $language, array $lang)
         {
             $this->step = 2;
             echo "
@@ -324,11 +324,11 @@ namespace YAWK {
 
             if ($this->serverRequirements === "true")
             {
-                echo "<button type=\"submit\" name=\"save\" id=\"savebutton\" class=\"btn btn-success pull-right\"><small>$_POST[step]/5</small> &nbsp;$lang[NEXT_STEP] &nbsp;<i id=\"savebuttonIcon\" class=\"fa fa-arrow-right\"></i></button>";
+                echo "<button type=\"submit\" name=\"save\" id=\"savebutton\" class=\"btn btn-success pull-right\"><small>$_POST[step]/5</small> &nbsp;$lang[CHECK_DB] &nbsp;<i id=\"savebuttonIcon\" class=\"fa fa-arrow-right\"></i></button>";
             }
             else
             {
-                echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" disabled aria-disabled=\"true\"><small>$_POST[step]/5</small> &nbsp;$lang[NEXT_STEP] &nbsp;<i class=\"fa fa-arrow-right\"></i></button>";
+                echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" disabled aria-disabled=\"true\"><small>$_POST[step]/5</small> &nbsp;$lang[CHECK_DB] &nbsp;<i class=\"fa fa-arrow-right\"></i></button>";
             }
                                 
                                 echo "<br><h4>$lang[MYSQL_DATA_EXT]</h4>
@@ -344,6 +344,12 @@ namespace YAWK {
 
             echo"<input type=\"hidden\" name=\"step\" value=\"3\">
                                 <input type=\"hidden\" name=\"currentLanguage\" value=\"$language->currentLanguage\">
+                                <input type=\"hidden\" name=\"DB_CHECK_TO\" value=\"$lang[DB_CHECK_TO]\">
+                                <input type=\"hidden\" name=\"DB_CHECK_EST\" value=\"$lang[DB_CHECK_EST]\">
+                                <input type=\"hidden\" name=\"DB_CHECK_FAILED\" value=\"$lang[DB_CHECK_FAILED]\">
+                                <input type=\"hidden\" name=\"DB_CHECK_DATA\" value=\"$lang[DB_CHECK_DATA]\">
+                                <input type=\"hidden\" name=\"DB_IMPORT_MSG\" value=\"$lang[DB_IMPORT_MSG]\">
+                                <input type=\"hidden\" name=\"DB_CHECK_AGAIN\" value=\"$lang[DB_CHECK_AGAIN]\">
                                 </div>
                                 
                                 <div class=\"col-md-4 text-justify\">
@@ -391,14 +397,14 @@ namespace YAWK {
          * @license    https://opensource.org/licenses/MIT
          * @author Daniel Retzl <danielretzl@gmail.com>
          */
-        public function step3($setup, $language, $lang)
+        public function step3(array $setup, object $language, array $lang)
         {
             // server-side check if user has filled out all required fields of step 2
-            if (!isset($_POST['DB_HOST']) || empty($_POST['DB_HOST'])
-            || (!isset($_POST['DB_USER']) || empty($_POST['DB_USER'])
-            || (!isset($_POST['DB_NAME']) || empty($_POST['DB_NAME'])
-            || (!isset($_POST['DB_PREFIX']) || empty($_POST['DB_PREFIX'])
-            || (!isset($_POST['DB_PORT']) || empty($_POST['DB_PORT'])
+            if (empty($_POST['DB_HOST'])
+            || (empty($_POST['DB_USER'])
+            || (empty($_POST['DB_NAME'])
+            || (empty($_POST['DB_PREFIX'])
+            || (empty($_POST['DB_PORT'])
             )))))
             {   // kick user back to step 2, due missing or empty settings
                 if (isset($_POST['step']) && (!empty($_POST['step']))) { $_POST['step']--; }
@@ -503,7 +509,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step4($setup, $language, $lang)
+        public function step4(array $setup, object $language, array $lang)
         {
             $this->step = 4;
             // include database and settings class
@@ -606,7 +612,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step5($setup, $language, $lang)
+        public function step5(array $setup, object $language, array $lang)
         {
             $this->step = 5;
             // include database and settings class
@@ -698,7 +704,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function  writeHtaccessFileToAdminFolder()
+        public function  writeHtaccessFileToAdminFolder(): bool
         {
             $file = 'admin/.htaccess';
             $host = $this->url;
@@ -964,7 +970,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function getLanguageSelectOptions($language, $lang)
+        public function getLanguageSelectOptions($language, $lang): string
         {
             $selectOptions = '';
 
@@ -993,7 +999,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
          * @license    https://opensource.org/licenses/MIT
          * @return bool
          */
-        public function checkPhpVersion()
+        public function checkPhpVersion(): bool
         {
             if (version_compare(phpversion(), $this->phpVersionRequired, '<')) {
                 // php version isn't high enough
@@ -1012,7 +1018,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
          * @license    https://opensource.org/licenses/MIT
          * @return bool
          */
-        public function checkApacheVersion()
+        public function checkApacheVersion(): bool
         {   // check if server software info is readable and set
             if (isset($_SERVER['SERVER_SOFTWARE']) && (!empty($_SERVER['SERVER_SOFTWARE'])))
             {   // test server software
@@ -1023,7 +1029,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
                 }
                 else
                     {   //
-                        if ($this->apacheStatus = apache_get_version())
+                        if ($this->apacheStatus == apache_get_version())
                         {
                             $this->apacheStatus = "true";
                             return true;
@@ -1038,7 +1044,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
             }
             else
                 {
-                    if ($this->apacheStatus = apache_get_version())
+                    if ($this->apacheStatus == apache_get_version())
                     {
                         $this->apacheStatus = "true";
                         return true;
@@ -1056,7 +1062,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
          * @brief Check if zlib is available
          * @return bool
          */
-        public function checkZlib()
+        public function checkZlib(): bool
         {   // check if zlib is installed
             if(extension_loaded('zlib'))
             {   // zlin loaded
@@ -1075,7 +1081,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
          * @details <p>Note: this does not work on some restricted configured shared hosting providers.</p>
          * @return bool
          */
-        public function checkModRewrite()
+        public function checkModRewrite(): bool
         {   // check if mod_rewrite is in module list
             // note: this does not work on some restricted configured shared hosting providers.
             // even when mod_rewrite works, sometimes the identification fails due configuration restrictions.
