@@ -1,4 +1,8 @@
 $(document).ready(function() {  // wait until document is ready
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
 // This file is a helper to check the database credentials via xhr
 // Get the form element
 const form = document.getElementById('installerForm');

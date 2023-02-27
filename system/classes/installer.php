@@ -162,11 +162,11 @@ namespace YAWK {
                 $this->setup($language, $lang);
             }
             else
-                {   // init() failed - INSTALL.INI is not found or not readable
-                    require_once('system/classes/alert.php');
-                    \YAWK\alert::draw("danger", "$lang[INSTALLER_BROKEN]", "$lang[INSTALLER_BROKEN_SUBTEXT]", "","");
-                    die ("$lang[INSTALLER_BROKEN] $lang[INSTALLER_BROKEN_SUBTEXT]");
-                }
+            {   // init() failed - INSTALL.INI is not found or not readable
+                require_once('system/classes/alert.php');
+                \YAWK\alert::draw("danger", "$lang[INSTALLER_BROKEN]", "$lang[INSTALLER_BROKEN_SUBTEXT]", "","");
+                die ("$lang[INSTALLER_BROKEN] $lang[INSTALLER_BROKEN_SUBTEXT]");
+            }
         }   // ./ end installer init()
 
 
@@ -235,13 +235,13 @@ namespace YAWK {
                     }
                 }
             }
-                else
-                    {
-                        \YAWK\alert::draw("danger", "$lang[INSTALLER_BROKEN]", "$lang[INSTALLER_BROKEN_SUBTEXT]", "","");
-                        die ("$lang[INSTALLER_BROKEN] $lang[INSTALLER_BROKEN_SUBTEXT]");
-                    }
-                    // prevent display anything else than the single steps
-                    exit;
+            else
+            {
+                \YAWK\alert::draw("danger", "$lang[INSTALLER_BROKEN]", "$lang[INSTALLER_BROKEN_SUBTEXT]", "","");
+                die ("$lang[INSTALLER_BROKEN] $lang[INSTALLER_BROKEN_SUBTEXT]");
+            }
+            // prevent display anything else than the single steps
+            exit;
         }
 
 
@@ -263,7 +263,9 @@ namespace YAWK {
                                 <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
                                 <h4>$lang[STEP] $_POST[step]/5 <small>$lang[PREPARATION]</small></h4>
                                 <hr>
-                                <label for=\"currentLanguage\">$lang[LANG_LABEL]</label>
+                                <label for=\"currentLanguage\">$lang[LANG_LABEL] 
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_SUPPORTED_LANGUAGES]\"></i></small>
+                                </label>
                                     <select class=\"form-control\" id=\"currentLanguage\" name=\"currentLanguage\">
                                         ".$this->getLanguageSelectOptions($language, $lang)."
                                     </select>
@@ -310,17 +312,25 @@ namespace YAWK {
                                 <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
                                 <h4>$lang[STEP] $_POST[step]/5 <small>$lang[DATABASE]</small></h4>
                                 <hr>
-                                <h4>$lang[MYSQL_DATA]</h4>
-                                <label for=\"DB_HOST\">$lang[DB_HOST] <small><i>$lang[DB_HOST_SUBTEXT]</i></small></label>
+                                <h4>$lang[MYSQL_DATA] <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_CREDENTIALS]\"></i></small></h4>
+                                <label for=\"DB_HOST\">$lang[DB_HOST] <small><i>$lang[DB_HOST_SUBTEXT]</i></small> 
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBHOST]\"></i></small>
+                                </label>
                                 <input type=\"text\" class=\"form-control\" name=\"DB_HOST\" id=\"DB_HOST\" placeholder=\"$setup[DB_HOST]\">
                                 
-                                <label for=\"DB_NAME\">$lang[DB_NAME] <small><i>$lang[DB_NAME_SUBTEXT]</i></small></label>
+                                <label for=\"DB_NAME\">$lang[DB_NAME] <small><i>$lang[DB_NAME_SUBTEXT]</i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBNAME]\"></i></small>
+                                </label>
                                 <input type=\"text\" class=\"form-control\" name=\"DB_NAME\" id=\"DB_NAME\" placeholder=\"$setup[DB_NAME]\">
                                     
-                                <label for=\"DB_USER\">$lang[DB_USER] <small><i>$lang[DB_USER_SUBTEXT]</i></small></label>
+                                <label for=\"DB_USER\">$lang[DB_USER] <small><i>$lang[DB_USER_SUBTEXT]</i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBUSER]\"></i></small>
+                                </label>
                                 <input type=\"text\" class=\"form-control\" name=\"DB_USER\" id=\"DB_USER\" placeholder=\"$setup[DB_USER]\">
                                     
-                                <label for=\"DB_PASS\">$lang[DB_PASS] <small><i>$lang[DB_PASS_SUBTEXT]</i></small></label>
+                                <label for=\"DB_PASS\">$lang[DB_PASS] <small><i>$lang[DB_PASS_SUBTEXT]</i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBPASS]\"></i></small>
+                                </label>
                                 <input type=\"password\" class=\"form-control\" name=\"DB_PASS\" id=\"DB_PASS\" placeholder=\"$setup[DB_PASS]\"><br>";
 
 
@@ -332,13 +342,17 @@ namespace YAWK {
             {
                 echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" disabled aria-disabled=\"true\"><small>$_POST[step]/5</small> &nbsp;$lang[CHECK_DB] &nbsp;<i class=\"fa fa-arrow-right\"></i></button>";
             }
-                                
-                                echo "<br><h4>$lang[MYSQL_DATA_EXT]</h4>
+
+            echo "<br><h4>$lang[MYSQL_DATA_EXT]</h4>
                                     
-                                <label for=\"DB_PREFIX\">$lang[DB_PREFIX] <small><i>$lang[DB_PREFIX_SUBTEXT]</i></small></label>
+                                <label for=\"DB_PREFIX\">$lang[DB_PREFIX] <small><i>$lang[DB_PREFIX_SUBTEXT]</i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBPREFIX]\"></i></small>
+                                </label>
                                 <input type=\"text\" class=\"form-control\" name=\"DB_PREFIX\" id=\"DB_PREFIX\" placeholder=\"$setup[DB_PREFIX]\" value=\"$setup[DB_PREFIX]\">
                                     
-                                <label for=\"DB_PORT\">$lang[DB_PORT] <small><i>$lang[DB_PORT_SUBTEXT]</i></small></label>
+                                <label for=\"DB_PORT\">$lang[DB_PORT] <small><i>$lang[DB_PORT_SUBTEXT]</i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBPORT]\"></i></small>
+                                </label>
                                 <input type=\"text\" class=\"form-control\" name=\"DB_PORT\" id=\"DB_PORT\" placeholder=\"$setup[DB_PORT]\" value=\"$setup[DB_PORT]\">
                                     
                                 <!-- <button type=\"button\" class=\"btn btn-default\" onClick=\"history.go(-1);return true;\"><i class=\"fa fa-arrow-left\"></i> &nbsp;back</button> -->
@@ -362,7 +376,7 @@ namespace YAWK {
                                 <br><br><br>
                                 <h4>$lang[SYS_REQ]</h4>
                                 <ul class=\"list-unstyled\">
-                                    <li>$this->apacheCheckIcon <b>Apache 2.x</b> or <b>nginx</b></li>
+                                    <li>$this->apacheCheckIcon <b>Apache 2.x</b> $lang[OR] <b>nginx</b></li>
                                     <li>$this->phpCheckIcon PHP $this->phpVersionRequired <small><i><small>($lang[USES]: ".phpversion().")</small></i></small></li>
                                     
                                         <ul class=\"list-unstyled small\">
@@ -403,11 +417,11 @@ namespace YAWK {
         {
             // server-side check if user has filled out all required fields of step 2
             if (empty($_POST['DB_HOST'])
-            || (empty($_POST['DB_USER'])
-            || (empty($_POST['DB_NAME'])
-            || (empty($_POST['DB_PREFIX'])
-            || (empty($_POST['DB_PORT'])
-            )))))
+                || (empty($_POST['DB_USER'])
+                    || (empty($_POST['DB_NAME'])
+                        || (empty($_POST['DB_PREFIX'])
+                            || (empty($_POST['DB_PORT'])
+                            )))))
             {   // kick user back to step 2, due missing or empty settings
                 if (isset($_POST['step']) && (!empty($_POST['step']))) { $_POST['step']--; }
                 $this->step2($setup, $language, $lang);
@@ -415,13 +429,13 @@ namespace YAWK {
                 exit;
             }
             else
-                {   // data from step 2 seem to be OK...
-                    $this->step = 3;
-                    // get root base path
-                    $this->rootPath = \YAWK\sys::getBaseDir();
+            {   // data from step 2 seem to be OK...
+                $this->step = 3;
+                // get root base path
+                $this->rootPath = \YAWK\sys::getBaseDir();
 
-                    // write DB connection into db-config.php
-                    $data = "
+                // write DB connection into db-config.php
+                $data = "
 <?php
     \$this->config['server'] = \"".$_POST['DB_HOST']."\";
     \$this->config['username'] = \"".$_POST['DB_USER']."\";
@@ -430,40 +444,40 @@ namespace YAWK {
     \$this->config['prefix'] = \"".$_POST['DB_PREFIX']."\";
     \$this->config['port'] = \"".$_POST['DB_PORT']."\";
 ?>";
-                    // check if dbconfig file was successfully written...
-                    if (file_put_contents($this->dbConfigPhp, $data))
-                    {
-                        // include database and settings class
-                        if (!isset($db)) {
-                            require_once('system/classes/db.php');
-                            $db = new \YAWK\db();
-                        }
+                // check if dbconfig file was successfully written...
+                if (file_put_contents($this->dbConfigPhp, $data))
+                {
+                    // include database and settings class
+                    if (!isset($db)) {
+                        require_once('system/classes/db.php');
+                        $db = new \YAWK\db();
+                    }
 
-                        // ok, lets test the database connection...
-                        if ($db->connect())
-                        {
-                            // import .sql data
-                            if ($status = $db->import($this->sqlFile, $lang))
-                            {   // delete filepointer, because it is not needed anymore
-                                unlink($this->filePointer);
-                                \YAWK\alert::draw("success", "$lang[DB_IMPORT]", "$lang[DB_IMPORT_OK]", "", 2000);
-                            }
-                            else
-                                {   // delete filepointer, start again at next try
-                                    unlink($this->filePointer);
-                                    $this->step2($setup, $language, $lang);
-                                    \YAWK\alert::draw("danger", "$lang[DB_IMPORT]", "$lang[DB_IMPORT_FAILED]", "setup.php", 6000);
-                                }
+                    // ok, lets test the database connection...
+                    if ($db->connect())
+                    {
+                        // import .sql data
+                        if ($status = $db->import($this->sqlFile, $lang))
+                        {   // delete filepointer, because it is not needed anymore
+                            unlink($this->filePointer);
+                            \YAWK\alert::draw("success", "$lang[DB_IMPORT]", "$lang[DB_IMPORT_OK]", "", 2000);
                         }
                         else
-                        {   // kick user back to step 2, due missing or empty settings
-                            if (isset($_POST['step']) && (!empty($_POST['step']))) { $_POST['step']--; }
+                        {   // delete filepointer, start again at next try
+                            unlink($this->filePointer);
                             $this->step2($setup, $language, $lang);
-                            \YAWK\alert::draw("danger", "$lang[DB_ERROR]", "$lang[DB_ERROR_SUBTEXT]", "", 5000);
-                            exit;
+                            \YAWK\alert::draw("danger", "$lang[DB_IMPORT]", "$lang[DB_IMPORT_FAILED]", "setup.php", 6000);
                         }
+                    }
+                    else
+                    {   // kick user back to step 2, due missing or empty settings
+                        if (isset($_POST['step']) && (!empty($_POST['step']))) { $_POST['step']--; }
+                        $this->step2($setup, $language, $lang);
+                        \YAWK\alert::draw("danger", "$lang[DB_ERROR]", "$lang[DB_ERROR_SUBTEXT]", "", 5000);
+                        exit;
+                    }
 
-                        echo"
+                    echo"
                           <div class=\"row\">
                             <div class=\"jumbotron\">
                                 <div class=\"col-md-8 text-justify\">
@@ -494,14 +508,14 @@ namespace YAWK {
                                 </div>
                             </div>
                           </div>";
-                    }
-                    else
-                    {   // if not - draw error
-                        \YAWK\alert::draw("danger", "$lang[DBCONFIG_WRITE_FAILED]", "$lang[DBCONFIG_WRITE_FAILED]", "","");
-                        $this->step2($setup, $language, $lang);
-                        exit;
-                    }
                 }
+                else
+                {   // if not - draw error
+                    \YAWK\alert::draw("danger", "$lang[DBCONFIG_WRITE_FAILED]", "$lang[DBCONFIG_WRITE_FAILED]", "","");
+                    $this->step2($setup, $language, $lang);
+                    exit;
+                }
+            }
         }
 
         /** @brief step 4 - save project settings and draw a form to enter user data (email, name, password...)
@@ -529,9 +543,9 @@ namespace YAWK {
                 \YAWK\settings::setSetting($db, "dirprefix", $this->rootPath, $lang);
             }
             else
-                {
-                    $this->rootPath = \YAWK\sys::getBaseDir();
-                }
+            {
+                $this->rootPath = \YAWK\sys::getBaseDir();
+            }
 
             if (isset($_POST['URL']) && (!empty($_POST['URL'])))
             {
@@ -546,15 +560,15 @@ namespace YAWK {
                     \YAWK\settings::setSetting($db, "backendLogoText", $this->url, $lang);
                 }
                 else
-                    {   // FILTER FAILED - process anway, but throw warning afterwards.
-                        // remove spaces around the string
-                        $this->url = trim($_POST['URL']);
-                        // ensure that there is no trailing slash at the end
-                        $this->url = rtrim($this->url, '/') . '';
-                        \YAWK\settings::setSetting($db, "host", $this->url, $lang);
-                        \YAWK\settings::setSetting($db, "backendLogoText", $this->url, $lang);
-                        \YAWK\alert::draw("warning", "$lang[FAULTY_URL]", "$lang[FAULTY_URL_SUBTEXT]", "", 5000);
-                    }
+                {   // FILTER FAILED - process anway, but throw warning afterwards.
+                    // remove spaces around the string
+                    $this->url = trim($_POST['URL']);
+                    // ensure that there is no trailing slash at the end
+                    $this->url = rtrim($this->url, '/') . '';
+                    \YAWK\settings::setSetting($db, "host", $this->url, $lang);
+                    \YAWK\settings::setSetting($db, "backendLogoText", $this->url, $lang);
+                    \YAWK\alert::draw("warning", "$lang[FAULTY_URL]", "$lang[FAULTY_URL_SUBTEXT]", "", 5000);
+                }
             }
 
             if (isset($_POST['TITLE']) && (!empty($_POST['TITLE'])))
@@ -669,25 +683,25 @@ namespace YAWK {
                             exit;
                         }
                         else
-                            {
-                                \YAWK\alert::draw("warning", "$lang[INSTALL_COMPLETE]", "$lang[SETUP_UNLINK_FAILED]", "", 5000);
-                                \YAWK\sys::setTimeout("admin/index.php", 5000);
-                                exit;
-                            }
+                        {
+                            \YAWK\alert::draw("warning", "$lang[INSTALL_COMPLETE]", "$lang[SETUP_UNLINK_FAILED]", "", 5000);
+                            \YAWK\sys::setTimeout("admin/index.php", 5000);
+                            exit;
+                        }
                     }
                     else
-                        {   // check which .htaccess file could not be written
-                            if ($htaccessAdminStatus === 0)
-                            {   // admin file could not be written, throw error
-                                \YAWK\alert::draw("warning", "$lang[HTACCESS_WRITE_FAILED_ADMIN]", "$lang[HTACCESS_WRITE_FAILED_ADMIN_SUBTEXT]", "", "");
-                                exit;
-                            }
-                            if ($htaccessRootStatus === 0)
-                            {
-                                \YAWK\alert::draw("warning", "$lang[HTACCESS_WRITE_FAILED_ROOT]", "$lang[HTACCESS_WRITE_FAILED_ROOT_SUBTEXT]", "", "");
-                                exit;
-                            }
+                    {   // check which .htaccess file could not be written
+                        if ($htaccessAdminStatus === 0)
+                        {   // admin file could not be written, throw error
+                            \YAWK\alert::draw("warning", "$lang[HTACCESS_WRITE_FAILED_ADMIN]", "$lang[HTACCESS_WRITE_FAILED_ADMIN_SUBTEXT]", "", "");
+                            exit;
                         }
+                        if ($htaccessRootStatus === 0)
+                        {
+                            \YAWK\alert::draw("warning", "$lang[HTACCESS_WRITE_FAILED_ROOT]", "$lang[HTACCESS_WRITE_FAILED_ROOT_SUBTEXT]", "", "");
+                            exit;
+                        }
+                    }
                 }
                 else
                 {
@@ -896,9 +910,9 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
                 return true;
             }
             else
-                {   // could not write file
-                    return false;
-                }
+            {   // could not write file
+                return false;
+            }
 
         }
 
@@ -979,13 +993,13 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
                                         ";
                 }
                 else
-                    {
-                        // $selectOptions .= "<option value=\"$supportedLanguage\">$supported</option>
-                        $selectOptions .= "<option value=\"$supported\">$supported</option>
+                {
+                    // $selectOptions .= "<option value=\"$supportedLanguage\">$supported</option>
+                    $selectOptions .= "<option value=\"$supported\">$supported</option>
                         ";
-                    }
+                }
             }
-                return $selectOptions;
+            return $selectOptions;
         }
 
         /** @brief Check if php version is bigger than required
@@ -1022,22 +1036,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
                     return true;
                 }
                 else
-                    {   //
-                        if ($this->apacheStatus = apache_get_version())
-                        {
-                            $this->apacheStatus = "true";
-                            return true;
-                        }
-                        else
-                            {
-                                // no apache detected...
-                                $this->apacheStatus = "false";
-                                return false;
-                            }
-                    }
-            }
-            else
-                {
+                {   //
                     if ($this->apacheStatus = apache_get_version())
                     {
                         $this->apacheStatus = "true";
@@ -1045,11 +1044,26 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
                     }
                     else
                     {
-                        // server software var not set or readable
-                        $this->apacheStatus = "unable to detect";
-                        return true; // let user try to install anyway
+                        // no apache detected...
+                        $this->apacheStatus = "false";
+                        return false;
                     }
                 }
+            }
+            else
+            {
+                if ($this->apacheStatus = apache_get_version())
+                {
+                    $this->apacheStatus = "true";
+                    return true;
+                }
+                else
+                {
+                    // server software var not set or readable
+                    $this->apacheStatus = "unable to detect";
+                    return true; // let user try to install anyway
+                }
+            }
         }
 
         /**
