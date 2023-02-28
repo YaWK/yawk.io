@@ -47,6 +47,7 @@ namespace YAWK {
         public $serverRequirements;
         /** * @param string $serverRequirementCount how many requirements were met? */
         public $serverRequirementCount;
+        public $setupIndicator = 'system/setup/setup.indicator';
 
         /**
          * @brief installer constructor.
@@ -157,16 +158,36 @@ namespace YAWK {
 
             /* INSTALLER SCRIPT */
             // check if system/setup/install.ini file is available
-            if (file_exists($this->configFile))
-            {
-                /* LOAD INSTALLER */
-                $this->setup($language, $lang);
+            if (file_exists($this->configFile) && (is_readable($this->configFile)))
+            {   // install.ini found, next step...
+                // check, if filepointer is found and readable
+                // if so, that means we may got a corrupt installation, probably due to a failed database import
+                // this can happen, if the database user has no rights to create tables or if - more common -
+                // the user has interrupted the import process (browser abort button / browser reload / browser close)
+                if (file_exists($this->filePointer) || (file_exists($this->setupIndicator)))
+                {   // filepointer found, which indicates, that something strange has happened during db import
+                    // no we try to fix the broken installation by re-installing db and deleting the filepointer
+                    // check if db config file already exists and is readable
+                    if (file_exists($this->dbConfigPhp) && (is_readable($this->dbConfigPhp)))
+                    {   // yep, good chance to reset the database
+                        // CALL RESET DATABASE METHOD
+                        $this->resetInstallation($language, $lang);
+                    }
+                    else
+                    {   // TELL: no db config file found, unable to reset database
+                        die ("$lang[INSTALLER_FIX_FAILED] $lang[INSTALLER_FIX_FAILED_SUBTEXT] $lang[MISSING_FILE] $this->dbConfigPhp $lang[INSTALLER_FIX_FAILED_EXPLAIN]");
+                    }
+                }
+                else
+                {   // filepointer not found, so we assume, that this is a fresh installation
+                    /* LOAD INSTALLER */
+                    $this->setup($language, $lang);
+                }
             }
             else
             {   // init() failed - INSTALL.INI is not found or not readable
-                require_once('system/classes/alert.php');
-                \YAWK\alert::draw("danger", "$lang[INSTALLER_BROKEN]", "$lang[INSTALLER_BROKEN_SUBTEXT]", "","");
-                die ("$lang[INSTALLER_BROKEN] $lang[INSTALLER_BROKEN_SUBTEXT]");
+                // the only thing we can do is to tell the user, that something is wrong and tell him to restart the setup again
+                die ("$lang[INSTALLER_BROKEN] $lang[INSTALLER_BROKEN_SUBTEXT] $lang[MISSING_FILE] $this->configFile");
             }
         }   // ./ end installer init()
 
@@ -237,14 +258,52 @@ namespace YAWK {
                 }
             }
             else
-            {
-                \YAWK\alert::draw("danger", "$lang[INSTALLER_BROKEN]", "$lang[INSTALLER_BROKEN_SUBTEXT]", "","");
-                die ("$lang[INSTALLER_BROKEN] $lang[INSTALLER_BROKEN_SUBTEXT]");
+            {   // unable to parse setup.ini file - something is wrong there is nothing we can do, but to tell the user to re-download the installation package
+                die ("$lang[INSTALLER_BROKEN] $lang[INSTALLER_BROKEN_SUBTEXT] $lang[PARSE_ERROR] $this->configFile");
             }
-            // prevent display anything else than the single steps
+            // prevent from displaying anything else than the single steps
             exit;
         }
 
+
+        /** @brief RESET - RESET DATABASE xor CORRUPT INSTALLATION
+         * @param array $lang language data array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @license    https://opensource.org/licenses/MIT
+         */
+        public function resetInstallation($language, $lang)
+        {
+            // include database and settings class
+            if (!isset($db)) {
+                require_once('system/classes/db.php');
+                $db = new \YAWK\db();
+            }
+            require_once('system/classes/dbconfig.php');
+            // ok, lets test the database connection...
+            $tableName = "cms_assets"; // replace with your table name
+            $sql = "SHOW TABLES LIKE '{$tableName}'";
+            $result = $db->query($sql);
+            if ($result->num_rows > 0) {
+                // table already exists, truncate all tables
+                $sql = "SHOW TABLES";
+                $result = $db->query($sql);
+                while ($row = $result->fetch_array()) {
+                    $tableName = $row[0];
+                    $sql = "DROP TABLE {$tableName}";
+                    $db->query($sql);
+                }
+            }
+            if (file_exists($this->setupIndicator))
+            {   // delete setup indicator file
+                unlink($this->setupIndicator);
+            }
+            if (file_exists($this->filePointer))
+            {   // delete file pointer file
+                unlink($this->filePointer);
+            }
+            // all tables dropped, now we can start the installation process again
+            $this->setup($language, $lang);
+        }
 
         /** @brief step 1 - SELECT LANGUAGE
          * @param object $language language object
@@ -266,7 +325,7 @@ namespace YAWK {
                                 <label for=\"currentLanguage\">$lang[LANG_LABEL] 
                                     <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_SUPPORTED_LANGUAGES]\"></i></small>
                                 </label>
-                                    <select class=\"form-control\" id=\"currentLanguage\" name=\"currentLanguage\">
+                                    <select required class=\"form-control\" id=\"currentLanguage\" name=\"currentLanguage\">
                                         ".$this->getLanguageSelectOptions($language, $lang)."
                                     </select>
                                 <br>
@@ -289,18 +348,6 @@ namespace YAWK {
         public function step2(array $setup, object $language, array $lang)
         {
             $this->step = 2;
-            echo "
-            <!-- JS to ensure loading state on save button -->
-            <script type=\"text/javascript\">
-                $(document).ready(function() {
-                    // store savebutton in var
-                    var savebutton = ('#savebutton');
-                    // check if user clicked on save button
-                    $(savebutton).click(function() {
-                        $(savebutton).removeClass('btn btn-success').html('<small>2/5</small> $lang[IMPORTING_DB] &nbsp;<i class=\"fa fa-spinner fa-spin fa-fw\"></i>').addClass('btn btn-warning disabled');
-                    });
-                });
-            </script>";
             echo '
         <!-- YaWK Setup Helper -->
         <script src="system/setup/setupHelper.js"></script>';
@@ -314,22 +361,22 @@ namespace YAWK {
                                 <label for=\"DB_HOST\">$lang[DB_HOST] <small><i>$lang[DB_HOST_SUBTEXT]</i></small> 
                                     <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBHOST]\"></i></small>
                                 </label>
-                                <input type=\"text\" class=\"form-control\" name=\"DB_HOST\" id=\"DB_HOST\" placeholder=\"$setup[DB_HOST]\">
+                                <input required type=\"text\" class=\"form-control\" name=\"DB_HOST\" id=\"DB_HOST\" placeholder=\"$setup[DB_HOST]\">
                                 
                                 <label for=\"DB_NAME\">$lang[DB_NAME] <small><i>$lang[DB_NAME_SUBTEXT]</i></small>
                                     <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBNAME]\"></i></small>
                                 </label>
-                                <input type=\"text\" class=\"form-control\" name=\"DB_NAME\" id=\"DB_NAME\" placeholder=\"$setup[DB_NAME]\">
+                                <input required type=\"text\" class=\"form-control\" name=\"DB_NAME\" id=\"DB_NAME\" placeholder=\"$setup[DB_NAME]\">
                                     
                                 <label for=\"DB_USER\">$lang[DB_USER] <small><i>$lang[DB_USER_SUBTEXT]</i></small>
                                     <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBUSER]\"></i></small>
                                 </label>
-                                <input type=\"text\" class=\"form-control\" name=\"DB_USER\" id=\"DB_USER\" placeholder=\"$setup[DB_USER]\">
+                                <input required type=\"text\" class=\"form-control\" name=\"DB_USER\" id=\"DB_USER\" placeholder=\"$setup[DB_USER]\">
                                     
                                 <label for=\"DB_PASS\">$lang[DB_PASS] <small><i>$lang[DB_PASS_SUBTEXT]</i></small>
                                     <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBPASS]\"></i></small>
                                 </label>
-                                <input type=\"password\" class=\"form-control\" name=\"DB_PASS\" id=\"DB_PASS\" placeholder=\"$setup[DB_PASS]\"><br>";
+                                <input required type=\"password\" class=\"form-control\" name=\"DB_PASS\" id=\"DB_PASS\" placeholder=\"$setup[DB_PASS]\"><br>";
 
 
             if ($this->serverRequirements === true)
@@ -346,12 +393,12 @@ namespace YAWK {
                                 <label for=\"DB_PREFIX\">$lang[DB_PREFIX] <small><i>$lang[DB_PREFIX_SUBTEXT]</i></small>
                                     <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBPREFIX]\"></i></small>
                                 </label>
-                                <input type=\"text\" class=\"form-control\" name=\"DB_PREFIX\" id=\"DB_PREFIX\" placeholder=\"$setup[DB_PREFIX]\" value=\"$setup[DB_PREFIX]\">
+                                <input required type=\"text\" class=\"form-control\" name=\"DB_PREFIX\" id=\"DB_PREFIX\" placeholder=\"$setup[DB_PREFIX]\" value=\"$setup[DB_PREFIX]\">
                                     
                                 <label for=\"DB_PORT\">$lang[DB_PORT] <small><i>$lang[DB_PORT_SUBTEXT]</i></small>
                                     <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBPORT]\"></i></small>
                                 </label>
-                                <input type=\"text\" class=\"form-control\" name=\"DB_PORT\" id=\"DB_PORT\" placeholder=\"$setup[DB_PORT]\" value=\"$setup[DB_PORT]\">
+                                <input required type=\"text\" class=\"form-control\" name=\"DB_PORT\" id=\"DB_PORT\" placeholder=\"$setup[DB_PORT]\" value=\"$setup[DB_PORT]\">
                                     
                                 <!-- <button type=\"button\" class=\"btn btn-default\" onClick=\"history.go(-1);return true;\"><i class=\"fa fa-arrow-left\"></i> &nbsp;back</button> -->
                                 ";
@@ -364,6 +411,7 @@ namespace YAWK {
                                 <input type=\"hidden\" name=\"DB_CHECK_DATA\" value=\"$lang[DB_CHECK_DATA]\">
                                 <input type=\"hidden\" name=\"DB_IMPORT_MSG\" value=\"$lang[DB_IMPORT_MSG]\">
                                 <input type=\"hidden\" name=\"DB_CHECK_AGAIN\" value=\"$lang[DB_CHECK_AGAIN]\">
+                                <input type=\"hidden\" name=\"DB_IMPORT_BTN\" value=\"$lang[DB_IMPORT_BTN]\">
                                 </div>
                                 
                                 <div class=\"col-md-4 text-justify\">
@@ -392,7 +440,7 @@ namespace YAWK {
                 \YAWK\alert::draw("warning", "$lang[SYS_REQ]", "$lang[SERVER_REQ_FALSE]", '', '');
             }
             echo"<br><h4>$lang[DATA_PACKAGES] <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_PACKAGES]\"></i></small></h4>
-                                     <input type=\"checkbox\" id=\"installCoreData\" name=\"installCoreData\" checked disabled>
+                                     <input required type=\"checkbox\" id=\"installCoreData\" name=\"installCoreData\" checked disabled>
                                      <label for=\"installCoreData\" style=\"font-weight: normal;\">$lang[YAWK_INSTALLATION_FILES] <small>($setup[VERSION])</small></label>
                                      <br>
                                      <input type=\"checkbox\" id=\"installSampleData\" name=\"installSampleData\" disabled>
@@ -460,6 +508,9 @@ namespace YAWK {
                         {   // delete filepointer, because it is not needed anymore
                             unlink($this->filePointer);
                             \YAWK\alert::draw("success", "$lang[DB_IMPORT]", "$lang[DB_IMPORT_OK]", "", 2000);
+
+                            // setup indicator will be used to check if setup was already done until this step
+                            touch($this->setupIndicator);
                         }
                         else
                         {   // delete filepointer, start again at next try
@@ -476,6 +527,7 @@ namespace YAWK {
                         exit;
                     }
 
+
                     echo"
                           <div class=\"row\">
                                 <div class=\"col-md-8 text-justify\">
@@ -485,15 +537,15 @@ namespace YAWK {
                                     <label for=\"URL\">$lang[URL] <small><i>$lang[URL_SUBTEXT]</i></small>
                                         <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[HOST_LABEL]\"></i></small>
                                     </label>
-                                    <input type=\"text\" class=\"form-control\" name=\"URL\" id=\"URL\" placeholder=\"$setup[URL]\">
+                                    <input required type=\"text\" class=\"form-control\" name=\"URL\" id=\"URL\" placeholder=\"$setup[URL]\">
                                     <label for=\"TITLE\">$lang[TITLE] <small><i>$lang[INSTALLER_TITLE_SUBTEXT]</i></small>
                                         <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[TITLE_LABEL]\"></i></small>
                                     </label>
-                                    <input type=\"text\" class=\"form-control\" name=\"TITLE\" id=\"TITLE\" placeholder=\"$lang[INSTALLER_TITLE]\">
+                                    <input required type=\"text\" class=\"form-control\" name=\"TITLE\" id=\"TITLE\" placeholder=\"$lang[INSTALLER_TITLE]\">
                                     <label for=\"DESC\">$lang[INSTALLER_DESC] <small><i>$lang[INSTALLER_DESC_SUBTEXT]</i></small>
                                         <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[SHORT_DESCRIPTION_PH]\"></i></small>
                                     </label>
-                                    <input type=\"text\" class=\"form-control\" name=\"DESC\" id=\"DESC\" placeholder=\"$lang[INSTALLER_DESC_PLACEHOLDER]\">
+                                    <input required type=\"text\" class=\"form-control\" name=\"DESC\" id=\"DESC\" placeholder=\"$lang[INSTALLER_DESC_PLACEHOLDER]\">
                                     <br>
                                     <input type=\"hidden\" name=\"step\" value=\"4\">
                                     <input type=\"hidden\" name=\"currentLanguage\" value=\"$language->currentLanguage\">
@@ -600,26 +652,25 @@ namespace YAWK {
                                     <label for=\"EMAIL\">$lang[EMAIL] <small><i>$lang[EMAIL_SUBTEXT]</i></small>
                                         <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_EMAIL]\"></i></small>
                                     </label>
-                                    <input type=\"text\" class=\"form-control\" name=\"EMAIL\" id=\"EMAIL\" placeholder=\"$setup[ADMIN_EMAIL]\">
+                                    <input required type=\"text\" class=\"form-control\" name=\"EMAIL\" id=\"EMAIL\" placeholder=\"$setup[ADMIN_EMAIL]\">
                                     <label for=\"USERNAME\">$lang[USERNAME] <small><i>$lang[USERNAME]</i></small>
                                         <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_ADMINUSER]\"></i></small>
                                     </label>
-                                    <input type=\"text\" class=\"form-control\" name=\"USERNAME\" id=\"USERNAME\" placeholder=\"$setup[ADMIN_USER]\" value=\"admin\">
+                                    <input required type=\"text\" class=\"form-control\" name=\"USERNAME\" id=\"USERNAME\" placeholder=\"$setup[ADMIN_USER]\" value=\"admin\">
                                     <label for=\"PASSWORD\">$lang[PASSWORD] <small><i>$lang[PASSWORD]</i></small>
                                         <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_ADMINPASS]\"></i></small>
                                     </label>
-                                    <input type=\"password\" class=\"form-control\" name=\"PASSWORD\" id=\"PASSWORD\" placeholder=\"$setup[ADMIN_PASS]\">
+                                    <input required type=\"password\" class=\"form-control\" name=\"PASSWORD\" id=\"PASSWORD\" placeholder=\"$setup[ADMIN_PASS]\">
                                     <label for=\"PASSWORD2\">$lang[PASSWORD] <small><i>($lang[REPEAT])</i></small>
                                         <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_ADMINPASS_CONFIRM]\"></i></small>
                                     </label>
-                                    <input type=\"password\" class=\"form-control\" name=\"PASSWORD2\" id=\"PASSWORD2\" placeholder=\"$setup[ADMIN_PASS]\">
+                                    <input required type=\"password\" class=\"form-control\" name=\"PASSWORD2\" id=\"PASSWORD2\" placeholder=\"$setup[ADMIN_PASS]\">
                                     <br>
                                     <input type=\"hidden\" name=\"url\" value=\"$this->url\">
                                     <input type=\"hidden\" name=\"rootPath\" value=\"$this->rootPath\">
                                     <input type=\"hidden\" name=\"step\" value=\"5\">
                                     <input type=\"hidden\" name=\"currentLanguage\" value=\"$language->currentLanguage\">
                                     <button type=\"submit\" class=\"btn btn-success pull-right\"><small>$_POST[step]/5</small> &nbsp;$lang[NEXT_STEP] &nbsp;<i class=\"fa fa-arrow-right\"></i></button>
-                                   
                                 </div>
                                 <div class=\"col-md-4 text-justify\">
                                     <br><br>
@@ -993,7 +1044,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         {
             $selectOptions = '';
 
-            $selectOptions .= "<option disabled selected>$lang[SELECT_LANGUAGE]</option>";
+            $selectOptions .= "<option value=\"\">$lang[SELECT_LANGUAGE]</option>";
             foreach ($language->supportedLanguages AS $supported)
             {
                 $supportedLanguage = substr($supported, 0, 2);

@@ -19,9 +19,9 @@ namespace YAWK
     class db {
 
         /** @param array $config mysql configuration (host, username, database etc...) */
-        private $config;
+        public $config;
         /** @param object $connection holds the mysqli database connection */
-        private $connection;
+        public $connection;
 
         /**
          * db constructor - Include the database config file
@@ -234,11 +234,15 @@ namespace YAWK
          * @brief Delete a whole database (including all tables)
          * @param $database
          */
-        public function deleteDatabase($database)
+        public function deleteDatabase($database): bool
         {
+            $deletedTables = 0;
+            $errors = 0;
+
             // get all tables as array
             $result = $this->query("SHOW TABLES IN `$database`");
             // check if result is set
+
             if (isset($result) && (!empty($result)))
             {
                 // walk through result array
@@ -246,15 +250,24 @@ namespace YAWK
                 {   // store tablename in var
                     $tableName = $table[0];
                     // try to delete table
-                    if ($this->query("TRUNCATE TABLE `$database`.`$tableName`"))
+                    if ($this->query("DROP TABLE `$database`.`$tableName`"))
                     {   // output(?)
-                        echo "$tableName was cleared <br>";
+                        //echo "$tableName was cleared <br>";
+                        $deletedTables++;
                     }
                     else
                     {   // output error
-                        echo $this->error().'<br>';
+                        $errors++;
                     }
                 }
+            }
+            // something went wrong
+            if ($errors > 0)
+            {   // output error
+                return false;
+            }
+            else {
+                return true;
             }
         }
 
