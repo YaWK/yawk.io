@@ -90,9 +90,10 @@ namespace YAWK {
         <link rel="stylesheet" href="system/engines/pace/pace-minimal-installer.css">
                        
     </head>
-    <body style="background-color: #ebebeb;">
-    <div class="container-fluid animated fadeIn">
+    <body style="background-color: #ebebeb; margin-top:50px;">
+    
     <form method="POST" id="installerForm">
+    <div class="container animated fadeIn shadow-lg" style="background-color: #fff;">
     ';
         }
 
@@ -255,13 +256,12 @@ namespace YAWK {
         {
             $this->step = 1;
             echo "<div class=\"row\">
-                        <div class=\"jumbotron\">
                             <div class=\"col-md-4 text-justify\">
                             
                             </div>
                             <div class=\"col-md-4\">
                                 <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
-                                <h4>$lang[STEP] $_POST[step]/5 <small>$lang[PREPARATION]</small></h4>
+                                <h4><i class=\"fa fa-language\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[PREPARATION]</small></h4>
                                 <hr>
                                 <label for=\"currentLanguage\">$lang[LANG_LABEL] 
                                     <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_SUPPORTED_LANGUAGES]\"></i></small>
@@ -276,7 +276,6 @@ namespace YAWK {
                             <div class=\"col-md-4 text-justify\">
                             
                             </div>
-                        </div>
                   </div>";
         }
 
@@ -307,10 +306,9 @@ namespace YAWK {
         <script src="system/setup/setupHelper.js"></script>';
             echo "
                     <div class=\"row\">
-                        <div class=\"jumbotron\">
                             <div class=\"col-md-8\">
                                 <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
-                                <h4>$lang[STEP] $_POST[step]/5 <small>$lang[DATABASE]</small></h4>
+                                <h4><i class=\"fa fa-database\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[DATABASE]</small></h4>
                                 <hr>
                                 <h4>$lang[MYSQL_DATA] <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_CREDENTIALS]\"></i></small></h4>
                                 <label for=\"DB_HOST\">$lang[DB_HOST] <small><i>$lang[DB_HOST_SUBTEXT]</i></small> 
@@ -402,7 +400,6 @@ namespace YAWK {
                                         <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_PACKAGES_EXAMPLE]\"></i></small>
                                      </label>
                                      <br><br><b>$lang[DB_CHECK]</b><br><br><br><br><br><br></div> <!-- end col -->
-                            </div> <!-- end jumbotron -->
                           </div> <!-- end row -->
                           ";
         }
@@ -481,10 +478,9 @@ namespace YAWK {
 
                     echo"
                           <div class=\"row\">
-                            <div class=\"jumbotron\">
                                 <div class=\"col-md-8 text-justify\">
                                     <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
-                                    <h4>$lang[STEP] $_POST[step]/5 <small>$lang[PROJECT_SETTINGS]</small></h4>
+                                    <h4><i class=\"fa fa-pencil\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[PROJECT_SETTINGS]</small></h4>
                                     <hr><h4>$lang[COMMON_PROJECT_SETTINGS]</h4>
                                     <label for=\"URL\">$lang[URL] <small><i>$lang[URL_SUBTEXT]</i></small>
                                         <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[HOST_LABEL]\"></i></small>
@@ -516,7 +512,6 @@ namespace YAWK {
                                     <br><br><br>
                                     <b>$lang[STEP4]</b><br>
                                 </div>
-                            </div>
                           </div>";
                 }
                 else
@@ -598,10 +593,9 @@ namespace YAWK {
 
             echo"
                           <div class=\"row\">
-                            <div class=\"jumbotron\">
                                 <div class=\"col-md-8 text-justify\">
                                     <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
-                                    <h4>$lang[STEP] $_POST[step]/5 <small>$lang[ACCOUNT_SETTINGS]</small></h4>
+                                    <h4><i class=\"fa fa-user-circle-o\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[ACCOUNT_SETTINGS]</small></h4>
                                     <hr><h4>$lang[USER] $lang[SETTINGS]</h4>
                                     <label for=\"EMAIL\">$lang[EMAIL] <small><i>$lang[EMAIL_SUBTEXT]</i></small>
                                         <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_EMAIL]\"></i></small>
@@ -635,7 +629,6 @@ namespace YAWK {
                                     <br><br><br>
                                     <b>$lang[STEP5]</b><br>
                                 </div>
-                            </div>
                           </div>";
         }
 
@@ -1163,8 +1156,10 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         {
             $this->footer();
             echo '
-            <div id="ajaxMessages" class="text-center" style="height:400px;"><div>
+        
+</div>
         </form>
+        
     </body>
 </html>';
         }
