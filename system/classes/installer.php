@@ -603,13 +603,21 @@ namespace YAWK {
                                     <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
                                     <h4>$lang[STEP] $_POST[step]/5 <small>$lang[ACCOUNT_SETTINGS]</small></h4>
                                     <hr><h4>$lang[USER] $lang[SETTINGS]</h4>
-                                    <label for=\"EMAIL\">$lang[EMAIL] <small><i>$lang[EMAIL_SUBTEXT]</i></small></label>
+                                    <label for=\"EMAIL\">$lang[EMAIL] <small><i>$lang[EMAIL_SUBTEXT]</i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_EMAIL]\"></i></small>
+                                    </label>
                                     <input type=\"text\" class=\"form-control\" name=\"EMAIL\" id=\"EMAIL\" placeholder=\"$setup[ADMIN_EMAIL]\">
-                                    <label for=\"USERNAME\">$lang[USERNAME] <small><i>$lang[USERNAME]</i></small></label>
+                                    <label for=\"USERNAME\">$lang[USERNAME] <small><i>$lang[USERNAME]</i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_ADMINUSER]\"></i></small>
+                                    </label>
                                     <input type=\"text\" class=\"form-control\" name=\"USERNAME\" id=\"USERNAME\" placeholder=\"$setup[ADMIN_USER]\" value=\"admin\">
-                                    <label for=\"PASSWORD\">$lang[PASSWORD] <small><i>$lang[PASSWORD]</i></small></label>
+                                    <label for=\"PASSWORD\">$lang[PASSWORD] <small><i>$lang[PASSWORD]</i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_ADMINPASS]\"></i></small>
+                                    </label>
                                     <input type=\"password\" class=\"form-control\" name=\"PASSWORD\" id=\"PASSWORD\" placeholder=\"$setup[ADMIN_PASS]\">
-                                    <label for=\"PASSWORD2\">$lang[PASSWORD] <small><i>($lang[REPEAT])</i></small></label>
+                                    <label for=\"PASSWORD2\">$lang[PASSWORD] <small><i>($lang[REPEAT])</i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_ADMINPASS_CONFIRM]\"></i></small>
+                                    </label>
                                     <input type=\"password\" class=\"form-control\" name=\"PASSWORD2\" id=\"PASSWORD2\" placeholder=\"$setup[ADMIN_PASS]\">
                                     <br>
                                     <input type=\"hidden\" name=\"url\" value=\"$this->url\">
