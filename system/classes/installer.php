@@ -393,12 +393,14 @@ namespace YAWK {
             {   // server does not fulfill requirements, draw error
                 \YAWK\alert::draw("warning", "$lang[SYS_REQ]", "$lang[SERVER_REQ_FALSE]", '', '');
             }
-            echo"<br><h4>$lang[DATA_PACKAGES]</h4>
+            echo"<br><h4>$lang[DATA_PACKAGES] <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_PACKAGES]\"></i></small></h4>
                                      <input type=\"checkbox\" id=\"installCoreData\" name=\"installCoreData\" checked disabled>
                                      <label for=\"installCoreData\" style=\"font-weight: normal;\">$lang[YAWK_INSTALLATION_FILES] <small>($setup[VERSION])</small></label>
                                      <br>
                                      <input type=\"checkbox\" id=\"installSampleData\" name=\"installSampleData\" disabled>
-                                     <label for=\"installSampleData\" style=\"font-weight: normal;\">$lang[YAWK_EXAMPLE_FILES] <small><small><i>$lang[USERS_PAGES_MENUS]</i></small></small></label>
+                                     <label for=\"installSampleData\" style=\"font-weight: normal;\">$lang[YAWK_EXAMPLE_FILES] <small><small><i>$lang[USERS_PAGES_MENUS]</i></small></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_PACKAGES_EXAMPLE]\"></i></small>
+                                     </label>
                                      <br><br><b>$lang[DB_CHECK]</b><br><br><br><br><br><br></div> <!-- end col -->
                             </div> <!-- end jumbotron -->
                           </div> <!-- end row -->
@@ -484,18 +486,26 @@ namespace YAWK {
                                     <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
                                     <h4>$lang[STEP] $_POST[step]/5 <small>$lang[PROJECT_SETTINGS]</small></h4>
                                     <hr><h4>$lang[COMMON_PROJECT_SETTINGS]</h4>
-                                    <label for=\"URL\">$lang[URL] <small><i>$lang[URL_SUBTEXT]</i></small></label>
+                                    <label for=\"URL\">$lang[URL] <small><i>$lang[URL_SUBTEXT]</i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[HOST_LABEL]\"></i></small>
+                                    </label>
                                     <input type=\"text\" class=\"form-control\" name=\"URL\" id=\"URL\" placeholder=\"$setup[URL]\">
-                                    <label for=\"TITLE\">$lang[TITLE] <small><i>$lang[INSTALLER_TITLE_SUBTEXT]</i></small></label>
+                                    <label for=\"TITLE\">$lang[TITLE] <small><i>$lang[INSTALLER_TITLE_SUBTEXT]</i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[TITLE_LABEL]\"></i></small>
+                                    </label>
                                     <input type=\"text\" class=\"form-control\" name=\"TITLE\" id=\"TITLE\" placeholder=\"$lang[INSTALLER_TITLE]\">
-                                    <label for=\"DESC\">$lang[INSTALLER_DESC] <small><i>$lang[INSTALLER_DESC_SUBTEXT]</i></small></label>
+                                    <label for=\"DESC\">$lang[INSTALLER_DESC] <small><i>$lang[INSTALLER_DESC_SUBTEXT]</i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[SHORT_DESCRIPTION_PH]\"></i></small>
+                                    </label>
                                     <input type=\"text\" class=\"form-control\" name=\"DESC\" id=\"DESC\" placeholder=\"$lang[INSTALLER_DESC_PLACEHOLDER]\">
                                     <br>
                                     <input type=\"hidden\" name=\"step\" value=\"4\">
                                     <input type=\"hidden\" name=\"currentLanguage\" value=\"$language->currentLanguage\">
                                     <button type=\"submit\" class=\"btn btn-success pull-right\"><small>$_POST[step]/5</small> &nbsp;$lang[NEXT_STEP] &nbsp;<i class=\"fa fa-arrow-right\"></i></button>
                                    <hr>
-                                    <label for=\"ROOT_PATH\">$lang[ROOT_PATH] <small><i>$lang[ROOT_PATH_SUBTEXT]</i></small></label>
+                                    <label for=\"ROOT_PATH\">$lang[ROOT_PATH] <small><i>$lang[ROOT_PATH_SUBTEXT]</i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_ROOT_PATH]\"></i></small>
+                                    </label>
                                     <input type=\"text\" class=\"form-control\" name=\"ROOT_PATH\" id=\"ROOT_PATH\" value=\"$this->rootPath\" placeholder=\"$setup[ROOT_PATH]\">
                                 </div>
                                 <div class=\"col-md-4 text-justify\">
