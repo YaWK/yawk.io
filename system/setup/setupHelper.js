@@ -25,11 +25,16 @@ const form = document.getElementById('installerForm');
             .then(response => response.json()) // Parse the JSON response
             .then(data => {
                 // Handle the response data
-                if (data.success) {
-                    // Credentials are valid, continue with installation
+                if (data.success)
+                {   // Credentials are valid, continue with installation
+
+                    // indicate loading state, change button text and icon
+                    $(saveBtn).removeClass('btn btn-success').html('<small>2/5</small> '+data.DB_IMPORT_BTN+' &nbsp;<i class=\"fa fa-spinner fa-spin fa-fw\"></i>').addClass('btn btn-danger disabled');
+
+                    // submit form
                     form.submit();
 
-                    // disable save button to prevent double submit
+                    // disable save button to prevent double submission if user clicks multiple times
                     $(saveBtn).prop('disabled', true);
 
                     // credentials are valid, display success message

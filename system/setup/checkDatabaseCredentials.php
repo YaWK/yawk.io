@@ -58,17 +58,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         $port = 3306;
     }
 
-
     // try to successfully connect to the database
     try {
         // Create a new mysqli object with given database credentials
         $db = new mysqli($host, $username, $password, $dbname, $port);
-        $response = array('success' => true, 'message' => ''.$_POST['DB_CHECK_TO'].' '.$dbname.' @ '.$host.' '.$_POST['DB_CHECK_EST'].'.', 'subline' => $_POST['DB_CHECK_DATA'], 'importmsg' => $_POST['DB_IMPORT_MSG']);
+        $response = array('success' => true,
+            'message' => ''.$_POST['DB_CHECK_TO'].' '.$dbname.' @ '.$host.' '.$_POST['DB_CHECK_EST'].'.',
+            'subline' => $_POST['DB_CHECK_DATA'],
+            'importmsg' => $_POST['DB_IMPORT_MSG'],
+            'DB_IMPORT_BTN' => $_POST['DB_IMPORT_BTN']);
     }
     // failed to connect to the database
     catch (Exception $e)
     {       // Credentials are invalid, return an error message
-            $response = array('error' => false, 'message' => $_POST['DB_CHECK_FAILED'], 'subline' => $e->getMessage(), 'checkagain' => $_POST['DB_CHECK_AGAIN']);
+            $response = array('error' => false,
+                'message' => $_POST['DB_CHECK_FAILED'],
+                'subline' => $e->getMessage(),
+                'checkagain' => $_POST['DB_CHECK_AGAIN']);
     }
 
     // Send the response as JSON
