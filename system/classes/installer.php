@@ -164,25 +164,25 @@ namespace YAWK {
                 // if so, that means we may got a corrupt installation, probably due to a failed database import
                 // this can happen, if the database user has no rights to create tables or if - more common -
                 // the user has interrupted the import process (browser abort button / browser reload / browser close)
-                if (file_exists($this->filePointer) || (file_exists($this->setupIndicator)))
-                {   // filepointer found, which indicates, that something strange has happened during db import
-                    // no we try to fix the broken installation by re-installing db and deleting the filepointer
-                    // check if db config file already exists and is readable
-                    if (file_exists($this->dbConfigPhp) && (is_readable($this->dbConfigPhp)))
-                    {   // yep, good chance to reset the database
-                        // CALL RESET DATABASE METHOD
-                        $this->resetInstallation($language, $lang);
+
+                    // check if filepointer exists
+                    if (file_exists($this->filePointer) || (file_exists($this->setupIndicator) && (empty($_POST)))) {   // filepointer found, which indicates, that something strange has happened during db import
+                        // no we try to fix the broken installation by re-installing db and deleting the filepointer
+                        // check if db config file already exists and is readable
+                        if (file_exists($this->dbConfigPhp) && (is_readable($this->dbConfigPhp))) {   // yep, good chance to reset the database
+                            // CALL RESET DATABASE METHOD
+                            $this->resetInstallation($language, $lang);
+                        }
+                        else
+                        {   // TELL: no db config file found, unable to reset database
+                            die ("$lang[INSTALLER_FIX_FAILED] $lang[INSTALLER_FIX_FAILED_SUBTEXT] $lang[MISSING_FILE] $this->dbConfigPhp $lang[INSTALLER_FIX_FAILED_EXPLAIN]");
+                        }
                     }
                     else
-                    {   // TELL: no db config file found, unable to reset database
-                        die ("$lang[INSTALLER_FIX_FAILED] $lang[INSTALLER_FIX_FAILED_SUBTEXT] $lang[MISSING_FILE] $this->dbConfigPhp $lang[INSTALLER_FIX_FAILED_EXPLAIN]");
+                    {   // filepointer not found, so we assume, that this is a fresh installation
+                        /* LOAD INSTALLER */
+                        $this->setup($language, $lang);
                     }
-                }
-                else
-                {   // filepointer not found, so we assume, that this is a fresh installation
-                    /* LOAD INSTALLER */
-                    $this->setup($language, $lang);
-                }
             }
             else
             {   // init() failed - INSTALL.INI is not found or not readable
@@ -434,6 +434,19 @@ namespace YAWK {
             if ($this->phpVersionStatus == "true")
             {   // server requirements met
                 echo "<h4 class=\"text-success\" id=\"ajaxMessage\">$lang[SERVER_REQ_TRUE]</h4>";
+
+                if (is_writable('.htaccess')){
+                echo "<span class=\"text-success\"><i class=\"fa fa-check\"></i> &nbsp;$lang[HTACCESS_ROOT_WRITABLE]</span><br>";
+                }
+                else {
+                    echo "<span class=\"text-danger text-bold\"><i class=\"fa fa-exclamation-circle\"></i> &nbsp;$lang[HTACCESS_ROOT_NOT_WRITABLE] <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_HTACCESS_RIGHTS]\"></i></small></span><br>";
+                }
+                if (is_writable('admin/.htaccess')){
+                    echo "<span class=\"text-success\"><i class=\"fa fa-check\"></i> &nbsp; $lang[HTACCESS_ADMIN_WRITABLE]</span><br>";
+                }
+                else {
+                    echo "<span class=\"text-danger text-bold\"><i class=\"fa fa-exclamation-triangle\"></i> &nbsp; $lang[HTACCESS_ADMIN_NOT_WRITABLE]</span><br>";
+                }
             }
             else
             {   // server does not fulfill requirements, draw error
@@ -523,10 +536,8 @@ namespace YAWK {
                     {   // kick user back to step 2, due missing or empty settings
                         if (isset($_POST['step']) && (!empty($_POST['step']))) { $_POST['step']--; }
                         $this->step2($setup, $language, $lang);
-                        \YAWK\alert::draw("danger", "$lang[DB_ERROR]", "$lang[DB_ERROR_SUBTEXT]", "", 5000);
                         exit;
                     }
-
 
                     echo"
                           <div class=\"row\">
@@ -803,13 +814,34 @@ RewriteRule ^([^\\.]+)$ \\index.php?page=$1 [NC,L]
 # off for tinymce
 #RewriteRule ^(.*).htm$ \\index.php?include=$1
 ";
-            if (file_put_contents($file, $data, LOCK_EX))
-            {
-                return true;
+            if (is_writable($file))
+            {   // folder is writeable, try to write file
+                if (file_put_contents($file, $data, LOCK_EX))
+                {   // admin/.htaccess file successfully written
+                    return true;
+                }
+                else
+                {   // folder is writeable, but file could not be written
+                    return false;
+                }
             }
             else
-            {
-                return false;
+            {   // folder is not writeable, try to chmod it
+                if (chmod($file, 0664))
+                {   // try again to write file
+                    if (file_put_contents($file, $data, LOCK_EX))
+                    {   // file successfully written
+                        return true;
+                    }
+                    else
+                    {   // unable to write file
+                        return false;
+                    }
+                }
+                else {
+                    // unable to chmod folder
+                    return false;
+                }
             }
         }
 
@@ -967,15 +999,35 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
             ";
             // write to file
             // using the flag LOCK_EX, to ensure safe writing on file
-            if (file_put_contents($file, $data, LOCK_EX))
-            {   // all good
-                return true;
+            if (is_writable($file))
+            {   // folder is writeable, try to write file
+                if (file_put_contents($file, $data, LOCK_EX))
+                {   // admin/.htaccess file successfully written
+                    return true;
+                }
+                else
+                {   // folder is writeable, but file could not be written
+                    return false;
+                }
             }
             else
-            {   // could not write file
-                return false;
+            {   // folder is not writeable, try to chmod it
+                if (chmod($file, 0664))
+                {   // try again to write file
+                    if (file_put_contents($file, $data, LOCK_EX))
+                    {   // file successfully written
+                        return true;
+                    }
+                    else
+                    {   // unable to write file
+                        return false;
+                    }
+                }
+                else
+                {   // unable to chmod folder
+                    return false;
+                }
             }
-
         }
 
 

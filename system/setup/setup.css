@@ -6,3 +6,7 @@
     height: 1em;
     background-color: #000;
 }
+
+.text-bold {
+    font-weight: bold;
+}
