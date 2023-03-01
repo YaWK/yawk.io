@@ -13,3 +13,11 @@
 .tooltip.show /* The CSS classes that the tooltip has */ {
     opacity: 0.7; !important; /* or whatever */
 }
+
+#saveBtn {
+    cursor:pointer; !important;
+}
+
+#currentLanguage {
+    cursor:pointer; !important;
+}

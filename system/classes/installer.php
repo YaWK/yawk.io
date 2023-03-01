@@ -68,8 +68,8 @@ namespace YAWK {
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-        <!-- Bootstrap 3.3.5 -->
-        <link rel="stylesheet" href="system/engines/bootstrap3/dist/css/bootstrap.min.css">
+        <!-- Bootstrap 4 -->
+        <link rel="stylesheet" href="system/engines/bootstrap4/css/bootstrap.min.css">
         <!-- Animate CSS -->
         <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css">
         <!-- Font Awesome -->
@@ -77,25 +77,35 @@ namespace YAWK {
         <!-- Admin LTE -->
         <link rel="stylesheet" href="system/engines/AdminLTE/css/AdminLTE.min.css">
         
-        <!-- jQuery 2.1.4 -->
-        <script type="text/javascript" src="system/engines/jquery/jquery-2.2.3.min.js"></script>
+        <!-- jQuery 3.2.1 -->
+        <script type="text/javascript" src="system/engines/jquery/jquery-3.2.1.min.js"></script>
         
         <!-- jQuery validation plugin -->
         <script type="text/javascript" src="system/engines/jquery/jquery.validate.min.js"></script>
+        
+        <!-- popper.js used by bootstrap to help positioning the tooltips -->
+        <script type="text/javascript" src="system/engines/jquery/popper.min.js"></script>
     
         <!-- Notify JS -->
         <script src="system/engines/jquery/notify/bootstrap-notify.min.js"></script>
         
+        <!-- Bootstrap 4 JS -->
+        <script type="text/javascript" src="system/engines/bootstrap4/js/bootstrap.min.js"></script>
+        
         <!-- pace JS -->
         <script src="system/engines/pace/pace.min.js"></script>
         <link rel="stylesheet" href="system/engines/pace/pace-minimal-installer.css">
-                       
+        
+        <!-- custom YaWK setup css -->
+        <link rel="stylesheet" href="system/setup/setup.css">
+       
     </head>
     <body style="background-color: #ebebeb; margin-top:50px;">
     
+    <div class="container animated fadeIn slow shadow-lg" style="background-color: #fff;">
     <form method="POST" id="installerForm">
-    <div class="container animated fadeIn shadow-lg" style="background-color: #fff;">
     ';
+
         }
 
         /**
@@ -315,24 +325,25 @@ namespace YAWK {
         {
             $this->step = 1;
             echo "<div class=\"row\">
-                            <div class=\"col-md-4 text-justify\">
+                            <div class=\"col-md-2 text-justify\">
                             
                             </div>
-                            <div class=\"col-md-4\">
-                                <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
+                            <div class=\"col-md-8\">
+                                <h2 class=\"mt-5\">YaWK <small>$lang[INSTALLATION]</small></h2>
                                 <h4><i class=\"fa fa-language\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[PREPARATION]</small></h4>
                                 <hr>
                                 <label for=\"currentLanguage\">$lang[LANG_LABEL] 
-                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_SUPPORTED_LANGUAGES]\"></i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_SUPPORTED_LANGUAGES]\"></i></small>
                                 </label>
                                     <select required class=\"form-control\" id=\"currentLanguage\" name=\"currentLanguage\">
                                         ".$this->getLanguageSelectOptions($language, $lang)."
                                     </select>
                                 <br>
-                                <button class=\"btn btn-success pull-right\" type=\"submit\"><small>$_POST[step]/5</small> &nbsp;$lang[NEXT_STEP] &nbsp;<i class=\"fa fa-arrow-right\"></i></button>
+                                <button class=\"btn btn-success pull-right\" type=\"submit\" id=\"saveBtn\"><small>$_POST[step]/5</small> &nbsp;$lang[NEXT_STEP] &nbsp;<i class=\"fa fa-arrow-right\"></i></button>
                                 <input type=\"hidden\" name=\"step\" value=\"2\">
+                                <br><br><br>
                             </div>
-                            <div class=\"col-md-4 text-justify\">
+                            <div class=\"col-md-2 text-justify\">
                             
                             </div>
                   </div>";
@@ -351,30 +362,29 @@ namespace YAWK {
             echo '
         <!-- YaWK Setup Helper -->
         <script src="system/setup/setupHelper.js"></script>';
-            echo "
-                    <div class=\"row\">
-                            <div class=\"col-md-8\">
+            echo "<div class=\"row\">
+                            <div class=\"col-md-7\">
                                 <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
                                 <h4><i class=\"fa fa-database\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[DATABASE]</small></h4>
                                 <hr>
-                                <h4>$lang[MYSQL_DATA] <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_CREDENTIALS]\"></i></small></h4>
+                                <h4>$lang[MYSQL_DATA] <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_CREDENTIALS]\"></i></small></h4>
                                 <label for=\"DB_HOST\">$lang[DB_HOST] <small><i>$lang[DB_HOST_SUBTEXT]</i></small> 
-                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBHOST]\"></i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_DBHOST]\"></i></small>
                                 </label>
                                 <input required type=\"text\" class=\"form-control\" name=\"DB_HOST\" id=\"DB_HOST\" placeholder=\"$setup[DB_HOST]\">
                                 
                                 <label for=\"DB_NAME\">$lang[DB_NAME] <small><i>$lang[DB_NAME_SUBTEXT]</i></small>
-                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBNAME]\"></i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_DBNAME]\"></i></small>
                                 </label>
                                 <input required type=\"text\" class=\"form-control\" name=\"DB_NAME\" id=\"DB_NAME\" placeholder=\"$setup[DB_NAME]\">
                                     
                                 <label for=\"DB_USER\">$lang[DB_USER] <small><i>$lang[DB_USER_SUBTEXT]</i></small>
-                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBUSER]\"></i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_DBUSER]\"></i></small>
                                 </label>
                                 <input required type=\"text\" class=\"form-control\" name=\"DB_USER\" id=\"DB_USER\" placeholder=\"$setup[DB_USER]\">
                                     
                                 <label for=\"DB_PASS\">$lang[DB_PASS] <small><i>$lang[DB_PASS_SUBTEXT]</i></small>
-                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBPASS]\"></i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_DBPASS]\"></i></small>
                                 </label>
                                 <input required type=\"password\" class=\"form-control\" name=\"DB_PASS\" id=\"DB_PASS\" placeholder=\"$setup[DB_PASS]\"><br>";
 
@@ -388,15 +398,15 @@ namespace YAWK {
                 echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" disabled aria-disabled=\"true\"><small>$_POST[step]/5</small> &nbsp;$lang[CHECK_DB] &nbsp;<i class=\"fa fa-arrow-right\"></i></button>";
             }
 
-            echo "<br><h4>$lang[MYSQL_DATA_EXT]</h4>
+            echo "<br><h4 class=\"mt-5\">$lang[MYSQL_DATA_EXT]</h4>
                                     
                                 <label for=\"DB_PREFIX\">$lang[DB_PREFIX] <small><i>$lang[DB_PREFIX_SUBTEXT]</i></small>
-                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBPREFIX]\"></i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_DBPREFIX]\"></i></small>
                                 </label>
                                 <input required type=\"text\" class=\"form-control\" name=\"DB_PREFIX\" id=\"DB_PREFIX\" placeholder=\"$setup[DB_PREFIX]\" value=\"$setup[DB_PREFIX]\">
                                     
                                 <label for=\"DB_PORT\">$lang[DB_PORT] <small><i>$lang[DB_PORT_SUBTEXT]</i></small>
-                                    <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_DBPORT]\"></i></small>
+                                    <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_DBPORT]\"></i></small>
                                 </label>
                                 <input required type=\"text\" class=\"form-control\" name=\"DB_PORT\" id=\"DB_PORT\" placeholder=\"$setup[DB_PORT]\" value=\"$setup[DB_PORT]\">
                                     
@@ -414,9 +424,9 @@ namespace YAWK {
                                 <input type=\"hidden\" name=\"DB_IMPORT_BTN\" value=\"$lang[DB_IMPORT_BTN]\">
                                 </div>
                                 
-                                <div class=\"col-md-4 text-justify\">
+                                <div class=\"col-md-5 text-justify\">
                                 <br><br>
-                                <br><br><hr>
+                                <br><hr>
                                 <h4>$lang[INSTALL_NOTICE_HEADING]</h4>
                                 $lang[INSTALL_NOTICE]
                                 <br><br><br>
@@ -439,7 +449,7 @@ namespace YAWK {
                 echo "<span class=\"text-success\"><i class=\"fa fa-check\"></i> &nbsp;$lang[HTACCESS_ROOT_WRITABLE]</span><br>";
                 }
                 else {
-                    echo "<span class=\"text-danger text-bold\"><i class=\"fa fa-exclamation-circle\"></i> &nbsp;$lang[HTACCESS_ROOT_NOT_WRITABLE] <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_HTACCESS_RIGHTS]\"></i></small></span><br>";
+                    echo "<span class=\"text-danger text-bold\"><i class=\"fa fa-exclamation-circle\"></i> &nbsp;$lang[HTACCESS_ROOT_NOT_WRITABLE] <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_HTACCESS_RIGHTS]\"></i></small></span><br>";
                 }
                 if (is_writable('admin/.htaccess')){
                     echo "<span class=\"text-success\"><i class=\"fa fa-check\"></i> &nbsp; $lang[HTACCESS_ADMIN_WRITABLE]</span><br>";
@@ -452,13 +462,13 @@ namespace YAWK {
             {   // server does not fulfill requirements, draw error
                 \YAWK\alert::draw("warning", "$lang[SYS_REQ]", "$lang[SERVER_REQ_FALSE]", '', '');
             }
-            echo"<br><h4>$lang[DATA_PACKAGES] <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_PACKAGES]\"></i></small></h4>
+            echo"<br><h4>$lang[DATA_PACKAGES] <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_PACKAGES]\"></i></small></h4>
                                      <input required type=\"checkbox\" id=\"installCoreData\" name=\"installCoreData\" checked disabled>
                                      <label for=\"installCoreData\" style=\"font-weight: normal;\">$lang[YAWK_INSTALLATION_FILES] <small>($setup[VERSION])</small></label>
                                      <br>
                                      <input type=\"checkbox\" id=\"installSampleData\" name=\"installSampleData\" disabled>
                                      <label for=\"installSampleData\" style=\"font-weight: normal;\">$lang[YAWK_EXAMPLE_FILES] <small><small><i>$lang[USERS_PAGES_MENUS]</i></small></small>
-                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_PACKAGES_EXAMPLE]\"></i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_PACKAGES_EXAMPLE]\"></i></small>
                                      </label>
                                      <br><br><b>$lang[DB_CHECK]</b><br><br><br><br><br><br></div> <!-- end col -->
                           </div> <!-- end row -->
@@ -546,15 +556,15 @@ namespace YAWK {
                                     <h4><i class=\"fa fa-pencil\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[PROJECT_SETTINGS]</small></h4>
                                     <hr><h4>$lang[COMMON_PROJECT_SETTINGS]</h4>
                                     <label for=\"URL\">$lang[URL] <small><i>$lang[URL_SUBTEXT]</i></small>
-                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[HOST_LABEL]\"></i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[HOST_LABEL]\"></i></small>
                                     </label>
                                     <input required type=\"text\" class=\"form-control\" name=\"URL\" id=\"URL\" placeholder=\"$setup[URL]\">
                                     <label for=\"TITLE\">$lang[TITLE] <small><i>$lang[INSTALLER_TITLE_SUBTEXT]</i></small>
-                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[TITLE_LABEL]\"></i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[TITLE_LABEL]\"></i></small>
                                     </label>
                                     <input required type=\"text\" class=\"form-control\" name=\"TITLE\" id=\"TITLE\" placeholder=\"$lang[INSTALLER_TITLE]\">
                                     <label for=\"DESC\">$lang[INSTALLER_DESC] <small><i>$lang[INSTALLER_DESC_SUBTEXT]</i></small>
-                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[SHORT_DESCRIPTION_PH]\"></i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[SHORT_DESCRIPTION_PH]\"></i></small>
                                     </label>
                                     <input required type=\"text\" class=\"form-control\" name=\"DESC\" id=\"DESC\" placeholder=\"$lang[INSTALLER_DESC_PLACEHOLDER]\">
                                     <br>
@@ -563,7 +573,7 @@ namespace YAWK {
                                     <button type=\"submit\" class=\"btn btn-success pull-right\"><small>$_POST[step]/5</small> &nbsp;$lang[NEXT_STEP] &nbsp;<i class=\"fa fa-arrow-right\"></i></button>
                                    <hr>
                                     <label for=\"ROOT_PATH\">$lang[ROOT_PATH] <small><i>$lang[ROOT_PATH_SUBTEXT]</i></small>
-                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_ROOT_PATH]\"></i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_ROOT_PATH]\"></i></small>
                                     </label>
                                     <input type=\"text\" class=\"form-control\" name=\"ROOT_PATH\" id=\"ROOT_PATH\" value=\"$this->rootPath\" placeholder=\"$setup[ROOT_PATH]\">
                                 </div>
@@ -661,19 +671,19 @@ namespace YAWK {
                                     <h4><i class=\"fa fa-user-circle-o\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[ACCOUNT_SETTINGS]</small></h4>
                                     <hr><h4>$lang[USER] $lang[SETTINGS]</h4>
                                     <label for=\"EMAIL\">$lang[EMAIL] <small><i>$lang[EMAIL_SUBTEXT]</i></small>
-                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_EMAIL]\"></i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_EMAIL]\"></i></small>
                                     </label>
                                     <input required type=\"text\" class=\"form-control\" name=\"EMAIL\" id=\"EMAIL\" placeholder=\"$setup[ADMIN_EMAIL]\">
                                     <label for=\"USERNAME\">$lang[USERNAME] <small><i>$lang[USERNAME]</i></small>
-                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_ADMINUSER]\"></i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_ADMINUSER]\"></i></small>
                                     </label>
                                     <input required type=\"text\" class=\"form-control\" name=\"USERNAME\" id=\"USERNAME\" placeholder=\"$setup[ADMIN_USER]\" value=\"admin\">
                                     <label for=\"PASSWORD\">$lang[PASSWORD] <small><i>$lang[PASSWORD]</i></small>
-                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_ADMINPASS]\"></i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_ADMINPASS]\"></i></small>
                                     </label>
                                     <input required type=\"password\" class=\"form-control\" name=\"PASSWORD\" id=\"PASSWORD\" placeholder=\"$setup[ADMIN_PASS]\">
                                     <label for=\"PASSWORD2\">$lang[PASSWORD] <small><i>($lang[REPEAT])</i></small>
-                                        <small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$lang[I_ADMINPASS_CONFIRM]\"></i></small>
+                                        <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_ADMINPASS_CONFIRM]\"></i></small>
                                     </label>
                                     <input required type=\"password\" class=\"form-control\" name=\"PASSWORD2\" id=\"PASSWORD2\" placeholder=\"$setup[ADMIN_PASS]\">
                                     <br>
@@ -1262,7 +1272,13 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         
 </div>
         </form>
-        
+        <script>
+        $(document).ready(function() {
+            $(function () {
+                $("[data-toggle=\'tooltip\']").tooltip();
+            });
+        });
+      </script>
     </body>
 </html>';
         }
