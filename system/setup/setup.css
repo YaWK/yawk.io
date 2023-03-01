@@ -10,3 +10,6 @@
 .text-bold {
     font-weight: bold;
 }
+.tooltip.show /* The CSS classes that the tooltip has */ {
+    opacity: 0.7; !important; /* or whatever */
+}
