@@ -76,36 +76,27 @@ namespace YAWK {
         <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css">
         <!-- Admin LTE -->
         <link rel="stylesheet" href="system/engines/AdminLTE/css/AdminLTE.min.css">
-        
         <!-- jQuery 3.2.1 -->
         <script type="text/javascript" src="system/engines/jquery/jquery-3.2.1.min.js"></script>
-        
         <!-- jQuery validation plugin -->
         <script type="text/javascript" src="system/engines/jquery/jquery.validate.min.js"></script>
-        
         <!-- popper.js used by bootstrap to help positioning the tooltips -->
         <script type="text/javascript" src="system/engines/jquery/popper.min.js"></script>
-    
         <!-- Notify JS -->
         <script src="system/engines/jquery/notify/bootstrap-notify.min.js"></script>
-        
         <!-- Bootstrap 4 JS -->
         <script type="text/javascript" src="system/engines/bootstrap4/js/bootstrap.min.js"></script>
-        
         <!-- pace JS -->
         <script src="system/engines/pace/pace.min.js"></script>
         <link rel="stylesheet" href="system/engines/pace/pace-minimal-installer.css">
-        
         <!-- custom YaWK setup css -->
         <link rel="stylesheet" href="system/setup/setup.css">
-       
     </head>
-    <body style="background-color: #ebebeb; margin-top:50px;">
     
+    <body style="background-color: #ebebeb; margin-top:50px;">
     <div class="container animated fadeIn slow shadow-lg" style="background-color: #fff;">
     <form method="POST" id="installerForm">
     ';
-
         }
 
         /**
@@ -116,7 +107,7 @@ namespace YAWK {
          * @license    https://opensource.org/licenses/MIT
          */
         public function init(): void
-        {
+        {   // set setup indicator
             $_SESSION['SETUP'] = TRUE;
             /* CHECK + SET LANGUAGE */
             // include language class
@@ -135,14 +126,12 @@ namespace YAWK {
                 if ($language->detectedLanguage = $language->getClientLanguage())
                 {   // currentLanguageGlobal is set due call of getClientLanguage
                     if ($language->isSupported($language->currentLanguageGlobal))
-                    {
-                        // client language is supported, set it
+                    {   // client language is supported, set it
                         $language->currentLanguage = $language->currentLanguageGlobal;
                         $language->setLanguage($language->currentLanguageGlobal);
                     }
                     else
-                    {
-                        // client language is not supported - set default (eg. en-EN)
+                    {   // client language is not supported - set default (eg. en-EN)
                         $language->setDefault($language->defaultLanguage);
                     }
                 }
@@ -150,14 +139,12 @@ namespace YAWK {
                 if (isset($_POST['currentLanguage']) && (!empty($_POST['currentLanguage'])))
                 {   // check if POST language is supported
                     if ($language->isSupported($_POST['currentLanguage']))
-                    {
-                        // POST language is supported
+                    {   // POST language is supported
                         $language->detectedLanguage = $_POST['currentLanguage'];
                         $language->setLanguage($language->detectedLanguage);
                     }
                     else
-                    {
-                        // POST language is NOT supported - set default (eg. en-EN)
+                    {   // POST language is NOT supported - set default (eg. en-EN)
                         $language->currentLanguage = $language->defaultLanguage;
                         $language->setDefault($language->defaultLanguage);
                     }
@@ -201,7 +188,6 @@ namespace YAWK {
             }
         }   // ./ end installer init()
 
-
         /**
          * @brief Start the setup process.
          * @details include core functions and check server requirements. handles the installation steps
@@ -225,8 +211,8 @@ namespace YAWK {
 
             // get install data into array
             if ($setup = parse_ini_file($this->configFile, FALSE))
-            {
-                $this->yawkVersion = $setup['VERSION']; // get the yawk version
+            {   // get the yawk version
+                $this->yawkVersion = $setup['VERSION']; // used in the footer
                 // if INSTALL is set to true
                 if ($setup['INSTALL'] === "true")
                 {   // if no step variable is set, setup run for the first time
@@ -236,6 +222,7 @@ namespace YAWK {
                         // STEP 1 - language selector
                         $this->step1($language, $lang);
                     }
+
                     // STEP 1 - Language Data
                     if (isset($_POST['step']) && $_POST['step'] === "1")
                     {   // in this step, the user sets the language
@@ -303,15 +290,18 @@ namespace YAWK {
                     $db->query($sql);
                 }
             }
+            // check if setup indicator file exists
             if (file_exists($this->setupIndicator))
-            {   // delete setup indicator file
+            {   // delete setup indicator file to reset setup
                 unlink($this->setupIndicator);
             }
+            // check if file pointer file exists
             if (file_exists($this->filePointer))
-            {   // delete file pointer file
+            {   // delete file pointer file to reset setup
                 unlink($this->filePointer);
             }
-            // all tables dropped, now we can start the installation process again
+
+            // all tables dropped, all files deleted now we can start the installation process again
             $this->setup($language, $lang);
         }
 
@@ -321,7 +311,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step1(object $language, array $lang)
+        public function step1(object $language, array $lang)    // STEP 1 - LANGUAGE SELECTION
         {
             $this->step = 1;
             echo "<div class=\"row\">
@@ -329,7 +319,7 @@ namespace YAWK {
                             
                             </div>
                             <div class=\"col-md-8\">
-                                <h2 class=\"mt-5\">YaWK <small>$lang[INSTALLATION]</small></h2>
+                                <h1 class=\"mt-5\">YaWK <small>$lang[INSTALLATION]</small></h1>
                                 <h4><i class=\"fa fa-language\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[PREPARATION]</small></h4>
                                 <hr>
                                 <label for=\"currentLanguage\">$lang[LANG_LABEL] 
@@ -356,7 +346,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step2(array $setup, object $language, array $lang)
+        public function step2(array $setup, object $language, array $lang)  // STEP 2 - MYSQL DATA
         {
             $this->step = 2;
             echo '
@@ -364,7 +354,7 @@ namespace YAWK {
         <script src="system/setup/setupHelper.js"></script>';
             echo "<div class=\"row\">
                             <div class=\"col-md-7\">
-                                <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
+                                <h1>YaWK <small>$lang[INSTALLATION]</small></h1>
                                 <h4><i class=\"fa fa-database\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[DATABASE]</small></h4>
                                 <hr>
                                 <h4>$lang[MYSQL_DATA] <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_CREDENTIALS]\"></i></small></h4>
@@ -426,7 +416,7 @@ namespace YAWK {
                                 
                                 <div class=\"col-md-5 text-justify\">
                                 <br><br>
-                                <br><hr>
+                                <br><br>
                                 <h4>$lang[INSTALL_NOTICE_HEADING]</h4>
                                 $lang[INSTALL_NOTICE]
                                 <br><br><br>
@@ -483,7 +473,7 @@ namespace YAWK {
          * @license    https://opensource.org/licenses/MIT
          * @author Daniel Retzl <danielretzl@gmail.com>
          */
-        public function step3(array $setup, object $language, array $lang)
+        public function step3(array $setup, object $language, array $lang)  // STEP 3 - WRITE DB CONFIG FILE + ADD GLOBAL SITE DATA
         {
             // server-side check if user has filled out all required fields of step 2
             if (empty($_POST['DB_HOST'])
@@ -551,8 +541,8 @@ namespace YAWK {
 
                     echo"
                           <div class=\"row\">
-                                <div class=\"col-md-8 text-justify\">
-                                    <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
+                                <div class=\"col-md-7 text-justify\">
+                                    <h1>YaWK <small>$lang[INSTALLATION]</small></h1>
                                     <h4><i class=\"fa fa-pencil\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[PROJECT_SETTINGS]</small></h4>
                                     <hr><h4>$lang[COMMON_PROJECT_SETTINGS]</h4>
                                     <label for=\"URL\">$lang[URL] <small><i>$lang[URL_SUBTEXT]</i></small>
@@ -571,15 +561,15 @@ namespace YAWK {
                                     <input type=\"hidden\" name=\"step\" value=\"4\">
                                     <input type=\"hidden\" name=\"currentLanguage\" value=\"$language->currentLanguage\">
                                     <button type=\"submit\" class=\"btn btn-success pull-right\"><small>$_POST[step]/5</small> &nbsp;$lang[NEXT_STEP] &nbsp;<i class=\"fa fa-arrow-right\"></i></button>
-                                   <hr>
+                                   <br><br><br>
                                     <label for=\"ROOT_PATH\">$lang[ROOT_PATH] <small><i>$lang[ROOT_PATH_SUBTEXT]</i></small>
                                         <small><i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"$lang[I_ROOT_PATH]\"></i></small>
                                     </label>
                                     <input type=\"text\" class=\"form-control\" name=\"ROOT_PATH\" id=\"ROOT_PATH\" value=\"$this->rootPath\" placeholder=\"$setup[ROOT_PATH]\">
                                 </div>
-                                <div class=\"col-md-4 text-justify\">
+                                <div class=\"col-md-5 text-justify\">
                                     <br><br>
-                                    <br><br><hr>
+                                    <br><br>
                                     <h4>$lang[BASE_INFO]</h4>
                                     $lang[INSTALL_NOTICE_BASE_INFO]
                                     <br><br><br>
@@ -603,7 +593,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step4(array $setup, object $language, array $lang)
+        public function step4(array $setup, object $language, array $lang)  // STEP 4 - ADMIN USER DATA
         {
             $this->step = 4;
             // include database and settings class
@@ -666,8 +656,8 @@ namespace YAWK {
 
             echo"
                           <div class=\"row\">
-                                <div class=\"col-md-8 text-justify\">
-                                    <h2>YaWK <small>$lang[INSTALLATION]</small></h2>
+                                <div class=\"col-md-7 text-justify\">
+                                    <h1>YaWK <small>$lang[INSTALLATION]</small></h1>
                                     <h4><i class=\"fa fa-user-circle-o\"></i> &nbsp; $lang[STEP] $_POST[step]/5 <small>$lang[ACCOUNT_SETTINGS]</small></h4>
                                     <hr><h4>$lang[USER] $lang[SETTINGS]</h4>
                                     <label for=\"EMAIL\">$lang[EMAIL] <small><i>$lang[EMAIL_SUBTEXT]</i></small>
@@ -693,9 +683,9 @@ namespace YAWK {
                                     <input type=\"hidden\" name=\"currentLanguage\" value=\"$language->currentLanguage\">
                                     <button type=\"submit\" class=\"btn btn-success pull-right\"><small>$_POST[step]/5</small> &nbsp;$lang[NEXT_STEP] &nbsp;<i class=\"fa fa-arrow-right\"></i></button>
                                 </div>
-                                <div class=\"col-md-4 text-justify\">
+                                <div class=\"col-md-5 text-justify\">
                                     <br><br>
-                                    <br><br><hr>
+                                    <br><br>
                                     <h4>$lang[ACCOUNT_NOTICE]</h4>
                                     $lang[ACCOUNT_NOTICE_INFO]
                                     <br><br><br>
@@ -711,7 +701,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step5(array $setup, object $language, array $lang)
+        public function step5(array $setup, object $language, array $lang)  // STEP 5 - save data, write .htaccess files and redirect to backend login - FIN
         {
             $this->step = 5;
             // include database and settings class
@@ -1040,7 +1030,6 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
             }
         }
 
-
         /** @brief check server requirements and set object params
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
@@ -1089,11 +1078,11 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
             // check if
             if ($this->serverRequirementCount == 0)
-            {
+            {   // PHP failed
                 $this->serverRequirements = false;
             }
             else
-            {
+            {   // Installation possible
                 $this->serverRequirements = true;
             }
         }
@@ -1132,7 +1121,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
          * @return bool
          */
         public function checkPhpVersion(): bool
-        {
+        {   // check if php version is high enough
             if (version_compare(phpversion(), $this->phpVersionRequired, '<')) {
                 // php version isn't high enough
                 $this->phpVersionStatus = "false";
@@ -1142,51 +1131,6 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
             {   // ok, PHP fits.
                 $this->phpVersionStatus = "true";
                 return true;
-            }
-        }
-
-        /** @brief Check if the weberver is running on apache
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @license    https://opensource.org/licenses/MIT
-         * @return bool
-         */
-        public function checkApacheVersion(): bool
-        {   // check if server software info is readable and set
-            if (isset($_SERVER['SERVER_SOFTWARE']) && (!empty($_SERVER['SERVER_SOFTWARE'])))
-            {   // test server software
-                if ($_SERVER['SERVER_SOFTWARE'] === "Apache")
-                {   // apache seems to be running
-                    $this->apacheStatus = "true";
-                    return true;
-                }
-                else
-                {   //
-                    if ($this->apacheStatus = apache_get_version())
-                    {
-                        $this->apacheStatus = "true";
-                        return true;
-                    }
-                    else
-                    {
-                        // no apache detected...
-                        $this->apacheStatus = "false";
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                if ($this->apacheStatus = apache_get_version())
-                {
-                    $this->apacheStatus = "true";
-                    return true;
-                }
-                else
-                {
-                    // server software var not set or readable
-                    $this->apacheStatus = "unable to detect";
-                    return true; // let user try to install anyway
-                }
             }
         }
 
