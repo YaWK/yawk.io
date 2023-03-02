@@ -18,7 +18,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <h3><u>R O A D M A P for 2023: <small></small></u></h3>
 <b>Currently in development:</b>
 <ul>
-<li>Installer / Improve Setup process</li>
+<li>Installer / Improve Setup process ✓</li>
 <li>Codebase update to ensure PHP 8 compatibility ✓</li>
 <li>Migrate all code docs to doxygen because APIGEN is outdated ✓</li>
 <li>Add support for multilingual FrontEnd (Content) Pages and Menus ✓</li>
@@ -31,7 +31,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <h3><u>ALSO PLANNED FOR 2023:</u></h3>
 <b>Update official website https://yawk.io </b>
 <ul>
-<li>Update https://test.yawk.io to current version</li>
+<li>YaWK Update Method </li>
 <li>Add feature showcase</li>
 <li>Update CSS Framework to completely support Bootstrap 5.x</li>
 <li>Add support page <small><i>(and ticket system)</i></small></li>
