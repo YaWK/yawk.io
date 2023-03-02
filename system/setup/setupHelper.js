@@ -29,7 +29,7 @@ const form = document.getElementById('installerForm');
                 {   // Credentials are valid, continue with installation
 
                     // indicate loading state, change button text and icon
-                    $(saveBtn).removeClass('btn btn-success').html('<small>2/5</small> '+data.DB_IMPORT_BTN+' &nbsp;<i class=\"fa fa-spinner fa-spin fa-fw\"></i>').addClass('btn btn-danger disabled');
+                    $(saveBtn).removeClass('btn btn-success').html('<small>2/5</small> '+data.DB_IMPORT_BTN+' &nbsp;<i class=\"fa fa-spinner fa-spin fa-fw\"></i>').addClass('btn btn-warning disabled');
 
                     // submit form
                     form.submit();
