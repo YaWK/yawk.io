@@ -201,7 +201,7 @@ namespace YAWK {
          * @license    https://opensource.org/licenses/MIT
          * @return string
          */
-        public function getClientLanguage(): ?string
+        public function getClientLanguage(): string
         {
             // check if browser tells any accepted language
             if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) || (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])))
