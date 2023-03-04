@@ -346,7 +346,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step2(array $setup, object $language, array $lang)  // STEP 2 - MYSQL DATA
+        public function step2(array $setup, $language, array $lang)  // STEP 2 - MYSQL DATA
         {
             $this->step = 2;
             echo '
@@ -473,7 +473,7 @@ namespace YAWK {
          * @license    https://opensource.org/licenses/MIT
          * @author Daniel Retzl <danielretzl@gmail.com>
          */
-        public function step3(array $setup, object $language, array $lang)  // STEP 3 - WRITE DB CONFIG FILE + ADD GLOBAL SITE DATA
+        public function step3(array $setup, $language, array $lang)  // STEP 3 - WRITE DB CONFIG FILE + ADD GLOBAL SITE DATA
         {
             // server-side check if user has filled out all required fields of step 2
             if (empty($_POST['DB_HOST'])
@@ -593,7 +593,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step4(array $setup, object $language, array $lang)  // STEP 4 - ADMIN USER DATA
+        public function step4(array $setup, $language, array $lang)  // STEP 4 - ADMIN USER DATA
         {
             $this->step = 4;
             // include database and settings class
@@ -701,7 +701,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step5(array $setup, object $language, array $lang)  // STEP 5 - save data, write .htaccess files and redirect to backend login - FIN
+        public function step5(array $setup, $language, array $lang)  // STEP 5 - save data, write .htaccess files and redirect to backend login - FIN
         {
             $this->step = 5;
             // include database and settings class
