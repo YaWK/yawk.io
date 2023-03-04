@@ -271,7 +271,7 @@ CREATE TABLE `cms_menu_names` (
 `id` int(11) NOT NULL,
 `name` varchar(30) NOT NULL,
 `published` int(1) NOT NULL DEFAULT '1',
-`menuLanguage` varchar(7) NOT NULL
+`menuLanguage` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_menu_names` (`id`, `name`, `published`, `menuLanguage`) VALUES
