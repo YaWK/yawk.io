@@ -933,20 +933,16 @@ namespace YAWK {
                 $widgetType = $row['widgetType'];
                 $pageID = $row['pageID'];
                 $positions = $row['position'];
-                $date_publish = $row['date_publish'];
-                $date_unpublish = $row['date_unpublish'];
 
                 // all good so far... now: copy widget
                 if ($res = $db->query("INSERT INTO {widgets}
-                    (id, published, widgetType, pageID, sort, position, date_publish, date_unpublish)
+                    (id, published, widgetType, pageID, sort, position)
                     VALUES('" . $id . "',
                           '" . $published . "',
                           '" . $widgetType . "',
                           '" . $pageID . "',
                           '" . $sort . "',
-                          '" . $positions . "',
-                          '" . $date_publish . "',
-                          '" . $date_unpublish . "')"))
+                          '" . $positions . "')"))
                 {   // copy widget successful// now we need to copy all settings of that widget into the new one
                     // first, we gonna get the settings of oldWidgetID
                     if ($settings = $db->query("SELECT * FROM {widget_settings} WHERE widgetID = '".$originalWidgetID."'"))
@@ -958,14 +954,34 @@ namespace YAWK {
                             $value = $settingsResult['value'];
                             $widgetType = $settingsResult['widgetType'];
                             $activated = $settingsResult['activated'];
+                            $sortation = $settingsResult['sortation'];
+                            $label = $settingsResult['label'];
+                            $icon = $settingsResult['icon'];
+                            $heading = $settingsResult['heading'];
+                            $subtext = $settingsResult['subtext'];
+                            $fieldClass = $settingsResult['fieldClass'];
+                            $fieldType = $settingsResult['fieldType'];
+                            $placeholder = $settingsResult['placeholder'];
+                            $options = $settingsResult['options'];
+                            $description = $settingsResult['description'];
 
                             // copy the widget's settings
-                            $db->query("INSERT INTO {widget_settings} (widgetID, property, value, widgetType, activated)
+                            $db->query("INSERT INTO {widget_settings} (widgetID, property, value, widgetType, activated, sortation, label, icon, heading, subtext, fieldClass, fieldType, placeholder, options, description)
 	                        VALUES('" . $id . "',
 	                        '" . $property . "',
 	                        '" . $value . "',
 	                        '" . $widgetType . "',
-	                        '" . $activated . "')");
+	                        '" . $activated . "',
+	                        '" . $sortation . "',
+	                        '" . $label . "',
+	                        '" . $icon . "',
+	                        '" . $heading . "',
+	                        '" . $subtext . "',
+	                        '" . $fieldClass . "',
+	                        '" . $fieldType . "',
+	                        '" . $placeholder . "',
+	                        '" . $options . "',
+	                        '" . $description . "')");
                         }
                         // all finished
                         return true;
