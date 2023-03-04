@@ -252,15 +252,15 @@ namespace YAWK {
          * @param $href string new menu link
          * @return bool
          */
-        static function addEntry($db, $menu, $text, $href)
+        static function addEntry($db, $menuID, $text, $href)
         {   /** @param $db db */
 
             // get menu name
-            $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
+            $menuName = \YAWK\menu::getMenuNameByID($db, $menuID);
 
             // ## select max ID from menu + add menu entry
             $res = $db->query("SELECT MAX(sort) FROM {menu}
-                               WHERE menuID = '".$menu."'");
+                               WHERE menuID = '".$menuID."'");
 
             $row = mysqli_fetch_row($res);
             if (isset($row[0]))
@@ -279,9 +279,10 @@ namespace YAWK {
 
             // add menu entry
             if ($res = $db->query("INSERT INTO {menu} 
-                                        (sort, text, href)
+                                        (sort, menuID, text, href)
                                         VALUES (
                                         '" . $sort . "',
+                                        '" . $menuID . "',
                                         '" . $text . "',
                                         '" . $href . "')"))
             {   // menu entry added
