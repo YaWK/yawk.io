@@ -11,9 +11,15 @@ $(document).ready(function() {
         var id = $('#lightMode').data('id');
         document.cookie = 'frontendSwitchID=' + id;
     });
+
     $(window).scroll(function() {
-        $(".scrollDownFadeOut").css("opacity", 1 - $(window).scrollTop() / 1400);
+        var screenWidth = $(window).width();
+        var scrollTop = $(window).scrollTop();
+        var fadeOutValue = 1 - (scrollTop / (screenWidth / 3));
+        $(".scrollDownFadeOut").css("opacity", fadeOutValue);
     });
+
+
     var $scrollingDiv = $("#scrollingDiv");
     $(window).scroll(function() {
         $scrollingDiv.stop().animate({"marginTop": ($(window).scrollTop())}, 0);
@@ -24,10 +30,8 @@ $(document).ready(function() {
         $('html,body').animate({scrollTop: $(aid).offset().top - 150}, 'slow');
         window.location.hash = aid;
     });
-    $(document.body).css('padding-top', $('#topnavbar').height() - 50);
-    $(window).resize(function() {
-        $(document.body).css('padding-top', $('#topnavbar').height() - 50);
-    });
+
+
     $('#terminateUser').click(function() {
         var terminate = window.confirm("ACHTUNG!\nDas wird Deinen Account permanent deaktivieren.\n" + "Bist Du Dir sicher, dass Du das tun willst?");
         if (terminate === true) {
@@ -85,7 +89,6 @@ $(document).ready(function() {
         fluidMode: false
     };
     $('.image-compare').each(function() {
-
         let view = new ImageCompare(this, options).mount();
     });
 
