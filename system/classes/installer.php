@@ -311,7 +311,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          */
-        public function step1(object $language, array $lang)    // STEP 1 - LANGUAGE SELECTION
+        public function step1($language, array $lang)    // STEP 1 - LANGUAGE SELECTION
         {
             $this->step = 1;
             echo "<div class=\"row\">
