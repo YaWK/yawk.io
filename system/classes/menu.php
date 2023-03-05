@@ -451,7 +451,7 @@ namespace YAWK {
                                   date_changed = '" . $date_changed . "',
                                   parentID = '" . $parentID . "',
                                   target = '" . $target . "',
-                                  icon = '" . $icon . "'
+                                  icon = 'fa " . $icon . "'
                                   WHERE id = '" . $id . "'
                                   AND menuID = '" . $menu . "'"))
             {

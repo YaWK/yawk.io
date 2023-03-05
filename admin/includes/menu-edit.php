@@ -170,8 +170,8 @@ if(isset($_POST['add'])) {
 <!-- data tables JS -->
 <script type="text/javascript">
     $(document).ready(function() {
-        var button = $('[role="iconpicker"]');
-        button.each(function () {
+        var iconField = $('[role="iconpicker"]');
+        iconField.each(function () {
             $(this).iconpicker();
         });
 
