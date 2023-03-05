@@ -873,7 +873,18 @@ namespace YAWK {
               <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">";
 
                             // select child items from db
-                            foreach ($menu['parents'][$itemId] as $child) {
+                            foreach ($menu['parents'][$itemId] as $child)
+                            {   // walk through child items
+                                // check if menu icon is set
+                                if (!empty($menu['items'][$itemId]['icon'])){
+                                    // set markup for icon
+                                    $icon = "<i class=\"".$menu['items'][$child]['icon']." text-muted\"></i> ";
+                                }
+                                else
+                                {   // leave icon empty
+                                    $icon = "";
+                                }
+                                // check if title is set
                                 if (!isset($menu['items'][$itemId]['title']) || (empty($menu['items'][$itemId]['title'])))
                                 {
                                     $title = "";
