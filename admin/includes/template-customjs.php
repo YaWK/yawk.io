@@ -103,6 +103,17 @@ $editorSettings = settings::getEditorSettings($db, 14);
             const frontend = text.replace(/<img src=\"..\/media/g,"<img src=\"media");
             // put the new string back into <textarea>
             $(editor).val(frontend); // to make sure that saving works
+
+
+            // replace &gt; with <
+            var newValue = $(editor).val();
+            var replace1 = newValue.replace(/&gt;/g, '>');
+            $(editor).val(replace1);
+
+            var newValue2 = $(editor).val();
+            var replace2 = newValue2.replace(/&lt;/g, '<');
+            $(editor).val(replace2);
+
         });
 
         // BEFORE SUMMERNOTE loads: 3 important lines of code!
@@ -147,7 +158,7 @@ $editorSettings = settings::getEditorSettings($db, 14);
                 autoCloseBrackets: <?php echo $editorSettings['editorCloseBrackets'];?>,      // auto insert close brackets
                 autoCloseTags: <?php echo $editorSettings['editorCloseTags']; ?>,             // auto insert close tags after opening
                 value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
-                mode: "javascript",                                                      // editor mode
+                mode: "javascript",                                                           // editor mode
                 matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
                 extraKeys: {
                     "Ctrl-J": "toMatchingTag",                                                // CTRL-J to jump to next matching tab
@@ -172,7 +183,6 @@ $editorSettings = settings::getEditorSettings($db, 14);
                 // icon:'<i class="note-icon">[Your Button]</i>'            // Display an icon
             }
         }); // end summernote
-
     }); // end document ready
 </script>
 <?php
