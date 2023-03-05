@@ -212,7 +212,7 @@ namespace YAWK {
             }
             else
                 {   // var empty - cannot detect -
-                    return null;
+                    return false;
                 }
         }
 
