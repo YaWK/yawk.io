@@ -51,13 +51,16 @@ namespace YAWK {
                                WHERE published = 1 
                                AND menuID = '".$menuID."' 
                                ORDER by sort, title");
-            echo "
-                    <ul class=\"list-group\">";
+
+            echo '<div id="subMenu" class="d-block animated fadeIn slow delay-2s">
+                    <ul class="list-group" style="cursor:pointer;">';
             while ($row = mysqli_fetch_assoc($res))
             {
-                echo "<li class=\"list-group-item\"><a href=\"".$row['href']."\" target=\"".$row['target']."\">".$row['text']."</a></li>";
+                if (isset($row['icon'])) { $icon = '<i class="'.$row["icon"].' text-muted"></i>'; } else { $icon = ""; }
+                echo '<li class="list-group-item">'.$icon.' &nbsp;&nbsp;<a href="'.$row['href'].'" class="hvr-grow">'.$row['text'].'</a></li>';
             }
-            echo "    </ul>";
+            echo "    </ul>
+                  </div>";
         }
 
 
