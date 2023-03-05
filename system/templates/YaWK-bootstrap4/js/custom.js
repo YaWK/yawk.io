@@ -1,19 +1,59 @@
 $(document).ready(function()
 {
+    // add animated fadeIn class to navbar on page load
     $('#navbar').addClass('animated fadeIn slow');
-    $(window).scroll(function() {
-        if ($(window).scrollTop() > $('#intro').outerHeight()) {
-            $('#navbar').addClass('fixed-top shadow');
-            // add padding top to show content behind navbar
-            var navbar_height = $('.navbar').outerHeight();
-            $('body').css('padding-top', navbar_height + 'px');
+
+    function setSticky(domElement, stickTo, offset)
+    {
+        if (domElement) {
+            console.log('domElement gesetzt: '+domElement);
         }
         else {
-            $('#navbar').removeClass('fixed-top');
-            // remove padding top from body
-            $('body').css('padding-top', '0');
+            console.error('Unable to setSticky - domElement is null or undefined: '+domElement);
+            alert('Unable to setSticky - domElement is null or undefined: '+domElement);
         }
+        if (!stickTo) {
+            console.error('Unable to setSticky - stickTo is null or undefined: '+stickTo);
+            alert('Unable to setSticky - stickTo is null or undefined: '+stickTo);
+        }
+        if (!offset) offset = 0;
+
+        // add fixed-top class to navbar on scroll
+        $(window).scroll(function()
+        {   // if scrolled to top is greater than the current height of intro position
+            // this ensures that the navbar is only fixed, if the intro section is scrolled out of view
+            if ($(window).scrollTop() > $(stickTo).outerHeight())
+            {
+                // add shadow class to navbar if its scrolled to top
+                $('#'+domElement).addClass('fixed-top shadow');
+                // get height of navbar
+                var navbar_height = $('.'+domElement).outerHeight();
+                // set padding-top of body to the height of the navbar
+                $('body').css('padding-top', navbar_height + 'px');
+            }
+            else
+            {   // if not scrolled to top, remove fixed-top class from navbar
+                $('#'+domElement).removeClass('fixed-top');
+                // remove padding top from body to reset to default
+                $('body').css('padding-top', 0);
+
+            }
+        });
+
+    } // end function setSticky
+    setSticky('navbar', '#intro', 0);
+    setSticky('subMenu', '#intro', 100);
+
+    // Roadmap SubMenu
+    $('#subMenu li').click(function(e) {
+        e.preventDefault();
+        var target = $($(this).find('a').attr('href'));
+        $('html, body').animate({
+            scrollTop: target.offset().top - 250
+        }, 1000);
     });
+
+
 
     // scroll to top method
     // if you want to use this, add a div with class="scrollup" to your html element
