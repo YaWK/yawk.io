@@ -573,10 +573,10 @@ namespace YAWK {
         {
             if (!empty($toolTipText))
             {   // print out toolTip markup
-                echo '<small><i class="fa fa-question-circle-o text-info" data-placement="auto right" data-toggle="tooltip" title="'.$toolTipText.'"></i></small>';
+                return '<small><i class="fa fa-question-circle-o text-info" data-placement="auto right" data-toggle="tooltip" title="'.$toolTipText.'"></i></small>';
             }
             else {
-                echo '<small><i class="fa fa-question-circle-o text-info" data-placement="auto right" data-toggle="tooltip" title="Tooltip fehlt leider :("></i></small>';
+                return '<small><i class="fa fa-question-circle-o text-info" data-placement="auto right" data-toggle="tooltip" title="Tooltip fehlt leider :("></i></small>';
             }
         }
 

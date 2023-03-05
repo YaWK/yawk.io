@@ -555,14 +555,14 @@ namespace YAWK {
     <tr>
       <td><strong>&nbsp;</strong></td>
       <td><strong>$lang[ID]</strong></td>
-      <td><strong>$lang[ICON]</strong></td>
-      <td><strong>$lang[TEXT]</strong></td>
-      <td><strong>$lang[LINK]</strong></td>
-      <td><strong>$lang[TITLE]</strong></td>
-      <td><strong>$lang[GROUP]</strong></td>
-      <td><strong>$lang[TARGET]</strong></td>
-      <td><strong>$lang[SORTATION]</strong></td>
-      <td><strong>$lang[PARENT_ELEMENT]</strong></td>
+      <td><strong>$lang[ICON] ".\YAWK\backend::printTooltip($lang['TT_MENU_ANCHOR'])."</strong></td>
+      <td><strong>$lang[TEXT] ".\YAWK\backend::printTooltip($lang['TT_MENU_TEXT'])."</strong></td>
+      <td><strong>$lang[LINK] ".\YAWK\backend::printTooltip($lang['TT_MENU_ANCHOR'])."</strong></td>
+      <td><strong>$lang[TITLE] ".\YAWK\backend::printTooltip($lang['TT_MENU_TITLE'])."</strong></td>
+      <td><strong>$lang[GROUP] ".\YAWK\backend::printTooltip($lang['TT_MENU_GROUP'])."</strong></td>
+      <td><strong>$lang[TARGET] ".\YAWK\backend::printTooltip($lang['TT_MENU_TARGET'])."</strong></td>
+      <td><strong>$lang[SORTATION] ".\YAWK\backend::printTooltip($lang['TT_MENU_SORT'])."</strong></td>
+      <td><strong>$lang[PARENT_ELEMENT] ".\YAWK\backend::printTooltip($lang['TT_MENU_PARENT'])."</strong></td>
       <td><strong>&nbsp;</td>
     </tr>
   </thead>
