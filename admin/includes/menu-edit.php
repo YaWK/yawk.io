@@ -108,39 +108,23 @@ if(isset($_POST['add'])) {
   }
 }
   else if(isset($_POST['save'])) {
-    $entries = array();
-    foreach($_POST as $param=>$value){
-
-    if(substr($param,-4,4) === "_gid"){
-            $entries[substr($param,0,-4)]['gid'] = $value;
-        }
-      if(strlen($param) >= 6){
-        if(substr($param,-5,5) === "_href"){
-          $entries[substr($param,0,-5)]['href'] = $value;
-        }
-        else if(substr($param,-7,7) === "_target"){
-            $entries[substr($param,0,-7)]['target'] = $value;
-        }
-        else if(strlen($param) >= 5 && substr($param,-5,5) === "_text"){
-            $entries[substr($param,0,-5)]['text'] = $value;
-        }
-        else if(strlen($param) >= 7 && substr($param,-6,6) === "_title"){
-         $entries[substr($param,0,-6)]['title'] = $value;
-        }
-        else if(substr($param,-5,5) === "_sort"){
-          $entries[substr($param,0,-5)]['sort'] = $value;
-        }
-        else if(substr($param,-10,10) === "_published"){
-          $entries[substr($param,0,-10)]['published'] = $value;
-        }
-        else if(substr($param,-9,9) === "_parentID"){
-          $entries[substr($param,0,-9)]['parentID'] = $value;
-        }
-        else if(substr($param,-8,8) === "_divider"){
-          $entries[substr($param,0,-8)]['divider'] = $value;
-        }
+      $entries = array();
+      foreach ($_POST as $param => $value) {
+          $key = '';
+          if (substr($param, -4, 4) === "_gid") {
+              $key = substr($param, 0, -4);
+              $entries[$key]['gid'] = $value;
+          } else {
+              $suffixes = array('_href', '_target', '_text', '_title', '_sort', '_published', '_parentID', '_divider', '_icon');
+              foreach ($suffixes as $suffix) {
+                  if (substr($param, -strlen($suffix), strlen($suffix)) === $suffix) {
+                      $key = substr($param, 0, -strlen($suffix));
+                      $entries[$key][substr($suffix, 1)] = $value;
+                      break;
+                  }
+              }
+          }
       }
-    }
 
     foreach($entries as $id=>$params){
     // echo "<br>".$params['gid']; exit;
@@ -165,7 +149,8 @@ if(isset($_POST['add'])) {
           $params['gid'],
           $params['published'],
           $params['parentID'],
-          $params['target']);
+          $params['target'],
+          $params['icon']);
     }
   }
   else {

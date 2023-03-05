@@ -261,11 +261,12 @@ CREATE TABLE `cms_menu` (
 `target` varchar(64) NOT NULL DEFAULT '_self',
 `divider` int(11) NOT NULL DEFAULT 0,
 `blogid` int(11) NOT NULL DEFAULT 0,
-`menuLanguage` varchar(7) DEFAULT NULL
+`menuLanguage` varchar(7) DEFAULT NULL,
+`icon` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `cms_menu` (`id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`, `menuLanguage`) VALUES
-(1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome!', 'index.html', '_self', 0, 0, '');
+INSERT INTO `cms_menu` (`id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`, `menuLanguage`, `icon`) VALUES
+(1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome!', 'index.html', '_self', 0, 0, '', '');
 
 CREATE TABLE `cms_menu_names` (
 `id` int(11) NOT NULL,

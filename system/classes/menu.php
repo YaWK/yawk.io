@@ -434,9 +434,10 @@ namespace YAWK {
          * @param int $published int 0|1 published status
          * @param int $parentID int id of the parent menu entry
          * @param string $target string link target (eg. _blank)
+         * @param string $icon string any fontAwesome icon
          * @return bool
          */
-        static function editEntry($db, $menu, $id, $text, $title, $href, $sort, $gid, $published, $parentID, $target)
+        static function editEntry($db, $menu, $id, $text, $title, $href, $sort, $gid, $published, $parentID, $target, $icon)
         {   /** @param $db db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
             $date_changed = date("Y-m-d G:i:s");
@@ -449,7 +450,8 @@ namespace YAWK {
                                   published = '" . $published . "',
                                   date_changed = '" . $date_changed . "',
                                   parentID = '" . $parentID . "',
-                                  target = '" . $target . "'
+                                  target = '" . $target . "',
+                                  icon = '" . $icon . "'
                                   WHERE id = '" . $id . "'
                                   AND menuID = '" . $menu . "'"))
             {
@@ -553,6 +555,7 @@ namespace YAWK {
     <tr>
       <td><strong>&nbsp;</strong></td>
       <td><strong>$lang[ID]</strong></td>
+      <td><strong>$lang[ICON]</strong></td>
       <td><strong>$lang[TEXT]</strong></td>
       <td><strong>$lang[LINK]</strong></td>
       <td><strong>$lang[TITLE]</strong></td>
@@ -565,7 +568,7 @@ namespace YAWK {
   </thead>
   <tbody>";
             // get menu entries from database
-            if ($res = $db->query("SELECT id, text, title, href, gid, target, sort, parentID, published
+            if ($res = $db->query("SELECT id, text, title, href, gid, target, sort, parentID, published, icon
                              FROM {menu}
                              WHERE menuID = '".$id."'
                              ORDER BY sort, parentID, title"))
@@ -635,7 +638,9 @@ namespace YAWK {
       <td>
           <input type=\"text\" class=\"form-control pull-left\" name=\"" . $row['id'] . "_id\" readonly value=\"" . $row['id'] . "\" size=\"1\">
      </td>
-
+      <td>
+          <input type=\"text\" class=\"form-control pull-left\" name=\"" . $row['id'] . "_icon\" value=\"" . $row['icon'] . "\" size=\"2\">
+      </td>
       <td>
           <input type=\"text\" class=\"form-control pull-left\" name=\"" . $row['id'] . "_text\" value=\"" . $row['text'] . "\" size=\"12\">
       </td>
