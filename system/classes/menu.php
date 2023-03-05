@@ -725,7 +725,7 @@ namespace YAWK {
             }
 
             // Select entries from the menu table
-            $res = $db->query("SELECT id, text, title, href, target, parentID, divider
+            $res = $db->query("SELECT id, text, title, href, target, parentID, divider, icon
                             FROM {menu}
                             ".$searchstring."
                             and gid <= '" . $currentRole . "'
@@ -829,10 +829,21 @@ namespace YAWK {
 
   <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">";
                     // echo "<pre>"; print_r($menu); echo "</pre>";
-                    // todo center:  w-100 justify-content-center
+
                     $html .="
     <ul class=\"navbar-nav ".$navbar_center."\">";
                     foreach ($menu['parents'][$parent] as $itemId) {
+
+                        // check if menu icon is set
+                        if (!empty($menu['items'][$itemId]['icon'])){
+                            // set markup for icon
+                            $icon = "<i class=\"".$menu['items'][$itemId]['icon']." text-muted\"></i> ";
+                        }
+                        else
+                        {   // leave icon empty
+                            $icon = "";
+                        }
+
                         // set parent w/o child items
                         if (!isset($menu['parents'][$itemId])) {
 
@@ -843,7 +854,7 @@ namespace YAWK {
                             }
                             $html .= "
         <li class=\"nav-item\">
-            <a class=\"nav-link\" href=\"" . $menu['items'][$itemId]['href'] . "\" target=\"" . $menu['items'][$itemId]['target'] . "\" $title>" . $menu['items'][$itemId]['text'] . "</a>
+            <a class=\"nav-link\" href=\"".$menu['items'][$itemId]['href']."\" target=\"".$menu['items'][$itemId]['target'] . "\" $title>".$icon." &nbsp;" . $menu['items'][$itemId]['text'] . "</a>
         </li>";
                         }
 
@@ -852,7 +863,7 @@ namespace YAWK {
                         {
                             $html .= "
         <li class=\"nav-item dropdown\">
-            <a class=\"nav-link dropdown-toggle\" href=\"" . $menu['items'][$itemId]['href'] . "\" id=\"" . $menu['items'][$itemId]['text'] . "\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">" . $menu['items'][$itemId]['text'] . "</a>
+            <a class=\"nav-link dropdown-toggle\" href=\"" . $menu['items'][$itemId]['href'] . "\" id=\"" . $menu['items'][$itemId]['text'] . "\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">".$icon." &nbsp;" . $menu['items'][$itemId]['text'] . "</a>
 ";
                         }
 
@@ -872,7 +883,7 @@ namespace YAWK {
                                     $title = "title=\"$menu[items][$itemId][title]\"";
                                 }
                                 $html .= "
-                <a class=\"dropdown-item\" href=\"" . $menu['items'][$child]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>".$menu['items'][$child]['text']."</a>";
+                <a class=\"dropdown-item\" href=\"" . $menu['items'][$child]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>".$icon." &nbsp;".$menu['items'][$child]['text']."</a>";
                             }
                             // dropdown navi ends here
                             $html .= "
