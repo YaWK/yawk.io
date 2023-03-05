@@ -441,6 +441,7 @@ namespace YAWK {
         {   /** @param $db db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
             $date_changed = date("Y-m-d G:i:s");
+            if (!empty($icon)) { $icon = "fa ".$icon; }
             if ($res = $db->query("UPDATE {menu} SET
                                   sort = '" . $sort . "',
                                   href = '" . $href . "',
@@ -451,7 +452,7 @@ namespace YAWK {
                                   date_changed = '" . $date_changed . "',
                                   parentID = '" . $parentID . "',
                                   target = '" . $target . "',
-                                  icon = 'fa " . $icon . "'
+                                  icon = '" . $icon . "'
                                   WHERE id = '" . $id . "'
                                   AND menuID = '" . $menu . "'"))
             {
