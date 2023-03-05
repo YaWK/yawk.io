@@ -556,7 +556,7 @@ namespace YAWK {
     <tr>
       <td><strong>&nbsp;</strong></td>
       <td><strong>$lang[ID]</strong></td>
-      <td><strong>$lang[ICON] ".\YAWK\backend::printTooltip($lang['TT_MENU_ANCHOR'])."</strong></td>
+      <td><strong>$lang[ICON] ".\YAWK\backend::printTooltip($lang['TT_MENU_ICON'])."</strong></td>
       <td><strong>$lang[TEXT] ".\YAWK\backend::printTooltip($lang['TT_MENU_TEXT'])."</strong></td>
       <td><strong>$lang[LINK] ".\YAWK\backend::printTooltip($lang['TT_MENU_ANCHOR'])."</strong></td>
       <td><strong>$lang[TITLE] ".\YAWK\backend::printTooltip($lang['TT_MENU_TITLE'])."</strong></td>
