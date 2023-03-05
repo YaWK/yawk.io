@@ -163,10 +163,18 @@ if(isset($_POST['add'])) {
     }
   }
 ?>
+<!-- iconpicker css + JS -->
+<link href="../system/engines/iconpicker/css/fontawesome-iconpicker.min.css" rel="stylesheet">
+<script src="../system/engines/iconpicker/js/fontawesome-iconpicker.min.js"></script>
 
 <!-- data tables JS -->
 <script type="text/javascript">
     $(document).ready(function() {
+        var button = $('[role="iconpicker"]');
+        button.each(function () {
+            $(this).iconpicker();
+        });
+
         $('#table-sort').dataTable( {
             "bPaginate": false,
             "bLengthChange": false,
