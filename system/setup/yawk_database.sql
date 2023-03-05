@@ -762,7 +762,7 @@ CREATE TABLE `cms_templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `framework`, `license`) VALUES
-(1, 1, 'YaWK-bootstrap4', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 4 Default Theme.', '2019-01-13 00:15:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'https://www.yawk.io', 'Daniel Retzl', '', '2019-01-13 00:15:00', '1.0.0', 'bootstrap4', 'MIT');
+(1, 1, 'YaWK-bootstrap4', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:mainLeft:main:mainRight:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 4 Default Theme.', '2019-01-13 00:15:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'https://www.yawk.io', 'Daniel Retzl', '', '2019-01-13 00:15:00', '1.0.0', 'bootstrap4', 'MIT');
 
 CREATE TABLE `cms_template_settings` (
 `id` int(11) NOT NULL,
