@@ -1,5 +1,20 @@
 $(document).ready(function()
 {
+    $('#navbar').addClass('animated fadeIn slow');
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > $('#intro').outerHeight()) {
+            $('#navbar').addClass('fixed-top shadow');
+            // add padding top to show content behind navbar
+            var navbar_height = $('.navbar').outerHeight();
+            $('body').css('padding-top', navbar_height + 'px');
+        }
+        else {
+            $('#navbar').removeClass('fixed-top');
+            // remove padding top from body
+            $('body').css('padding-top', '0');
+        }
+    });
+
     // scroll to top method
     // if you want to use this, add a div with class="scrollup" to your html element
     $('.scrollup').click(function() {
