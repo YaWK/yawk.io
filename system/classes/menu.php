@@ -639,7 +639,7 @@ namespace YAWK {
           <input type=\"text\" class=\"form-control pull-left\" name=\"" . $row['id'] . "_id\" readonly value=\"" . $row['id'] . "\" size=\"1\">
      </td>
       <td>
-          <input type=\"text\" class=\"form-control pull-left\" name=\"" . $row['id'] . "_icon\" value=\"" . $row['icon'] . "\" size=\"2\">
+          <input type=\"text\" class=\"form-control pull-left icp icp-auto iconpicker-element iconpicker-input\" role=\"iconpicker\" name=\"" . $row['id'] . "_icon\" value=\"" . $row['icon'] . "\" size=\"2\">
       </td>
       <td>
           <input type=\"text\" class=\"form-control pull-left\" name=\"" . $row['id'] . "_text\" value=\"" . $row['text'] . "\" size=\"12\">
