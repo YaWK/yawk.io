@@ -521,8 +521,7 @@ namespace YAWK {
             // get widget list from database
             $widgetList = widget::loadWidgetsOfPage($db, $page);
 
-
-            // Draw a list of widgets, what are bound to this given page->id
+            // Draw a list of widgets, that are bound to this given page->id
             echo'<!-- WIDGET OVERVIEW -->
                 <div class="box box-default">
                   <div class="box-header with-border">
@@ -546,9 +545,15 @@ namespace YAWK {
                     // set widget info tag
                     if ($widget['pageID'] == 0){ $wPageInfo = 'all'; } else { $wPageInfo = 'this'; }
 
+                    // check, if widget title is set
+                    if ((empty($widget['widgetTitle'])))
+                    {   // if not, set widget name as title
+                        $widget['widgetTitle'] = $widget['name'];
+                    }
+
                     // draw widget bubble
                     echo '<p style="float:left; margin-right:5px;"><a href="index.php?page=widget-edit&widget='.$widget['id'].'" class="btn btn-xs btn-'.$wTextColor.'" title="'.$lang['EDIT'].': '.$widget['name'].' '.$lang['WIDGET'].'">
-                        '.$widget['name'].' @<small> '.$wPageInfo.' | '.$widget['position'].'</small></a></p>';
+                        '.$widget['widgetTitle'].' @<small> '.$wPageInfo.' | '.$widget['position'].'</small></a></p>';
                 }
             }
             else {

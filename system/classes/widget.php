@@ -1148,7 +1148,7 @@ namespace YAWK {
         {
             if (isset($page->id) && (is_numeric($page->id)))
             {
-                $row = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cwt.name, cwt.folder
+                $row = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cw.widgetTitle, cwt.name, cwt.folder
                                 FROM {widgets} as cw
                                 JOIN {widget_types} as cwt on cw.widgetType = cwt.id
                                 WHERE (cw.pageID = '" . $page->id . "' OR cw.pageID = '0')
