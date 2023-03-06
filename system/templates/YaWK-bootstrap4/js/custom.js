@@ -44,7 +44,19 @@ $(document).ready(function()
     setSticky('navbar', '#intro', 0);
     setSticky('subMenu', '#intro', 100);
 
-    // Roadmap SubMenu
+    // Submenu Smooth scrolling REQUIRES velocity.js as loaded asset for smooth animation
+    $('#subMenu li').click(function(e) {
+        e.preventDefault();
+        var target = $($(this).find('a').attr('href'));
+        $('html, body').velocity('scroll', {
+            offset: target.offset().top - 250,
+            duration: 2400,
+            easing: 'easeOutQuart'
+        });
+    });
+
+    // Roadmap SubMenu without velocity.JS (less smooth, but no requirement of velocity.js)
+    /*
     $('#subMenu li').click(function(e) {
         e.preventDefault();
         var target = $($(this).find('a').attr('href'));
@@ -52,16 +64,29 @@ $(document).ready(function()
             scrollTop: target.offset().top - 250
         }, 1000);
     });
+	*/
 
-
-
-    // scroll to top method
+    // scroll to top method REQUIRES VELOCITY.JS loaded before!
     // if you want to use this, add a div with class="scrollup" to your html element
     $('.scrollup').click(function() {
-        // this will smooth scroll to top of page
-        $("html, body").animate({scrollTop:0}, 600);
+        // this will smooth scroll to top of page using velocity
+        $("html, body").velocity("scroll", {
+            duration: 2400,
+            easing: "easeOutExpo"
+            //easing: "ease-out"
+        });
         return false;
     });
+
+    // scroll to top method without velocity.js (a bit less smooth)
+    // if you want to use this, add a div with class="scrollup" to your html element
+    /*
+    $('.scrollup').click(function() {
+        // this will smooth scroll to top of page
+        $("html, body").animate({scrollTop:0}, 1200);
+        return false;
+    });
+    */
 
     // switch between dark and light mode
     // set cookie to remember user choice

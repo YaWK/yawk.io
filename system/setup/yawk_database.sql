@@ -52,7 +52,8 @@ INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`,
 (16, 1, 1, 7, 'Bootstrap 4 CSS', 'bootstrap4-css', 'system/engines/bootstrap4/css/bootstrap.min.css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css', ''),
 (17, 1, 1, 8, 'Bootstrap 4 JS', 'bootstrap4-js', 'system/engines/bootstrap4/js/bootstrap.min.js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js', ''),
 (18, 1, 2, 16, 'Image Compare CSS', 'image-compare-css', 'system/engines/imageCompare/imageCompare.css', 'https://unpkg.com/image-compare-viewer/dist/image-compare-viewer.min.css', '', ''),
-(19, 1, 2, 17, 'Image Compare JS', 'image-compare-js', 'system/engines/imageCompare/imageCompare.js', 'https://unpkg.com/image-compare-viewer/dist/image-compare-viewer.min.js', '', '');
+(19, 1, 2, 17, 'Image Compare JS', 'image-compare-js', 'system/engines/imageCompare/imageCompare.js', 'https://unpkg.com/image-compare-viewer/dist/image-compare-viewer.min.js', '', ''),
+(20, 1, 2, 18, 'Velocity JS', 'velocity-js', 'system/engines/velocityJS/velocity.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js', '', '');
 
 CREATE TABLE `cms_blog` (
 `id` int(11) NOT NULL,
@@ -2629,7 +2630,7 @@ ADD PRIMARY KEY (`id`);
 ALTER TABLE `cms_assets`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 ALTER TABLE `cms_assets_types`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 ALTER TABLE `cms_blog`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_blog_comments`
