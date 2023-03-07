@@ -16,7 +16,9 @@ to
 see what's going on and what has been done over the past few days, weeks, months and years.
 <hr>
 <h3><u>R O A D M A P for 2023: <small></small></u></h3>
-<b>Currently in development:</b>
+<b>Currently in development:</b><br><br>
+
+<b>Update official website https://yawk.io </b>
 <ul>
 <li>Installer / Improve Setup process ✓</li>
 <li>Codebase update to ensure PHP 8 compatibility ✓</li>
@@ -29,7 +31,6 @@ see what's going on and what has been done over the past few days, weeks, months
 </ul>
 
 <h3><u>ALSO PLANNED FOR 2023:</u></h3>
-<b>Update official website https://yawk.io </b>
 <ul>
 <li>YaWK Update Method </li>
 <li>Add feature showcase</li>
