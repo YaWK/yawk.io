@@ -72,9 +72,9 @@ ATTENTION: Files must be accessible by webserver user & group. Make sure to chec
 </ol>
 <h4>Minimum Server / Web-hosting Requirements:</h4>
 <ul>
-<li>PHP 7.x supported, 8.x is recommended)</li>
-<li>MySQL 5.x or higher</li>
-<li>Apache 2.x Webserver</li>
+<li>PHP 8.x is recommended</li>
+<li>MySQL 5.x or higher (MariaDB works also)</li>
+<li>Apache 2.x or nginx Webserver</li>
 <li>MOD_REWRITE enabled</li>
 </ul>
 
