@@ -778,6 +778,9 @@ namespace YAWK {
                             exit;
                         }
                     }
+
+                    // setup seems to be complete, remove setup indicator silently
+                    @unlink($this->setupIndicator);
                 }
                 else
                 {
