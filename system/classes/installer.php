@@ -595,6 +595,9 @@ namespace YAWK {
          */
         public function step4(array $setup, $language, array $lang)  // STEP 4 - ADMIN USER DATA
         {
+            echo '
+        <!-- YaWK Setup Helper -->
+        <script src="system/setup/validationHelper.js"></script>';
             $this->step = 4;
             // include database and settings class
             if (!isset($db))
