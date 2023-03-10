@@ -116,7 +116,6 @@ $(document).ready(function() {  // wait until document is ready
 
 // This file is a helper to check the database credentials via xhr
 // Get the form element
-        const form = document.getElementById('installerForm');
 // Add an event listener to the form submit event
         form.addEventListener('submit', (event) => {
             event.preventDefault(); // prevent the form from submitting
