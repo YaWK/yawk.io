@@ -397,6 +397,41 @@ namespace YAWK {
                                       <textarea cols=\"64\" rows=\"10\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
                         }
                     }
+                    /* SELECT FIELD */
+                    /* SUBMENU SELECTOR */
+                    /** @var $db \YAWK\db */
+                    if ($setting['fieldType'] === "submenuSelector"){
+                        // display icon, heading and subtext, if its set
+                        if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                        {   // output heading
+                            echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                        }
+                        // begin draw select
+                        echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]</label>
+                                  <select class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                        // get all submenus
+                        $res = $db->query("SELECT * FROM {menu_names} ORDER BY name ASC");
+                        // check if submenus exist
+                        if ($res)
+                        {   // submenus found, draw select
+                            while ($row = mysqli_fetch_array($res))
+                            {   // draw select
+                                echo "<option value=\"$row[id]\" ";
+                                if ($setting['value'] === $row['id'])
+                                {   // set selected
+                                    echo "selected";
+                                }
+                                echo ">$row[name]</option>";
+                            }
+                        }
+                        else
+                        {   // no menus found
+                            echo "<option value=\"0\">$lang[NONE_SELECTED]</option>";
+                        }
+                        // close select
+                        echo "</select>";
+
+                    }
 
                     /* SELECT FIELD */
                     /* GALLERY SELECTOR */
@@ -706,7 +741,7 @@ namespace YAWK {
          * @brief return widget ID
          * @param object $db database
          * @param int $id the ID
-         * @return bool
+         * @return array | bool
          */
         static function getWidgetId($db, $id)
         {
@@ -729,7 +764,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 39, 1, "failed to get widget ID <b>$id</b> $row", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 39, 1, "failed to get widget ID <b>$id</b>", 0, 0, 0, 0);
                 return false;
             }
             // something else has happened

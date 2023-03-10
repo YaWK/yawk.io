@@ -2062,7 +2062,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('twitchChannelHeight', '720', 14, 1, 3, 'LABEL_TWITCH_CHANNEL_HEIGHT', '', '', '', 'DESC_TWITCH_CHANNEL_HEIGHT', 'form-control', '', 'PH_TWITCH_CHANNEL_HEIGHT', '', 33),
 ('twitchChannelWidth', '100%', 14, 1, 2, 'LABEL_TWITCH_CHANNEL_WIDTH', '', '', '', 'DESC_TWITCH_CHANNEL_WIDTH', 'form-control', '', 'PH_TWITCH_CHANNEL_WIDTH', '', 34),
 ('twitchChannelFullscreen', 'true', 14, 1, 4, 'LABEL_TWITCH_CHANNEL_FULLSCREEN', '', '', '', 'DESC_TWITCH_CHANNEL_FULLSCREEN', 'form-control', 'select', '', 'true,TRUE:false,FALSE', 35),
-('menuID', '1', 15, 1, 0, 'LABEL_SUBMENU_ID', '', '', '', 'DESC_SUBMENU_ID', 'form-control', '', 'PH_SUBMENU_CLASS', '', 36),
+('menuID', '1', 15, 1, 0, 'LABEL_SUBMENU_ID', '', '', '', 'DESC_SUBMENU_ID', 'form-control', 'submenuSelector', 'PH_SUBMENU_CLASS', '', 36),
 ('youtubeWidth', '100%', 16, 1, 0, 'LABEL_YOUTUBE_WIDTH', '', '', '', 'DESC_YOUTUBE_WIDTH', 'form-control', '', 'PH_YOUTUBE_WIDTH', '', 37),
 ('youtubeHeight', '720', 16, 1, 0, 'LABEL_YOUTUBE_HEIGHT', '', '', '', 'DESC_YOUTUBE_HEIGHT', 'form-control', '', 'PH_YOUTUBE_HEIGHT', '', 38),
 ('youtubeFullscreen', 'true', 16, 1, 0, 'LABEL_YOUTUBE_FULLSCREEN', '', '', '', 'DESC_YOUTUBE_FULLSCREEN', 'form-control', 'select', '', 'true,true:false,false', 39),
