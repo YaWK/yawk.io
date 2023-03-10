@@ -29,7 +29,6 @@ $(document).ready(function() {  // wait until document is ready
             },
             rules: {
                 USERNAME: {
-                    required: true,
                     minlength: 4,
                     maxlength: 48,
                     remote: {
@@ -38,24 +37,21 @@ $(document).ready(function() {  // wait until document is ready
                     }
                 },
                 EMAIL: {
-                    required: true,
                     email: true,
                     maxlength: 128
                 },
                 PASSWORD: {
-                    required: true,
                     minlength: 4,
                     maxlength: 48
                 },
                 PASSWORD2: {
-                    required: true,
                     minlength: 4,
                     maxlength: 48,
                     equalTo: "#PASSWORD"
                 }
             },
             messages: {
-                username: {
+                USERNAME: {
                     remote: "Please select another username. &nbsp;"
                 },
                 PASSWORD2: {
