@@ -44,49 +44,60 @@ $(document).ready(function()
     setSticky('navbar', '#intro', 0);
     setSticky('subMenu', '#intro', 100);
 
-    // Submenu Smooth scrolling REQUIRES velocity.js as loaded asset for smooth animation
-    $('#subMenu li').click(function(e) {
-        e.preventDefault();
-        var target = $($(this).find('a').attr('href'));
-        $('html, body').velocity('scroll', {
-            offset: target.offset().top - 250,
-            duration: 2400,
-            easing: 'easeOutQuart'
-        });
-    });
 
-    // Roadmap SubMenu without velocity.JS (less smooth, but no requirement of velocity.js)
-    /*
     $('#subMenu li').click(function(e) {
         e.preventDefault();
-        var target = $($(this).find('a').attr('href'));
-        $('html, body').animate({
-            scrollTop: target.offset().top - 250
-        }, 1000);
+        // Submenu Smooth scrolling REQUIRES velocity.js as loaded asset for smooth animation
+        var target = $(this).find('a').attr('href');
+        console.log('target:', target);
+
+        // The target starts with a "#" character
+        if (target.charAt(0) === '#') {
+            try {
+                // this will smooth scroll to the target element using velocity
+                $('html, body').velocity('scroll', {
+                    offset: $(target).offset().top - 250,
+                    duration: 2400,
+                    easing: 'easeOutQuart'
+                });
+            }
+            catch (error) {
+                // velocity.js is not loaded: fallback to jquery animate method
+                console.log('Error: Velocity.js is not loaded. Please consider loading velocity.js within the assets if you want the smoothest scroll experience. Error message: ', error.message);
+                // scroll to target element
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top - 250
+                }, 2400);
+            }
+
+        } else {
+            // The target does not start with a "#" character
+            setTimeout(function () {
+                // it must be an external link, so just redirect to the target
+                window.location = target.toString();
+            }, 0);
+        }
     });
-	*/
 
     // scroll to top method REQUIRES VELOCITY.JS loaded before!
     // if you want to use this, add a div with class="scrollup" to your html element
     $('.scrollup').click(function() {
-        // this will smooth scroll to top of page using velocity
-        $("html, body").velocity("scroll", {
-            duration: 2400,
-            easing: "easeOutExpo"
-            //easing: "ease-out"
-        });
-        return false;
+        try{
+            // this will smooth scroll to top of page using velocity
+            $("html, body").velocity("scroll", {
+                duration: 2400,
+                easing: "easeOutExpo"
+                //easing: "ease-out"
+            });
+        }
+        catch {
+            // velocity.js is not loaded: fallback to jquery animate method
+            console.log('Error: Velocity.js is not loaded. Please consider loading velocity.js within the assets if you want the smoothest scroll experience. Error message: ', error.message);
+            // scroll to target element
+            $("html, body").animate({scrollTop:0}, 1200);
+        }
     });
 
-    // scroll to top method without velocity.js (a bit less smooth)
-    // if you want to use this, add a div with class="scrollup" to your html element
-    /*
-    $('.scrollup').click(function() {
-        // this will smooth scroll to top of page
-        $("html, body").animate({scrollTop:0}, 1200);
-        return false;
-    });
-    */
 
     // switch between dark and light mode
     // set cookie to remember user choice
