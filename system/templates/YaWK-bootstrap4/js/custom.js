@@ -6,7 +6,7 @@ $(document).ready(function()
     function setSticky(domElement, stickTo, offset)
     {
         if (domElement) {
-            console.log('domElement gesetzt: '+domElement);
+            console.log('domElement set sticky: '+domElement);
         }
         else {
             console.error('Unable to setSticky - domElement is null or undefined: '+domElement);
@@ -66,7 +66,7 @@ $(document).ready(function()
             }
             catch (error) {
                 // velocity.js is not loaded: fallback to jquery animate method
-                console.log('Error: Velocity.js is not loaded. Please consider loading velocity.js within the assets if you want the smoothest scroll experience. Error message: ', error.message);
+                console.log('Info: Velocity.js is not loaded. Please consider loading velocity.js within the assets if you want the smoothest scroll experience. Error message: ', error.message);
                 // scroll to target element
                 $('html, body').animate({
                     scrollTop: $(href).offset().top - 250
