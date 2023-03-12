@@ -1,6 +1,8 @@
 <?php
 namespace YAWK\WIDGETS\SUBMENU\EMBED
 {
+    use YAWK\widget;
+
     /**
      * @details<b>Empty submenu Widget - for development and demo purpose</b>
      *
@@ -14,7 +16,7 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
      * @version    1.0.0
      * @brief Submenu widget - embed any menu on any page in any position
      */
-    class submenu extends \YAWK\widget
+    class submenu extends widget
     {
         /** @param object global widget object data */
         public $widget = '';
@@ -33,7 +35,7 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
         public function __construct($db)
         {
             // load this widget settings from db
-            $this->widget = new \YAWK\widget();
+            $this->widget = new widget();
             $settings = $this->widget->getWidgetSettingsArray($db);
             foreach ($settings as $property => $value) {
                 $this->$property = $value;

@@ -15,26 +15,26 @@ namespace YAWK {
      */
     class menu
     {
-        /**
-         * @param int the menu id
-         */
+        /** * @param int the menu id */
         public $id;
-        /**
-         * @param string the menu name
-         */
+
+        /** * @param string the menu name */
         public $name;
-        /**
-         * @param int the menu ID
-         */
+
+        /** * @param int the menu ID that should act as subMenu */
         public $menuID;
-        /**
-         * @param int 0|1 published - yes or no
-         */
+
+        /** * @param int 0|1 published - yes or no */
         public $published;
-        /**
-         * @param int the parent menu ID
-         */
+
+        /** * @param int the parent menu ID  */
         public $parent;
+
+        /** * @param string the class that is applied to the subMenu  */
+        public $subMenuClass;
+
+        /** * @param string the class that is applied to a subMenu Item  */
+        public $subMenuItemClass;
 
         /**
          * @brief display any subMenu (used by widgets to get any menu in any position)
@@ -52,10 +52,10 @@ namespace YAWK {
                                AND menuID = '".$menuID."' 
                                ORDER by sort, title");
 
-            echo '<div id="subMenu" class="d-block animated fadeIn slow delay-2s">
-                    <ul class="list-group" style="cursor:pointer;">';
+            $subMenuItem = '';
             while ($row = mysqli_fetch_assoc($res))
             {
+                // check if target is set
                 if (!empty($row['target']))
                 {   // target is set
                     $row['target'] = ' target="'.$row['target'].'"';
@@ -64,10 +64,31 @@ namespace YAWK {
                 {   // target is not set
                     $row['target'] = '';
                 }
-                if (isset($row['icon'])) { $icon = '<i class="'.$row["icon"].' text-muted"></i>'; } else { $icon = ""; }
-                echo '<li class="list-group-item">'.$icon.' &nbsp;&nbsp;<a href="'.$row['href'].'" class="hvr-grow"'.$row['target'].'>'.$row['text'].'</a></li>';
+
+                // check if subMenu class is set
+                if (!empty($row['subMenuClass'])){
+                    $subMenuClass = ' class="'.$row['subMenuClass'].'"';
+                }
+                else
+                {   // subMenuClass is not set
+                    $subMenuClass = '';
+                }
+
+                // check if icon is set
+                if (isset($row['icon']))
+                {   // set icon markup
+                    $icon = '<i class="'.$row["icon"].' text-muted"></i>';
+                }
+                else
+                {   // no icon set
+                    $icon = "";
+                }
+
+                $subMenuItem .= '<li class="list-group-item">'.$icon.' &nbsp;&nbsp;<a href="'.$row['href'].'" class="hvr-grow"'.$row['target'].'>'.$row['text'].'</a></li>';
             }
-            echo "    </ul>
+            echo '<div id="subMenu"'.$subMenuClass.'">
+                    <ul class="list-group" style="cursor:pointer;">';
+            echo "    '.$subMenuItem.'</ul>
                   </div>";
         }
 
