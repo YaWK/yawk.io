@@ -48,15 +48,18 @@ $(document).ready(function()
     $('#subMenu li').click(function(e) {
         e.preventDefault();
         // Submenu Smooth scrolling REQUIRES velocity.js as loaded asset for smooth animation
-        var target = $(this).find('a').attr('href');
-        console.log('target:', target);
+        var linkObject = $(this).find('a');     // get link object
+        var href = linkObject.attr('href');     // extract href
+        var target = linkObject.attr('target'); // extract target
+
+
 
         // The target starts with a "#" character
-        if (target.charAt(0) === '#') {
+        if (href.charAt(0) === '#') {
             try {
                 // this will smooth scroll to the target element using velocity
                 $('html, body').velocity('scroll', {
-                    offset: $(target).offset().top - 250,
+                    offset: $(href).offset().top - 250,
                     duration: 2400,
                     easing: 'easeOutQuart'
                 });
@@ -66,16 +69,21 @@ $(document).ready(function()
                 console.log('Error: Velocity.js is not loaded. Please consider loading velocity.js within the assets if you want the smoothest scroll experience. Error message: ', error.message);
                 // scroll to target element
                 $('html, body').animate({
-                    scrollTop: $(target).offset().top - 250
+                    scrollTop: $(href).offset().top - 250
                 }, 2400);
             }
-
-        } else {
-            // The target does not start with a "#" character
-            setTimeout(function () {
-                // it must be an external link, so just redirect to the target
-                window.location = target.toString();
-            }, 0);
+        }
+        else
+        {   // The link does NOT start with a "#" character (so it must be an external link)
+            // let's check if the target is set
+            if (target) {
+                // target is set, open link with target
+                window.open(href, target);
+            }
+            else
+            {   // target is not set, so open link in same window
+                window.open(href, '_self');
+            }
         }
     });
 
@@ -94,6 +102,7 @@ $(document).ready(function()
             // velocity.js is not loaded: fallback to jquery animate method
             console.log('Error: Velocity.js is not loaded. Please consider loading velocity.js within the assets if you want the smoothest scroll experience. Error message: ', error.message);
             // scroll to target element
+
             $("html, body").animate({scrollTop:0}, 1200);
         }
     });

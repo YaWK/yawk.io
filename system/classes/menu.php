@@ -56,8 +56,16 @@ namespace YAWK {
                     <ul class="list-group" style="cursor:pointer;">';
             while ($row = mysqli_fetch_assoc($res))
             {
+                if (!empty($row['target']))
+                {   // target is set
+                    $row['target'] = ' target="'.$row['target'].'"';
+                }
+                else
+                {   // target is not set
+                    $row['target'] = '';
+                }
                 if (isset($row['icon'])) { $icon = '<i class="'.$row["icon"].' text-muted"></i>'; } else { $icon = ""; }
-                echo '<li class="list-group-item">'.$icon.' &nbsp;&nbsp;<a href="'.$row['href'].'" class="hvr-grow">'.$row['text'].'</a></li>';
+                echo '<li class="list-group-item">'.$icon.' &nbsp;&nbsp;<a href="'.$row['href'].'" class="hvr-grow"'.$row['target'].'>'.$row['text'].'</a></li>';
             }
             echo "    </ul>
                   </div>";
