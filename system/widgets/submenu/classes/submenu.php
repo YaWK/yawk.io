@@ -1,6 +1,7 @@
 <?php
 namespace YAWK\WIDGETS\SUBMENU\EMBED
 {
+    use YAWK\db;
     use YAWK\widget;
 
     /**
@@ -26,6 +27,22 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
         public $submenuSubtext = '';
         /** @param int ID of the menu to display */
         public $menuID = '';
+
+        /** * @param string the class that is applied to the subMenu  */
+        public $subMenuClass;
+
+        /** * @param string the class that is applied to a subMenu Item  */
+        public $subMenuItemClass;
+
+        /**
+         * @brief display any subMenu (used by widgets to get any menu in any position)
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    https://opensource.org/licenses/MIT
+         * @version    1.0.0
+         * @param object $db database
+         * @param int $menuID the menuID to get data
+         */
+
 
         /**
          * @brief Load all widget settings from database and fill object
@@ -61,8 +78,57 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
                 require_once 'system/classes/menu.php';
                 $menu = new \YAWK\menu();
             }
-            $menu->displaySubMenu($db, $this->menuID);
+            $this->displaySubMenu($db, $this->menuID);
         }
+
+        public function displaySubMenu($db, $menuID)
+        {   /** @param db $db */
+            // get menu entries and draw navbar
+            $res = $db->query("SELECT * FROM {menu}
+                               WHERE published = 1 
+                               AND menuID = '".$menuID."' 
+                               ORDER by sort, title");
+
+            $subMenuItem = '';
+            while ($row = mysqli_fetch_assoc($res))
+            {
+                // check if target is set
+                if (!empty($row['target']))
+                {   // target is set
+                    $row['target'] = ' target="'.$row['target'].'"';
+                }
+                else
+                {   // target is not set
+                    $row['target'] = '';
+                }
+
+                // check if subMenu class is set
+                if (!empty($this->subMenuClass)){
+                    $subMenuClass = ' class="'.$this->subMenuClass.'"';
+                }
+                else
+                {   // subMenuClass is not set
+                    $subMenuClass = '';
+                }
+
+                // check if icon is set
+                if (isset($row['icon']))
+                {   // set icon markup
+                    $icon = '<i class="'.$row["icon"].' text-muted"></i>';
+                }
+                else
+                {   // no icon set
+                    $icon = "";
+                }
+
+                $subMenuItem .= '<li class="list-group-item">'.$icon.' &nbsp;&nbsp;<a href="'.$row['href'].'" class="hvr-grow"'.$row['target'].'>'.$row['text'].'</a></li>';
+            }
+            echo '<div id="subMenu"'.$subMenuClass.'>
+                    <ul class="list-group" style="cursor:pointer;">';
+            echo '    '.$subMenuItem.'</ul>
+                  </div>';
+        }
+
 
     }
 }
