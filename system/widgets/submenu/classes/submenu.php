@@ -90,6 +90,8 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
                                ORDER by sort, title");
 
             $subMenuItem = '';
+            $subMenuClass = '';
+            $subMenuItemClass = '';
             while ($row = mysqli_fetch_assoc($res))
             {
                 // check if target is set
@@ -111,6 +113,15 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
                     $subMenuClass = '';
                 }
 
+                // check if subMenuItem class is set
+                if (!empty($this->subMenuItemClass)){
+                    $submenuItemClass = ' class="'.$this->subMenuItemClass.'"';
+                }
+                else
+                {   // subMenuItemClass is not set
+                    $subMenuItemClass = '';
+                }
+
                 // check if icon is set
                 if (isset($row['icon']))
                 {   // set icon markup
@@ -121,7 +132,7 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
                     $icon = "";
                 }
 
-                $subMenuItem .= '<li class="list-group-item">'.$icon.' &nbsp;&nbsp;<a href="'.$row['href'].'" class="hvr-grow"'.$row['target'].'>'.$row['text'].'</a></li>';
+                $subMenuItem .= '<li class="list-group-item">'.$icon.' &nbsp;&nbsp;<a href="'.$row['href'].'"'.$subMenuItemClass.$row['target'].'>'.$row['text'].'</a></li>';
             }
             echo '<div id="subMenu"'.$subMenuClass.'>
                     <ul class="list-group" style="cursor:pointer;">';
