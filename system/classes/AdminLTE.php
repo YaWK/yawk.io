@@ -1165,6 +1165,9 @@ namespace YAWK\BACKEND {
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-backup') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-backup\"><i class=\"fa fa-hdd-o\"></i> $lang[BACKUP]</a>
             </li>
+            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'update') ? "class=\"active\"" : ""; echo">
+                <a href=\"index.php?page=update\"><i class=\"fa fa-code-fork\"></i> $lang[UPDATE]</a>
+            </li>
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-systeminfo') ? "class=\"active\"" : ""; echo">
             <a href=\"index.php?page=settings-systeminfo\"><i class=\"fa fa-info-circle\"></i> $lang[SYSTEM]&nbsp;$lang[INFO]</a></li>
           </ul>
