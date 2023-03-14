@@ -9,7 +9,7 @@ namespace YAWK {
      * risk of any errors or issues during the update.
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2016 Daniel Retzl
+     * @copyright  2009-2023 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @brief      The update class - handles yawk's system update functions.
@@ -37,10 +37,11 @@ namespace YAWK {
         {
             $this->base_dir = dirname(__FILE__);
             $this->base_dir = substr($this->base_dir, 0, -15); // remove last 5 characters
+            // echo "<p>Base directory: $this->base_dir</p>";
 
-            echo "<p>Base directory: $this->base_dir</p>";
-
-            $updateFolder = $this->base_dir.'/system/update/';
+            // set path and filename of the ini file
+            $updatePath = '/system/update/';
+            $updateFolder = $this->base_dir.$updatePath;
             $iniFileName = 'filebase.current.ini';
             $input_folder = $this->base_dir;
             $output_file = $updateFolder.$iniFileName;
@@ -57,14 +58,14 @@ namespace YAWK {
                 // handle the error (e.g. show an error message or log the error)
                 die("Failed to open file");
             } else {
-                echo "<p>File opened successfully</p>";
+                // echo "<p>opened $updateFolder.$iniFileName</p>";
             }
 
             // Get the full path of the input folder
             $input_folder = realpath($input_folder);
 
             // Loop through all files in the input folder and its subfolders
-            echo "<p>Finding files in $input_folder</p>";
+            echo "<p>Building filebase of: <i><small>$input_folder</small></i></p>";
             $root_files = array();
             $subfolder_files = array();
             foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($input_folder)) as $file_path)
@@ -129,32 +130,46 @@ namespace YAWK {
             }
 
             // Close the output file
-            echo '<p class="animated fadeIn slow delay-1s">Scanned <b>'.$totalFiles.'</b> files. Verified <b>'.$totalFilesVerified.'</b> files. Failed <b>'.$totalFilesFailed.'</b> files.</p>';
+            echo '<p class="animated fadeIn slow delay-1s">Indexing <b>'.$totalFiles.'</b> files. Verified <b>'.$totalFilesVerified.'</b> files. Failed <b>'.$totalFilesFailed.'</b> files.</p>';
 
-//            if (is_file($output_file)){
-//                echo "<h4 class=\"text-success animated fadeIn slow delay-5s\">".$iniFileName." written successfully</h4>";
-//            }
-//            else
-//            {
-//                echo "<h4 class=\"text-danger animated fadeIn slow delay-5s\">".$iniFileName." could not be written</h4>";
-//            }
-//
-            if ($totalFiles == $totalFilesVerified)
-            {
-                $icon = '<i class="fa fa-check-circle-o fa-2x text-success"></i>';
-                $done = "<h4 class=\"text-success animated fadeIn slow delay-4s\">".$totalFiles."&nbsp;".$lang['UPDATE_VERIFICATION_SUCCESS']."</h4>";
+            if (!is_file($output_file))
+            {   // unable to write ini file
+                $iniFileWritten = "<h4 class=\"text-danger\">".$iniFileName." could not be written</h4>";
             }
             else
-            {   $icon = '<i class="fa fa-exclamation-triangle fa-2x text-danger"></i>';
-                $done = "<h4 class=\"text-danger animated fadeIn slow delay-4s\"><b>".$totalFilesFailed." ".$lang['UPDATE_VERIFICATION_FAILED']."</b></h4>";
+            {   // ini file written successfully
+                $iniFileWritten = "<p class=\"animated fadeIn slow delay-5s\">Hash values written to: <b><a href=\"$updatePath$iniFileName\" target=\"_blank\">$updatePath$iniFileName</a></b></p>";
+            }
+
+            // check if all files were verified
+            if ($totalFiles == $totalFilesVerified)
+            {   // set success icon, message and colors
+                $icon = '<i class="fa fa-check-circle-o fa-2x text-success"></i>';
+                $done = "<h4 class=\"text-success animated fadeIn slow delay-4s\">".$totalFiles."&nbsp;".$lang['UPDATE_VERIFICATION_SUCCESS']."</h4>";
+                $iconFalse = '';
+                $successColor = ' text-success';
+                $failedColor = '';
+            }
+            else
+            {   // set failure icon, message and colors
+                $iconFalse = '<i class="fa fa-exclamation-triangle fa-2x text-danger"></i>';
+                $done = "<h4 class=\"text-danger\"><b>".$totalFilesFailed." ".$lang['UPDATE_VERIFICATION_FAILED']."</b></h4>";
+                $failedColor = ' text-danger';
+                $successColor = '';
             }
 
 
-            echo "<p class=\"animated fadeIn slow delay-2s\">Total files: <b>$totalFiles</b></p>
-<p class=\"animated fadeIn slow delay-3s\">$icon &nbsp;Verified files: <b>$totalFilesVerified</b></p>
-<p class=\"animated fadeIn slow delay-4s\">Failed to verify: <b>$totalFilesFailed</b></p>
-<p class=\"animated fadeIn slow delay-5s\">$iniFileName written to $updateFolder</p>
-<h4 class=\"animated fadeIn slow delay-6s\">$done</h4>";
+            echo "
+<p class=\"animated fadeIn slow delay-2s$successColor\">$icon &nbsp;Generated hash values: <b>$totalFilesVerified / $totalFiles</b></p>
+<h4 class=\"animated fadeIn slow delay-3s\">$done</h4>
+<p class=\"animated fadeIn slow delay-4s$failedColor\">$iconFalse &nbsp;Failed to verify: <b>$totalFilesFailed</b></p>
+$iniFileWritten";
+
+            // Close the output file
+            fclose($output_handle);
+
+            // return $output_file;
+            
         }
 
     }
