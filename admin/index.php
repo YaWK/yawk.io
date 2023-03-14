@@ -24,6 +24,7 @@ require_once '../system/classes/template.php';      // template class: methods t
 require_once '../system/classes/controller.php';    // basic controller class
 require_once '../system/classes/filemanager.php';   // filemanager class: methods to add, edit, upload and handle files
 require_once '../system/classes/sys.php';           // system class: methods and helpers for overall system use
+require_once '../system/classes/update.php';        // update class: functions used to update the system
 // PREPARE OBJECTS
 // database object
 if (!isset($db))
