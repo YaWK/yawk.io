@@ -38,12 +38,15 @@ echo"<ol class=\"breadcrumb\">
     <div class="box-body">
         <a href="#update" id="update" class="btn btn-success pull-right"><i class="fa fa-refresh"></i> &nbsp;<?php echo $lang['UPDATE_CHECK']; ?></a>
         <h3 class="box-title"><?php echo $lang['UPDATE_CURRENT_INSTALLED_VERSION']; echo ' '; echo \YAWK\settings::getSetting($db,'yawkversion');?> </h3>
-        <br>
-
+<hr>
 <?php
 // CHECK FOR UPDATES
 $update = new update($db);
-$update->readFilebase($db, $lang);
+if (isset($_GET['readFilebase']) && ($_GET['readFilebase'] == 1))
+{
+    echo '<h3 class="box-title">Filebase <small>of your installation '.\YAWK\backend::printTooltip('Der Updater prüft die Dateibasis Deiner Installation, um die Intigrität mit den Daten des Update zu vergleichen. ').'</small></h3>';
+    $update->readFilebase($db, (array)$lang);
+}
 
 ?>
 
