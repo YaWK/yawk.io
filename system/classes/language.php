@@ -336,9 +336,16 @@ namespace YAWK {
                 {
                     $this->pathToFile = "admin/language";
                 }
+                // call seems to come from admin/js/ folder (probably a class called by ajax in /system/classes/*
+                elseif (is_dir("../language/"))
+                {
+                    $base_dir = __DIR__;
+                    $base_dir = substr($base_dir, 0, -15); // remove last 15 chars
+                    $this->pathToFile = $base_dir."/admin/language/";
+                }
                 else
                 {
-                    $this->pathToFile = '';
+                    '';
                 }
             }
 
