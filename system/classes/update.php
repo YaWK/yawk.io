@@ -17,7 +17,7 @@ namespace YAWK {
     class update
     {
         /* @param string $base_dir */
-        public $base_dir = '';
+        public string $base_dir = '';
 
 
         /** @return object global db object */
@@ -33,10 +33,10 @@ namespace YAWK {
          * @param $lang array global language array
          * @return void
          */
-        public function readFilebase($db, $lang)
+        public function readFilebase(object $db, array $lang): void
         {
             $this->base_dir = dirname(__FILE__);
-            $this->base_dir = substr($this->base_dir, 0, -15); // remove last 5 characters
+            $this->base_dir = substr($this->base_dir, 0, -15); // remove last 15 chars
             // echo "<p>Base directory: $this->base_dir</p>";
 
             // set path and filename of the ini file
@@ -166,10 +166,9 @@ namespace YAWK {
 $iniFileWritten";
 
             // Close the output file
-            fclose($output_handle);
-
-            // return $output_file;
-            
+            if (fclose($output_handle)){
+                echo '<p class="animated fadeIn slow delay-5s">written: $updateFolder.$iniFileName</p>';
+            }
         }
 
     }
