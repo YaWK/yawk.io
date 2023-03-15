@@ -36,23 +36,36 @@ echo"<ol class=\"breadcrumb\">
 <!-- CONTENT -->
 <div class="box box-default">
     <div class="box-body">
-        <a href="#update" id="update" class="btn btn-success pull-right"><i class="fa fa-refresh"></i> &nbsp;<?php echo $lang['UPDATE_CHECK']; ?></a>
-        <h3 class="box-title"><?php echo $lang['UPDATE_CURRENT_INSTALLED_VERSION']; echo ' '; echo \YAWK\settings::getSetting($db,'yawkversion');?> </h3>
-<hr>
-<?php
-// CHECK FOR UPDATES
-$update = new update($db);
-if (isset($_GET['readFilebase']) && ($_GET['readFilebase'] == 1))
-{
-    echo '<h3 class="box-title">Filebase <small>of your installation '.\YAWK\backend::printTooltip('Der Updater prüft die Dateibasis Deiner Installation, um die Intigrität mit den Daten des Update zu vergleichen. ').'</small></h3>';
-    $update->readFilebase($db, (array)$lang);
-}
-
-?>
-
-
-
+        <a href="#checkForUpdatesBtn" id="checkForUpdatesBtn" class="btn btn-success pull-right"><i class="fa fa-refresh"></i> &nbsp;<?php echo $lang['UPDATE_CHECK']; ?></a>
+        <h3 class="box-title"><?php echo $lang['UPDATE_CURRENT_INSTALLED_VERSION']; echo ' <span id="installedVersion">'; echo \YAWK\settings::getSetting($db,'yawkversion').'</span>';?></h3>
+        <hr>
+        <div id="statusBarNode"></div>
+        <hr>
     </div>
+</div>
+
+<!-- 2cols -->
+<div class="row">
+<div class="col-md-6">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <?php echo '<h3 class="box-title">Filebase <small>of your installation </small> '.\YAWK\backend::printTooltip($lang['UPDATE_INTEGRITY_TT']).'</h3>'; ?>
+        </div>
+        <div class="box-body">
+            <div id="readFilebaseNode"></div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <?php echo '<h3 class="box-title">Filebase <small>of the latest YaWK release </small> '.\YAWK\backend::printTooltip($lang['UPDATE_INTEGRITY_TT']).'</h3>'; ?>
+        </div>
+        <div class="box-body">
+            <div id="readFilebaseNode"></div>
+        </div>
+    </div>
+</div>
 </div>
 
 <script type="text/javascript" src="js/checkForUpdates.js"></script>
