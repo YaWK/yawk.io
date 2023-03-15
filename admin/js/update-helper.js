@@ -22,6 +22,7 @@ $(document).ready(function() {  // wait until document is ready
                     statusBarNode.html('Update to '+updateVersion+' available! (currently installed: '+installedVersion+')').fadeIn(1000);
                     console.log('Update to '+updateVersion+' available! (currently installed: '+installedVersion+')');
                 } else {
+                    statusBarNode.html('No update available! The current version ('+installedVersion+') is up to date.').fadeIn(1000);
                     console.log('No update available! The current version ('+installedVersion+') is up to date.');
                 }
             }
