@@ -68,4 +68,4 @@ echo"<ol class=\"breadcrumb\">
 </div>
 </div>
 
-<script type="text/javascript" src="js/checkForUpdates.js"></script>
+<script type="text/javascript" src="js/update-helper.js"></script>
