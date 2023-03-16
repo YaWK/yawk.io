@@ -72,7 +72,7 @@ $(document).ready(function() {  // wait until document is ready
             });
     }
 
-    /*
+    /**
     * Compare two version numbers
     * @param {string} v1
     * @param {string} v2
