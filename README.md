@@ -16,30 +16,33 @@ to
 see what's going on and what has been done over the past few days, weeks, months and years.
 <hr>
 <h3><u>R O A D M A P for 2023: <small></small></u></h3>
-<b>Currently in development:</b><br><br>
-
-<b>Update official website https://yawk.io </b>
+<b><i></i></b>
+<h3>Currently on the ToDo list:</h3>
 <ul>
-<li>Installer / Improve Setup process ✓</li>
-<li>Codebase update to ensure PHP 8 compatibility ✓</li>
-<li>Migrate all code docs to doxygen because APIGEN is outdated ✓</li>
-<li>Add support for multilingual FrontEnd (Content) Pages and Menus ✓</li>
-<li>Major Updates of all Assets and Social Widgets </li>
-<li>Update CSS Framework to completely support Bootstrap 4.x</li>
+<li><a href="https://github.com/YaWK/yawk.io/milestone/80">YaWK Update Feature</a> <i>(in progress!)</i></li>
+<li>Brand new official website <a href="https://yawk.io">https://yawk.io/</a> <i>(in progress!)</i></li>
+<li>Migrate all doc blocks to doxygen <i><small>(nearly done)</small></i></li>
+<li>Major Updates of all Assets and Social / Facebook Widgets </li>
 <li>Add templates and demo pages <i><small>(scheduled until end of 2023)</small></i></li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
+</ul>
+<h3>Latest improvements / closed milestones </h3>
+<ul>
+<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/11?closed=1"> ✓ Installer / Improve Setup process</a></li>
+<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/78?closed=1"> ✓ Add support for multilingual FrontEnd (Content) Pages and Menus</a></li>
+<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/65?closed=1"> ✓ Improved SubMenu Widget</a></li>
+<li>[done] <a href="https://github.com/YaWK/yawk.io/issues/376"> ✓ Codebase update to ensure PHP 8 compatibility</a></li>
 </ul>
 
 <h3><u>ALSO PLANNED FOR 2023:</u></h3>
 <ul>
-<li>YaWK Update Method </li>
 <li>Add feature showcase</li>
 <li>Update CSS Framework to completely support Bootstrap 5.x</li>
 <li>Add support page <small><i>(and ticket system)</i></small></li>
 <li>Add admin handbook <small><i>(pdf and / or html)</i></small></li>
 <li>Add developer manual <small><i>(https://docs.yawk.io)</i></small></li>
 </ul>
-<b>Add social media channels</b>
+<b>Social media channels</b>
 <ul>
 <li>YouTube HowTo videos</li>
 </ul>
