@@ -31,13 +31,25 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
-
 ?>
 <!-- CONTENT -->
 <div class="box box-default">
     <div class="box-body">
-        <a href="#checkForUpdatesBtn" id="checkForUpdatesBtn" class="btn btn-success pull-right"><i class="fa fa-refresh"></i> &nbsp;<?php echo $lang['UPDATE_CHECK']; ?></a>
-        <h3 class="box-title"><?php echo $lang['UPDATE_CURRENT_INSTALLED_VERSION']; echo ' <span id="installedVersion">'; echo \YAWK\settings::getSetting($db,'yawkversion').'</span>';?></h3>
+        <div class="updateBtnNode" id="updateBtnNode">
+            <a href="#checkForUpdatesBtn" id="checkForUpdatesBtn" class="btn btn-success pull-right"
+               data-UPDATE_CHECK="<?php echo $lang['UPDATE_CHECK'];?>"
+               data-UPDATE_AVAILABLE="<?php echo $lang['UPDATE_AVAILABLE'];?>"
+               data-UPDATE_AVAILABLE_SUBTEXT="<?php echo $lang['UPDATE_AVAILABLE_SUBTEXT'];?>"
+               data-UPDATE_NOT_AVAILABLE="<?php echo $lang['UPDATE_NOT_AVAILABLE'];?>"
+               data-UPDATE_NOT_AVAILABLE_SUBTEXT="<?php echo $lang['UPDATE_NOT_AVAILABLE_SUBTEXT'];?>"
+               data-UPDATE_CHECK_SAME="<?php echo $lang['UPDATE_CHECK_SAME'];?>"
+               data-UPDATE_UP_TO_DATE="<?php echo $lang['UPDATE_UP_TO_DATE'];?>"
+               data-UPDATE_CURRENT_INSTALLED_VERSION="<?php echo $lang['UPDATE_CURRENT_INSTALLED_VERSION'];?>"
+               data-UPDATE_NO_UPDATE="<?php echo $lang['UPDATE_NO_UPDATE'];?>"
+               data-UPDATE_VERIFYING_FILES="<?php echo $lang['UPDATE_VERIFYING_FILES'];?>"
+               data-UPDATE_INSTALL="<?php echo $lang['UPDATE_INSTALL'];?>"><i class="fa fa-refresh"></i> &nbsp;<?php echo $lang['UPDATE_CHECK']; ?></a>
+        </div>
+        <h3 class="box-title"><?php echo $lang['UPDATE_CURRENT_INSTALLED_VERSION']; echo ' <small>development build</small> <span id="installedVersion">'; echo \YAWK\settings::getSetting($db,'yawkversion').'</span>';?></h3>
         <hr>
         <div id="statusBarNode"></div>
         <hr>
