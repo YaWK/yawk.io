@@ -19,8 +19,8 @@ see what's going on and what has been done over the past few days, weeks, months
 <b><i></i></b>
 <h3>Currently on the ToDo list:</h3>
 <ul>
-<li><a href="https://github.com/YaWK/yawk.io/milestone/80">YaWK Update Feature</a> <i>(in progress!)</i></li>
-<li>Brand new official website <a href="https://yawk.io">https://yawk.io/</a> <i>(in progress!)</i></li>
+<li><a href="https://github.com/YaWK/yawk.io/milestone/80" target="_blank">YaWK Update Feature</a> <i>(in progress!)</i></li>
+<li>Brand new official website <a href="https://yawk.io" target="_blank">https://yawk.io/</a> <i>(in progress!)</i></li>
 <li>Migrate all doc blocks to doxygen <i><small>(nearly done)</small></i></li>
 <li>Major Updates of all Assets and Social / Facebook Widgets </li>
 <li>Add templates and demo pages <i><small>(scheduled until end of 2023)</small></i></li>
@@ -28,10 +28,10 @@ see what's going on and what has been done over the past few days, weeks, months
 </ul>
 <h3>Latest improvements / closed milestones </h3>
 <ul>
-<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/11?closed=1"> ✓ Installer / Improve Setup process</a></li>
-<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/78?closed=1"> ✓ Add support for multilingual FrontEnd (Content) Pages and Menus</a></li>
-<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/65?closed=1"> ✓ Improved SubMenu Widget</a></li>
-<li>[done] <a href="https://github.com/YaWK/yawk.io/issues/376"> ✓ Codebase update to ensure PHP 8 compatibility</a></li>
+<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/11?closed=1" target="_blank"> ✓ Installer / Improve Setup process</a></li>
+<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/78?closed=1" target="_blank"> ✓ Add support for multilingual FrontEnd (Content) Pages and Menus</a></li>
+<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/65?closed=1" target="_blank"> ✓ Improved SubMenu Widget</a></li>
+<li>[done] <a href="https://github.com/YaWK/yawk.io/issues/376" target="_blank"> ✓ Codebase update to ensure PHP 8 compatibility</a></li>
 </ul>
 
 <h3><u>ALSO PLANNED FOR 2023:</u></h3>
