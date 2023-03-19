@@ -19,4 +19,4 @@ if (!isset($lang))
 }
 // prepare vars
 $update = new \YAWK\update();
-$update->readFilebase($db, (array)$lang);
+$update->generateLocalFilebase($db, (array)$lang);
