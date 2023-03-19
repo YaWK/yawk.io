@@ -37,35 +37,77 @@ $(document).ready(function() {  // wait until document is ready
             } else {
 
 
-                if (compareVersions(installedVersion, updateVersion) < 0) {
-                    // update available msg
-                    statusBarMessage = '<span class="animated lightSpeedIn">'+updateAvailable + ': ' + updateVersion+'</span>';
-                    successMsg = '<span class="text-primary animated zoomInDown"><b><i class="fa fa-globe animated bounce slow"></i> &nbsp;' + statusBarMessage + '</b></span>';
-                    statusBarNode.html(successMsg).fadeIn(1000);
-                    console.log(statusBarMessage);
+                // check, if version is higher than installed version (if so, update is available)
+                // UPDATE AVAILABLE: call api and get update config, update markup and display update message
+                if (compareVersions(installedVersion, updateVersion) < 0)
+                {
+                    // This method will call the api and return the update config object
+                    getUpdateConfig(function(error, data) {
+                        if (error) {
+                            console.error(error);
+                        }
+                        else // retrieved update config successfully
+                        {   console.log('Update config:', data);
 
-                    // change update button to install update
-                    $("#checkForUpdatesBtn").remove();
+                            // check, if all required properties are set
+                            if (data.updateConfig && data.updateConfig.UPDATE
+                                && data.updateConfig.UPDATE.buildMessage
+                                && data.updateConfig.UPDATE.buildTime
+                                && data.updateConfig.UPDATE.updateVersion
+                                && data.updateConfig.UPDATE.updateFilebase)
+                            {
+                                // ok, set vars from update config
+                                let buildMessage = data.updateConfig.UPDATE.buildMessage;
+                                let buildTime = data.updateConfig.UPDATE.buildTime;
+                                let updateVersion = data.updateConfig.UPDATE.updateVersion;
+                                let updateFilebase = data.updateConfig.UPDATE.updateFilebase;
 
-                    // Create a new startUpdateBtn element with the given attributes
-                    var newBtn = $('<a>', {
-                        'href': '#startUpdateBtn',
-                        'id': 'startUpdateBtn',
-                        'class': 'btn btn-primary pull-right animated fadeIn slow',
-                        'html': '<i class="fa fa-download"></i> &nbsp;' + updateInstall
+                                // log vars
+                                // console.log('Build message:', buildMessage);
+                                // console.log('Build time:', buildTime);
+                                // console.log('Build version:', updateVersion);
+                                // console.log('Build filebase:', updateFilebase);
+
+                                // update available msg
+                                statusBarMessage = updateAvailable + ': ' + updateVersion+' '+buildMessage;
+                                successMsg = '<span class="text-primary animated zoomInDown"><b><i class="fa fa-globe animated bounce slow"></i> &nbsp;' + statusBarMessage + '</b></span>';
+                                statusBarNode.html(successMsg).fadeIn(1000);
+                                console.log(statusBarMessage);
+
+                                // START BTN CREATION
+                                // switch styling of update button to "install update" process
+                                // to achieve this, we have to remove the old button and create a new one
+                                $("#checkForUpdatesBtn").remove();
+
+                                // Create the new startUpdateBtn element with the given attributes
+                                var newBtn = $('<a>', {
+                                    'href': '#startUpdateBtn',
+                                    'id': 'startUpdateBtn',
+                                    'class': 'btn btn-primary pull-right animated fadeIn slow',
+                                    'html': '<i class="fa fa-download"></i> &nbsp;' + updateInstall
+                                });
+                                // Append the new startUpdateBtn to a container element on the page
+                                $('#updateBtnNode').append(newBtn);
+                                // END BTN CREATION
+
+                                // get new startUpdateBtn, check if it is clicked and call readFileBase()
+                                var startUpdateBtn = $("#startUpdateBtn");
+                                $(startUpdateBtn).click(function() {
+                                    console.log('install update button clicked, read local filebase and store to ini file');
+                                    startUpdateBtn.html("<i class=\"fa fa-refresh fa-spin\"></i> &nbsp;&nbsp;" + verifyingFiles);
+                                    // this function will read the local filebase from your installation and store it to a filebase.ini file
+                                    readFileBase();
+                                });
+                            } // end if all required properties are set
+                            else // update config not found or properties not set
+                            {   // throw error to console
+                                console.error('updateConfig, UPDATE, or properties not found in xhr data');
+                            }
+                        }
                     });
-                    // Append the new startUpdateBtn to a container element on the page
-                    $('#updateBtnNode').append(newBtn);
-
-                    var startUpdateBtn = $("#startUpdateBtn");
-                    $(startUpdateBtn).click(function() {
-                        console.log('install update button clicked, read local filebase and store to ini file');
-                        startUpdateBtn.html("<i class=\"fa fa-refresh fa-spin\"></i> &nbsp;&nbsp;" + verifyingFiles);
-                        // if install update button is clicked
-                        readFileBase();
-                    });
-
-                } else {
+                }
+                else    // no update available
+                {   // update status bar message and updateBtn text
                     statusBarMessage = updateNotAvailable + ' (' + installedVersion + ') ' + updateNotAvailableSubtext;
                     errorMsg = '<span class="text-success animated fadeIn slow"><i class="fa fa-check-circle-o"></i> &nbsp;' + statusBarMessage + '</span>';
                     statusBarNode.html(errorMsg).fadeIn(1000);
@@ -74,11 +116,10 @@ $(document).ready(function() {  // wait until document is ready
                 }
             }
         });
-    });
-
+    }); // end update button click processing
 
     /**
-     * Read the filebase from local installation
+     * Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
      */
     function readFileBase(){
         // check via ajax, if there are updates available
@@ -96,7 +137,7 @@ $(document).ready(function() {  // wait until document is ready
     }
 
     /**
-    * Check the version of the current YAWK installation
+    * Return the latest update version from update.yawk.io
     * @return {string} version
      */
     function checkVersion(callback) {
@@ -119,6 +160,33 @@ $(document).ready(function() {  // wait until document is ready
                 callback('Error: ' + error);
             });
     }
+
+    /**
+     * Return the update config from update.yawk.io
+     * @return {string} update config as json
+     */
+    function getUpdateConfig(callback)
+    {   // get update config from update.yawk.io
+        fetch('https://update.yawk.io/?action=getUpdateConfig')
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('API error: ' + response.status);
+                }
+            })
+            .then(data => {
+                if (data) {
+                    callback(null, data);
+                } else {
+                    callback('Error fetching data: ' + JSON.stringify(data));
+                }
+            })
+            .catch(error => {
+                callback('Error: ' + error);
+            });
+    }
+
 
     /**
     * Compare two version numbers
@@ -146,7 +214,6 @@ $(document).ready(function() {  // wait until document is ready
                 return -1;
             }
         }
-
         return 0;
     }
 
