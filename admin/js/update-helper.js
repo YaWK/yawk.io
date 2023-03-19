@@ -36,6 +36,7 @@ $(document).ready(function() {  // wait until document is ready
             let updateChanges = lang.attr('data-UPDATE_CHANGES');
             let released = lang.attr('data-RELEASED');
             let githubReference = lang.attr('data-GITHUB_REFERENCE');
+            let githubMilestoneText = lang.attr('data-GITHUB_MILESTONE');
 
             if (error) {
                 console.error(error);
@@ -72,6 +73,11 @@ $(document).ready(function() {  // wait until document is ready
                                 }
                                 else { githubIssues = false; }
 
+                                if (data.updateConfig.UPDATE.githubMilestone){
+                                    var githubMilestone = data.updateConfig.UPDATE.githubMilestone;
+                                }
+                                else { githubMilestone = false; }
+
                                 // log vars
                                 // console.log('Build message:', buildMessage);
                                 // console.log('Build time:', buildTime);
@@ -79,7 +85,6 @@ $(document).ready(function() {  // wait until document is ready
                                 // console.log('Build filebase:', updateFilebase);
 
                                 if (githubIssues){
-                                    const inputString = 'This is a test string with issues #123, #213 and #455';
                                     // Use a regular expression to match issue numbers (# followed by digits)
                                     const regex = /#(\d+)/g;
                                     // Extract the issue numbers
@@ -89,22 +94,46 @@ $(document).ready(function() {  // wait until document is ready
                                     while ((match = regex.exec(githubIssues)) !== null) {
                                         issueNumbers.push(match[1]);
                                     }
-
                                     // Replace issue numbers with GitHub links
                                     const repoUrl = 'https://github.com/YaWK/yawk.io/issues/';
-                                    var stringWithLinks = githubIssues.replace(regex, (match, issueNumber) => {
+                                    var issuesWithLinks = githubIssues.replace(regex, (match, issueNumber) => {
                                         return `<a href="${repoUrl}${issueNumber}" target="_blank">${match}</a>`;
                                     });
-
                                     // console.log('Issue numbers:', issueNumbers);
                                     // console.log('String with links:', stringWithLinks);
 
                                     // create GitHub info string
-                                    var githubInfo = '<li>'+githubReference+': <b>'+stringWithLinks+'</b></li>';
+                                    var githubRelatedIssues = '<li>'+githubReference+': <b>'+issuesWithLinks+'</b></li>';
                                 }
                                 else // no GitHub issues found
                                 {   // leave GitHub info empty
-                                    githubInfo = '';
+                                    githubRelatedIssues = '';
+                                }
+
+                                // check, if GitHub milestone is set
+                                if (githubMilestone){
+                                    // Use a regular expression to match issue numbers (# followed by digits)
+                                    const regex = /#(\d+)/g;
+                                    // Extract the milestone numbers
+                                    const milestoneNumbers = [];
+                                    let match;
+
+                                    while ((match = regex.exec(githubMilestone)) !== null) {
+                                        milestoneNumbers.push(match[1]);
+                                    }
+
+                                    // Replace milestone numbers with GitHub links
+                                    const repoUrl = 'https://github.com/YaWK/yawk.io/milestone/';
+                                    var milestoneWithLinks = githubMilestone.replace(regex, (match, milestoneNumber) => {
+                                        return `<a href="${repoUrl}${milestoneNumber}" target="_blank">${match}</a>`;
+                                    });
+
+                                    // create GitHub info string
+                                    var githubRelatedMilestone = '<li>'+githubMilestoneText+': <b>'+milestoneWithLinks+'</b></li>';
+                                }
+                                else // no GitHub issues found
+                                {   // leave GitHub info empty
+                                    githubRelatedMilestone = '';
                                 }
 
                                 // update available msg
@@ -112,10 +141,9 @@ $(document).ready(function() {  // wait until document is ready
                                 successMsg = '<h3 class="text-primary animated fadeIn"><b><i class="fa fa-globe animated bounce slow"></i></b> &nbsp;' + updateAvailable + '<br><small>'+updateAvailableSubtext+'</small></h3>';
                                 statusBarNode.html(successMsg).fadeIn(1000);
 
-                                let extendedInfo = '<ul class="animated fadeIn slow delay-2s"><li><span class="text-primary"><b>' + latestAvailableVersion + '</b> build <b>' + updateVersion + '</b></span></li><li>' + updateCurrentInstalledVersion + ' build <b class="text-muted">' + installedVersion + '</b></li>' +  '<li>'+updateChanges+': <b>'+ buildMessage + '</b></li>'+githubInfo+'<li>'+released+': ' + buildTime + '</li></ul>';
+                                let extendedInfo = '<ul class="animated fadeIn slow delay-2s"><li><span class="text-primary"><b>' + latestAvailableVersion + '</b> build <b>' + updateVersion + '</b></span></li><li>' + updateCurrentInstalledVersion + ' build <b class="text-muted">' + installedVersion + '</b></li>' +  '<li>'+updateChanges+': <b>'+ buildMessage + '</b></li>'+githubRelatedIssues+githubRelatedMilestone+'<li>'+released+': ' + buildTime + '</li></ul>';
                                 extendedInfoNode.html(extendedInfo).fadeIn(1000);
                                 console.log(statusBarMessage);
-
 
                                 // START BTN CREATION
                                 // switch styling of update button to "install update" process
@@ -133,13 +161,14 @@ $(document).ready(function() {  // wait until document is ready
                                 $('#updateBtnNode').append(newBtn);
                                 // END BTN CREATION
 
-                                // get new startUpdateBtn, check if it is clicked and call readFileBase()
+                                // get new startUpdateBtn, check if it is clicked and call generateLocalFileBase()
                                 var startUpdateBtn = $("#startUpdateBtn");
                                 $(startUpdateBtn).click(function() {
                                     console.log('install update button clicked, read local filebase and store to ini file');
                                     startUpdateBtn.html("<i class=\"fa fa-refresh fa-spin\"></i> &nbsp;&nbsp;" + verifyingFiles);
                                     // this function will read the local filebase from your installation and store it to a filebase.ini file
-                                    readFileBase();
+                                    generateLocalFileBase();
+                                    readUpdateFileBase();
                                 });
                             } // end if all required properties are set
                             else // update config not found or properties not set
@@ -164,17 +193,37 @@ $(document).ready(function() {  // wait until document is ready
     /**
      * Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
      */
-    function readFileBase(){
+    function generateLocalFileBase(){
         // check via ajax, if there are updates available
         $.ajax({    // create a new AJAX call
             type: 'POST', // GET or POST
-            url: 'js/update-readFilebase.php', // the file to call
+            url: 'js/update-generateLocalFilebase.php', // the file to call
             success: function (response) { // fileBase checked successfully
                 // update view with response
                 $(readFilebaseNode).html(response).fadeIn(1000);
             },
             error: function (response) { // on error..
-                console.log('readFileBase() ERROR: ' +response);
+                console.log('generateLocalFileBase() ERROR: ' +response);
+            }
+        });
+    }
+
+    /**
+     * Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
+     */
+    function readUpdateFileBase(){
+        console.log('readUpdateFileBase() called');
+        // check via ajax, if there are updates available
+        $.ajax({    // create a new AJAX call
+            type: 'POST', // GET or POST
+            url: 'js/update-readUpdateFilebase.php', // the file to call
+            success: function (response) { // fileBase checked successfully
+                // update view with response
+                console.log("readUpdateFileBase() response: " + response);
+                $(readUpdateFilebaseNode).html(response).fadeIn(1000);
+            },
+            error: function (response) { // on error..
+                console.log('readUpdateFileBase() ERROR: ' +response);
             }
         });
     }
