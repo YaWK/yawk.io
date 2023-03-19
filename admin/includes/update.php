@@ -14,6 +14,13 @@ if (!isset($page)) // if no page object is set
 {   // create new page object
     $page = new YAWK\page();
 }
+if (!isset($lang))
+{   // create language object
+    $lang = new language();
+}
+// if server-side update processing is required instead of xhr:
+//$update = new update();
+//$updateConfig = $update->readUpdateIniFromServer();
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
