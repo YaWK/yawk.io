@@ -54,11 +54,15 @@ echo"<ol class=\"breadcrumb\">
                data-UPDATE_CURRENT_INSTALLED_VERSION="<?php echo $lang['UPDATE_CURRENT_INSTALLED_VERSION'];?>"
                data-UPDATE_NO_UPDATE="<?php echo $lang['UPDATE_NO_UPDATE'];?>"
                data-UPDATE_VERIFYING_FILES="<?php echo $lang['UPDATE_VERIFYING_FILES'];?>"
+               data-UPDATE_LATEST_AVAILABLE_VERSION="<?php echo $lang['UPDATE_LATEST_AVAILABLE_VERSION'];?>"
+               data-UPDATE_CHANGES="<?php echo $lang['UPDATE_CHANGES'];?>"
+               data-RELEASED="<?php echo $lang['RELEASED'];?>"
                data-UPDATE_INSTALL="<?php echo $lang['UPDATE_INSTALL'];?>"><i class="fa fa-refresh"></i> &nbsp;<?php echo $lang['UPDATE_CHECK']; ?></a>
         </div>
         <h3 class="box-title"><?php echo $lang['UPDATE_CURRENT_INSTALLED_VERSION']; echo ' <small>development build</small> <span id="installedVersion">'; echo \YAWK\settings::getSetting($db,'yawkversion').'</span>';?></h3>
         <hr>
         <div id="statusBarNode"></div>
+        <div id="extendedInfoNode"></div>
         <hr>
     </div>
 </div>
