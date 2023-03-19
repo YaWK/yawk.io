@@ -58,6 +58,7 @@ echo"<ol class=\"breadcrumb\">
                data-UPDATE_CHANGES="<?php echo $lang['UPDATE_CHANGES'];?>"
                data-RELEASED="<?php echo $lang['RELEASED'];?>"
                data-GITHUB_REFERENCE="<?php echo $lang['GITHUB_REFERENCE'];?>"
+               data-GITHUB_MILESTONE="<?php echo $lang['GITHUB_MILESTONE'];?>"
                data-UPDATE_INSTALL="<?php echo $lang['UPDATE_INSTALL'];?>"><i class="fa fa-refresh"></i> &nbsp;<?php echo $lang['UPDATE_CHECK']; ?></a>
         </div>
         <h3 class="box-title"><?php echo $lang['UPDATE_CURRENT_INSTALLED_VERSION']; echo ' <small>development build</small> <span id="installedVersion">'; echo \YAWK\settings::getSetting($db,'yawkversion').'</span>';?></h3>
@@ -86,7 +87,7 @@ echo"<ol class=\"breadcrumb\">
             <?php echo '<h3 class="box-title">Filebase <small>of the latest YaWK release </small> '.\YAWK\backend::printTooltip($lang['UPDATE_INTEGRITY_TT']).'</h3>'; ?>
         </div>
         <div class="box-body">
-            <div id="readFilebaseNode"></div>
+            <div id="readUpdateFilebaseNode"></div>
         </div>
     </div>
 </div>
