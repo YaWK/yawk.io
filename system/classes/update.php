@@ -16,12 +16,20 @@ namespace YAWK {
      */
     class update
     {
-        /* @param string $base_dir */
+        /** @var string $base_dir the base directory of the YaWK installation */
         public string $base_dir = '';
 
+        /** @var string $updateServer the remote server to connect to */
         public string $updateServer = 'https://update.yawk.io/';
+
+        /** @var string $updateFile contains all update information like version, build time, build message, etc. */
         public string $updateFile = 'update.ini';
 
+
+        /**
+         * @brief update constructor. Check if allow_url_fopen is enabled
+         * @details will be called by xhr request from admin/js/update-generateLocalFilebase.php
+         */
         public function __construct()
         {
             // Get the value of the allow_url_fopen setting
@@ -34,10 +42,47 @@ namespace YAWK {
             }
             else
             {   // allow_url_fopen is disabled, exit with error
-                die("allow_url_fopen is disabled, but required to be in order to use the update methods.");
+                echo "allow_url_fopen is disabled, but required to use the update methods.";
             }
         }
 
+        /**
+         * @brief read filebase.ini from update server (https://update.yawk.io/filebase.ini) and return array|false
+         * @details will be called by xhr request from admin/js/update-readUpdateFilebase.php
+         * @return array|false
+         */
+        public function readUpdateFilebaseFromServer(): false|array
+        {
+            // URL of the remote INI file
+            $url = $this->updateServer.'filebase.ini';
+
+            // Get the content of the remote INI file
+            $iniContent = file_get_contents($url);
+
+            // Check if the content was retrieved successfully
+            if ($iniContent !== false)
+            {   // Parse the INI content into an associative array
+                $filebase = parse_ini_string($iniContent);
+
+                // Print the contents of the array
+                foreach ($filebase as $key => $value)
+                {   // set update array
+                    $updateFilebase[$key] = $value;
+                }
+            }
+            else
+            {   // unable to read filebase from remote server
+                echo "Error: Unable to read filebase from remote server. Check if this file exists: $url";
+            }
+            // return array or false
+            return $updateFilebase ?? false;
+        }
+
+
+        /**
+         * @brief read update.ini from update server (https://update.yawk.io/update.ini) and return array|false
+         * @return false|array
+         */
         public function readUpdateIniFromServer(): false|array
         {
             // URL of the remote INI file
@@ -58,7 +103,7 @@ namespace YAWK {
                 }
             }
             else
-            {
+            {   // unable to read update.ini from remote server
                 echo "Error: Unable to read the remote INI file.";
             }
             return $updateConfig ?? false;
@@ -71,7 +116,7 @@ namespace YAWK {
          * @param $lang array global language array
          * @return void
          */
-        public function readFilebase(object $db, array $lang): void
+        public function generateLocalFilebase(object $db, array $lang): void
         {
             $this->base_dir = dirname(__FILE__);
             $this->base_dir = substr($this->base_dir, 0, -15); // remove last 15 chars
@@ -208,6 +253,5 @@ $iniFileWritten";
                 echo '<p class="animated fadeIn slow delay-5s">written: $updateFolder.$iniFileName</p>';
             }
         }
-
-    }
-}
+    } // EOF class update
+} // EOF namespace
