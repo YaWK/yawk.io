@@ -35,6 +35,7 @@ $(document).ready(function() {  // wait until document is ready
             let latestAvailableVersion = lang.attr('data-UPDATE_LATEST_AVAILABLE_VERSION');
             let updateChanges = lang.attr('data-UPDATE_CHANGES');
             let released = lang.attr('data-RELEASED');
+            let githubReference = lang.attr('data-GITHUB_REFERENCE');
 
             if (error) {
                 console.error(error);
@@ -64,7 +65,12 @@ $(document).ready(function() {  // wait until document is ready
                                 let buildMessage = data.updateConfig.UPDATE.buildMessage;
                                 let buildTime = data.updateConfig.UPDATE.buildTime;
                                 let updateVersion = data.updateConfig.UPDATE.updateVersion;
-                                let updateFilebase = data.updateConfig.UPDATE.updateFilebase;
+                                // let updateFilebase = data.updateConfig.UPDATE.updateFilebase;
+
+                                if (data.updateConfig.UPDATE.githubIssues){
+                                    var githubIssues = data.updateConfig.UPDATE.githubIssues;
+                                }
+                                else { githubIssues = false; }
 
                                 // log vars
                                 // console.log('Build message:', buildMessage);
@@ -72,14 +78,44 @@ $(document).ready(function() {  // wait until document is ready
                                 // console.log('Build version:', updateVersion);
                                 // console.log('Build filebase:', updateFilebase);
 
+                                if (githubIssues){
+                                    const inputString = 'This is a test string with issues #123, #213 and #455';
+                                    // Use a regular expression to match issue numbers (# followed by digits)
+                                    const regex = /#(\d+)/g;
+                                    // Extract the issue numbers
+                                    const issueNumbers = [];
+                                    let match;
+
+                                    while ((match = regex.exec(githubIssues)) !== null) {
+                                        issueNumbers.push(match[1]);
+                                    }
+
+                                    // Replace issue numbers with GitHub links
+                                    const repoUrl = 'https://github.com/YaWK/yawk.io/issues/';
+                                    var stringWithLinks = githubIssues.replace(regex, (match, issueNumber) => {
+                                        return `<a href="${repoUrl}${issueNumber}" target="_blank">${match}</a>`;
+                                    });
+
+                                    // console.log('Issue numbers:', issueNumbers);
+                                    // console.log('String with links:', stringWithLinks);
+
+                                    // create GitHub info string
+                                    var githubInfo = '<li>'+githubReference+': <b>'+stringWithLinks+'</b></li>';
+                                }
+                                else // no GitHub issues found
+                                {   // leave GitHub info empty
+                                    githubInfo = '';
+                                }
+
                                 // update available msg
                                 statusBarMessage = updateAvailable;
                                 successMsg = '<h3 class="text-primary animated fadeIn"><b><i class="fa fa-globe animated bounce slow"></i></b> &nbsp;' + updateAvailable + '<br><small>'+updateAvailableSubtext+'</small></h3>';
                                 statusBarNode.html(successMsg).fadeIn(1000);
 
-                                let extendedInfo = '<ul class="animated fadeIn slow delay-2s"><li><span class="text-primary"><b>' + latestAvailableVersion + '</b> build <b>' + updateVersion + '</b></span></li><li>' + updateCurrentInstalledVersion + ' build <b class="text-muted">' + installedVersion + '</b></li>' +  '<li>'+updateChanges+': <b>'+ buildMessage + '</b></li><li>'+released+': ' + buildTime + '</li></ul>';
+                                let extendedInfo = '<ul class="animated fadeIn slow delay-2s"><li><span class="text-primary"><b>' + latestAvailableVersion + '</b> build <b>' + updateVersion + '</b></span></li><li>' + updateCurrentInstalledVersion + ' build <b class="text-muted">' + installedVersion + '</b></li>' +  '<li>'+updateChanges+': <b>'+ buildMessage + '</b></li>'+githubInfo+'<li>'+released+': ' + buildTime + '</li></ul>';
                                 extendedInfoNode.html(extendedInfo).fadeIn(1000);
                                 console.log(statusBarMessage);
+
 
                                 // START BTN CREATION
                                 // switch styling of update button to "install update" process
