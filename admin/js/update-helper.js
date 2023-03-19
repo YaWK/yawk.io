@@ -6,6 +6,7 @@ $(document).ready(function() {  // wait until document is ready
     let installedVersion = $('#installedVersion').text(); // the current installed version of YAWK
     var updateVersion = ''; // latest version of YAWK (filled with api call from update.yawk.io)
     var statusBarNode = $("#statusBarNode"); // status bar node
+    var extendedInfoNode = $("#extendedInfoNode"); // displays more info about update
     var statusBarMessage = '';  // message to display in status bar
     var successMsg = ''; // holds success message, if update is available
     var errorMsg = ''; // holds error message, if no update is available
@@ -31,6 +32,9 @@ $(document).ready(function() {  // wait until document is ready
             let updateCurrentInstalledVersion = lang.attr('data-UPDATE_CURRENT_INSTALLED_VERSION');
             let updateNoUpdate = lang.attr('data-UPDATE_NO_UPDATE');
             let verifyingFiles = lang.attr('data-UPDATE_VERIFYING_FILES');
+            let latestAvailableVersion = lang.attr('data-UPDATE_LATEST_AVAILABLE_VERSION');
+            let updateChanges = lang.attr('data-UPDATE_CHANGES');
+            let released = lang.attr('data-RELEASED');
 
             if (error) {
                 console.error(error);
@@ -69,9 +73,12 @@ $(document).ready(function() {  // wait until document is ready
                                 // console.log('Build filebase:', updateFilebase);
 
                                 // update available msg
-                                statusBarMessage = updateAvailable + ': ' + updateVersion+' '+buildMessage;
-                                successMsg = '<span class="text-primary animated zoomInDown"><b><i class="fa fa-globe animated bounce slow"></i> &nbsp;' + statusBarMessage + '</b></span>';
+                                statusBarMessage = updateAvailable;
+                                successMsg = '<h3 class="text-primary animated fadeIn"><b><i class="fa fa-globe animated bounce slow"></i></b> &nbsp;' + updateAvailable + '<br><small>'+updateAvailableSubtext+'</small></h3>';
                                 statusBarNode.html(successMsg).fadeIn(1000);
+
+                                let extendedInfo = '<ul class="animated fadeIn slow delay-2s"><li><span class="text-primary"><b>' + latestAvailableVersion + '</b> build <b>' + updateVersion + '</b></span></li><li>' + updateCurrentInstalledVersion + ' build <b class="text-muted">' + installedVersion + '</b></li>' +  '<li>'+updateChanges+': <b>'+ buildMessage + '</b></li><li>'+released+': ' + buildTime + '</li></ul>';
+                                extendedInfoNode.html(extendedInfo).fadeIn(1000);
                                 console.log(statusBarMessage);
 
                                 // START BTN CREATION
