@@ -5,5 +5,5 @@ include '../../system/classes/update.php';
 $update = new update();
 $updateFilebase = $update->readUpdateFilebaseFromServer();
 echo "<pre>";
-print_r($update->readUpdateFilebaseFromServer());
+print_r($updateFilebase);
 echo "</pre>";
