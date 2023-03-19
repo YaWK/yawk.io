@@ -19,11 +19,49 @@ namespace YAWK {
         /* @param string $base_dir */
         public string $base_dir = '';
 
+        public string $updateServer = 'https://update.yawk.io/';
+        public string $updateFile = 'update.ini';
 
-        /** @return object global db object */
         public function __construct()
         {
+            // Get the value of the allow_url_fopen setting
+            $allowUrlFopen = ini_get('allow_url_fopen');
 
+            // Check if allow_url_fopen is enabled
+            if ($allowUrlFopen)
+            {   // allow_url_fopen is enabled, all good
+                echo "allow_url_fopen is enabled.";
+            }
+            else
+            {   // allow_url_fopen is disabled, exit with error
+                die("allow_url_fopen is disabled, but required to be in order to use the update methods.");
+            }
+        }
+
+        public function readUpdateIniFromServer(): false|array
+        {
+            // URL of the remote INI file
+            $url = $this->updateServer.$this->updateFile;
+
+            // Get the content of the remote INI file
+            $iniContent = file_get_contents($url);
+
+            // Check if the content was retrieved successfully
+            if ($iniContent !== false)
+            {   // Parse the INI content into an associative array
+                $config = parse_ini_string($iniContent);
+
+                // Print the contents of the array
+                foreach ($config as $key => $value)
+                {   // set update array
+                    $updateConfig['UPDATE'][$key] = $value;
+                }
+            }
+            else
+            {
+                echo "Error: Unable to read the remote INI file.";
+            }
+            return $updateConfig ?? false;
         }
 
         /**
