@@ -167,8 +167,15 @@ $(document).ready(function() {  // wait until document is ready
                                     console.log('install update button clicked, read local filebase and store to ini file');
                                     startUpdateBtn.html("<i class=\"fa fa-refresh fa-spin\"></i> &nbsp;&nbsp;" + verifyingFiles);
                                     // this function will read the local filebase from your installation and store it to a filebase.ini file
-                                    generateLocalFileBase();
-                                    readUpdateFileBase();
+                                    // Call both functions and wait for them to complete
+                                    Promise.all([generateLocalFileBase()])
+                                        .then(([localFilebase]) => {
+                                            // local filebase generated successfully, now read update filebase
+                                            readUpdateFileBase();
+                                        })
+                                        .catch((error) => {
+                                            console.log(error);
+                                        });
                                 });
                             } // end if all required properties are set
                             else // update config not found or properties not set
@@ -193,20 +200,25 @@ $(document).ready(function() {  // wait until document is ready
     /**
      * Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
      */
-    function generateLocalFileBase(){
-        // check via ajax, if there are updates available
-        $.ajax({    // create a new AJAX call
-            type: 'POST', // GET or POST
-            url: 'js/update-generateLocalFilebase.php', // the file to call
-            success: function (response) { // fileBase checked successfully
-                // update view with response
-                $(readFilebaseNode).html(response).fadeIn(1000);
-            },
-            error: function (response) { // on error..
-                console.log('generateLocalFileBase() ERROR: ' +response);
-            }
+    // Wrap the AJAX request in a Promise
+    function generateLocalFileBase() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: 'POST',
+                url: 'js/update-generateLocalFilebase.php',
+                success: function (response) {
+                    resolve(response);
+                    $(readFilebaseNode).html(response).fadeIn(1000);
+                    // this function will read the filebase.ini from remote update server https://update.yawk.io
+                    readUpdateFileBase();
+                },
+                error: function (response) {
+                    reject('generateLocalFileBase() ERROR: ' + response);
+                },
+            });
         });
     }
+
 
     /**
      * Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
@@ -219,7 +231,7 @@ $(document).ready(function() {  // wait until document is ready
             url: 'js/update-readUpdateFilebase.php', // the file to call
             success: function (response) { // fileBase checked successfully
                 // update view with response
-                console.log("readUpdateFileBase() response: " + response);
+                // console.log("readUpdateFileBase() response: " + response);
                 $(readUpdateFilebaseNode).html(response).fadeIn(1000);
             },
             error: function (response) { // on error..
