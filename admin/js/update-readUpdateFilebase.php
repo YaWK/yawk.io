@@ -20,19 +20,15 @@ foreach ($localFilebase as $filePath => $localHash) {
             $differentFiles[] = $filePath;
         }
     } else {
-        echo '<br><b>not found:</b> '.$filePath.' <span class="text-muted">in update filebase</span>';
+        echo '<br><span class="animated fadeIn slow delay-2s"><b>not found:</b> '.$filePath.' <span class="text-muted">in update filebase</span></span>';
     }
 }
 
 if (empty($differentFiles)) {
-    echo "<b>All files have the same hash values.</b><br>";
+    echo '<p><b class="animated fadeIn slow delay-2s">All files have the same hash values.</b></p>';
 } else {
-    echo "<br><br><b>Files with different hash values:</b><br>";
+    echo '<p class="animated fadeIn slow delay-2s"><br><b>Files with different hash values:</b></p>';
     foreach ($differentFiles as $file) {
-        echo "- $file<br>";
+        echo '<span class="animated slideInDown delay-3s">- '.$file.'</span><br>';
     }
 }
-
-
-echo "<pre>";
-echo "</pre>";
