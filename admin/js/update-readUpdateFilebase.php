@@ -27,8 +27,8 @@ foreach ($localFilebase as $filePath => $localHash) {
 if (empty($differentFiles)) {
     echo '<p><b class="animated fadeIn slow delay-2s">All files have the same hash values.</b></p>';
 } else {
-    echo '<p class="animated fadeIn slow delay-2s"><br><b>Files with different hash values:</b></p>';
+    echo '<p class="animated fadeIn slow delay-3s"><br><b>Files with different hash values:</b></p>';
     foreach ($differentFiles as $file) {
-        echo '<span class="animated slideInDown delay-3s">- '.$file.'</span><br>';
+        echo '<span class="animated fadeIn slow delay-4s">- '.$file.'</span><br>';
     }
 }
