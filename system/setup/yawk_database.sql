@@ -618,7 +618,8 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('webmail_smtp_username', '', '', 25, 10, 1, 'LABEL_WEBMAIL_SMTP_USERNAME', 'fa fa-user-o', 'HEADING_WEBMAIL_SMTP_USERNAME', '', 'form-control', 'input', 'PH_WEBMAIL_SMTP_USERNAME', '', ''),
 ('yawkversion', '1.0 build 2021.06', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('youtubeChannelUrl', 'https://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
-('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
+('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', ''),
+('openAIApiKey', '', '', '25', '1', '1', 'OPENAI_APIKEY', 'fa fa-hashtag', 'OPENAI_HEADING', 'OPENAI_SUBTEXT', 'form-control', 'input', 'OPENAI_KEY_PH', 'OPENAI_KEY_DESC', '');
 
 CREATE TABLE `cms_settings_types` (
 `id` int(11) NOT NULL,
@@ -649,7 +650,8 @@ INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
 (21, 'database'),
 (22, 'webmail-account'),
 (23, 'webmail-server'),
-(24, 'webmail-settings');
+(24, 'webmail-settings'),
+(25, 'openAI');
 
 CREATE TABLE `cms_stats` (
 `id` int(11) NOT NULL,
@@ -2674,7 +2676,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_stats`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_settings_types`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 ALTER TABLE `cms_syslog`
 MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_syslog_categories`
