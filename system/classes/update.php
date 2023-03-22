@@ -25,7 +25,6 @@ namespace YAWK {
         /** @var string $updateFile contains all update information like version, build time, build message, etc. */
         public string $updateFile = 'update.ini';
 
-
         /**
          * @brief update constructor. Check if allow_url_fopen is enabled
          * @details will be called by xhr request from admin/js/update-generateLocalFilebase.php
@@ -34,15 +33,10 @@ namespace YAWK {
         {
             // Get the value of the allow_url_fopen setting
             $allowUrlFopen = ini_get('allow_url_fopen');
-
             // Check if allow_url_fopen is enabled
-            if ($allowUrlFopen)
-            {   // allow_url_fopen is enabled, all good
-                echo "allow_url_fopen is enabled.";
-            }
-            else
+            if (!$allowUrlFopen)
             {   // allow_url_fopen is disabled, exit with error
-                echo "allow_url_fopen is disabled, but required to use the update methods.";
+                echo "allow_url_fopen is disabled, but required to use the update methods. Please enable allow_url_fopen in your php.ini file or ask your admin / hoster for assistance.";
             }
         }
 
@@ -158,7 +152,9 @@ namespace YAWK {
                     || $file_path->getFilename()[0] == '.'
                     || strpos($file_path, '/.git/') !== false
                     || strpos($file_path, '/.github/') !== false
-                    || strpos($file_path, '/.idea/') !== false)
+                    || strpos($file_path, '/.idea/') !== false
+                    || strpos($file_path, '/content/') !== false
+                    || strpos($file_path, '/media/') !== false)
                 {   // skip this file/folder
                     continue;
                 }
