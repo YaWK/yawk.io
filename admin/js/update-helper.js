@@ -153,7 +153,7 @@ $(document).ready(function() {  // wait until document is ready
                                 // Create the new startUpdateBtn element with the given attributes
                                 var newBtn = $('<a>', {
                                     'href': '#startUpdateBtn',
-                                    'id': 'startUpdateBtn',
+                                    'id': 'getFilebaseBtn',
                                     'class': 'btn btn-primary pull-right animated fadeIn slow',
                                     'html': '<i class="fa fa-download"></i> &nbsp;' + updateInstall
                                 });
@@ -162,10 +162,10 @@ $(document).ready(function() {  // wait until document is ready
                                 // END BTN CREATION
 
                                 // get new startUpdateBtn, check if it is clicked and call generateLocalFileBase()
-                                var startUpdateBtn = $("#startUpdateBtn");
-                                $(startUpdateBtn).click(function() {
+                                var getFilebaseBtn = $("#getFilebaseBtn");
+                                $(getFilebaseBtn).click(function() {
                                     console.log('install update button clicked, read local filebase and store to ini file');
-                                    startUpdateBtn.html("<i class=\"fa fa-refresh fa-spin\"></i> &nbsp;&nbsp;" + verifyingFiles);
+                                    getFilebaseBtn.html("<i class=\"fa fa-refresh fa-spin\"></i> &nbsp;&nbsp;" + verifyingFiles);
                                     // this function will read the local filebase from your installation and store it to a filebase.ini file
                                     // Call both functions and wait for them to complete
                                     Promise.all([generateLocalFileBase()])
@@ -208,9 +208,23 @@ $(document).ready(function() {  // wait until document is ready
                 url: 'js/update-generateLocalFilebase.php',
                 success: function (response) {
                     resolve(response);
+                    var updateInstall = 'START UPDATE NOW';
                     $(readFilebaseNode).html(response).fadeIn(1000);
                     // this function will read the filebase.ini from remote update server https://update.yawk.io
-                    readUpdateFileBase();
+                    // add start update button
+                    // Create the new startUpdateBtn element with the given attributes
+                    var newBtn = $('<a>', {
+                        'href': '#startUpdateBtn',
+                        'id': 'startUpdateBtn',
+                        'class': 'btn btn-primary pull-right animated fadeIn slow',
+                        'html': '<i class="fa fa-download"></i> &nbsp;' + updateInstall
+                    });
+                    // Append the new startUpdateBtn to a container element on the page
+                    delay(function(){
+                        $("#getFilebaseBtn").remove();
+                        $('#updateBtnNode').append(newBtn);
+                    }, 5000 ); // end delay
+
                 },
                 error: function (response) {
                     reject('generateLocalFileBase() ERROR: ' + response);
@@ -218,7 +232,13 @@ $(document).ready(function() {  // wait until document is ready
             });
         });
     }
-
+    var delay = ( function() {
+        var timer = 0;
+        return function(callback, ms) {
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
 
     /**
      * Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
