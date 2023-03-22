@@ -20,6 +20,24 @@ $(document).ready(function() {
         return false;
     });
 
+
+    // terminate user account (this must be refactored and moved to yawk's backend core js file)
+    $('#terminateUser').click(function() {
+        var terminate = window.confirm("ACHTUNG!\nDas wird Deinen Account permanent deaktivieren.\n" + "Bist Du Dir sicher, dass Du das tun willst?");
+        if (terminate === true) {
+            var terminateUser = window.confirm("Bist Du Dir wirklich ganz sicher?\n" + "Diese Aktion kann nicht rueckgaengig gemacht werden.");
+            if (terminateUser === true) {
+                $.get('system/templates/YaWK-bootstrap3/js/terminate-user.php', function(data) {
+                    if (data === "true") {
+                        setTimeout("window.location='logout.html'", 0);
+                    } else {
+                        alert("Fehler: " + data);
+                    }
+                });
+            }
+        }
+    });
+
     function dismissNotifications() {
         $.ajax({    // do ajax request
             url: 'js/dismiss-notifications.php',
