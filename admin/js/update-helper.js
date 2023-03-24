@@ -31,6 +31,7 @@ $(document).ready(function() {  // wait until document is ready
             let updateUpToDate = lang.attr('data-UPDATE_UP_TO_DATE');
             let updateCurrentInstalledVersion = lang.attr('data-UPDATE_CURRENT_INSTALLED_VERSION');
             let updateNoUpdate = lang.attr('data-UPDATE_NO_UPDATE');
+            let verifyFiles = lang.attr('data-UPDATE_VERIFY_FILES');
             let verifyingFiles = lang.attr('data-UPDATE_VERIFYING_FILES');
             let latestAvailableVersion = lang.attr('data-UPDATE_LATEST_AVAILABLE_VERSION');
             let updateChanges = lang.attr('data-UPDATE_CHANGES');
@@ -155,7 +156,7 @@ $(document).ready(function() {  // wait until document is ready
                                     'href': '#startUpdateBtn',
                                     'id': 'getFilebaseBtn',
                                     'class': 'btn btn-primary pull-right animated fadeIn slow',
-                                    'html': '<i class="fa fa-download"></i> &nbsp;' + updateInstall
+                                    'html': '<i class="fa fa-search"></i> &nbsp;&nbsp;' + verifyFiles
                                 });
                                 // Append the new startUpdateBtn to a container element on the page
                                 $('#updateBtnNode').append(newBtn);
@@ -168,7 +169,7 @@ $(document).ready(function() {  // wait until document is ready
                                     getFilebaseBtn.html("<i class=\"fa fa-refresh fa-spin\"></i> &nbsp;&nbsp;" + verifyingFiles);
                                     // this function will read the local filebase from your installation and store it to a filebase.ini file
                                     // Call both functions and wait for them to complete
-                                    Promise.all([generateLocalFileBase()])
+                                    Promise.all([generateLocalFileBase(updateInstall)])
                                         .then(([localFilebase]) => {
                                             // local filebase generated successfully, now read update filebase
                                             readUpdateFileBase();
@@ -201,14 +202,14 @@ $(document).ready(function() {  // wait until document is ready
      * Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
      */
     // Wrap the AJAX request in a Promise
-    function generateLocalFileBase() {
+    function generateLocalFileBase(upateInstall) {
+        var updateBtnText = upateInstall;
         return new Promise((resolve, reject) => {
             $.ajax({
                 type: 'POST',
                 url: 'js/update-generateLocalFilebase.php',
                 success: function (response) {
                     resolve(response);
-                    var updateInstall = 'START UPDATE NOW';
                     $(readFilebaseNode).html(response).fadeIn(1000);
                     // this function will read the filebase.ini from remote update server https://update.yawk.io
                     // add start update button
@@ -216,8 +217,8 @@ $(document).ready(function() {  // wait until document is ready
                     var newBtn = $('<a>', {
                         'href': '#startUpdateBtn',
                         'id': 'startUpdateBtn',
-                        'class': 'btn btn-primary pull-right animated fadeIn slow',
-                        'html': '<i class="fa fa-download"></i> &nbsp;' + updateInstall
+                        'class': 'btn btn-success pull-right animated flipInX',
+                        'html': '<i class="fa fa-download"></i> &nbsp;' + updateBtnText
                     });
                     // Append the new startUpdateBtn to a container element on the page
                     delay(function(){
