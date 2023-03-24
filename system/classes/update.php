@@ -26,6 +26,26 @@ namespace YAWK {
         public string $updateFile = 'update.ini';
 
         /**
+         * @var string $updateVersion contains the version of current update (eg. 23.0.0)
+         */
+        public string $updateVersion = '';
+
+        /**
+         * @var string $localUpdateSystemPath the path to the local update system folder (eg. system/update/)
+         */
+        public string $localUpdateSystemPath = 'system/update/';
+
+        /**
+         * @var string $updateFilebase  the name of the remote filebase file (eg. filebase.ini)
+         */
+        public string $updateFilebase = 'filebase.ini';
+
+        /**
+         * @var array $updateSettings contains all update settings
+         */
+        public array $updateSettings = array();
+
+        /**
          * @brief update constructor. Check if allow_url_fopen is enabled
          * @details will be called by xhr request from admin/js/update-generateLocalFilebase.php
          */
@@ -36,13 +56,76 @@ namespace YAWK {
             // Check if allow_url_fopen is enabled
             if (!$allowUrlFopen)
             {   // allow_url_fopen is disabled, exit with error
+                // todo: syslog entry
                 echo "allow_url_fopen is disabled, but required to use the update methods. Please enable allow_url_fopen in your php.ini file or ask your admin / hoster for assistance.";
             }
+
+            // check if update server is reachable
+            if ($this->isServerReachable($this->updateServer.$this->updateFile) === false)
+            {   // todo: syslog entry
+                echo "Update server $this->updateServer not reachable. Update not possible at the moment - please try again later.<br>";
+            }
+        }
+
+        /**
+         * @brief check if update server is reachable
+         * @details returns true if server is reachable, false if not
+         * @param $url string url to check
+         * @return bool true|false
+         */
+        public function isServerReachable(string $url): bool
+        {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_NOBODY, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; UpdateClient/1.0)');
+
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+            curl_close($ch);
+
+            if ($httpCode >= 200 && $httpCode < 300) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * @brief get update settings from local update folder (system/update/update.ini) and return array|false
+         * @details will be called by xhr request from admin/js/update-generateLocalFilebase.php
+         * @return array|false
+         */
+        public function getUpdateSettings(): array|false
+        {
+            // read update.ini from local update folder
+            $this->updateSettings = parse_ini_file($this->localUpdateSystemPath.$this->updateFile);
+            if (count($this->updateSettings) < 1)
+            {   // unable to read update.ini from local update folder
+                echo "Error: Unable to read update.ini from local update folder. Check if this file exists: ".$this->localUpdateSystemPath.$this->updateFile;
+            }
+            else {
+                // update.ini read successfully
+                // set update version
+                $this->updateVersion = $this->updateSettings['version'];
+
+                // return update settings array
+                return $this->updateSettings;
+            }
+            // return false if something went wrong
+            return false;
         }
 
         /**
          * @brief read filebase.ini from update server (https://update.yawk.io/filebase.ini) and return array|false
          * @details will be called by xhr request from admin/js/update-readUpdateFilebase.php
+         * The filebase.ini contains a list of all files with their md5 hash.
+         * This function returns the filebase as array. (to compare it later with the local filebase)
          * @return array|false
          */
         public function readUpdateFilebaseFromServer(): false|array
@@ -70,6 +153,69 @@ namespace YAWK {
             }
             // return array or false
             return $updateFilebase ?? false;
+        }
+
+        /**
+         * @brief Run the migration SQL file
+         * @details if update.ini contains a migration file, this function will be called
+         * @param $db
+         * @return void
+         */
+        function runMigration($db): void
+        {
+            // build migration SQL file string
+            $migrationUrl = $this->updateServer.$this->updateVersion.'-migration.sql';
+
+            // Fetch the migration SQL file
+            $migrationSql = file_get_contents($migrationUrl);
+
+            if ($migrationSql === false) {
+                echo "Error: Unable to fetch migration file from $migrationUrl\n";
+                return;
+            }
+
+            // Check if the migration has already been executed
+            $checkMigration = $db->prepare("SELECT `version` FROM `migrations` WHERE `version` = ?");
+            $checkMigration->bind_param('s', $this->updateVersion);
+            $checkMigration->execute();
+            $result = $checkMigration->get_result();
+
+            if ($result->num_rows === 0) {
+                // Execute the migration SQL
+                if ($db->multi_query($migrationSql)) {
+                    // Record the successful migration
+                    $insertMigration = $db->prepare("INSERT INTO `migrations` (`version`, `executed_at`) VALUES (?, NOW())");
+                    $insertMigration->bind_param('s', $this->updateVersion);
+
+                    // execute update migration
+                    if ($insertMigration->execute())
+                    {   // migration executed successfully
+                        // todo: syslog entry
+                        echo "Migration for version $this->updateVersion executed successfully.\n";
+                    }
+                    else
+                    {   // migration failed
+                        // todo: syslog entry
+                        echo "Error recording migration for version $this->updateVersion: " . $insertMigration->error . "\n";
+                    }
+
+                    // close insert migration connection
+                    $insertMigration->close();
+                }
+                else
+                {   // migration failed
+                    // todo: syslog entry
+                    echo "Error executing migration for version $this->updateVersion: " . $db->error . "\n";
+                }
+            }
+            else
+            {   // migration already executed
+                // todo: syslog entry
+                echo "Migration for version $this->updateVersion already executed.\n";
+            }
+
+            // close check migration connection
+            $checkMigration->close();
         }
 
 
@@ -134,8 +280,6 @@ namespace YAWK {
             if (!$output_handle) {
                 // handle the error (e.g. show an error message or log the error)
                 die("Failed to open file");
-            } else {
-                // echo "<p>opened $updateFolder.$iniFileName</p>";
             }
 
             // Get the full path of the input folder
@@ -237,7 +381,6 @@ namespace YAWK {
                 $successColor = '';
             }
 
-
             echo "
 <p class=\"animated fadeIn slow delay-2s$successColor\">$icon &nbsp;Generated hash values: <b>$totalFilesVerified / $totalFiles</b></p>
 <h4 class=\"animated fadeIn slow delay-3s\">$done</h4>
@@ -245,8 +388,8 @@ namespace YAWK {
 $iniFileWritten";
 
             // Close the output file
-            if (fclose($output_handle)){
-                echo '<p class="animated fadeIn slow delay-5s">written: $updateFolder.$iniFileName</p>';
+            if (!fclose($output_handle)){
+                echo '<p class="animated fadeIn slow delay-5s">failed to close: '.$updateFolder.$iniFileName.'</p>';
             }
         }
     } // EOF class update
