@@ -1,6 +1,6 @@
 <h1>Attention: work in progress! <br><small>It's done when it's done. <small>(release: soon)</small></small></h1>
 
-Official Website: <b>https://yawk.io</b><br>
+<!-- Official Website: <b>https://yawk.io</b><br> -->
 Documentation: <b><a href="https://docs.yawk.io/namespaceYAWK.html" target="_blank">https://docs.yawk.io</a></b>
 
 <h1>What is YaWK?</h1>
