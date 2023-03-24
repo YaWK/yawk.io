@@ -265,6 +265,12 @@ namespace YAWK {
             // set path and filename of the ini file
             $updatePath = '/system/update/';
             $updateFolder = $this->base_dir.$updatePath;
+
+            if (!is_dir($updateFolder)){
+                if (!mkdir($updateFolder, 0777, true) && !is_dir($updateFolder)) {
+                    throw new \RuntimeException(sprintf('Unable to create "%s" - please check folder permissions or create folder by hand', $updateFolder));
+                }
+            }
             $iniFileName = 'filebase.current.ini';
             $input_folder = $this->base_dir;
             $output_file = $updateFolder.$iniFileName;
