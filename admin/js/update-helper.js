@@ -1,5 +1,9 @@
+/**
+ * @brief Update Helper
+ * @details This script is used to check for updates and display update info, as well as call xhr functions to update yawk
+ * @file update-helper.js
+ */
 $(document).ready(function() {  // wait until document is ready
-
     // get button and nodes
     var updateBtn = $("#checkForUpdatesBtn");
     var readFilebaseNode = $("#readFilebaseNode");
@@ -14,7 +18,7 @@ $(document).ready(function() {  // wait until document is ready
     let updateCheck = lang.attr('data-UPDATE_CHECK');
 
     /* UPDATE BTN CLICK */
-// if update button is clicked
+    // if update button is clicked
     $(updateBtn).click(function() {
         // update button with spinner icon
         $(updateBtn).html("<i class=\"fa fa-refresh fa-spin\"></i> &nbsp;" + updateCheck);
@@ -199,7 +203,9 @@ $(document).ready(function() {  // wait until document is ready
     }); // end update button click processing
 
     /**
-     * Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
+     * @brief read update filebase from remote update server
+     * @details Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
+     * @param upateInstall string language tag to display on update button
      */
     // Wrap the AJAX request in a Promise
     function generateLocalFileBase(upateInstall) {
@@ -242,7 +248,8 @@ $(document).ready(function() {  // wait until document is ready
     })();
 
     /**
-     * Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
+     * @brief read update filebase from remote update server
+     * @details Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
      */
     function readUpdateFileBase(){
         console.log('readUpdateFileBase() called');
@@ -262,8 +269,9 @@ $(document).ready(function() {  // wait until document is ready
     }
 
     /**
-    * Return the latest update version from update.yawk.io
-    * @return {string} version
+     * @brief Return the latest update version from update.yawk.io
+     * @details This function will connect to update.yawk.io and fetch the latest version number
+     * @return {string} version
      */
     function checkVersion(callback) {
         fetch('https://update.yawk.io/?action=version')
@@ -287,7 +295,8 @@ $(document).ready(function() {  // wait until document is ready
     }
 
     /**
-     * Return the update config from update.yawk.io
+     * @brief Return the update config from update.yawk.io
+     * @details This function will connect to update.yawk.io and fetch the update config
      * @return {string} update config as json
      */
     function getUpdateConfig(callback)
@@ -314,14 +323,14 @@ $(document).ready(function() {  // wait until document is ready
 
 
     /**
-    * Compare two version numbers
-    * @param {string} v1
-    * @param {string} v2
-    * @return {number} 1 if v1 > v2, -1 if v1 < v2, 0 if v1 === v2
-    * @example
-    * compareVersions('1.0.0', '1.0.1'); // -1
-    * compareVersions('1.0.1', '1.0.0'); // 1
-    * compareVersions('1.0.0', '1.0.0'); // 0
+     * @brief Compare two version numbers
+     * @param {string} v1
+     * @param {string} v2
+     * @return {number} 1 if v1 > v2, -1 if v1 < v2, 0 if v1 === v2
+     * @details This function will compare two version numbers and return 1 if v1 > v2, -1 if v1 < v2, 0 if v1 === v2
+     * compareVersions('1.0.0', '1.0.1'); // -1
+     * compareVersions('1.0.1', '1.0.0'); // 1
+     * compareVersions('1.0.0', '1.0.0'); // 0
      */
     function compareVersions(v1, v2) {
         const v1Parts = v1.split('.').map(Number);
