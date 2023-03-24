@@ -296,6 +296,14 @@ CREATE TABLE `cms_meta_local` (
 `content` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `cms_migrations` (
+`id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+`version` VARCHAR(255) NOT NULL,
+`filename` VARCHAR(255) NOT NULL,
+`executed_at` DATETIME NOT NULL,
+UNIQUE KEY `version` (`version`)
+);
+
 CREATE TABLE `cms_newsletter` (
 `id` int(11) NOT NULL,
 `date_created` datetime DEFAULT NULL,
