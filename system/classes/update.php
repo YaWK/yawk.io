@@ -22,6 +22,9 @@ namespace YAWK {
         /** @var string $updateServer the remote server to connect to */
         public string $updateServer = 'https://update.yawk.io/';
 
+        /** @var string $githubServer the remote GitHub server to fetch from  */
+        public string $githubServer = 'https://github.com/YaWK/yawk.io/raw/master/';
+
         /** @var string $updateFile contains all update information like version, build time, build message, etc. */
         public string $updateFile = 'update.ini';
 
@@ -33,7 +36,7 @@ namespace YAWK {
         /**
          * @var string $localUpdateSystemPath the path to the local update system folder (eg. system/update/)
          */
-        public string $localUpdateSystemPath = 'system/update/';
+        public string $localUpdateSystemPath = '../../system/update/';
 
         /**
          * @var string $updateFilebase  the name of the remote filebase file (eg. filebase.ini)
@@ -44,6 +47,16 @@ namespace YAWK {
          * @var array $updateSettings contains all update settings
          */
         public array $updateSettings = array();
+
+        /**
+         * @var string $updateFilesFile contains all files that need to be updated
+         */
+        public string $updateFilesFile = 'updateFiles.ini';
+
+        /**
+         * @var array $updateFiles array of files that need to be updated
+         */
+        public array $updateFiles = array();
 
         /**
          * @brief update constructor. Check if allow_url_fopen is enabled
@@ -122,40 +135,6 @@ namespace YAWK {
         }
 
         /**
-         * @brief read filebase.ini from update server (https://update.yawk.io/filebase.ini) and return array|false
-         * @details will be called by xhr request from admin/js/update-readUpdateFilebase.php
-         * The filebase.ini contains a list of all files with their md5 hash.
-         * This function returns the filebase as array. (to compare it later with the local filebase)
-         * @return array|false
-         */
-        public function readUpdateFilebaseFromServer(): false|array
-        {
-            // URL of the remote INI file
-            $url = $this->updateServer.'filebase.ini';
-
-            // Get the content of the remote INI file
-            $iniContent = file_get_contents($url);
-
-            // Check if the content was retrieved successfully
-            if ($iniContent !== false)
-            {   // Parse the INI content into an associative array
-                $filebase = parse_ini_string($iniContent);
-
-                // Print the contents of the array
-                foreach ($filebase as $key => $value)
-                {   // set update array
-                    $updateFilebase[$key] = $value;
-                }
-            }
-            else
-            {   // unable to read filebase from remote server
-                echo "Error: Unable to read filebase from remote server. Check if this file exists: $url";
-            }
-            // return array or false
-            return $updateFilebase ?? false;
-        }
-
-        /**
          * @brief Run the migration SQL file
          * @details if update.ini contains a migration file, this function will be called
          * @param $db
@@ -216,6 +195,79 @@ namespace YAWK {
 
             // close check migration connection
             $checkMigration->close();
+        }
+
+        /**
+         * @brief read system/update/updateFiles.ini and fetch files from remote (GitHub) server
+         * @details will be called by xhr request from admin/js/update-fetchFiles.php
+         * @var $output string the result of the update process
+         */
+        public function fetchFiles(): void
+        {
+            // override $this->updateServer with GitHub url
+            $this->updateServer = $this->githubServer;
+
+            $response = ''; // init output string, result of the update process, will be returned to the frontend
+            // check if updateFiles.ini exists
+            if (file_exists($this->localUpdateSystemPath.$this->updateFilesFile))
+            {   // updateFiles.ini exists
+                // parse updateFiles.ini into array
+                $this->updateFiles = parse_ini_file($this->localUpdateSystemPath . $this->updateFilesFile);
+                if (count($this->updateFiles) < 1)
+                {   // unable to read updateFiles.ini from local update folder
+                    $response .= "Error: Unable to read updateFiles.ini from local update folder. Check if this file exists: " . $this->localUpdateSystemPath . $this->updateFilesFile;
+                }
+                else
+                {   // updateFiles.ini read successfully
+                    // fetch files from remote server
+                    foreach ($this->updateFiles as $key => $value) {   // build file url
+                        $fileUrl = $this->updateServer . $value;
+                        // fetch file
+                        $file = file_get_contents($fileUrl);
+                        if ($file === false)
+                        {   // unable to fetch file
+                            $response .= "Error: Unable to fetch file from $fileUrl<br>";
+                        }
+                        else // file fetched successfully
+                        {
+                            // check the md5 value of the fetched file with the one in updateFiles.ini
+                            $currentHashValue = md5_file($file);
+                            if ($currentHashValue === $key)
+                            {   // hash value matches, file is ok
+                                $response .= "File hash value matches: " . $value . "<br>";
+
+                                // write file to local system
+                                if (file_put_contents($this->localUpdateSystemPath . $value, $file) === false)
+                                {   // unable to write file to local system
+                                    $response .= "Error: Unable to write file to local system: " . $this->localUpdateSystemPath . $value . "<br>";
+                                }
+                                else
+                                {   // file written successfully
+                                    echo "File written successfully: " . $this->localUpdateSystemPath . $value . "<br>";
+                                    // check if file hashes still match (after writing file to local system)
+                                    if (md5($this->localUpdateSystemPath.$value) == $value)
+                                    {   // hash value matches, file is ok
+                                        $response .= "File hash value matches: " . $value . "<br>";
+                                    }
+                                    else
+                                    {   // hash value does not match, file is corrupted
+                                        $response .= "Error: File hash value does not match: " . $value . "<br>";
+                                    }
+                                }
+                            }
+                            else
+                            {   // hash value does not match
+                                $response .= "Error: File hash value does not match: " . $value . "<br>";
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {   // updateFiles.ini does not exist
+                $response .= "<span class=\"text-danger\"><b>Error:</b> updateFiles.ini does not exist. Check if this file exists: " . __DIR__.$this->localUpdateSystemPath . $this->updateFilesFile."</span>";
+            }
+            echo $response;
         }
 
 
@@ -397,6 +449,42 @@ $iniFileWritten";
             if (!fclose($output_handle)){
                 echo '<p class="animated fadeIn slow delay-5s">failed to close: '.$updateFolder.$iniFileName.'</p>';
             }
+        }
+
+
+        /**
+         * @brief read filebase.ini from update server (https://update.yawk.io/filebase.ini) and return array|false
+         * @details will be called by xhr request from admin/js/update-readUpdateFilebase.php
+         * The filebase.ini contains a list of all files with their md5 hash.
+         * This function returns the filebase as array. (to compare it later with the local filebase)
+         * @return array|false
+         */
+        public function readUpdateFilebaseFromServer(): array|false
+        {
+            // URL of the remote INI file
+            $url = $this->updateServer.'filebase.ini';
+
+            // Get the content of the remote INI file
+            $iniContent = file_get_contents($url);
+
+            // Check if the content was retrieved successfully
+            if ($iniContent !== false)
+            {   // Parse the INI content into an associative array
+                $filebase = parse_ini_string($iniContent);
+
+                // Print the contents of the array
+                foreach ($filebase as $key => $value)
+                {   // set update array
+                    $updateFilebase[$key] = $value;
+                }
+            }
+            else
+            {   // unable to read filebase from remote server
+                echo "Error: Unable to read filebase from remote server. Check if this file exists: $url";
+            }
+            // return array or false
+            return $updateFilebase ?? false;
+
         }
     } // EOF class update
 } // EOF namespace
