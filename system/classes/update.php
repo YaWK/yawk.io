@@ -23,7 +23,7 @@ namespace YAWK {
         public string $updateServer = 'https://update.yawk.io/';
 
         /** @var string $githubServer the remote GitHub server to fetch from  */
-        public string $githubServer = 'https://github.com/YaWK/yawk.io/raw/master/';
+        public string $githubServer = 'https://raw.githubusercontent.com/YaWK/yawk.io/master/';
 
         /** @var string $updateFile contains all update information like version, build time, build message, etc. */
         public string $updateFile = 'update.ini';
@@ -36,7 +36,8 @@ namespace YAWK {
         /**
          * @var string $localUpdateSystemPath the path to the local update system folder (eg. system/update/)
          */
-        public string $localUpdateSystemPath = '../../system/update/';
+//        public string $localUpdateSystemPath = '../../system/update/';
+        public string $localUpdateSystemPath = '/system/update/';
 
         /**
          * @var string $updateFilebase  the name of the remote filebase file (eg. filebase.ini)
@@ -200,76 +201,170 @@ namespace YAWK {
         /**
          * @brief read system/update/updateFiles.ini and fetch files from remote (GitHub) server
          * @details will be called by xhr request from admin/js/update-fetchFiles.php
-         * @var $output string the result of the update process
+         * @param $db object database connection
+         * @param $updateVersion string update version
+         * @param $lang array language array
          */
-        public function fetchFiles(): void
+        public function fetchFiles(object $db, $updateVersion, $lang): void
         {
+            $updateSucceed = false; // init updateSucceed flag, will be set to true if update was successful
             // override $this->updateServer with GitHub url
             $this->updateServer = $this->githubServer;
 
+            // file fetched successfully
+            $basedir = __DIR__;
+            // remove last 15 chars from $basedir (system/update/)
+            $basedir = substr($basedir, 0, -14);
+            // $basedir = substr($basedir, 0, -8);
+
             $response = ''; // init output string, result of the update process, will be returned to the frontend
             // check if updateFiles.ini exists
-            if (file_exists($this->localUpdateSystemPath.$this->updateFilesFile))
-            {   // updateFiles.ini exists
+            if (file_exists($basedir.$this->localUpdateSystemPath . $this->updateFilesFile))
+            {
+                // updateFiles.ini exists
                 // parse updateFiles.ini into array
-                $this->updateFiles = parse_ini_file($this->localUpdateSystemPath . $this->updateFilesFile);
+                $this->updateFiles = parse_ini_file($basedir.$this->localUpdateSystemPath . $this->updateFilesFile);
                 if (count($this->updateFiles) < 1)
-                {   // unable to read updateFiles.ini from local update folder
-                    $response .= "Error: Unable to read updateFiles.ini from local update folder. Check if this file exists: " . $this->localUpdateSystemPath . $this->updateFilesFile;
+                {
+                    // unable to read updateFiles.ini from local update folder
+                    $response .= "Error: Unable to read updateFiles.ini from local update folder. Check if this file exists: " . $basedir.$this->localUpdateSystemPath . $this->updateFilesFile;
                 }
                 else
-                {   // updateFiles.ini read successfully
+                {
+                    // count elements of updateFiles array
+                    $totalUpdateFiles = count($this->updateFiles);
+                    $failedFiles = 0;
+                    $successFiles = 0;
+                    $fetchFailed = 0;
+                    $fetchSucceed = 0;
+                    $processedFiles = 0;
+
+                    // updateFiles.ini read successfully
                     // fetch files from remote server
-                    foreach ($this->updateFiles as $key => $value) {   // build file url
+                    foreach ($this->updateFiles as $key => $value)
+                    {
+                        $processedFiles++;
+                        // debug line can be removed $response .= "VALUE: $value <br>";
+
+                        // build file url
                         $fileUrl = $this->updateServer . $value;
                         // fetch file
                         $file = file_get_contents($fileUrl);
                         if ($file === false)
-                        {   // unable to fetch file
-                            $response .= "Error: Unable to fetch file from $fileUrl<br>";
-                        }
-                        else // file fetched successfully
                         {
-                            // check the md5 value of the fetched file with the one in updateFiles.ini
-                            $currentHashValue = md5_file($file);
-                            if ($currentHashValue === $key)
-                            {   // hash value matches, file is ok
-                                $response .= "File hash value matches: " . $value . "<br>";
+                            // unable to fetch file
+                            $response .= "Error: Unable to fetch file from $fileUrl<br>";
+                            $fetchFailed++;
+                        }
+                        else
+                        {
+                            $fetchSucceed++;
 
-                                // write file to local system
-                                if (file_put_contents($this->localUpdateSystemPath . $value, $file) === false)
-                                {   // unable to write file to local system
-                                    $response .= "Error: Unable to write file to local system: " . $this->localUpdateSystemPath . $value . "<br>";
-                                }
-                                else
-                                {   // file written successfully
-                                    echo "File written successfully: " . $this->localUpdateSystemPath . $value . "<br>";
-                                    // check if file hashes still match (after writing file to local system)
-                                    if (md5($this->localUpdateSystemPath.$value) == $value)
-                                    {   // hash value matches, file is ok
-                                        $response .= "File hash value matches: " . $value . "<br>";
-                                    }
-                                    else
-                                    {   // hash value does not match, file is corrupted
-                                        $response .= "Error: File hash value does not match: " . $value . "<br>";
-                                    }
-                                }
+                            // create path to tmp folder
+//                            $tmpPath = $basedir.$this->localUpdateSystemPath;
+//
+//                            $tmpFilePath = $tmpPath . $value;
+//                            // Create the directory structure if it doesn't exist
+//                            $tmpFileDir = dirname($tmpFilePath);
+//                            if (!is_dir($tmpFileDir)) {
+//                                mkdir($tmpFileDir, 0755, true);
+//                            }
+//
+//                            // debug, cen be removed $response .= "TMP Path: $tmpPath <br>";
+//
+//                            // Ensure tmp directory exists
+//                            if (!is_dir($tmpPath) && !mkdir($tmpPath)) {
+//                                $response .= "Error: Unable to create tmp directory: " . $tmpPath . "<br>";
+//                                continue;
+//                            }
+//
+//                            // Save the file to tmp folder
+//                            if (!file_put_contents($tmpPath . $value, $file)) {
+//                                $response .= "Error: Unable to write file to local system: " . $tmpPath . $value . "<br>";
+//                                continue;
+//                            }
+//
+//                            $response .= "File written successfully to tmp folder: " . $tmpPath . $value . "<br>";
+
+                            // Check the md5 value of the fetched file with the one in updateFiles.ini
+//                            $currentHashValue = md5_file($tmpPath . $value);
+//                            if ($currentHashValue !== $key) {
+//                                $response .= "Error: File hash value does not match: <br>FILE: " . $value . "<br> original hash: $key <br> current hash: $currentHashValue <br>";
+//                                continue;
+//                            }
+//
+//                            $response .= "<span class=\"text-success\">File hash value matches: " . $value . "</span><br>";
+
+                            // Write file to local system
+                            if (!file_put_contents($basedir.$value, $file))
+                            {   // unable to write file to local system
+                                $failedFiles++;
+                                $response .= "<b> class=\"text-danger\">Error: Unable to write file to local system: " .$basedir.$value . "</b><br>";
                             }
                             else
-                            {   // hash value does not match
-                                $response .= "Error: File hash value does not match: " . $value . "<br>";
+                            {   // file written successfully
+                                $successFiles++;
+                                $response .= "<b class=\"text-success animated fadeIn slow\">File written successfully: " . $basedir.$value . "</b><br>";
                             }
                         }
                     }
+                    // check if all files were fetched successfully
+                    if ($fetchFailed > 0)
+                    {
+                        // at least one file could not be fetched
+                        $response .= "<b class=\"text-danger\">Error: Unable to fetch $fetchFailed files from remote server.</b><br>";
+                    }
+                    else if ($fetchSucceed === $totalUpdateFiles)
+                    {
+                        // all files fetched successfully
+                        $response .= "<b class=\"text-success\">All $fetchSucceed files fetched successfully from remote server.</b><br>";
+                    }
+                    // check if all files were written successfully
+                    if ($failedFiles > 0)
+                    {
+                        // at least one file could not be written
+                        $response .= "<b class=\"text-danger\">Error: Unable to write $failedFiles files to local system.</b><br>";
+                    }
+                    else if ($successFiles === $totalUpdateFiles)
+                    {
+                        // all files written successfully
+                        $response .= "<b class=\"text-success\">All $successFiles files written successfully to local system.</b><br>";
+                    }
+                    // check if all files were processed
+                    if ($processedFiles === $totalUpdateFiles)
+                    {
+                        // all files processed
+                        $response .= "<b class=\"text-success\">All $processedFiles files processed.</b><br>";
+                    }
+                    else
+                    {
+                        // not all files processed
+                        $response .= "<b class=\"text-danger\">Error: Not all files processed. $processedFiles of $totalUpdateFiles files processed.</b><br>";
+                    }
+                    // check if update was successful
+                    if ($successFiles === $totalUpdateFiles)
+                    {   // update was successful
+                        $updateSucceed = true;
+                        // update was successful
+                        $response .= "<b class=\"text-success\">Update was successful.</b><br>";
+                    }
+                    else
+                    {   // update failed
+                        $response .= "<b class=\"text-danger\">Update failed.</b><br>";
+                    }
                 }
+            } else {
+                // updateFiles.ini does not exist
+                $response .= "<span class=\"text-danger\"><b>Error:</b> updateFiles.ini does not exist. Check if this file exists: " .$basedir.$this->localUpdateSystemPath . $this->updateFilesFile . "</span>";
             }
-            else
-            {   // updateFiles.ini does not exist
-                $response .= "<span class=\"text-danger\"><b>Error:</b> updateFiles.ini does not exist. Check if this file exists: " . __DIR__.$this->localUpdateSystemPath . $this->updateFilesFile."</span>";
+
+            // check if update was successful
+            if ($updateSucceed === true){
+                settings::setSetting($db, "yawkversion", $updateVersion, $lang);
             }
+
             echo $response;
         }
-
 
         /**
          * @brief read update.ini from update server (https://update.yawk.io/update.ini) and return array|false
