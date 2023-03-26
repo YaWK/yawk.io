@@ -230,6 +230,14 @@ $(document).ready(function() {  // wait until document is ready
                     delay(function(){
                         $("#getFilebaseBtn").remove();
                         $('#updateBtnNode').append(newBtn);
+
+                        // get new startUpdateBtn, check if it is clicked and call startUpdate()
+                        var startUpdateBtn = $("#startUpdateBtn");
+                        $(startUpdateBtn).click(function() {
+                            console.log('start update button clicked, start update process');
+                            // start ajax call
+                            fetchFiles();
+                        });
                     }, 5000 ); // end delay
 
                 },
@@ -246,6 +254,28 @@ $(document).ready(function() {  // wait until document is ready
             timer = setTimeout(callback, ms);
         };
     })();
+
+    /**
+     * @brief start update process
+     * @details This function will start the update process by calling the fetchUpdate() method from update.php class
+     */
+    function fetchFiles()
+    {   var fetchUpdateNode = $("#fetchUpdateNode");
+        console.log('fetchUpdate() called');
+        // check via ajax, if there are updates available
+        $.ajax({    // create a new AJAX call
+            type: 'POST', // GET or POST
+            url: 'js/update-fetchFiles.php', // the file to call
+            success: function (response) { // fileBase checked successfully
+                // update view with response
+                console.log("fetchUpdate() response: " + response);
+                $(fetchUpdateNode).html(response).fadeIn(1000);
+            },
+            error: function (response) { // on error..
+                console.log('fetchUpdate() ERROR: ' +response);
+            }
+        });
+    }
 
     /**
      * @brief read update filebase from remote update server
