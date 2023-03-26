@@ -205,7 +205,7 @@ namespace YAWK {
          * @param $updateVersion string update version
          * @param $lang array language array
          */
-        public function fetchFiles(object $db, $updateVersion, $lang): void
+        public function fetchFiles(object $db, string $updateVersion, array $lang): void
         {
             $updateSucceed = false; // init updateSucceed flag, will be set to true if update was successful
             // override $this->updateServer with GitHub url
