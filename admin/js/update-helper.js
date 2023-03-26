@@ -46,8 +46,6 @@ $(document).ready(function() {  // wait until document is ready
             if (error) {
                 console.error(error);
             } else {
-
-
                 // check, if version is higher than installed version (if so, update is available)
                 // UPDATE AVAILABLE: call api and get update config, update markup and display update message
                 if (compareVersions(installedVersion, updateVersion) < 0)
@@ -146,7 +144,7 @@ $(document).ready(function() {  // wait until document is ready
                                 successMsg = '<h3 class="text-primary animated fadeIn"><b><i class="fa fa-globe animated bounce slow"></i></b> &nbsp;' + updateAvailable + '<br><small>'+updateAvailableSubtext+'</small></h3>';
                                 statusBarNode.html(successMsg).fadeIn(1000);
 
-                                let extendedInfo = '<ul class="animated fadeIn slow delay-2s"><li><span class="text-primary"><b>' + latestAvailableVersion + '</b> build <b>' + updateVersion + '</b></span></li><li>' + updateCurrentInstalledVersion + ' build <b class="text-muted">' + installedVersion + '</b></li>' +  '<li>'+updateChanges+': <b>'+ buildMessage + '</b></li>'+githubRelatedIssues+githubRelatedMilestone+'<li>'+released+': ' + buildTime + '</li></ul>';
+                                let extendedInfo = '<ul class="animated fadeIn slow delay-2s"><li><span class="text-primary"><b>' + latestAvailableVersion + '</b> build <b>' + '<div id="updateVersion">'+updateVersion+'</div></b></span></li><li>' + updateCurrentInstalledVersion + ' build <b class="text-muted">' + installedVersion + '</b></li>' +  '<li>'+updateChanges+': <b>'+ buildMessage + '</b></li>'+githubRelatedIssues+githubRelatedMilestone+'<li>'+released+': ' + buildTime + '</li></ul>';
                                 extendedInfoNode.html(extendedInfo).fadeIn(1000);
                                 console.log(statusBarMessage);
 
@@ -261,6 +259,7 @@ $(document).ready(function() {  // wait until document is ready
      */
     function fetchFiles()
     {   var fetchUpdateNode = $("#fetchUpdateNode");
+        updateVersion = $("#updateVersion").text();
         console.log('fetchUpdate() called');
         // check via ajax, if there are updates available
         $.ajax({    // create a new AJAX call
