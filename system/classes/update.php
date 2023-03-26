@@ -345,8 +345,6 @@ namespace YAWK {
                     if ($successFiles === $totalUpdateFiles)
                     {   // update was successful
                         $updateSucceed = true;
-                        // update was successful
-                        $response .= "<h3 class=\"text-success\">Update was successful.</b><h3>";
                     }
                     else
                     {   // update failed
@@ -365,9 +363,9 @@ namespace YAWK {
 
                 // get version from database to check if it was updated correctly
                 $version = settings::getSetting($db, "yawkversion");
-                if ($version === $updateVersion)
+                if ($version == $updateVersion && $updateSucceed === true)
                 {
-                    $response .= "<h3 class=\"text-success\">Update to $updateVersion successful.</b><h3>";
+                    $response .= "<h3 class=\"text-success\">Update to $updateVersion completed successfully.</b><h3>";
                 }
                 else
                 {
