@@ -266,6 +266,9 @@ $(document).ready(function() {  // wait until document is ready
         $.ajax({    // create a new AJAX call
             type: 'POST', // GET or POST
             url: 'js/update-fetchFiles.php', // the file to call
+            data: {
+                updateVersion: updateVersion
+            },
             success: function (response) { // fileBase checked successfully
                 // update view with response
                 console.log("fetchUpdate() response: " + response);
