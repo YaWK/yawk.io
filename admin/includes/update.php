@@ -89,6 +89,7 @@ echo"<ol class=\"breadcrumb\">
             <?php echo '<h3 class="box-title">Filebase <small>of the latest YaWK release </small> '.\YAWK\backend::printTooltip($lang['UPDATE_INTEGRITY_TT']).'</h3>'; ?>
         </div>
         <div class="box-body">
+            <div id="fetchUpdateNode"></div>
             <div id="readUpdateFilebaseNode"></div>
         </div>
     </div>
