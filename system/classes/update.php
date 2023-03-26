@@ -346,11 +346,11 @@ namespace YAWK {
                     {   // update was successful
                         $updateSucceed = true;
                         // update was successful
-                        $response .= "<b class=\"text-success\">Update was successful.</b><br>";
+                        $response .= "<h3 class=\"text-success\">Update was successful.</b><h3>";
                     }
                     else
                     {   // update failed
-                        $response .= "<b class=\"text-danger\">Update failed.</b><br>";
+                        $response .= "<h3 class=\"text-danger\">Update failed.</h3>";
                     }
                 }
             } else {
@@ -359,10 +359,22 @@ namespace YAWK {
             }
 
             // check if update was successful
-            if ($updateSucceed === true){
+            if ($updateSucceed === true)
+            {   // set new version in database
                 settings::setSetting($db, "yawkversion", $updateVersion, $lang);
-            }
 
+                // get version from database to check if it was updated correctly
+                $version = settings::getSetting($db, "yawkversion");
+                if ($version === $updateVersion)
+                {
+                    $response .= "<h3 class=\"text-success\">Update to $updateVersion successful.</b><h3>";
+                }
+                else
+                {
+                    $response .= "<h3 class=\"text-danger\">Update to $updateVersion failed.</h3>";
+                }
+            }
+            // return xhr response
             echo $response;
         }
 
