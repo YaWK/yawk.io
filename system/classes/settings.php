@@ -184,14 +184,14 @@ namespace YAWK {
                             }
                             echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
-                              <label for=\"$setting[property]\">&nbsp; $setting[label] $setting[description]</label><br>";
+                              <label style=\"margin-bottom:10px;\" for=\"$setting[property]\">&nbsp; $setting[label] $setting[description]</label><br>";
                         }
 
                         /* RADIO BUTTTONS */
                         if ($setting['fieldType'] === "radio")
                         {
                             echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
-                                  <input type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                                  <input style=\"margin-bottom:10px;\" type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
                             echo "<input type=\"radio\" value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                             // explode option string into array
                             $optionValues = explode(":", $setting['options']);
@@ -226,7 +226,7 @@ namespace YAWK {
                             {
                                 $currentMenu = \YAWK\menu::getMenuNameByID($db, $setting['value'], $lang);
                                 echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
-                                      <select name=\"$setting[property]\" class=\"form-control\" id=\"$setting[property]\">";
+                                      <select style=\"margin-bottom:10px;\" name=\"$setting[property]\" class=\"form-control\" id=\"$setting[property]\">";
                                 echo "<option value=\"$setting[value]\">$currentMenu</option>";
                                 foreach (\YAWK\backend::getMenuNamesArray($db) as $property=>$row)
                                 {
@@ -241,7 +241,7 @@ namespace YAWK {
                             else
                             {   // begin draw select
                                 echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
-                                          <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                                          <select style=\"margin-bottom:10px;\" class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
                                 echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                                 // explode option string into array
                                 $optionValues = explode(":", $setting['options']);
@@ -273,14 +273,14 @@ namespace YAWK {
                             {   // build a longValue tagged textarea and fill with longValue
                                 $setting['longValue'] = nl2br($setting['longValue']);
                                 echo "<label for=\"$setting[property]-long\">$setting[label] $setting[description]</label>
-                                      <textarea cols=\"64\" rows=\"4\" placeholder=\"$placeholder\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\"$disabled>$setting[longValue]</textarea>";
+                                      <textarea style=\"margin-bottom:10px;\" cols=\"64\" rows=\"4\" placeholder=\"$placeholder\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\"$disabled>$setting[longValue]</textarea>";
                             }
                             else
                             {   // draw default textarea
                                 $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                                 $setting['value'] = nl2br($setting['value']);
                                 echo "<label for=\"$setting[property]-long\">$setting[label] $setting[description]</label>
-                                      <textarea cols=\"64\" rows=\"4\" placeholder=\"$placeholder\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\"$disabled>$setting[value]</textarea>";
+                                      <textarea style=\"margin-bottom:10px;\" cols=\"64\" rows=\"4\" placeholder=\"$placeholder\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\"$disabled>$setting[value]</textarea>";
                             }
                         }
 
@@ -293,7 +293,7 @@ namespace YAWK {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
-                                  <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+                                  <input style=\"margin-bottom:10px;\" type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$placeholder\"$readonly$disabled>";
                         }
 
@@ -306,7 +306,7 @@ namespace YAWK {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
-                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+                                  <input style=\"margin-bottom:10px;\" type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$placeholder\"$readonly$disabled>";
                         }
 
@@ -319,7 +319,7 @@ namespace YAWK {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
-                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+                                  <input style=\"margin-bottom:10px;\" type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\">";
                         }
                     }

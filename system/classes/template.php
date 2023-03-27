@@ -1249,7 +1249,7 @@ namespace YAWK {
                                 // begin draw select
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
-                                  <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                                  <select style=\"margin-bottom:10px;\" class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
                                 echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                                 // explode option string into array
                                 $optionValues = explode(":", $setting['options']);
@@ -1274,7 +1274,7 @@ namespace YAWK {
                                     echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                                 }
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;</label>
-                                  <input type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                                  <input style=\"margin-bottom:10px;\" type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
                                 echo "<input type=\"radio\" value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
 
                                 // explode option string into array
@@ -1308,7 +1308,7 @@ namespace YAWK {
                                 }
                                 echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
-                              <label for=\"$setting[property]\">&nbsp; $setting[label]&nbsp;$setting[description]&nbsp;</label>";
+                              <label style=\"margin-bottom:10px;\" for=\"$setting[property]\">&nbsp; $setting[label]&nbsp;$setting[description]&nbsp;</label>";
                             }
 
                             // CHECKBOX as toggle switch
@@ -1346,7 +1346,7 @@ namespace YAWK {
                                         echo "<h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                                     }
                                     echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;</label>
-                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[longValue]</textarea>";
+                                      <textarea style=\"margin-bottom:10px;\" cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[longValue]</textarea>";
                                 }
                                 else
                                 {   // draw default textarea
@@ -1356,7 +1356,7 @@ namespace YAWK {
                                         echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                                     }
                                     echo "<label for=\"$setting[property]-long\">$setting[label]&nbsp;$setting[description]&nbsp;</label>
-                                          <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
+                                          <textarea style=\"margin-bottom:10px;\" cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
                                 }
                             }
 
@@ -1370,7 +1370,7 @@ namespace YAWK {
                                     echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                                 }
                                 echo "<label for=\"$setting[property]\">$setting[label]</label>&nbsp;$setting[description]&nbsp;
-                                  <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+                                  <input style=\"margin-bottom:10px;\" type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
                                   value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                             }
                             /* INPUT TEXT FIELD */
@@ -1384,7 +1384,7 @@ namespace YAWK {
                                 }
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
-                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+                                  <input style=\"margin-bottom:10px;\" type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
                                   value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                             }
 
@@ -1398,7 +1398,7 @@ namespace YAWK {
                                 }
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
-                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+                                  <input style=\"margin-bottom:10px;\" type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
                                   value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                             }
 
@@ -1414,7 +1414,7 @@ namespace YAWK {
                                 // begin draw select
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
-                                  <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                                  <select style=\"margin-bottom:10px;\" class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
                                 $activeTemplateName = \YAWK\template::getTemplateNameById($db, (int)$setting['value']);
                                 echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $activeTemplateName</option>";
                                 // explode option string into array
@@ -1439,7 +1439,7 @@ namespace YAWK {
                                 if (!isset($lang[$placeholder]) ||(empty($lang[$placeholder]))){ $phMarkup = ""; } else { $phMarkup = " placeholder=\"$lang[$placeholder]\""; }
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                       <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
-                                      <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+                                      <input style=\"margin-bottom:10px;\" type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
                                              value=\"$setting[value]\"$phMarkup\">";
                             }
                         }
@@ -1523,19 +1523,19 @@ namespace YAWK {
             $html .= "
                 
                     <label for=\"$fontRowSize\">$lang[$labelFontSize] $fontRowSizeDefault</label>
-                    <input id=\"$fontRowSize\" name=\"$fontRowSize\" value=\"" . $templateSettings[$fontRowSize]['value'] . "\" class=\"form-control\">
+                    <input style=\"margin-bottom:10px;\" id=\"$fontRowSize\" name=\"$fontRowSize\" value=\"" . $templateSettings[$fontRowSize]['value'] . "\" class=\"form-control\">
                 
                     <label for=\"$fontRowColor\">$lang[$labelFontColor]</label>
-                    <input id=\"$fontRowColor\" name=\"$fontRowColor\" class=\"form-control color\" value=\"" . $templateSettings[$fontRowColor]['value'] . "\">
+                    <input style=\"margin-bottom:10px;\" id=\"$fontRowColor\" name=\"$fontRowColor\" class=\"form-control color\" value=\"" . $templateSettings[$fontRowColor]['value'] . "\">
                
                     <label for=\"$fontRowFontShadowSize\">$lang[TPL_FONTSHADOWSIZE]</label>
-                    <input id=\"$fontRowFontShadowSize\" name=\"$fontRowFontShadowSize\" class=\"form-control\" value=\"" . $templateSettings[$fontRowFontShadowSize]['value'] . "\" placeholder=\"2px 2px\">
+                    <input style=\"margin-bottom:10px;\" id=\"$fontRowFontShadowSize\" name=\"$fontRowFontShadowSize\" class=\"form-control\" value=\"" . $templateSettings[$fontRowFontShadowSize]['value'] . "\" placeholder=\"2px 2px\">
                 
                     <label for=\"$fontRowFontShadowColor\">$lang[TPL_FONTSHADOWCOLOR]</label>
-                    <input id=\"$fontRowFontShadowColor\" name=\"$fontRowFontShadowColor\" value=\"" . $templateSettings[$fontRowFontShadowColor]['value'] . "\" class=\"form-control color\">
+                    <input style=\"margin-bottom:10px;\" id=\"$fontRowFontShadowColor\" name=\"$fontRowFontShadowColor\" value=\"" . $templateSettings[$fontRowFontShadowColor]['value'] . "\" class=\"form-control color\">
                 
                     <label for=\"$fontRowFontWeight\">$lang[TPL_FONTWEIGHT]</label>
-                    <select id=\"$fontRowFontWeight\" name=\"$fontRowFontWeight\" class=\"form-control\">";
+                    <select style=\"margin-bottom:10px;\" id=\"$fontRowFontWeight\" name=\"$fontRowFontWeight\" class=\"form-control\">";
 
             $fontweightStyles = array("normal", "bold", "bolder", "lighter", "100", "200", "300", "400 [normal]", "500", "600", "700 [bold]", "800", "900", "initial", "inherit");
             foreach ($fontweightStyles as $weight) {
@@ -1550,7 +1550,7 @@ namespace YAWK {
             $html .= "</select>
                 
                     <label for=\"$fontRowFontStyle\">$lang[TPL_FONTSTYLE]</label>
-                    <select id=\"$fontRowFontStyle\" name=\"$fontRowFontStyle\" class=\"form-control\">";
+                    <select style=\"margin-bottom:10px;\" id=\"$fontRowFontStyle\" name=\"$fontRowFontStyle\" class=\"form-control\">";
 
             $fontStyles = array("normal", "italic", "oblique", "initial", "inherit");
             foreach ($fontStyles as $style) {
@@ -1566,7 +1566,7 @@ namespace YAWK {
             $html .= "</select>
                 
                     <label for=\"$fontRowTextdecoration\">$lang[TPL_TEXTDECORATION]</label>
-                    <select id=\"$fontRowTextdecoration\" name=\"$fontRowTextdecoration\" class=\"form-control\">";
+                    <select style=\"margin-bottom:10px;\" id=\"$fontRowTextdecoration\" name=\"$fontRowTextdecoration\" class=\"form-control\">";
 
             $textdecorationTypes = array("none", "underline", "overline", "line-through", "intial", "inherit");
             foreach ($textdecorationTypes as $decoration) {
@@ -1584,7 +1584,7 @@ namespace YAWK {
             $html .= "
 
                     <label for=\"$fontRowLinkTextDecoration\">$lang[TPL_LINK_TEXTDECORATION]</label>
-                    <select id=\"$fontRowLinkTextDecoration\" name=\"$fontRowLinkTextDecoration\" class=\"form-control\">";
+                    <select style=\"margin-bottom:10px;\" id=\"$fontRowLinkTextDecoration\" name=\"$fontRowLinkTextDecoration\" class=\"form-control\">";
 
             foreach ($textdecorationTypes as $decoration) {
                 $currentLinkTextDecoration = "$fontRow-linktextdecoration";
@@ -1597,16 +1597,16 @@ namespace YAWK {
             }
             $html .= "</select>
                         <label for=\"$fontRow-alink\">$lang[TPL_LINK_COLOR]</label>
-                        <input id=\"$fontRow-alink\" name=\"$fontRow-alink\" value=\"" . $templateSettings[$fontRowALinkColor]['value'] . "\" class=\"form-control color\">
+                        <input style=\"margin-bottom:10px;\" id=\"$fontRow-alink\" name=\"$fontRow-alink\" value=\"" . $templateSettings[$fontRowALinkColor]['value'] . "\" class=\"form-control color\">
                    
                         <label for=\"$fontRow-avisited\">$lang[TPL_LINK_VISITED_COLOR]</label>
-                        <input id=\"$fontRow-avisited\" name=\"$fontRow-avisited\" value=\"" . $templateSettings[$fontRowAVisitedColor]['value'] . "\" class=\"form-control color\"> 
+                        <input style=\"margin-bottom:10px;\" id=\"$fontRow-avisited\" name=\"$fontRow-avisited\" value=\"" . $templateSettings[$fontRowAVisitedColor]['value'] . "\" class=\"form-control color\"> 
                     
                         <label for=\"$fontRow-ahover\">$lang[TPL_LINK_HOVER_COLOR]</label>
-                        <input id=\"$fontRow-ahover\" name=\"$fontRow-ahover\" value=\"" . $templateSettings[$fontRowAHoverColor]['value'] . "\" class=\"form-control color\"> 
+                        <input style=\"margin-bottom:10px;\" id=\"$fontRow-ahover\" name=\"$fontRow-ahover\" value=\"" . $templateSettings[$fontRowAHoverColor]['value'] . "\" class=\"form-control color\"> 
                    
                     <label for=\"$fontRowLinkFontWeight\">$lang[TPL_LINK_TEXTDECORATION]</label>
-                        <select id=\"$fontRowLinkFontWeight\" name=\"$fontRowLinkFontWeight\" class=\"form-control\">";
+                        <select style=\"margin-bottom:10px;\" id=\"$fontRowLinkFontWeight\" name=\"$fontRowLinkFontWeight\" class=\"form-control\">";
 
             foreach ($fontweightStyles as $weight) {
                 $currentLinkFontWeight = "$fontRow-linkfontweight";
@@ -1620,7 +1620,7 @@ namespace YAWK {
             $html .= "</select>
                
                     <label for=\"$fontRowLinkFontStyle\">$lang[TPL_LINK_FONTSTYLE]</label>
-                    <select id=\"$fontRowLinkFontStyle\" name=\"$fontRowLinkFontStyle\" class=\"form-control\">";
+                    <select style=\"margin-bottom:10px;\" id=\"$fontRowLinkFontStyle\" name=\"$fontRowLinkFontStyle\" class=\"form-control\">";
 
             foreach ($fontStyles as $style) {
                 $currentLinkFontStyle = "$fontRow-linkfontstyle";
@@ -1634,7 +1634,7 @@ namespace YAWK {
 
             $html .= "</select>
                     <label for=\"$fontRowHoverTextDecoration\">$lang[TPL_HOVER_TEXTDECORATION]</label>
-                    <select id=\"$fontRowHoverTextDecoration\" name=\"$fontRowHoverTextDecoration\" class=\"form-control\">";
+                    <select style=\"margin-bottom:10px;\" id=\"$fontRowHoverTextDecoration\" name=\"$fontRowHoverTextDecoration\" class=\"form-control\">";
 
             foreach ($textdecorationTypes as $decoration) {
                 $currentFontDecoration = "$fontRow-hovertextdecoration";
@@ -1650,14 +1650,14 @@ namespace YAWK {
 
             // SMALL TAG COLOR
             $html .= "<label for=\"$fontRowSmallColor\">$lang[TPL_SMALLCOLOR]</label>
-                    <input id=\"$fontRowSmallColor\" name=\"$fontRowSmallColor\" class=\"form-control color\" value=\"" . $templateSettings[$fontRowSmallColor]['value'] . "\">";
+                    <input style=\"margin-bottom:10px;\" id=\"$fontRowSmallColor\" name=\"$fontRowSmallColor\" class=\"form-control color\" value=\"" . $templateSettings[$fontRowSmallColor]['value'] . "\">";
 
             // SMALL TAG SHADOW SIZE
             $html .= "<label for=\"$fontRowSmallShadowSize\">$lang[TPL_SMALLSHADOWSIZE]</label>
-                    <input id=\"$fontRowSmallShadowSize\" name=\"$fontRowSmallShadowSize\" class=\"form-control\" value=\"" . $templateSettings[$fontRowSmallShadowSize]['value'] . "\" placeholder=\"2px 2px\">";
+                    <input style=\"margin-bottom:10px;\" id=\"$fontRowSmallShadowSize\" name=\"$fontRowSmallShadowSize\" class=\"form-control\" value=\"" . $templateSettings[$fontRowSmallShadowSize]['value'] . "\" placeholder=\"2px 2px\">";
             // SMALL TAG SHADOW COLOR
             $html .= "<label for=\"$fontRowSmallShadowColor\">$lang[TPL_SMALLSHADOWCOLOR]</label>
-                    <input id=\"$fontRowSmallShadowColor\" name=\"$fontRowSmallShadowColor\" value=\"" . $templateSettings[$fontRowSmallShadowColor]['value'] . "\" class=\"form-control color\">";
+                    <input style=\"margin-bottom:10px;\" id=\"$fontRowSmallShadowColor\" name=\"$fontRowSmallShadowColor\" value=\"" . $templateSettings[$fontRowSmallShadowColor]['value'] . "\" class=\"form-control color\">";
 
             // end font div box
             $html .= "
@@ -1849,7 +1849,7 @@ namespace YAWK {
             $selectField = ''; // init var to hold select field html code
             $selectField =
                 "
-                        <select id=\"$selectName\" name=\"$selectName\" class=\"form-control\">
+                        <select style=\"margin-bottom:10px;\" id=\"$selectName\" name=\"$selectName\" class=\"form-control\">
                             $defaultValueOption;
                             <optgroup label=\"System Sans-Serif Fonts\"></optgroup>
                                 <option value=\"Arial, Helvetica, sans-serif\">&nbsp;&nbsp;Arial, Helvetica, sans-serif</option>
