@@ -155,8 +155,8 @@ echo"</section><!-- Main content -->
                                 <!-- <div class="input-group-addon" id="switchPreview" style="cursor: pointer;"><i class="fa fa-link" title="switch preview"></i></div> -->
                                 <input id="testText" name="testText" placeholder="<?php echo $lang['TPL_FORM_TESTFIELD_PLACEHOLDER']; ?>" maxlength="84" class="form-control">
                                 <span class="input-group-btn">
-                        <button type="button" disabled id="resetTestText" class="btn btn-default" title="<?php echo $lang['RESET']; ?>"><i class="fa fa-refresh"></i></button>
-                        </span>
+                                    <button type="button" disabled id="resetTestText" class="btn btn-default" title="<?php echo $lang['RESET']; ?>"><i class="fa fa-refresh"></i></button>
+                                </span>
                             </div>
                             <!-- common text settings (size, shadow, color...) -->
                             <?php // $template->getFormElements($db, $templateSettings, 2, $lang, $user); ?>
