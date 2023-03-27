@@ -44,7 +44,7 @@ echo"<ol class=\"breadcrumb\">
 <div class="box box-default">
     <div class="box-body">
         <div class="updateBtnNode" id="updateBtnNode">
-            <a href="#checkForUpdatesBtn" id="checkForUpdatesBtn" class="btn btn-success pull-right"
+            <a href="#checkForUpdatesBtn" id="checkForUpdatesBtn" class="btn btn-primary pull-right"
                data-UPDATE_CHECK="<?php echo $lang['UPDATE_CHECK'];?>"
                data-UPDATE_AVAILABLE="<?php echo $lang['UPDATE_AVAILABLE'];?>"
                data-UPDATE_AVAILABLE_SUBTEXT="<?php echo $lang['UPDATE_AVAILABLE_SUBTEXT'];?>"
