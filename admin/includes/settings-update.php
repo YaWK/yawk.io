@@ -40,6 +40,7 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
+
 <!-- CONTENT -->
 <div class="box box-default">
     <div class="box-body">

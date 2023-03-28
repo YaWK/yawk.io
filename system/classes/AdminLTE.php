@@ -1144,7 +1144,7 @@ namespace YAWK\BACKEND {
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-system\"><i class=\"fa fa-gears\"></i> $lang[SYSTEM]</a>
             </li>
-            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class=\"active\"" : ""; echo">
+            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-openai') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-openai\"><i class=\"fa fa-key\"></i> $lang[API_KEYS]</a>
             </li>
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-webmail') ? "class=\"active\"" : ""; echo">
@@ -1168,8 +1168,8 @@ namespace YAWK\BACKEND {
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-backup') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-backup\"><i class=\"fa fa-hdd-o\"></i> $lang[BACKUP]</a>
             </li>
-            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'update') ? "class=\"active\"" : ""; echo">
-                <a href=\"index.php?page=update\"><i class=\"fa fa-code-fork\"></i> $lang[UPDATE]</a>
+            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-update') ? "class=\"active\"" : ""; echo">
+                <a href=\"index.php?page=settings-update\"><i class=\"fa fa-code-fork\"></i> $lang[UPDATE]</a>
             </li>
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-systeminfo') ? "class=\"active\"" : ""; echo">
             <a href=\"index.php?page=settings-systeminfo\"><i class=\"fa fa-info-circle\"></i> $lang[SYSTEM]&nbsp;$lang[INFO]</a></li>
