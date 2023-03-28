@@ -26,7 +26,7 @@ if (isset($_POST['updateVersion'])) {
     // generate new update object
     $update = new update();
     $update->updateVersion = $updateVersion;
-    $update->fetchFiles($db, $updateVersion, $lang);
+    $update->runMigrations($db, $updateVersion, $lang);
 }
 else
 {   // error

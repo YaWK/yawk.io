@@ -233,8 +233,8 @@ $(document).ready(function() {  // wait until document is ready
                         var startUpdateBtn = $("#startUpdateBtn");
                         $(startUpdateBtn).click(function() {
                             console.log('start update button clicked, start update process');
-                            // start ajax call
-                            fetchFiles();
+                            // start the update process
+                            runMigrations(); // if migrations are required, they will be run first
                         });
                     }, 5000 ); // end delay
 
@@ -254,13 +254,42 @@ $(document).ready(function() {  // wait until document is ready
     })();
 
     /**
+     * @brief run migrations
+     * @details check and run all migrations between current installed version and latest available version
+     */
+    function runMigrations(){
+        console.log('called runMigrations()');
+        var runMigrationsNode = $("#fetchUpdateNode");
+        var updateVersion = $("#updateVersion").text();
+
+        $.ajax({
+            type: 'POST',
+            url: 'js/update-runMigrations.php',
+            data: {
+                updateVersion: updateVersion
+            },
+            success: function (response)
+            {   // update view with response
+                $(runMigrationsNode).html(response).fadeIn(1000);
+                console.log("runMigrations() response: " + response);
+                // ok, done with migrations, now fetch files
+                fetchFiles();
+            },
+            error: function (response)
+            {   // on error..
+                console.error('runMigrations() ERROR: ' + response);
+            },
+        });
+    }
+
+
+    /**
      * @brief start update process
      * @details This function will start the update process by calling the fetchUpdate() method from update.php class
      */
     function fetchFiles()
     {   var fetchUpdateNode = $("#fetchUpdateNode");
         updateVersion = $("#updateVersion").text();
-        console.log('fetchUpdate() called');
         // check via ajax, if there are updates available
         $.ajax({    // create a new AJAX call
             type: 'POST', // GET or POST

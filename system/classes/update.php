@@ -139,12 +139,15 @@ namespace YAWK {
          * @brief Run the migration SQL files
          * @details If update.ini contains migration files between the current version and the update version, this function will be called
          * @param $db object the database object
-         * @return void
+         * @return bool true|false if migrations were successful or not
          */
         function runMigrations(object $db): void
         {
-            //
-            $db->begin_transaction(); // Begin a transaction
+            // Start transaction, so we can roll back if something goes wrong
+            $db->begin_transaction();
+
+            // init ajax response
+            $output = '';
 
             // run migrations
             try
@@ -170,12 +173,13 @@ namespace YAWK {
                     $migrationSql = file_get_contents($migrationUrl);
                     // Check if the migration file was fetched successfully
                     if ($migrationSql === false)
-                    {
-                        echo "Error: Unable to fetch migration file from $migrationUrl<br>";
+                    {   // Unable to fetch migration file
+                        $output .= "Migration file for $migrationVersion not found: $migrationUrl<br>";
                         continue;
                     }
-                    else {
-                        echo "Fetched migration file from $migrationUrl<br>";
+                    else
+                    {   // Fetched migration file successfully
+                        $output .= "Fetched migration file from $migrationUrl<br>";
                     }
 
                     // Execute the migration SQL
@@ -188,12 +192,12 @@ namespace YAWK {
                         if ($insertMigration->execute())
                         {   // migration executed successfully
                             // todo: syslog entry
-                            echo "Migration for version $migrationVersion executed successfully.<br>";
+                            $output .= "Migration for version $migrationVersion executed successfully.<br>";
                         }
                         else
                         {   // migration failed
                             // todo: syslog entry
-                            echo "Error recording migration for version $migrationVersion: " . $insertMigration->error . "<br>";
+                            $output .= "Error recording migration for version $migrationVersion: " . $insertMigration->error . "<br>";
                             $db->rollback(); // Rollback the transaction
                             return;
                         }
@@ -203,26 +207,37 @@ namespace YAWK {
                     else
                     {   // migration failed
                         // todo: syslog entry
-                        echo "Error executing migration for version $migrationVersion: " . $db->error . "<br>";
+                        $output .= "Error executing migration for version $migrationVersion: " . $db->error . "<br>";
                         $db->rollback(); // Rollback the transaction
                         return;
                     }
                 }
                 // Commit the transaction if all migrations executed successfully
                 $db->commit();
-                echo "All migrations executed successfully.\n";
+                $output .= "All migrations executed successfully.\n";
+                $migrationsSuccessful = true;
             }
+            // migration failed
             catch (\Exception $e)
             {   // An exception was thrown, so rollback the transaction
                 $db->rollback(); // Rollback the transaction if an exception is thrown
-                echo "Rolled back transaction because there was en error executing migrations: " . $e->getMessage() . "<br>";
+                $output .= "Rolled back transaction because there was en error executing migrations: " . $e->getMessage() . "<br>";
             }
 
-            // close database connection
-            $db->close();
+            // ajax response
+            if (!empty($output))
+            {
+                // will be returned to ajax request
+                echo $output;
+
+                // close database connection
+                $db->close();
+            }
+            else
+            {   // something else went wrong during processing - there is no error or success message which is unlikely.
+                echo "Error: Something went wrong during processing. No error or success message generated during migration process which is very unlikely.";
+            }
         }
-
-
 
 
         /**
@@ -232,9 +247,14 @@ namespace YAWK {
          * @param $updateVersion string update version
          * @param $lang array language array
          */
-        public function fetchFiles(object $db, string $updateVersion, array $lang): void
+        public function fetchFiles(object $db, string $updateVersion, array $lang): bool
         {
-            $updateSucceed = false; // init updateSucceed flag, will be set to true if update was successful
+            // init updateSucceed flag, will be set to true if update was successful
+            $updateSucceed = false;
+
+            // set update version
+            $this->updateVersion = $updateVersion;
+
             // override $this->updateServer with GitHub url
             $this->updateServer = $this->githubServer;
 
@@ -284,53 +304,18 @@ namespace YAWK {
                             $fetchFailed++;
                         }
                         else
-                        {
+                        {   // count successful fetches
                             $fetchSucceed++;
-
-                            // create path to tmp folder
-//                            $tmpPath = $basedir.$this->localUpdateSystemPath;
-//
-//                            $tmpFilePath = $tmpPath . $value;
-//                            // Create the directory structure if it doesn't exist
-//                            $tmpFileDir = dirname($tmpFilePath);
-//                            if (!is_dir($tmpFileDir)) {
-//                                mkdir($tmpFileDir, 0755, true);
-//                            }
-//
-//                            // debug, cen be removed $response .= "TMP Path: $tmpPath <br>";
-//
-//                            // Ensure tmp directory exists
-//                            if (!is_dir($tmpPath) && !mkdir($tmpPath)) {
-//                                $response .= "Error: Unable to create tmp directory: " . $tmpPath . "<br>";
-//                                continue;
-//                            }
-//
-//                            // Save the file to tmp folder
-//                            if (!file_put_contents($tmpPath . $value, $file)) {
-//                                $response .= "Error: Unable to write file to local system: " . $tmpPath . $value . "<br>";
-//                                continue;
-//                            }
-//
-//                            $response .= "File written successfully to tmp folder: " . $tmpPath . $value . "<br>";
-
-                            // Check the md5 value of the fetched file with the one in updateFiles.ini
-//                            $currentHashValue = md5_file($tmpPath . $value);
-//                            if ($currentHashValue !== $key) {
-//                                $response .= "Error: File hash value does not match: <br>FILE: " . $value . "<br> original hash: $key <br> current hash: $currentHashValue <br>";
-//                                continue;
-//                            }
-//
-//                            $response .= "<span class=\"text-success\">File hash value matches: " . $value . "</span><br>";
 
                             // Write file to local system
                             if (!file_put_contents($basedir.$value, $file))
                             {   // unable to write file to local system
-                                $failedFiles++;
+                                $failedFiles++; // count failed files
                                 $response .= "<b> class=\"text-danger\">Error: Unable to write file to local system: " .$basedir.$value . "</b><br>";
                             }
                             else
                             {   // file written successfully
-                                $successFiles++;
+                                $successFiles++; // count successful written files
                                 $response .= "<b class=\"text-success animated fadeIn slow\">File written successfully: " . $basedir.$value . "</b><br>";
                             }
                         }
@@ -378,8 +363,9 @@ namespace YAWK {
                         $response .= "<h3 class=\"text-danger\">Update failed.</h3>";
                     }
                 }
-            } else {
-                // updateFiles.ini does not exist
+            }
+            else
+            {   // updateFiles.ini does not exist
                 $response .= "<span class=\"text-danger\"><b>Error:</b> updateFiles.ini does not exist. Check if this file exists: " .$basedir.$this->localUpdateSystemPath . $this->updateFilesFile . "</span>";
             }
 
