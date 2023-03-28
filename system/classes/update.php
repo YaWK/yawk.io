@@ -247,7 +247,7 @@ namespace YAWK {
          * @param $updateVersion string update version
          * @param $lang array language array
          */
-        public function fetchFiles(object $db, string $updateVersion, array $lang): bool
+        public function fetchFiles(object $db, string $updateVersion, array $lang): void
         {
             // init updateSucceed flag, will be set to true if update was successful
             $updateSucceed = false;

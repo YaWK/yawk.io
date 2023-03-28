@@ -277,6 +277,7 @@ $(document).ready(function() {  // wait until document is ready
             },
             error: function (response)
             {   // on error..
+                $(runMigrationsNode).html(response).fadeIn(1000);
                 console.error('runMigrations() ERROR: ' + response);
             },
         });
