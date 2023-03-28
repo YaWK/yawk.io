@@ -271,14 +271,14 @@ $(document).ready(function() {  // wait until document is ready
             success: function (response)
             {   // update view with response
                 $(runMigrationsNode).html(response).fadeIn(1000);
-                console.log("runMigrations() response: " + response);
+                console.log("runMigrations() response: ", response);
                 // ok, done with migrations, now fetch files
                 fetchFiles();
             },
             error: function (response)
             {   // on error..
                 $(runMigrationsNode).html(response).fadeIn(1000);
-                console.error('runMigrations() ERROR: ' + response);
+                console.error('runMigrations() ERROR: ', response);
             },
         });
     }

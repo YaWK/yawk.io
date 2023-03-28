@@ -183,7 +183,7 @@ namespace YAWK {
                     }
 
                     // Execute the migration SQL
-                    if ($db->multi_query($migrationSql))
+                    if ($db->query($migrationSql))
                     {   // Record the successful migration
                         $insertMigration = $db->prepare("INSERT INTO {migrations} (`version`, `executed_at`) VALUES (?, NOW())");
                         $insertMigration->bind_param('s', $migrationVersion);
