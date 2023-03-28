@@ -136,76 +136,93 @@ namespace YAWK {
         }
 
         /**
-         * @brief Run the migration SQL file
-         * @details if update.ini contains a migration file, this function will be called
-         * @param $db
+         * @brief Run the migration SQL files
+         * @details If update.ini contains migration files between the current version and the update version, this function will be called
+         * @param $db object the database object
          * @return void
          */
-        function runMigration($db): void
+        function runMigrations(object $db): void
         {
-            // build migration SQL file string
-            $migrationUrl = $this->updateServer . $this->updateVersion . '-migration.sql';
+            //
+            $db->begin_transaction(); // Begin a transaction
 
-            // Fetch the migration SQL file
-            $migrationSql = file_get_contents($migrationUrl);
+            // run migrations
+            try
+            {   // Get current version number from the database
+                $currentVersion = settings::getSetting($db, "yawkversion");
 
-            if ($migrationSql === false) {
-                echo "Error: Unable to fetch migration file from $migrationUrl\n";
-                return;
-            }
+                // Determine which migrations need to be executed
+                $migrationUrlBase = $this->updateServer . 'migration-';
+                $currentVersionParts = explode('.', $currentVersion);
+                $updateVersionParts = explode('.', $this->updateVersion);
+                // Start at the next minor version after the current version
+                $startIndex = (int)$currentVersionParts[2] + 1;
+                // End at the minor version of the update version
+                $endIndex = (int)$updateVersionParts[2];
 
-            // Check if the migration has already been executed
-            $checkMigration = $db->prepare("SELECT `version` FROM `migrations` WHERE `version` = ?");
-            $checkMigration->bind_param('s', $this->updateVersion);
-            $checkMigration->execute();
-            $result = $checkMigration->get_result();
-
-            if ($result->num_rows === 0) {
-                // Start transaction
-                $db->begin_transaction();
-
-                // Execute the migration SQL
-                if ($db->multi_query($migrationSql)) {
-                    // Record the successful migration
-                    $insertMigration = $db->prepare("INSERT INTO `migrations` (`version`, `executed_at`) VALUES (?, NOW())");
-                    $insertMigration->bind_param('s', $this->updateVersion);
-
-                    // execute update migration
-                    if ($insertMigration->execute()) {
-                        // Commit transaction
-                        $db->commit();
-
-                        // migration executed successfully
-                        // todo: syslog entry
-                        echo "Migration for version $this->updateVersion executed successfully.\n";
-                    } else {
-                        // Rollback transaction
-                        $db->rollback();
-
-                        // migration failed
-                        // todo: syslog entry
-                        echo "Error recording migration for version $this->updateVersion: " . $insertMigration->error . "\n";
+                // Loop through the migration files
+                for ($i = $startIndex; $i <= $endIndex; $i++)
+                {   // build migration version
+                    $migrationVersion = $currentVersionParts[0] . '.' . $currentVersionParts[1] . '.' . $i;
+                    // build migration filename
+                    $migrationUrl = $migrationUrlBase . $migrationVersion . '.sql';
+                    // Fetch the migration file
+                    $migrationSql = file_get_contents($migrationUrl);
+                    // Check if the migration file was fetched successfully
+                    if ($migrationSql === false)
+                    {
+                        echo "Error: Unable to fetch migration file from $migrationUrl<br>";
+                        continue;
+                    }
+                    else {
+                        echo "Fetched migration file from $migrationUrl<br>";
                     }
 
-                    // close insert migration connection
-                    $insertMigration->close();
-                } else {
-                    // Rollback transaction
-                    $db->rollback();
+                    // Execute the migration SQL
+                    if ($db->multi_query($migrationSql))
+                    {   // Record the successful migration
+                        $insertMigration = $db->prepare("INSERT INTO {migrations} (`version`, `executed_at`) VALUES (?, NOW())");
+                        $insertMigration->bind_param('s', $migrationVersion);
 
-                    // migration failed
-                    // todo: syslog entry
-                    echo "Error executing migration for version $this->updateVersion: " . $db->error . "\n";
+                        // execute update migration
+                        if ($insertMigration->execute())
+                        {   // migration executed successfully
+                            // todo: syslog entry
+                            echo "Migration for version $migrationVersion executed successfully.<br>";
+                        }
+                        else
+                        {   // migration failed
+                            // todo: syslog entry
+                            echo "Error recording migration for version $migrationVersion: " . $insertMigration->error . "<br>";
+                            $db->rollback(); // Rollback the transaction
+                            return;
+                        }
+                        // close insert migration connection
+                        $insertMigration->close();
+                    }
+                    else
+                    {   // migration failed
+                        // todo: syslog entry
+                        echo "Error executing migration for version $migrationVersion: " . $db->error . "<br>";
+                        $db->rollback(); // Rollback the transaction
+                        return;
+                    }
                 }
-            } else {
-                // migration already executed
-                // todo: syslog entry
-                echo "Migration for version $this->updateVersion already executed.\n";
+                // Commit the transaction if all migrations executed successfully
+                $db->commit();
+                echo "All migrations executed successfully.\n";
+            }
+            catch (\Exception $e)
+            {   // An exception was thrown, so rollback the transaction
+                $db->rollback(); // Rollback the transaction if an exception is thrown
+                echo "Rolled back transaction because there was en error executing migrations: " . $e->getMessage() . "<br>";
             }
 
-            // close check migration connection
-            $checkMigration->close();
+            // close database connection
+            $db->close();
         }
+
+
 
 
         /**
