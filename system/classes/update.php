@@ -141,17 +141,19 @@ namespace YAWK {
          * @param $db object the database object
          * @return bool true|false if migrations were successful or not
          */
-        function runMigrations(object $db): void
-        {
-            // Start transaction, so we can roll back if something goes wrong
-            $db->begin_transaction();
+        function runMigrations($db): void
+        {   /** @param $db db */
 
             // init ajax response
             $output = '';
 
             // run migrations
             try
-            {   // Get current version number from the database
+            {
+                // Start transaction, so we can roll back if something goes wrong
+                $db->beginTransaction();
+
+                // Get current version number from the database
                 $currentVersion = settings::getSetting($db, "yawkversion");
 
                 // Determine which migrations need to be executed
@@ -183,9 +185,9 @@ namespace YAWK {
                     }
 
                     // Execute the migration SQL
-                    if ($db->query($migrationSql))
+                    if ($db->multi_query($migrationSql))
                     {   // Record the successful migration
-                        $insertMigration = $db->prepare("INSERT INTO {migrations} (`version`, `executed_at`) VALUES (?, NOW())");
+                        $insertMigration = $db->prepare("INSERT INTO {migrations} (`version`, `executed_at`) VALUES ('$this->updateVersion', NOW())");
                         $insertMigration->bind_param('s', $migrationVersion);
 
                         // execute update migration
@@ -221,7 +223,7 @@ namespace YAWK {
             catch (\Exception $e)
             {   // An exception was thrown, so rollback the transaction
                 $db->rollback(); // Rollback the transaction if an exception is thrown
-                $output .= "Rolled back transaction because there was en error executing migrations: " . $e->getMessage() . "<br>";
+                $output .= "Rolled back transaction because there was en error executing migrations: " . $e->getMessage() . "\n";
             }
 
             // ajax response
@@ -229,7 +231,6 @@ namespace YAWK {
             {
                 // will be returned to ajax request
                 echo $output;
-
                 // close database connection
                 $db->close();
             }

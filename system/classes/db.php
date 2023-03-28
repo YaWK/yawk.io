@@ -1,9 +1,7 @@
 <?php
 namespace YAWK
 {
-
     use Exception;
-
     /**
      * @details <b>Database class - connect to mysqli and return connection object</b>
      * <p>This class establish the database connection if none already exists.
@@ -71,18 +69,37 @@ namespace YAWK
             $this->connection->close();
         }
 
-        public function begin_transaction(): void
+        /**
+         * @throws Exception
+         */
+        public function beginTransaction(): void
         {
-            $this->connection->begin_transaction();
+            if (!isset($this->connection)) {
+                throw new \Exception("No database connection available.");
+            }
+
+            if (!$this->connection->begin_transaction()) {
+                throw new \Exception("Failed to begin transaction.");
+            }
+        }
+
+        public function multi_query($query)
+        {   // query database
+            return $this->connection->multi_query($query);
+        }
+
+        public function prepare($sql)
+        {   // prepare statement
+            return $this->connection->prepare($sql);
         }
 
         public function commit(): void
-        {
+        {   // commit transaction
             $this->connection->commit();
         }
 
         public function rollback(): void
-        {
+        {   // rollback transaction
             $this->connection->rollback();
         }
 

@@ -273,7 +273,7 @@ $(document).ready(function() {  // wait until document is ready
                 $(runMigrationsNode).html(response).fadeIn(1000);
                 console.log("runMigrations() response: ", response);
                 // ok, done with migrations, now fetch files
-                fetchFiles();
+                // fetchFiles();
             },
             error: function (response)
             {   // on error..
