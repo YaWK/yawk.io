@@ -1144,6 +1144,9 @@ namespace YAWK\BACKEND {
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-system\"><i class=\"fa fa-gears\"></i> $lang[SYSTEM]</a>
             </li>
+            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class=\"active\"" : ""; echo">
+                <a href=\"index.php?page=settings-openai\"><i class=\"fa fa-key\"></i> $lang[API_KEYS]</a>
+            </li>
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-webmail') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-webmail\"><i class=\"fa fa-envelope-o\"></i> $lang[WEBMAIL]</a>
             </li>
