@@ -144,7 +144,7 @@ namespace YAWK {
         function runMigration($db): void
         {
             // build migration SQL file string
-            $migrationUrl = $this->updateServer.$this->updateVersion.'-migration.sql';
+            $migrationUrl = $this->updateServer . $this->updateVersion . '-migration.sql';
 
             // Fetch the migration SQL file
             $migrationSql = file_get_contents($migrationUrl);
@@ -161,6 +161,9 @@ namespace YAWK {
             $result = $checkMigration->get_result();
 
             if ($result->num_rows === 0) {
+                // Start transaction
+                $db->begin_transaction();
+
                 // Execute the migration SQL
                 if ($db->multi_query($migrationSql)) {
                     // Record the successful migration
@@ -168,28 +171,34 @@ namespace YAWK {
                     $insertMigration->bind_param('s', $this->updateVersion);
 
                     // execute update migration
-                    if ($insertMigration->execute())
-                    {   // migration executed successfully
+                    if ($insertMigration->execute()) {
+                        // Commit transaction
+                        $db->commit();
+
+                        // migration executed successfully
                         // todo: syslog entry
                         echo "Migration for version $this->updateVersion executed successfully.\n";
-                    }
-                    else
-                    {   // migration failed
+                    } else {
+                        // Rollback transaction
+                        $db->rollback();
+
+                        // migration failed
                         // todo: syslog entry
                         echo "Error recording migration for version $this->updateVersion: " . $insertMigration->error . "\n";
                     }
 
                     // close insert migration connection
                     $insertMigration->close();
-                }
-                else
-                {   // migration failed
+                } else {
+                    // Rollback transaction
+                    $db->rollback();
+
+                    // migration failed
                     // todo: syslog entry
                     echo "Error executing migration for version $this->updateVersion: " . $db->error . "\n";
                 }
-            }
-            else
-            {   // migration already executed
+            } else {
+                // migration already executed
                 // todo: syslog entry
                 echo "Migration for version $this->updateVersion already executed.\n";
             }
@@ -197,6 +206,7 @@ namespace YAWK {
             // close check migration connection
             $checkMigration->close();
         }
+
 
         /**
          * @brief read system/update/updateFiles.ini and fetch files from remote (GitHub) server
