@@ -36,7 +36,7 @@ namespace YAWK
          * @return object|bool false on failure / mysqli MySQLi object instance on success
          * @throws Exception
          */
-        public function connect()
+        public function connect(): object|bool
         {
             // if connection is not set
             if (!isset($this->connection))
@@ -64,6 +64,26 @@ namespace YAWK
                 // connection already established...
                 return $this->connection;
             }
+        }
+
+        public function close(): void
+        {
+            $this->connection->close();
+        }
+
+        public function begin_transaction(): void
+        {
+            $this->connection->begin_transaction();
+        }
+
+        public function commit(): void
+        {
+            $this->connection->commit();
+        }
+
+        public function rollback(): void
+        {
+            $this->connection->rollback();
         }
 
 
