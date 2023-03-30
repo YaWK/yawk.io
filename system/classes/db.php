@@ -74,13 +74,7 @@ namespace YAWK
          */
         public function beginTransaction(): void
         {
-            if (!isset($this->connection)) {
-                throw new \Exception("No database connection available.");
-            }
-
-            if (!$this->connection->begin_transaction()) {
-                throw new \Exception("Failed to begin transaction.");
-            }
+            $this->connection->begin_transaction();
         }
 
         public function multi_query($query)
@@ -98,10 +92,110 @@ namespace YAWK
             $this->connection->commit();
         }
 
-        public function rollback(): void
-        {   // rollback transaction
-            $this->connection->rollback();
+        public function real_escape_string($migrationSql){
+            return $this->connection->real_escape_string($migrationSql);
         }
+
+        /**
+         * Rollback the current transaction
+         *
+         * @return bool true if rollback succeeded, false otherwise
+         */
+        public function rollback()
+        {
+            try
+            {
+                while ($this->connection->more_results())
+                {
+                    $this->connection->next_result();
+                }
+
+                // Rollback the transaction
+                $result = $this->connection->rollback();
+
+                if ($result)
+                {   // Rollback succeeded
+                    return true;
+                }
+
+            }
+            catch (\Exception $e)
+            {
+                // An exception was thrown, so rollback failed
+                return false;
+            }
+            return false;
+        }
+
+        /**
+         * @brief Move to next result set of a multi query
+         * @return bool
+         */
+        public function next_result()
+        {
+            if (method_exists($this->connection, 'next_result'))
+            {
+//                sys::setSyslog($this->connection, 53, 0, "next result called", 0, 0, 0, 0);
+                return $this->connection->next_result();
+            }
+            else
+            {
+                // Free any active result sets
+                while ($this->more_results() && $this->connection->next_result()) {
+//                    sys::setSyslog($this->connection, 53, 0, "free any active result sets", 0, 0, 0, 0);
+                }
+                return true;
+            }
+        }
+
+        /**
+         * @brief Checks if there are more query results from a multi query
+         * @return bool
+         */
+        public function more_results(): bool
+        {
+            if (method_exists($this->connection, 'more_results'))
+            {
+//                sys::setSyslog($this->connection, 53, 0, "more migration results available", 0, 0, 0, 0);
+                return $this->connection->more_results() && $this->connection->next_result() && $this->connection->store_result();
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /**
+         * Clear all pending result sets after a multi-query
+         * @return bool true if successful, false otherwise
+         */
+        public function clearResults()
+        {
+            try
+            {
+                // Check if there are more result sets available
+                while ($this->connection->more_results() && $this->connection->next_result())
+                {
+                    // Store the current result set
+                    $result = $this->connection->store_result();
+
+                    // Free the current result set
+                    if ($result !== false)
+                    {
+                        $result->free();
+                    }
+                }
+
+                return true;
+            }
+            catch (\Exception $e)
+            {
+                error_log("Error clearing result sets: " . $e->getMessage());
+                return false;
+            }
+        }
+
+
 
 
         /**
