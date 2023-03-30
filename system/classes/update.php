@@ -317,7 +317,6 @@ namespace YAWK
 
                 // Commit the transaction if all migrations executed successfully
                 $db->commit();
-                sys::setSyslog($db, 54, 0, "<b>Committed transaction</b> all migrations excecuted succcessfully!", 0, 0, 0, 0);
 
                 // if there was at least one successful migration
                 if ($successfulMigrations > 0)
@@ -327,6 +326,7 @@ namespace YAWK
 
                 // all migrations executed successfully
                 $output .= "<h3 class=\"text-success\">All migrations executed successfully.</h3>";
+                sys::setSyslog($db, 54, 0, "<b>Migration complete</b> All migrations executed successfully.", 0, 0, 0, 0);
                 $this->migrationSuccessful = true;
             }
             catch (\Exception $e)
@@ -387,13 +387,11 @@ namespace YAWK
                 // parse updateFiles.ini into array
                 $this->updateFiles = parse_ini_file($basedir.$this->localUpdateSystemPath . $this->updateFilesFile);
                 if (count($this->updateFiles) < 1)
-                {
-                    // unable to read updateFiles.ini from local update folder
+                {   // unable to read updateFiles.ini from local update folder
                     $response .= "Error: Unable to read updateFiles.ini from local update folder. Check if this file exists: " . $basedir.$this->localUpdateSystemPath . $this->updateFilesFile;
                 }
                 else
-                {
-                    // count elements of updateFiles array
+                {   // count elements of updateFiles array
                     $totalUpdateFiles = count($this->updateFiles);
                     $failedFiles = 0;
                     $successFiles = 0;
@@ -494,11 +492,16 @@ namespace YAWK
                 if ($version == $updateVersion && $updateSucceed === true)
                 {
                     $response .= "<h3 class=\"text-success\">Update to $updateVersion completed successfully.</b><h3>";
+                    sys::setSyslog($db, 54, 0, "<b>UPDATE COMPLETE</b> Migration and Files updated to $updateVersion.", 0, 0, 0, 0);
                 }
                 else
                 {
-                    $response .= "<h3 class=\"text-danger\">Update to $updateVersion failed.</h3>";
+                    $response .= "<h3 class=\"text-danger\">Failed writing new Version number $updateVersion to database</h3>";
                 }
+            }
+            else
+            {
+                $response .= "<h3 class=\"text-danger\">Failed to update from $this->currentVersion to $updateVersion.</h3>";
             }
             // return xhr response
             echo $response;
