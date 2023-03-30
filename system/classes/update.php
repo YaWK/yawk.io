@@ -45,7 +45,6 @@ namespace YAWK
         /**
          * @var string $localUpdateSystemPath the path to the local update system folder (eg. system/update/)
          */
-//        public string $localUpdateSystemPath = '../../system/update/';
         public string $localUpdateSystemPath = '/system/update/';
 
         /**
@@ -67,6 +66,11 @@ namespace YAWK
          * @var array $updateFiles array of files that need to be updated
          */
         public array $updateFiles = array();
+
+        /**
+         * @var bool $migrationSuccessful true|false indicates if migration was successful, call fetchFiles() on true
+         */
+        public bool $migrationSuccessful = false;
 
         /**
          * @brief update constructor. Check if allow_url_fopen is enabled
@@ -145,16 +149,10 @@ namespace YAWK
             return false;
         }
 
-        public function logMessage($message) {
-            $logfile = 'debug_log.txt';
-            $timestamp = date('Y-m-d H:i:s');
-            file_put_contents($logfile, "[$timestamp] $message\n", FILE_APPEND);
-        }
 
         public function recordMigration($db, $successfulMigrations): void
         {
             $output = '';
-
             // check if migrations array is set and got at least 1 entry
             if (is_array($successfulMigrations) && (count($successfulMigrations) > 0))
             {   // loop through all migrations
@@ -180,14 +178,14 @@ namespace YAWK
             echo $output;
         }
 
-
         /**
          * @brief Run the migration SQL files
          * @details If update.ini contains migration files between the current version and the update version, this function will be called
          * @param $db object the database object
+         * @param $lang array the language array
          * @return bool true|false if migrations were successful or not
          */
-        function runMigrations(object $db): void
+        function runMigrations(object $db, array $lang): void
         {
             require_once 'sys.php';
             /** @param $db db */
@@ -206,8 +204,7 @@ namespace YAWK
 
             // run migrations
             try
-            {
-                // Start transaction, so we can roll back if something goes wrong
+            {   // Start transaction, so we can roll back if something goes wrong
                 $db->beginTransaction();
 
                 // Determine which migrations need to be executed
@@ -241,7 +238,7 @@ namespace YAWK
                     }
                     else {
                         // migration was not executed yet
-                        // $output .= "Migration for build $migrationVersion was not executed yet. fetching file: $migrationUrl<br>";
+                        $output .= "Migration for build $migrationVersion was not executed yet. fetching file: $migrationUrl<br>";
                         // Fetch the migration file
                         $migrationSql = @file_get_contents($migrationUrl);
                     }
@@ -292,7 +289,6 @@ namespace YAWK
                             }
                         }
                     }
-
 //                    // MULTI QUERY INSTEAD OF SINGLE QUERIES
 //                    // Execute the migration SQL
 //                    if ($db->multi_query($migrationSql))
@@ -324,7 +320,7 @@ namespace YAWK
 
                 // all migrations executed successfully
                 $output .= "<h3 class=\"text-success\">All migrations executed successfully.</h3>";
-                $migrationsSuccessful = true;
+                $this->migrationSuccessful = true;
             }
             catch (\Exception $e)
             {   // An exception was thrown, rollback the transaction
@@ -336,6 +332,7 @@ namespace YAWK
                     sys::setSyslog($db, 56, 2, "<b>Rollback FAILED!</b>, additionally there was an error during migrations: " . $e->getMessage() ." ", 0, 0, 0, 0);
                     $output .= "<b>ROLLBACK FAILED!</b> there was an error during migrations: " . $e->getMessage() . "\n";
                 }
+                $this->migrationSuccessful = false;
             }
 
             // ajax response
@@ -348,9 +345,6 @@ namespace YAWK
                 sys::setSyslog($db, 56, 2, "No migrations were executed. Output is empty. output was not filled with any value during runMigrations(). (this is not possible?!)", 0, 0, 0, 0);
                 echo "No migrations were executed. Output is empty.";
             }
-
-            // close database connection
-            $db->close();
         }
 
 
@@ -501,6 +495,9 @@ namespace YAWK
             }
             // return xhr response
             echo $response;
+
+            // close database connection
+            $db->close();
         }
 
         /**
