@@ -150,6 +150,13 @@ namespace YAWK
         }
 
 
+        /**
+         * @brief record migration in database
+         * @details will be called from runMigrations() if migration was successful
+         * @param $db
+         * @param $successfulMigrations
+         * @return void
+         */
         public function recordMigration($db, $successfulMigrations): void
         {
             $output = '';
