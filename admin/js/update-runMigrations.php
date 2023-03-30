@@ -29,9 +29,9 @@ if (isset($_POST['currentVersion']) && (isset($_POST['updateVersion'])))
     $update = new update();
     $update->currentVersion = $currentVersion;
     $update->updateVersion = $updateVersion;
-    $update->runMigrations($db);
+    $update->runMigrations($db, $lang);
 }
-else
-{   // error
-    echo "Update Version could not be read!";
-}
+//else
+//{   // error
+//    echo "currentVersion xor updateVersion are not set - check if version numbers are set correctly in html markup on admin/settings-update.php";
+//}
