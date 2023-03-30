@@ -213,6 +213,13 @@ namespace YAWK {
             if ($setup = parse_ini_file($this->configFile, FALSE))
             {   // get the yawk version
                 $this->yawkVersion = $setup['VERSION']; // used in the footer
+                if (is_file('system/update/system.ini'))
+                {
+                    if ($system = parse_ini_file('system/update/system.ini', FALSE))
+                    {   // get the yawk version
+                        $this->yawkVersion = $system['currentVersion'];
+                    }
+                }
                 // if INSTALL is set to true
                 if ($setup['INSTALL'] === "true")
                 {   // if no step variable is set, setup run for the first time
@@ -520,6 +527,12 @@ namespace YAWK {
                         if ($status = $db->import($this->sqlFile, $lang))
                         {   // delete filepointer, because it is not needed anymore
                             unlink($this->filePointer);
+
+                            // write current version into db
+                            if (!empty($this->yawkVersion)){
+                                \YAWK\settings::setSetting($db, "yawkversion", $this->yawkVersion, $lang);
+                            }
+
                             \YAWK\alert::draw("success", "$lang[DB_IMPORT]", "$lang[DB_IMPORT_OK]", "", 2000);
 
                             // setup indicator will be used to check if setup was already done until this step
