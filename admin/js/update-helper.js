@@ -8,6 +8,7 @@ $(document).ready(function() {  // wait until document is ready
     var updateBtn = $("#checkForUpdatesBtn");
     var readFilebaseNode = $("#readFilebaseNode");
     let installedVersion = $('#installedVersion').text(); // the current installed version of YAWK
+    var currentVersion = ''; // current version of YAWK (filled with api call from update.yawk.io)
     var updateVersion = ''; // latest version of YAWK (filled with api call from update.yawk.io)
     var statusBarNode = $("#statusBarNode"); // status bar node
     var extendedInfoNode = $("#extendedInfoNode"); // displays more info about update
@@ -144,7 +145,7 @@ $(document).ready(function() {  // wait until document is ready
                                 successMsg = '<h3 class="text-primary animated fadeIn"><b><i class="fa fa-globe animated bounce slow"></i></b> &nbsp;' + updateAvailable + '<br><small>'+updateAvailableSubtext+'</small></h3>';
                                 statusBarNode.html(successMsg).fadeIn(1000);
 
-                                let extendedInfo = '<ul class="animated fadeIn slow delay-2s"><li><span class="text-primary"><b>' + latestAvailableVersion + '</b> build <b>' + '<div id="updateVersion">'+updateVersion+'</div></b></span></li><li>' + updateCurrentInstalledVersion + ' build <b class="text-muted">' + installedVersion + '</b></li>' +  '<li>'+updateChanges+': <b>'+ buildMessage + '</b></li>'+githubRelatedIssues+githubRelatedMilestone+'<li>'+released+': ' + buildTime + '</li></ul>';
+                                let extendedInfo = '<ul class="animated fadeIn slow delay-2s"><li><span class="text-primary"><b>' + latestAvailableVersion + '</b> build <b>' + '<span id="updateVersion">'+updateVersion+'</span></b></span></li><li>' + updateCurrentInstalledVersion + ' build <b class="text-muted">' + '<span id="currentVersion">'+installedVersion + '</span></b></li>' +  '<li>'+updateChanges+': <b>'+ buildMessage + '</b></li>'+githubRelatedIssues+githubRelatedMilestone+'<li>'+released+': ' + buildTime + '</li></ul>';
                                 extendedInfoNode.html(extendedInfo).fadeIn(1000);
                                 console.log(statusBarMessage);
 
@@ -260,13 +261,15 @@ $(document).ready(function() {  // wait until document is ready
     function runMigrations(){
         console.log('called runMigrations()');
         var runMigrationsNode = $("#fetchUpdateNode");
+        var currentVersion = $("#currentVersion").text();
         var updateVersion = $("#updateVersion").text();
 
         $.ajax({
             type: 'POST',
             url: 'js/update-runMigrations.php',
             data: {
-                updateVersion: updateVersion
+                updateVersion: updateVersion,
+                currentVersion: currentVersion
             },
             success: function (response)
             {   // update view with response
