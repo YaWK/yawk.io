@@ -754,7 +754,11 @@ INSERT INTO `cms_syslog_categories` (`id`, `active`, `property`, `icon`, `type`,
 (49, 1, 'backup-info', 'fa fa-hdd-o', 'text-default', 1),
 (50, 1, 'backup-success', 'fa fa-hdd-o', 'text-success', 1),
 (51, 1, 'backup-warning', 'fa fa-hdd-o', 'text-default', 1),
-(52, 1, 'backup-error', 'fa fa-hdd-o', 'text-default', 1);
+(52, 1, 'backup-error', 'fa fa-hdd-o', 'text-default', 1),
+(53, 1, 'update-info', 'fa fa-hdd-o', 'text-default', 1),
+(54, 1, 'update-success', 'fa fa-hdd-o', 'text-default', 1),
+(55, 1, 'update-warning', 'fa fa-hdd-o', 'text-default', 1),
+(56, 1, 'update-error', 'fa fa-hdd-o', 'text-default', 1);
 
 CREATE TABLE `cms_templates` (
 `id` int(11) NOT NULL,
@@ -2689,7 +2693,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 ALTER TABLE `cms_syslog`
 MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_syslog_categories`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 ALTER TABLE `cms_templates`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_template_settings`
