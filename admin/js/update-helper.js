@@ -192,7 +192,7 @@ $(document).ready(function() {  // wait until document is ready
                 else    // no update available
                 {   // update status bar message and updateBtn text
                     statusBarMessage = updateNotAvailable + ' (' + installedVersion + ') ' + updateNotAvailableSubtext;
-                    errorMsg = '<span class="text-success animated fadeIn slow"><i class="fa fa-check-circle-o"></i> &nbsp;' + statusBarMessage + '</span>';
+                    errorMsg = '<h3 class="text-success animated fadeIn slow"><i class="fa fa-check-circle-o"></i> &nbsp;' + statusBarMessage + '</h3>';
                     statusBarNode.html(errorMsg).fadeIn(1000);
                     $(updateBtn).removeClass().addClass('btn btn-default pull-right disabled animated fadeIn slow').html("<i class=\"fa fa-check-circle-o\"></i> &nbsp;" + updateNoUpdate);
                     console.log(statusBarMessage);

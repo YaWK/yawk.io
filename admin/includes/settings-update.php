@@ -87,7 +87,7 @@ echo"<ol class=\"breadcrumb\">
 <div class="col-md-6">
     <div class="box box-default">
         <div class="box-header with-border">
-            <?php echo '<h3 class="box-title">Filebase <small>of the latest YaWK release </small> '.\YAWK\backend::printTooltip($lang['UPDATE_INTEGRITY_TT']).'</h3>'; ?>
+            <?php echo '<h3 class="box-title">Update <small>status information </small> '.\YAWK\backend::printTooltip($lang['UPDATE_INTEGRITY_TT']).'</h3>'; ?>
         </div>
         <div class="box-body">
             <div id="fetchUpdateNode"></div>
