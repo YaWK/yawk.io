@@ -1832,6 +1832,18 @@ namespace YAWK {
         }
 
         /**
+         * @brief log message to debug_log.txt
+         * @details this function is used to log any given messages to debug_log.txt
+         * @param $message
+         * @return void
+         */
+        public function logMessage($message) {
+            $logfile = 'debug_log.txt';
+            $timestamp = date('Y-m-d H:i:s');
+            file_put_contents($logfile, "[$timestamp] $message\n", FILE_APPEND);
+        }
+
+        /**
          * @brief set a syslog entry to database
          * @param object $db database
          * @param int    $log_category log category
