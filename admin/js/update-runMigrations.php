@@ -20,13 +20,16 @@ if (!isset($lang))
 }
 
 // prepare vars
-if (isset($_POST['updateVersion'])) {
+if (isset($_POST['currentVersion']) && (isset($_POST['updateVersion'])))
+{
+    $currentVersion = $_POST['currentVersion'];
     $updateVersion = $_POST['updateVersion'];
 
     // generate new update object
     $update = new update();
+    $update->currentVersion = $currentVersion;
     $update->updateVersion = $updateVersion;
-    $update->runMigrations($db, $updateVersion, $lang);
+    $update->runMigrations($db);
 }
 else
 {   // error
