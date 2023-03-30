@@ -275,8 +275,7 @@ $(document).ready(function() {  // wait until document is ready
             {   // update view with response
                 $(runMigrationsNode).html(response).fadeIn(1000);
                 console.log("runMigrations() response: ", response);
-                // ok, done with migrations, now fetch files
-                // fetchFiles();
+
             },
             error: function (response)
             {   // on error..
@@ -284,6 +283,9 @@ $(document).ready(function() {  // wait until document is ready
                 console.error('runMigrations() ERROR: ', response);
             },
         });
+
+        // ok, done with migrations, now fetch files
+        fetchFiles();
     }
 
 
