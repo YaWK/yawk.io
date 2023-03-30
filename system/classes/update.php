@@ -1,5 +1,9 @@
 <?php
-namespace YAWK {
+namespace YAWK
+{
+    use YAWK\db;
+    use YAWK\sys;
+    require_once 'sys.php';
     /**
      * @details YaWK System Updater Class
      *
@@ -29,7 +33,12 @@ namespace YAWK {
         public string $updateFile = 'update.ini';
 
         /**
-         * @var string $updateVersion contains the version of current update (eg. 23.0.0)
+         * @var string $currentVersion contains the current installed version (eg. 23.0.0)
+         */
+        public string $currentVersion = '';
+
+        /**
+         * @var string $updateVersion contains the version of current update (eg. 23.1.2)
          */
         public string $updateVersion = '';
 
@@ -79,6 +88,7 @@ namespace YAWK {
             {   // todo: syslog entry
                 echo "Update server $this->updateServer not reachable. Update not possible at the moment - please try again later.<br>";
             }
+
         }
 
         /**
@@ -135,17 +145,64 @@ namespace YAWK {
             return false;
         }
 
+        public function logMessage($message) {
+            $logfile = 'debug_log.txt';
+            $timestamp = date('Y-m-d H:i:s');
+            file_put_contents($logfile, "[$timestamp] $message\n", FILE_APPEND);
+        }
+
+        public function recordMigration($db, $successfulMigrations): void
+        {
+            $output = '';
+
+            // check if migrations array is set and got at least 1 entry
+            if (is_array($successfulMigrations) && (count($successfulMigrations) > 0))
+            {   // loop through all migrations
+                foreach ($successfulMigrations as $migrationVersion) {
+                    // record migration
+                    if (!$db->query("INSERT INTO {migrations} (`version`, `executed_at`) VALUES ('$migrationVersion', NOW())"))
+                    {   // error recording migration
+                        sys::setSyslog($db, 53, 0, "Error recording migration for version $migrationVersion: " . $db->error . " ", 0, 0, 0, 0);
+                        $output .= "Error recording migration for version $migrationVersion: " . $db->error . "<br>";
+                    }
+                    else
+                    {   // migration recorded successfully
+                        sys::setSyslog($db, 53, 0, "Migration record for version $migrationVersion successful.", 0, 0, 0, 0);
+                        $output .= "Migration for version $migrationVersion executed successfully.<br>";
+                    }
+                }
+            }
+            else
+            {   // no migrations to record
+                sys::setSyslog($db, 54, 0, "No Migrations to record. Is there a logical error?", 0, 0, 0, 0);
+                $output .= "No migrations to record.<br>";
+            }
+            echo $output;
+        }
+
+
         /**
          * @brief Run the migration SQL files
          * @details If update.ini contains migration files between the current version and the update version, this function will be called
          * @param $db object the database object
          * @return bool true|false if migrations were successful or not
          */
-        function runMigrations($db): void
-        {   /** @param $db db */
+        function runMigrations(object $db): void
+        {
+            require_once 'sys.php';
+            /** @param $db db */
+            ini_set('display_errors', 1);
+            error_reporting(E_ALL);
 
-            // init ajax response
+            // init variables
             $output = '';
+            $totalMigration = 0;
+            $successfulMigrations = 0;
+            $failedMigrations = 0;
+            $successfulMigrationVersions = array();
+
+            // log start of migration
+            sys::setSyslog($db, 56, 0, "runMigrations initialized. Updating from $this->currentVersion to $this->updateVersion", 0, 0, 0, 0);
 
             // run migrations
             try
@@ -153,12 +210,9 @@ namespace YAWK {
                 // Start transaction, so we can roll back if something goes wrong
                 $db->beginTransaction();
 
-                // Get current version number from the database
-                $currentVersion = settings::getSetting($db, "yawkversion");
-
                 // Determine which migrations need to be executed
                 $migrationUrlBase = $this->updateServer . 'migration-';
-                $currentVersionParts = explode('.', $currentVersion);
+                $currentVersionParts = explode('.', $this->currentVersion);
                 $updateVersionParts = explode('.', $this->updateVersion);
                 // Start at the next minor version after the current version
                 $startIndex = (int)$currentVersionParts[2] + 1;
@@ -167,77 +221,136 @@ namespace YAWK {
 
                 // Loop through the migration files
                 for ($i = $startIndex; $i <= $endIndex; $i++)
-                {   // build migration version
+                {
+                    $totalMigration++;
+                    // build migration version
                     $migrationVersion = $currentVersionParts[0] . '.' . $currentVersionParts[1] . '.' . $i;
                     // build migration filename
                     $migrationUrl = $migrationUrlBase . $migrationVersion . '.sql';
-                    // Fetch the migration file
-                    $migrationSql = file_get_contents($migrationUrl);
+
+                    // check if migration was already executed
+                    $migrationRecord = $db->query("SELECT version FROM {migrations} WHERE version = '$migrationVersion'")->fetch_assoc();
+
+                    // check if migration was already executed
+                    if ($migrationRecord !== null)
+                    {   // migration was already executed
+                        $output .= "Migration for build $migrationVersion was already executed.<br>";
+                        sys::setSyslog($db, 53, 1, "Migration for build $migrationVersion was already executed.", 0, 0, 0, 0);
+                        $failedMigrations++;
+                        continue;
+                    }
+                    else {
+                        // migration was not executed yet
+                        // $output .= "Migration for build $migrationVersion was not executed yet. fetching file: $migrationUrl<br>";
+                        // Fetch the migration file
+                        $migrationSql = @file_get_contents($migrationUrl);
+                    }
+
                     // Check if the migration file was fetched successfully
                     if ($migrationSql === false)
                     {   // Unable to fetch migration file
-                        $output .= "Migration file for $migrationVersion not found: $migrationUrl<br>";
+                        $output .= "No migration required for build $migrationVersion<br>";
+                        sys::setSyslog($db, 53, 0, "No migration required for build $migrationVersion", 0, 0, 0, 0);
+                        $failedMigrations++;
                         continue;
                     }
                     else
                     {   // Fetched migration file successfully
-                        $output .= "Fetched migration file from $migrationUrl<br>";
+                        $output .= "<span style=\"text-success\"><b>Fetched migration file</b> from $migrationUrl</span><br>";
+                        sys::setSyslog($db, 54, 0, "<b>Fetched migration file</b> from $migrationUrl", 0, 0, 0, 0);
+                        $successfulMigrations++;
+                        $successfulMigrationVersions[] = $migrationVersion;
                     }
 
-                    // Execute the migration SQL
-                    if ($db->multi_query($migrationSql))
-                    {   // Record the successful migration
-                        $insertMigration = $db->prepare("INSERT INTO {migrations} (`version`, `executed_at`) VALUES ('$this->updateVersion', NOW())");
-                        $insertMigration->bind_param('s', $migrationVersion);
+                    // todo: add accordion, default closed
+                    $output .= "Multi-query SQL: " . $migrationSql . "<br>";
 
-                        // execute update migration
-                        if ($insertMigration->execute())
-                        {   // migration executed successfully
-                            // todo: syslog entry
-                            $output .= "Migration for version $migrationVersion executed successfully.<br>";
+                    // explode the migration file into individual queries (array)
+                    $sqlStatements = explode(';', $migrationSql);
+                    // to keep track of the statement number
+                    $statementCounter = 0;
+                    // loop through all sql queries of current migration file
+                    foreach ($sqlStatements as $sqlStatement)
+                    {   // increment statement counter
+                        $statementCounter++;
+                        // trim the sql statement
+                        $sqlStatement = trim($sqlStatement);
+                        // check if sql statement is not empty
+                        if (!empty($sqlStatement))
+                        {   // execute the sql statement
+                            if (!$db->query($sqlStatement))
+                            {   // migration failed
+                                $output .= "$migrationVersion <b>Error executing migration</b> statement #$statementCounter" . $db->error . "<br>";
+                                sys::setSyslog($db, 56, 2, "Error executing migration statement #$statementCounter for version (query failed) $migrationVersion: " . $db->error . " ", 0, 0, 0, 0);
+                                $db->rollback(); // Rollback the transaction
+                                return;
+                            }
+                            else
+                            {   // migration successful
+                                $output .= "<span style=\"text-success\">$migrationVersion <b>Executed migration</b> statement #$statementCounter</span><br>";
+                                sys::setSyslog($db, 53, 0, "executed migration statement #$statementCounter : $migrationUrlBase$migrationVersion.sql ", 0, 0, 0, 0);
+                            }
                         }
-                        else
-                        {   // migration failed
-                            // todo: syslog entry
-                            $output .= "Error recording migration for version $migrationVersion: " . $insertMigration->error . "<br>";
-                            $db->rollback(); // Rollback the transaction
-                            return;
-                        }
-                        // close insert migration connection
-                        $insertMigration->close();
                     }
-                    else
-                    {   // migration failed
-                        // todo: syslog entry
-                        $output .= "Error executing migration for version $migrationVersion: " . $db->error . "<br>";
-                        $db->rollback(); // Rollback the transaction
-                        return;
-                    }
-                }
+
+//                    // MULTI QUERY INSTEAD OF SINGLE QUERIES
+//                    // Execute the migration SQL
+//                    if ($db->multi_query($migrationSql))
+//                    {
+//                        // Clear any active results sets before moving to the next query
+//                        $db->clearResults();
+//                        $output .= "<span style=\"text-success\"><b>Executed migration</b> for version $migrationVersion</span><br>";
+//                        sys::setSyslog($db, 53, 0, "init multi_query for $migrationUrlBase$migrationVersion.sql ", 0, 0, 0, 0);
+//                    }
+//                    else
+//                    {
+//                        // migration failed
+//                        $output .= "<b>Error executing migration for version</b> $migrationVersion: " . $db->error . "<br>";
+//                        sys::setSyslog($db, 56, 2, "Error executing migration for version (multi_query failed) $migrationVersion: " . $db->error . " ", 0, 0, 0, 0);
+//                        $db->rollback(); // Rollback the transaction
+//                        return;
+//                    }
+                } // end loop through migration files
+
                 // Commit the transaction if all migrations executed successfully
                 $db->commit();
-                $output .= "All migrations executed successfully.\n";
+                sys::setSyslog($db, 54, 0, "<b>Committed transaction</b> all migrations excecuted succcessfully!", 0, 0, 0, 0);
+
+                // if there was at least one successful migration
+                if ($successfulMigrations > 0)
+                {   // store migration version in database
+                    $this->recordMigration($db, $successfulMigrationVersions);
+                }
+
+                // all migrations executed successfully
+                $output .= "<h3 class=\"text-success\">All migrations executed successfully.</h3>";
                 $migrationsSuccessful = true;
             }
-            // migration failed
             catch (\Exception $e)
-            {   // An exception was thrown, so rollback the transaction
-                $db->rollback(); // Rollback the transaction if an exception is thrown
-                $output .= "Rolled back transaction because there was en error executing migrations: " . $e->getMessage() . "\n";
+            {   // An exception was thrown, rollback the transaction
+                if ($db->rollback() === true){
+                    sys::setSyslog($db, 56, 2, "<b>Rolled back transaction</b> because there was an error executing migrations: " . $e->getMessage() ." ", 0, 0, 0, 0);
+                    $output .= "<b>Rolled back transaction</b> because there was an error executing migrations: " . $e->getMessage() . "\n";
+                }
+                else {
+                    sys::setSyslog($db, 56, 2, "<b>Rollback FAILED!</b>, additionally there was an error during migrations: " . $e->getMessage() ." ", 0, 0, 0, 0);
+                    $output .= "<b>ROLLBACK FAILED!</b> there was an error during migrations: " . $e->getMessage() . "\n";
+                }
             }
 
             // ajax response
             if (!empty($output))
-            {
-                // will be returned to ajax request
+            {   // will be returned to ajax request
                 echo $output;
-                // close database connection
-                $db->close();
             }
             else
-            {   // something else went wrong during processing - there is no error or success message which is unlikely.
-                echo "Error: Something went wrong during processing. No error or success message generated during migration process which is very unlikely.";
+            {
+                sys::setSyslog($db, 56, 2, "No migrations were executed. Output is empty. output was not filled with any value during runMigrations(). (this is not possible?!)", 0, 0, 0, 0);
+                echo "No migrations were executed. Output is empty.";
             }
+
+            // close database connection
+            $db->close();
         }
 
 
