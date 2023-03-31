@@ -45,7 +45,7 @@ namespace YAWK
         /**
          * @var string $localUpdateSystemPath the path to the local update system folder (eg. system/update/)
          */
-        public string $localUpdateSystemPath = '/system/update/';
+        public string $localUpdateSystemPath = 'system/update/';
 
         /**
          * @var string $updateFilebase  the name of the remote filebase file (eg. filebase.ini)
