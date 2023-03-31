@@ -34,11 +34,11 @@ $yawkversion = \YAWK\settings::getSetting($db, "yawkversion");
 if ($yawkversion == $updateVersion)
 {   // fast-forward successful
     \YAWK\sys::setSyslog($db, 54, 0, "fast-forward update to version ".$update->updateVersion." successful", 0, 0, 0, 0);
-    echo "<h3 class=\"text-success\">Update fast-forward to version ".$update->updateVersion." successful</h3>";
+    echo "<h3 class=\"text-success\">Update fast-forward to version ".$updateVersion." successful</h3>";
 }
 else
 {   // fast-forward failed
     \YAWK\sys::setSyslog($db, 55, 2, "fast-forward to version ".$update->updateVersion." failed", 0, 0, 0, 0);
-    echo "<h3 class=\"text-danger\">fast-forward update to version ".$update->updateVersion." failed</h3>";
+    echo "<h3 class=\"text-danger\">fast-forward update to version ".$updateVersion." failed</h3>";
 }
 
