@@ -260,7 +260,7 @@ $(document).ready(function() {  // wait until document is ready
      */
     function runMigrations(){
         console.log('called runMigrations()');
-        var runMigrationsNode = $("#fetchUpdateNode");
+        var runMigrationsNode = $("#runMigrationsNode");
         var currentVersion = $("#currentVersion").text();
         var updateVersion = $("#updateVersion").text();
 
