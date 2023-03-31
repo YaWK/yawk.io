@@ -306,7 +306,7 @@ UNIQUE KEY `version` (`version`)
 
 CREATE TABLE `cms_newsletter` (
 `id` int(11) NOT NULL,
-`date_created` datetime DEFAULT NULL,
+`date_created` datetime DEFAULT CURRENT_TIMESTAMP,
 `name` varchar(255) NOT NULL,
 `email` varchar(255) NOT NULL,
 `active` int(1) NOT NULL DEFAULT '1'
