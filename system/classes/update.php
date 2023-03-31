@@ -245,7 +245,7 @@ namespace YAWK
                     }
                     else {
                         // migration was not executed yet
-                        $output .= "Migration for build $migrationVersion was not executed yet. fetching file: $migrationUrl<br>";
+                        $output .= "Migration for build $migrationVersion was not executed yet.<br>";
                         // Fetch the migration file
                         $migrationSql = @file_get_contents($migrationUrl);
                     }
@@ -388,7 +388,8 @@ namespace YAWK
                 $this->updateFiles = parse_ini_file($basedir.$this->localUpdateSystemPath . $this->updateFilesFile);
                 if (count($this->updateFiles) < 1)
                 {   // unable to read updateFiles.ini from local update folder
-                    $response .= "Error: Unable to read updateFiles.ini from local update folder. Check if this file exists: " . $basedir.$this->localUpdateSystemPath . $this->updateFilesFile;
+                    $response .= "<span class=\"text-warning\"><p>Error: No entries to process in updateFiles.ini This can happen, if all of your files have the same hash value as the update files, but version number differs. <b>You may want to fast forward this update to latest Version.</b> But think, before you click and use the backup feature before!</p>
+                                  <a href=\"#fastForwardUpdate\" id=\"fastForwardUpdateBtn\" class=\"btn btn-warning\">Fast Forward to latest Version >></a></span><br>";
                 }
                 else
                 {   // count elements of updateFiles array

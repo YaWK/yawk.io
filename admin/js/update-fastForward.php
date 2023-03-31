@@ -1,0 +1,43 @@
+<?php
+use YAWK\db;
+use YAWK\update;
+include '../../system/classes/db.php';
+include '../../system/classes/language.php';
+include '../../system/classes/settings.php';
+include '../../system/classes/update.php';
+include '../../system/classes/sys.php';
+/* set database object */
+if (!isset($db))
+{   // create new db object
+    $db = new db();
+}
+if (!isset($lang))
+{   // create new language object
+    $language = new YAWK\language();
+    // init language
+    $language->init($db, "backend");
+    // convert object param to array !important
+    $lang = (array) $language->lang;
+}
+
+
+// generate new update object
+$update = new update();
+// get latest update version from server
+$updateSettings[] = $update->getUpdateSettings();
+// fast-forward to current version
+\YAWK\settings::setSetting($db, "yawkversion", $update->updateVersion, $lang);
+
+// get yawkversion from settings and check, if it is the same as the update version
+$yawkversion = \YAWK\settings::getSetting($db, "yawkversion");
+if ($yawkversion == $update->updateVersion)
+{   // fast-forward successful
+    \YAWK\sys::setSyslog($db, 54, 0, "fast-forward update to version ".$update->updateVersion." successful", 0, 0, 0, 0);
+    echo "<h3 class=\"text-success\">Update fast-forward to version ".$update->updateVersion." successful</h3>";
+}
+else
+{   // fast-forward failed
+    \YAWK\sys::setSyslog($db, 55, 2, "fast-forward to version ".$update->updateVersion." failed", 0, 0, 0, 0);
+    echo "<h3 class=\"text-danger\">fast-forward update to version ".$update->updateVersion." failed</h3>";
+}
+
