@@ -296,7 +296,7 @@ namespace YAWK
                             }
                         }
                     }
-//                    // MULTI QUERY INSTEAD OF SINGLE QUERIES
+//                    // MULTI QUERY INSTEAD OF SINGLE QUERIES - can be deleted after update feature is tested and done.
 //                    // Execute the migration SQL
 //                    if ($db->multi_query($migrationSql))
 //                    {
