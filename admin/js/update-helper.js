@@ -6,7 +6,6 @@
 $(document).ready(function() {  // wait until document is ready
     // get button and nodes
     var updateBtn = $("#checkForUpdatesBtn");
-    var fastForwardBtn = $("#fastForwardUpdateBtn");
     var readFilebaseNode = $("#readFilebaseNode");
     let installedVersion = $('#installedVersion').text(); // the current installed version of YAWK
     var currentVersion = ''; // current version of YAWK (filled with api call from update.yawk.io)
@@ -19,27 +18,28 @@ $(document).ready(function() {  // wait until document is ready
     let lang = $('#checkForUpdatesBtn');
     let updateCheck = lang.attr('data-UPDATE_CHECK');
 
-    // if user click on fast forward button
-    $(fastForwardBtn).click(function() {
-        // console.log('Fast forward button clicked');
-        console.log('Fast forward button clicked');
-        // ajax to fast-forward to the latest version number
-        $.ajax({   // ajax call to update.php
-            url: 'js/update-fastForward.php',
-            type: 'POST',
-            data: {fastForward: true},
-            success: function (data) {
-                console.log('Fast forward to latest version successful');
-                console.log(data);
-                // reload page
-                location.reload();
-            },
-            error: function (data) {
-                console.log('Fast forward to latest version failed');
-                console.log(data);
-            }
+    function fastForwardVersionNumber(fastForwardBtn) {
+        // if user click on fast forward button
+        $(fastForwardBtn).click(function () {
+            // console.log('Fast forward button clicked');
+            console.log('Fast forward button clicked');
+            // ajax to fast-forward to the latest version number
+            $.ajax({   // ajax call to update.php
+                url: 'js/update-fastForward.php',
+                type: 'POST',
+                data: {fastForward: true},
+                success: function (data) {
+                    console.log('Fast forward to latest version successful');
+                    console.log(data);
+                    // reload page
+                },
+                error: function (data) {
+                    console.log('Fast forward to latest version failed');
+                    console.log(data);
+                }
+            });
         });
-    });
+    }
 
     /* UPDATE BTN CLICK */
     // if update button is clicked
@@ -332,6 +332,11 @@ $(document).ready(function() {  // wait until document is ready
                 // update view with response
                 console.log("fetchUpdate() response: " + response);
                 $(fetchUpdateNode).append(response).fadeIn(1000);
+
+                var fastForwardBtn = $("#fastForwardUpdateBtn");
+                if (fastForwardBtn){
+                    fastForwardVersionNumber(fastForwardBtn);
+                }
             },
             error: function (response) { // on error..
                 console.log('fetchUpdate() ERROR: ' +response);
