@@ -362,12 +362,13 @@ namespace YAWK
          * @param $updateVersion string update version
          * @param $lang array language array
          */
-        public function fetchFiles(object $db, string $updateVersion, array $lang): void
+        public function fetchFiles(object $db, string $currentVersion, string $updateVersion, array $lang): void
         {
             // init updateSucceed flag, will be set to true if update was successful
             $updateSucceed = false;
 
             // set update version
+            $this->currentVersion = $currentVersion;
             $this->updateVersion = $updateVersion;
 
             // override $this->updateServer with GitHub url

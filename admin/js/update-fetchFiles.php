@@ -20,13 +20,13 @@ if (!isset($lang))
 }
 
 // prepare vars
-if (isset($_POST['updateVersion'])) {
+if (isset($_POST['updateVersion']) && (isset($_POST['currentVersion']))) {
     $updateVersion = $_POST['updateVersion'];
+    $currentVersion = $_POST['currentVersion'];
 
     // generate new update object
     $update = new update();
-    $update->updateVersion = $updateVersion;
-    $update->fetchFiles($db, $updateVersion, $lang);
+    $update->fetchFiles($db, $currentVersion, $updateVersion, $lang);
 }
 else
 {   // error
