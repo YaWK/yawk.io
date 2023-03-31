@@ -33,7 +33,7 @@ echo "
 echo backend::getTitle($lang['UPDATE'], $lang['UPDATE_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
         <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
-        <li class=\"active\"><a href=\"index.php?page=update\" title=\"".$lang['UPDATE']."\"><i class=\"fa fa-code-fork\"></i>  ".$lang['UPDATE']."</a></li>
+        <li class=\"active\"><a href=\"index.php?page=settings-update\" title=\"".$lang['UPDATE']."\"><i class=\"fa fa-code-fork\"></i>  ".$lang['UPDATE']."</a></li>
      </ol>
     </section>
     <!-- Main content -->
