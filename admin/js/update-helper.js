@@ -38,7 +38,7 @@ $(document).ready(function() {  // wait until document is ready
                     // reload page
                     setTimeout(function () {
                         location.reload();
-                    }, 1200);
+                    }, 2200);
                 },
                 error: function (data) {
                     console.log('Fast forward to latest version failed');
