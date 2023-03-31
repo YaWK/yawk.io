@@ -5,7 +5,6 @@ include '../../system/classes/db.php';
 include '../../system/classes/language.php';
 include '../../system/classes/settings.php';
 include '../../system/classes/update.php';
-include '../../system/classes/sys.php';
 /* set database object */
 if (!isset($db))
 {   // create new db object
@@ -23,14 +22,16 @@ if (!isset($lang))
 
 // generate new update object
 $update = new update();
-// get latest update version from server
-$updateSettings[] = $update->getUpdateSettings();
-// fast-forward to current version
-\YAWK\settings::setSetting($db, "yawkversion", $update->updateVersion, $lang);
-
+$updateVersion = '';
+if (isset($_POST['updateVersion']))
+{   // get update version from post xhr
+    $updateVersion = $_POST['updateVersion'];
+    // fast-forward to current version
+    \YAWK\settings::setSetting($db, "yawkversion", $updateVersion, $lang);
+}
 // get yawkversion from settings and check, if it is the same as the update version
 $yawkversion = \YAWK\settings::getSetting($db, "yawkversion");
-if ($yawkversion == $update->updateVersion)
+if ($yawkversion == $updateVersion)
 {   // fast-forward successful
     \YAWK\sys::setSyslog($db, 54, 0, "fast-forward update to version ".$update->updateVersion." successful", 0, 0, 0, 0);
     echo "<h3 class=\"text-success\">Update fast-forward to version ".$update->updateVersion." successful</h3>";

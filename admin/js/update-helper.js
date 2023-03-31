@@ -19,15 +19,17 @@ $(document).ready(function() {  // wait until document is ready
     let updateCheck = lang.attr('data-UPDATE_CHECK');
 
     function fastForwardVersionNumber(fastForwardBtn) {
-        // if user click on fast forward button
-        $(fastForwardBtn).click(function () {
-            // console.log('Fast forward button clicked');
+
+        // if user click on fast-forward button
+        $(fastForwardBtn).click(function ()
+        {
+            var updateVersion = $("#updateVersion").text();
             console.log('Fast forward button clicked');
             // ajax to fast-forward to the latest version number
-            $.ajax({   // ajax call to update.php
+            $.ajax({   // ajax call
                 url: 'js/update-fastForward.php',
                 type: 'POST',
-                data: {fastForward: true},
+                data: {fastForward: true, updateVersion: updateVersion },
                 success: function (data) {
                     console.log('Fast forward to latest version successful');
                     console.log(data);
