@@ -33,6 +33,8 @@ $(document).ready(function() {  // wait until document is ready
                 success: function (data) {
                     console.log('Fast forward to latest version successful');
                     console.log(data);
+                    $(fastForwardBtn).removeClass().addClass('btn btn-success disabled animated fadeIn slow').html("<i class=\"fa fa-refresh fa-spin\"></i> &nbsp; fast-forwarding...");
+
                     // reload page
                     setTimeout(function () {
                         location.reload();
@@ -197,7 +199,7 @@ $(document).ready(function() {  // wait until document is ready
                                 var getFilebaseBtn = $("#getFilebaseBtn");
                                 $(getFilebaseBtn).click(function() {
                                     console.log('install update button clicked, read local filebase and store to ini file');
-                                    getFilebaseBtn.html("<i class=\"fa fa-refresh fa-spin\"></i> &nbsp;&nbsp;" + verifyingFiles);
+                                    getFilebaseBtn.removeClass().addClass('btn btn-primary pull-right disabled').html("<i class=\"fa fa-refresh fa-spin\"></i> &nbsp;&nbsp;" + verifyingFiles);
                                     // this function will read the local filebase from your installation and store it to a filebase.ini file
                                     // Call both functions and wait for them to complete
                                     Promise.all([generateLocalFileBase(updateInstall)])
