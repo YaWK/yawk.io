@@ -306,7 +306,7 @@ $(document).ready(function() {  // wait until document is ready
             success: function (response) { // fileBase checked successfully
                 // update view with response
                 console.log("fetchUpdate() response: " + response);
-                $(fetchUpdateNode).html(response).fadeIn(1000);
+                $(fetchUpdateNode).append(response).fadeIn(1000);
             },
             error: function (response) { // on error..
                 console.log('fetchUpdate() ERROR: ' +response);
