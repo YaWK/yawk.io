@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     // try to successfully connect to the database
     try {
         // Create a new mysqli object with given database credentials
-        $db = new mysqli($host, $username, $password, $dbname, $port);
+        $db = new \mysqli($host, $username, $password, $dbname, $port);
         $response = array('success' => true,
             'message' => ''.$_POST['DB_CHECK_TO'].' '.$dbname.' @ '.$host.' '.$_POST['DB_CHECK_EST'].'.',
             'subline' => $_POST['DB_CHECK_DATA'],
