@@ -166,6 +166,7 @@ namespace YAWK {
                 echo "<script>disableButtons(60000);</script>";
                 return false;
             }
+
             $user = new \YAWK\user($db);
             if(!empty($_POST['user']) && (!empty($_POST['password'])))
             {   // check if user is allowed to login

@@ -1819,6 +1819,12 @@ namespace YAWK {
             $this->username = $db->quote(trim($username));
             // datum + login count aktualisieren
             $date_now = date("Y-m-d G:i:s");
+
+            // Implement rate limiting
+            $maxAttempts = 5;
+            $lockoutTime = 30; // In minutes
+
+
             if ($this->checkPassword($db, $this->username, $password)) {
                 /* select and add login_count */
                 $res = $db->query("SELECT id, login_count, gid FROM {users} WHERE username='" . $username . "'");
@@ -1867,6 +1873,10 @@ namespace YAWK {
                 else
                 {
                     $_SESSION['failed']++;
+                    // If max attempts reached, set lockout time
+                    if ($_SESSION['failed'] >= $maxAttempts) {
+                        $_SESSION['lockout_until'] = time() + ($lockoutTime * 60);
+                    }
 
                     echo "<script>
                             function disableButtons(delay) 
@@ -1914,14 +1924,15 @@ namespace YAWK {
                     $this->storeLogin($db, 0, "backend", $username, $password);
 
 
-                    if ($_SESSION['failed'] == 2){
+                    if ($_SESSION['failed'] == 3){
                     \YAWK\alert::draw("warning", "ATTENTION!", "This is the 3rd failed login tryout. - <b>The next failed login will be logged for security reasons!</b>","","6800");
                     return false;
                     }
                     else if ($_SESSION['failed'] >= 5)
                     {
+                        $hostname = gethostname();
                         \YAWK\sys::setSyslog($db, 11, 1, "possible brute force attack: <b>$username</b> : $password", $uid, 0, 0, 0);
-                        \YAWK\alert::draw("danger", "DO NOT BRUTE FORCE HERE!", "failed tryouts: $_SESSION[failed]</h3><br><b>You are not allowed to login here. You have been warned.<br>The Admin is informed. Remember: BruteForce Attacks are against the law. <i style=\"text-decoration: underline\"><br><br>All of your actions will be logged and prosecuted.<br><b>The network operation centre was informed.</b></i></b><br><br>Date: $date_now<br>Your IP: $_SERVER[REMOTE_ADDR]<br>Browser: $_SERVER[HTTP_USER_AGENT]</b>","","0");
+                        \YAWK\alert::draw("danger", "DO NOT BRUTE FORCE HERE!", "failed tryouts: $_SESSION[failed]</h3><br><b>You are not allowed to login here. You have been warned.<br>The Admin is informed. Remember: BruteForce Attacks are against the law. <i style=\"text-decoration: underline\"><br><br>All of your actions will be logged and prosecuted. - <b>The network operation centre was informed.</b></i></b><br><br>Date: $date_now<br>Your IP: $_SERVER[REMOTE_ADDR]<br>Browser: $_SERVER[HTTP_USER_AGENT]</b><br>","","0");
                         $domain = \YAWK\settings::getSetting($db, "domain");
                         $to = \YAWK\settings::getSetting($db, "admin_email");
                         $from = "script@".$domain." ";

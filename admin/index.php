@@ -1,4 +1,9 @@
 <?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\sys;
+
 session_start();
 header('Cache-control: private');             // OLD IE (6+) FIX
 error_reporting(E_ALL ^ E_STRICT);         // just for development purpose!!!
@@ -133,7 +138,7 @@ if (!isset($AdminLTE))
         else
         {
             // session username, gid and / or user is is not set - throw alert and draw login box
-            \YAWK\alert::draw("warning", "Warning :", "It seems that you are not logged in correctly. Please try to re-login!","","8000");
+            alert::draw("warning", "Warning :", "It seems that you are not logged in correctly. Please try to re-login!","","8000");
         }
     }
     else
@@ -145,13 +150,39 @@ if (!isset($AdminLTE))
       echo "<body>";
 
         // check if the current user is logged in
-        if (\YAWK\backend::checkLogin($db) === false){
-            // draw login box
-            echo \YAWK\backend::drawLoginBox($db, $lang);
+        if (backend::checkLogin($db) === false)
+        {
+            // USER BAN (client side)
+            // if the user has failed to login more than 5 times, ban them for 60 minutes
+            if (!isset($_SESSION['failed']))
+            {   // prepare session var
+                $_SESSION['failed'] = 0;
+            }
+            if (!isset($_SESSION['lockout_until']))
+            {   // reset lockout time
+                $_SESSION['lockout_until'] = 0;
+            }
+
+            if (isset($_POST['user']) && (!empty($_POST['user']))){
+                $user->currentuser = $_POST['user'];
+            }
+
+            // do not allow login attempts if the user is currently banned
+            if (time() < $_SESSION['lockout_until'])
+            {   // inform the user that he is banned
+                alert::draw("danger", "Access Denied", "You have reached the maximum number of login attempts. You have been banned for 60 minutes.", "", 0);
+                // add syslog entry
+                sys::setSyslog($db, 12, 2, "User ".$user->currentuser." tried to login, but failed. User is banned for 60 minutes.", 0, 0, 0, 0);
+            }
+            else
+            {   // draw login box
+                echo backend::drawLoginBox($db, $lang);
+            }
+
         }
         else {
             // add syslog entry for successful login
-            \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['LOGIN']." ".$lang['SUCCESSFUL'], "index.php", 1200);
+            alert::draw("success", $lang['SUCCESS'], $lang['LOGIN']." ".$lang['SUCCESSFUL'], "index.php", 1200);
         }
 
       // reset password email request
@@ -159,11 +190,11 @@ if (!isset($AdminLTE))
       {   // send reset email
           if ($user::sendResetEmail($db, $_POST['username'], $_POST['email'], $lang) == true)
           {   // email sent
-              \YAWK\alert::draw("success", "$lang[EMAIL_SENT]", "$lang[PLEASE_CHECK_YOUR_INBOX]", "", 2400);
+              alert::draw("success", "$lang[EMAIL_SENT]", "$lang[PLEASE_CHECK_YOUR_INBOX]", "", 2400);
           }
           else
               {   // error: sending reset email failed
-                  \YAWK\alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_FAILED'], "", 3800);
+                  alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_FAILED'], "", 3800);
               }
       }
 
@@ -189,7 +220,7 @@ if (!isset($AdminLTE))
               }
               else
                   {   // ERROR: token does not match with database - throw error
-                      \YAWK\alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_TOKEN_INVALID'], "", 3800);
+                      alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_TOKEN_INVALID'], "", 3800);
                   }
           }
       }
