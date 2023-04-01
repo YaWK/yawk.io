@@ -61,9 +61,6 @@ if (!isset($AdminLTE))
     // html head (html start, js includes asf...)
     echo $AdminLTE->drawHtmlHead();
 
-    // check if the current user is logged in
-    \YAWK\backend::checkLogin($db);
-
     // only show this, if session login is set and true
     if (isset($_SESSION['logged_in']) && ($_SESSION['logged_in'] === true))
     {
@@ -132,18 +129,31 @@ if (!isset($AdminLTE))
             echo $AdminLTE->drawHtmlJSIncludes();
             // html end
             echo $AdminLTE->drawHtmlEnd($db);
+        }
+        else
+        {
+            // session username, gid and / or user is is not set - throw alert and draw login box
+            \YAWK\alert::draw("warning", "Warning :", "It seems that you are not logged in correctly. Please try to re-login!","","8000");
+        }
     }
     else
     {
-        // session username, gid and / or user is is not set - throw alert and draw login box
-        \YAWK\alert::draw("warning", "Warning :", "It seems that you are not logged in correctly. Please try to re-login!","","8000");
-    }
-  }
-  else
-  {
       // user is not logged in - set a basic body markup and display login box
+
+
       // body markup
       echo "<body>";
+
+        // check if the current user is logged in
+        if (\YAWK\backend::checkLogin($db) === false){
+            // draw login box
+            echo \YAWK\backend::drawLoginBox($db, $lang);
+        }
+        else {
+            // add syslog entry for successful login
+            \YAWK\sys::setSyslog($db, 1, 0, "<b>".$_SESSION['user']."</b> login successful", 0, 0, 0, 0);
+            \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['LOGIN']." ".$lang['SUCCESSFUL'], "index.php", 1200);
+        }
 
       // reset password email request
       if (isset($_POST['resetPasswordRequest']) && ($_POST['resetPasswordRequest'] == "true"))
@@ -185,8 +195,9 @@ if (!isset($AdminLTE))
           }
       }
 
-      // draw login box
-      echo \YAWK\backend::drawLoginBox($db, $lang);
+        // draw login box
+       // echo \YAWK\backend::drawLoginBox($db, $lang);
+
       // end section markup
       echo "<br><br></section></div>";
 
@@ -196,6 +207,6 @@ if (!isset($AdminLTE))
       // html output end
       echo $AdminLTE->drawHtmlEnd($db);
       exit;
-  }
+    }
 }
 /* END /admin index controller */

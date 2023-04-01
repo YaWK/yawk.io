@@ -1413,7 +1413,7 @@ namespace YAWK {
             {
                 echo \YAWK\alert::draw("danger", "Error!", "Missing Data. Please fill out the complete form.","",4200);
                 echo \YAWK\PLUGINS\SIGNUP\signup::signUp($db);
-                echo "</div></div><div style=\"background-image: url(media/images/bottom.png); height: 150px;\"></div>";
+                echo "</div></div><!-- <div style=\"background-image: url(media/images/bottom.png); height: 150px;\"></div> -->";
                 exit;
             }
             $date_created = date("Y-m-d G:i:s");
@@ -1562,6 +1562,7 @@ namespace YAWK {
             }
             else
             {
+
                 \YAWK\sys::setSyslog($db, 11, 1, "login failed due wrong credentials from <b>".$username."</b>", 0, 0, 0, 0);
                 // checkPassword failed
                 /* echo "<div class=\"container bg-danger\"><br><h2>Warning! <small>Login failed!</h2>
@@ -1861,15 +1862,33 @@ namespace YAWK {
                 if (!isset($_SESSION['failed']))
                 {
                     $_SESSION['failed'] = 0;
+                    $_SESSION['failed']++;
                 }
                 else
                 {
                     $_SESSION['failed']++;
-                }
-                echo "<script>
-                            // RE-LOGIN TIMER
+
+                    echo "<script>
+                            function disableButtons(delay) 
+                            {
+                                // Disable the buttons
+                                $('#loginButton').removeClass().addClass('btn btn-success disabled').attr('id', 'LOGIN_FORBIDDEN');
+                                $('#resetPasswordButton').removeClass().addClass('btn btn-danger disabled');
+                        
+                                // Enable the buttons after the specified delay
+                                setTimeout(function() {
+                                    $('#LOGIN_FORBIDDEN').attr('id', 'loginButton').removeClass().addClass('btn btn-success');
+                                    $('#resetPasswordButton').removeClass().addClass('btn btn-danger');
+                                }, delay);
+                            }
+                        // add document ready
+                        $(document).ready(function() {
+                            disableButtons(10000);
+                        });
+                            
+                                // RE-LOGIN TIMER
                                 $('div *').prop('disabled', true);
-                                var count = 8;
+                                var count = 10;
                                 var counter = setInterval(timer, 1000); // 1000 will  run it every 1 second
                                 function timer()
                                 {
@@ -1887,66 +1906,45 @@ namespace YAWK {
                                     //Do code for showing the number of seconds here
                                     document.getElementById(\"timer\").innerHTML=count; // watch for spelling
                                 }
+                       
                             </script>";
-                \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in a few seconds!","","3500");
-                $uid = \YAWK\user::getUserIdFromName($db, $username);
-                $this->storeLogin($db, 0, "backend", $username, $password);
-                \YAWK\sys::setSyslog($db, 11, 1, "failed to login <b>$username</b>", $uid, 0, 0, 0);
-                // \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try again.", "", 6000);
 
-                /**
-                if ($_SESSION['failed'] == 2){
-                echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ATTENTION!", "2nd failed try!</h3>
-                <b>Next failed login will be logged for security reasons.</b>","","3800");
-                $this->storeLogin($db, 0, "backend", $username, $password);
-                return false;
-                }
-                else if ($_SESSION['failed'] >= 4){
-                echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ATTENTION!", "$_SESSION[failed]. failed try!</h3>
-                <b>You are not allowed to login here. You have been warned.<br>
-                The Admin is informed. Remember: BruteForce Attacks are against the law. <i style=\"text-decoration: underline;\">
-                Case of recurrence will be logged and prosecuted.</i></b><br><br>
-                Date: $date_now<br>
-                Your IP: $_SERVER[REMOTE_ADDR]<br>
-                Browser: $_SERVER[HTTP_USER_AGENT]</b>","","6800");
-                $domain = \YAWK\settings::getSetting($db, "domain");
-                $to = \YAWK\settings::getSetting($db, "admin_email");
-                $from = "script@".$domain."";
-                $message = "FAILED LOGIN ATTEMPT!\n\r
-                Date     : $date_now\n
-                Message  : User tried a Backend Login more than 4 times!!!\n
-                User     : $this->username\n
-                Password : $this->password\n";
-                \YAWK\email::sendEmail($from, $to, "", "LOGIN WARNING! on $domain", $message);
-                $this->storeLogin($db, 0, "backend", $username, $password);
-                return false;
-                }
+                    \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in a few seconds!","","3500");
+                    $uid = \YAWK\user::getUserIdFromName($db, $username);
+                    $this->storeLogin($db, 0, "backend", $username, $password);
 
-                else if ($_SESSION['failed'] >= 3) {
-                echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ATTENTION!", "$_SESSION[failed]. failed try!</h3>
-                <b>You are not allowed to login here. You have been warned.<br>
-                The Admin is informed. Remember: BruteForce Attacks are against the law. <i style=\"text-decoration: underline;\">
-                Case of recurrence will be logged and prosecuted.</i></b><br><br>
-                Date: $date_now<br>
-                Your IP: $_SERVER[REMOTE_ADDR]<br>
-                Browser: $_SERVER[HTTP_USER_AGENT]</b>","","6800");
-                $domain = \YAWK\settings::getSetting($db, "domain");
-                $to = \YAWK\settings::getSetting($db, "admin_email");
-                $from = "script@" . $domain . "";
-                $message = "FAILED LOGIN ATTEMPT!\n\r
-                Date     : $date_now\n
-                Message  : User tried a Backend Login without sufficient right!\n
-                User     : $this->username\n
-                Password : $this->password\n";
-                \YAWK\email::sendEmail($from, $to, "", "LOGIN WARNING! on $domain", $message);
-                $this->storeLogin($db, 0, "backend", $username, $password);
-                return false;
-                }
-                 *  */
-                return false;
+
+                    if ($_SESSION['failed'] == 2){
+                    \YAWK\alert::draw("warning", "ATTENTION!", "This is the 3rd failed login tryout. - <b>The next failed login will be logged for security reasons!</b>","","6800");
+                    return false;
+                    }
+                    else if ($_SESSION['failed'] >= 5)
+                    {
+                        \YAWK\sys::setSyslog($db, 11, 1, "possible brute force attack: <b>$username</b> : $password", $uid, 0, 0, 0);
+                        \YAWK\alert::draw("danger", "DO NOT BRUTE FORCE HERE!", "failed tryouts: $_SESSION[failed]</h3><br><b>You are not allowed to login here. You have been warned.<br>The Admin is informed. Remember: BruteForce Attacks are against the law. <i style=\"text-decoration: underline\"><br><br>All of your actions will be logged and prosecuted.<br><b>The network operation centre was informed.</b></i></b><br><br>Date: $date_now<br>Your IP: $_SERVER[REMOTE_ADDR]<br>Browser: $_SERVER[HTTP_USER_AGENT]</b>","","0");
+                        $domain = \YAWK\settings::getSetting($db, "domain");
+                        $to = \YAWK\settings::getSetting($db, "admin_email");
+                        $from = "script@".$domain." ";
+                        $ip = $_SERVER['HTTP_USER_AGENT'];
+                        $userAgent = $_SERVER['HTTP_USER_AGENT'];
+                        $message = "FAILED LOGIN ATTEMPT!\n\r
+                        Date      : $date_now\n
+                        Message   : User tried a Backend Login more than 5 times!\n
+                        User      : $this->username\n
+                        Password  : $this->password\n
+                        IP        : $ip\n
+                        UserAgent : $userAgent\n";
+                        \YAWK\email::sendEmail($from, $to, "", "LOGIN WARNING! on $domain", $message);
+                        $this->storeLogin($db, 0, "backend", $username, $password);
+                        return false;
+                    }
+
+                    return false;
+
+                } // failed login
             }
             // something else has happened
-            echo \YAWK\alert::draw("danger", "Login failed!", "Something else has happened.", "", 6000);
+            \YAWK\alert::draw("danger", "Login failed!", "Please check your credentials!", "", 6000);
             return false;
         }
 
@@ -1999,6 +1997,7 @@ namespace YAWK {
                 <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control animated fadeIn\" placeholder=\"Passwort\">
                 <input type=\"hidden\" name=\"login\" value=\"login\">
                 <input type=\"submit\" id=\"submitBtn\" value=\"Login\" style=\"margin-top:5px;\" name=\"Login\" class=\"btn btn-success animated fadeIn\">
+                <div id=\"captchaNode\"></div>
             </form>";
             return $html;
         }
@@ -2033,7 +2032,7 @@ namespace YAWK {
                 }
             }
 
-            $html = "<form name=\"login\" class=\"navbar-form navbar-right\" role=\"form\" action=\"welcome.html\" method=\"POST\">
+            $html = "<form name=\"login\" id=\"loginForm\" class=\"navbar-form navbar-right\" role=\"form\" action=\"welcome.html\" method=\"POST\">
               <div class=\"form-group\">
                 <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control\" $input_style placeholder=\"Benutzername\">
                 <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control\" $input_style placeholder=\"Passwort\">

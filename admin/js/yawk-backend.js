@@ -62,6 +62,45 @@ $(document).ready(function() {
         dismissNotifications();
     });
 
+    function disableButtons(delay)
+    {
+        // Disable the buttons
+        $('#loginButton').removeClass().addClass('btn btn-success disabled').attr('id', 'LOGIN_FORBIDDEN');
+        $('#resetPasswordButton').removeClass().addClass('btn btn-danger disabled');
+
+        // Enable the buttons after the specified delay
+        setTimeout(function() {
+            $('#LOGIN_FORBIDDEN').attr('id', 'loginButton').removeClass().addClass('btn btn-success');
+            $('#resetPasswordButton').removeClass().addClass('btn btn-danger');
+        }, delay);
+    }
+
+    // submit login form
+    $("#loginButton").click(function(){
+        if ($('#loginButton').length > 0) {
+            // Either #loginButton or #LOGIN_FORBIDDEN element exists
+            if ($('#loginButton').hasClass('btn') && $('#loginButton').hasClass('btn-success') && $('#loginButton').hasClass('disabled'))
+            {
+                // The loginButton has all three classes: btn, btn-success, and disabled
+            }
+            else {
+                // The loginButton is not disabled
+                $("#loginForm").submit();
+                disableButtons(10000);
+            }
+        }
+        else if ($('#LOGIN_FORBIDDEN').length > 0)
+        {
+            // Either #loginButton or #LOGIN_FORBIDDEN element exists
+            if ($('#LOGIN_FORBIDDEN').hasClass('btn') && $('#LOGIN_FORBIDDEN').hasClass('btn-success') && $('#LOGIN_FORBIDDEN').hasClass('disabled')) {
+                // The loginButton has all three classes: btn, btn-success, and disabled
+            } else {
+                // The loginButton is not disabled
+                // $("#loginForm").submit();
+            }
+        }
+    });
+
 
     // BLOCKED USER BUTTON (user-edit.php)
     $("#blockedBtn").hover(function()

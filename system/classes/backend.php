@@ -155,15 +155,20 @@ namespace YAWK {
 
 
         /**
-         * @brief Checks whether a user is allowed to login to backend or not. Logins will be stored.
+         * @brief Checks whether a user is allowed to log in to backend or not. Logins will be stored.
          * @param object $db Database object
          * @return bool
          */
-        static function checkLogin($db)
+        static function checkLogin(object $db): bool
         {   /** @var $db \YAWK\db */
             /* check user login */
+            if (!isset($_POST['user'])){
+                echo "<script>disableButtons(60000);</script>";
+                return false;
+            }
             $user = new \YAWK\user($db);
-            if(isset($_POST['user']) && isset($_POST['password'])) {
+            if(!empty($_POST['user']) && (!empty($_POST['password'])))
+            {   // check if user is allowed to login
                 if($user->loginBackEnd($db, $_POST['user'],$_POST['password']))
                 {   // create session var
                     $_SESSION['username'] = $_POST['user'];
@@ -245,7 +250,7 @@ namespace YAWK {
             if (isset($_SESSION['passwordFail']) && ($_SESSION['passwordFail'] > 1))
             {
                 // password wrong after user's 2nd try - display reset button
-                $resetBtn = "<a class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModal\"><i class=\"fa fa-question-circle\"></i> &nbsp;$lang[PASSWORD_FORGOTTEN]</a>";
+                $resetBtn = "<a type=\"button\" class=\"btn btn-danger\" id=\"resetPasswordButton\" data-toggle=\"modal\" data-target=\"#myModal\"><i class=\"fa fa-question-circle\"></i> &nbsp;$lang[PASSWORD_FORGOTTEN]</a>";
             }
             else
             {   // password not wrong - no button needed
@@ -255,19 +260,21 @@ namespace YAWK {
             // check if any page is requested
             if (isset($_GET['page']) && (!empty($_GET['page'])))
             {   // set redirect
-                $redirect = "?page=".$_GET['page']."";
+                $redirect = "?page=".$_GET['page']." ";
             }
             else
             {   // redirect requested
                 $redirect = '';
             }
 
-            $form = "<form role=\"form\" class=\"form-horizontal\" action=\"index.php".$redirect."\" method=\"post\">
+            $form = "<form role=\"form\" id=\"loginForm\" class=\"form-horizontal\" action=\"index.php".$redirect."\" method=\"post\">
             <input type=\"text\" class=\"form-control\" maxlength=\"128\" id=\"user\" value=\"".$username."\" name=\"user\" style=\"margin-bottom:4px;\" placeholder=\"Username\">
             <input type=\"password\" class=\"form-control\" id=\"password\" value=\"".$password."\" name=\"password\" placeholder=\"Password\"><br>
-            <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-lock\"></i> &nbsp;".$lang['LOGIN']."</button>
+            <button type=\"button\" class=\"btn btn-success\" id=\"loginButton\"><i class=\"fa fa-lock\"></i> &nbsp;".$lang['LOGIN']."</button>
             &nbsp;&nbsp;".$resetBtn."
-            </form>";
+            </form>
+                <div id=\"captchaNode\"></div>
+                <div id=\"loginTimerNode\"></div>";
             return $form;
         }
 
@@ -329,8 +336,8 @@ namespace YAWK {
                             <div class=\"box-body\">
                             <h3>Login :: <small>" . $title . "</small></h3><br>";
             $loginBox .= \YAWK\backend::drawLoginForm("","", $lang);
-            $loginBox .= "
-                        </div>
+            $loginBox .= "<div id=\"loginTimerNode\"></div>
+                            </div>
                         <br><br>
                     </div>
                     <div class=\"col-md-4\">&nbsp;</div>
