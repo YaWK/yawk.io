@@ -151,7 +151,6 @@ if (!isset($AdminLTE))
         }
         else {
             // add syslog entry for successful login
-            \YAWK\sys::setSyslog($db, 1, 0, "<b>".$_SESSION['user']."</b> login successful", 0, 0, 0, 0);
             \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['LOGIN']." ".$lang['SUCCESSFUL'], "index.php", 1200);
         }
 
