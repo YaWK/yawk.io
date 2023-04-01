@@ -77,6 +77,8 @@ namespace YAWK {
         public $overrideTemplate;
         /** * @param int current template ID */
         public $templateID;
+        /** * @param int 0|1 indicates, if user has accepted the terms of service */
+        public $terms;
 
         /**
          * @brief user constructor.
