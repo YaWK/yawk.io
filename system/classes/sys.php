@@ -1901,7 +1901,7 @@ namespace YAWK {
                 // get syslog settings (which category is active and should be notified)
                 $syslogSettings = self::isSysLogCategoryActive($db, $log_category);
                 // check if notification should be enabled for this category
-                if ($syslogSettings[0]['notify'] == 1)
+                if (isset($syslogSettings[0]['notify']) && ($syslogSettings[0]['notify'] == 1))
                 {   // set syslog entry to state !seen (not seen)
                     $seen = 0;  // means notification WILL be drawn
                 }
