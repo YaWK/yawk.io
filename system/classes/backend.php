@@ -166,6 +166,10 @@ namespace YAWK {
                 echo "<script>disableButtons(60000);</script>";
                 return false;
             }
+            // cut off any blank spaces
+            if (isset($_POST['user'])){
+                $_POST['user']=trim($_POST['user']);
+            }
 
             $user = new \YAWK\user($db);
             if(!empty($_POST['user']) && (!empty($_POST['password'])))
@@ -194,6 +198,9 @@ namespace YAWK {
             }
             else
             {   // username or password not set
+                // alert: no username was set - please enter a qualified username
+                \YAWK\alert::draw("warning", "Username", "Please enter a qualified username", "", 2400);
+
                 return false;
             }
         }
@@ -269,8 +276,8 @@ namespace YAWK {
             }
 
             $form = "<form role=\"form\" id=\"loginForm\" class=\"form-horizontal\" action=\"index.php".$redirect."\" method=\"post\">
-            <input type=\"text\" class=\"form-control\" maxlength=\"128\" id=\"user\" value=\"".$username."\" name=\"user\" style=\"margin-bottom:4px;\" placeholder=\"Username\">
-            <input type=\"password\" class=\"form-control\" id=\"password\" value=\"".$password."\" name=\"password\" placeholder=\"Password\"><br>
+            <input required type=\"text\" class=\"form-control\" maxlength=\"128\" id=\"user\" value=\"".$username."\" name=\"user\" style=\"margin-bottom:4px;\" placeholder=\"Username\">
+            <input required type=\"password\" class=\"form-control\" id=\"password\" value=\"".$password."\" name=\"password\" placeholder=\"Password\"><br>
             <button type=\"button\" class=\"btn btn-success\" id=\"loginButton\"><i class=\"fa fa-lock\"></i> &nbsp;".$lang['LOGIN']."</button>
             &nbsp;&nbsp;".$resetBtn."
             </form>
