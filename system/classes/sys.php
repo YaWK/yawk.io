@@ -1911,7 +1911,7 @@ namespace YAWK {
                 }
 
                 // only add syslog entry if category is enabled for logging (active)
-                if ($syslogSettings[0]['active'] == 1)
+                if (isset($syslogSettings[0]['active']) && ($syslogSettings[0]['active'] == 1))
                 {
                     // insert syslog entry into db
                     if ($db->query("INSERT INTO {syslog} (log_date, log_category, log_type, message, fromUID, toUID, toGID, seen)
