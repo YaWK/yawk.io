@@ -170,9 +170,9 @@ if (!isset($AdminLTE))
             // do not allow login attempts if the user is currently banned
             if (time() < $_SESSION['lockout_until'])
             {   // inform the user that he is banned
-                alert::draw("danger", "Access Denied", "You have reached the maximum number of login attempts. You have been banned for 60 minutes.", "", 0);
+                alert::draw("danger", "ACCESS DENIED", "You have reached the maximum number of login attempts. You have been banned for 60 minutes.<br>Your IP ".$_SERVER['REMOTE_ADDR']." / ".$_SERVER['REMOTE_HOST']." has been logged.", "", 0);
                 // add syslog entry
-                sys::setSyslog($db, 12, 2, "User ".$user->currentuser." tried to login, but failed. User is banned for 60 minutes.", 0, 0, 0, 0);
+                sys::setSyslog($db, 12, 2, "Possible brute force client ".$_SERVER['REMOTE_ADDR']." ".$_SERVER['REMOTE_HOST']." banned.", 0, 0, 0, 0);
             }
             else
             {   // draw login box
