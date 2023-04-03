@@ -147,7 +147,8 @@ if (!isset($AdminLTE))
 
 
       // body markup
-      echo "<body>";
+      echo "<body style=\"background-color: #ecf0f5\">
+";
 
         // check if the current user is logged in
         if (backend::checkLogin($db) === false)
