@@ -1,3 +1,31 @@
+<?php
+// IMPORT REQUIRED CLASSES
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\BACKEND\dashboard;
+use YAWK\db;
+use YAWK\stats;
+use YAWK\language;
+
+if (!isset($db))
+{   // create database object
+    $db = new db();
+}
+if (!isset($lang))
+{   // create language object
+    $lang = new language();
+}
+if (isset($_GET['reset']) && ($_GET['reset'] == 1))
+{
+    if ($db->truncateTable("stats") === true){
+        alert::draw("success", "$lang[STATS_RESET]", "$lang[STATS_RESET_SUCCESS]", "", 2400);
+    }
+    else {
+        alert::draw("danger", "$lang[STATS_RESET]", "$lang[STATS_RESET_FAILED]", "", 2400);
+    }
+}
+?>
+
 <!-- JS includes -->
 <!-- SlimScroll 1.3.0 -->
 <script src="../system/engines/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
@@ -15,12 +43,6 @@
     }
 </style>
 <?php
-
-use YAWK\backend;
-use YAWK\BACKEND\dashboard;
-use YAWK\db;
-use YAWK\language;
-use YAWK\stats;
 
 /** @var $db db */
 /** @var $lang language */
@@ -163,6 +185,10 @@ echo"<ol class=\"breadcrumb\">
                     <option value="YEAR"><?php echo $lang['YEARS']; ?></option>
                 </select>
                 <button type="submit" id="refresh" name="refresh" class="btn btn-success" title="<?php echo $lang['REFRESH_STATS']; ?>"><i class="glyphicon glyphicon-refresh"></i>&nbsp; <?php echo "$lang[STATS]"; ?></button>
+
+                <?php
+                echo "<a class=\"btn btn-default pull-right\" role=\"dialog\" data-confirm=\"$lang[STATS_RESET_CONFIRM]\"
+                title=\"$lang[STATS_DELETE]\" href=\"index.php?page=stats&reset=1\">&nbsp;<i class=\"fa fa-trash-o\"></i>&nbsp;</a>"; ?>
             </div>
         </form>
     </div>
