@@ -421,6 +421,28 @@ namespace YAWK
         }
 
         /**
+         * @brief Truncate a table
+         * @param $table string the table to truncate
+         * @return bool
+         */
+        public function truncateTable(string $table): bool
+        {
+            if (!empty($table))
+            {
+                $table = '{'.$table.'}';
+                if ($this->query("TRUNCATE TABLE $table"))
+                {   // success
+                    return true;
+                }
+                else
+                    {   // error
+                        return false;
+                    }
+            }
+            return false;
+        }
+
+        /**
          * @brief Drop table from a database
          * @param array $tables the tables to drop
          * @return bool
