@@ -2,7 +2,6 @@
 
 <!-- Official Website: <b>https://yawk.io</b><br> -->
 Documentation: <b><a href="https://docs.yawk.io/namespaceYAWK.html" target="_blank">https://docs.yawk.io</a></b>
-
 <h1>What is YaWK?</h1>
 <b>YaWK</b> = <b>Y</b>et <b>a</b>nother <b>W</b>eb<b>K</b>it<br> 
 <b>YaWK is a free, open-source-bundle solution</b> CMS to build, design and operate any modern webpage or web-app. Designed to be slick, fast and reliable. Steady in development. It brings together, what belongs together. YaWK uses HTML, CSS, MySQL, PHP and JavaScript to bundle Bootstrap, jQuery, AdminLTE, FontAwesome and much more of your favourite daily use web open source tools and combines them into a new base for your daily work.
@@ -19,7 +18,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <b><i></i></b>
 <h3>Currently on the ToDo list:</h3>
 <ul>
-<li><a href="https://github.com/YaWK/yawk.io/milestone/80" target="_blank">YaWK Update Feature</a> <i>(in progress!)</i></li>
+<li>Implement <b>Chat GPT-4 API</b></li>
 <li>Brand new official website <a href="https://yawk.io" target="_blank">https://yawk.io/</a> <i>(in progress!)</i></li>
 <li>Migrate all doc blocks to doxygen <i><small>(nearly done)</small></i></li>
 <li>Major Updates of all Assets and Social / Facebook Widgets </li>
@@ -28,6 +27,7 @@ see what's going on and what has been done over the past few days, weeks, months
 </ul>
 <h3>Latest improvements / closed milestones </h3>
 <ul>
+<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/80" target="_blank"> ✓ YaWK Update Feature</a></li>
 <li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/11?closed=1" target="_blank"> ✓ Installer / Improve Setup process</a></li>
 <li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/78?closed=1" target="_blank"> ✓ Add support for multilingual FrontEnd (Content) Pages and Menus</a></li>
 <li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/65?closed=1" target="_blank"> ✓ Improved SubMenu Widget</a></li>
