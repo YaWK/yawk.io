@@ -439,19 +439,23 @@ fieldset[disabled] .btn-default.focus {
 
 .dropdown-menu {
   background-color: #23282D;
-  color:#fff;
+  color:#fff; !important;
   border-color: #444;
 }
 
 .navbar-nav>.user-menu>.dropdown-menu>.user-footer {
   background-color: #23282D;
-  color:#fff;
+  color:#fff; !important;
   padding: 10px;
 }
 
 .navbar-nav>.user-menu>.dropdown-menu>.user-body {
-  background-color: #8c8c8c;
+  background-color: #23282D;
   color:#fff; !important;
+}
+
+.navbar-nav>.user-menu>.dropdown-menu>.user-body a {
+  color: #fff !important;
 }
 
 .navbar-nav>.notifications-menu>.dropdown-menu>li .menu>li>a {
@@ -491,4 +495,19 @@ fieldset[disabled] .btn-default.focus {
   background: #191e23;
   text-decoration: none;
   font-weight:bold;
+}
+
+.panel {
+  margin-bottom: 20px;
+  color:#fff;
+  background-color: #32373C;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.panel-default>.panel-heading {
+  color: #fff;
+  background-color: #32373C;
+  border-color: #ddd;
 }
