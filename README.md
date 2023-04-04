@@ -6,11 +6,8 @@ Documentation: <b><a href="https://docs.yawk.io/namespaceYAWK.html" target="_bla
 <b>YaWK</b> = <b>Y</b>et <b>a</b>nother <b>W</b>eb<b>K</b>it<br> 
 <b>YaWK is a free, open-source-bundle solution</b> CMS to build, design and operate any modern webpage or web-app. Designed to be slick, fast and reliable. Steady in development. It brings together, what belongs together. YaWK uses HTML, CSS, MySQL, PHP and JavaScript to bundle Bootstrap, jQuery, AdminLTE, FontAwesome and much more of your favourite daily use web open source tools and combines them into a new base for your daily work.
 <hr>
-<h3>Development status - <small>what has been done so far?</small></h3>
-Short answer, a lot! - long answer: take a look at the <a href="https://github.com/YaWK/yawk.io/commits/master" target="_blank">recent commits</a>, 
-<a href="https://github.com/YaWK/yawk.io/issues?q=is%3Aissue+is%3Aclosed" target="_blank">closed issues</a>, 
-<a href="https://github.com/YaWK/yawk.io/milestones?state=closed" target="_blank">latest closed milestones</a> 
-and <a href="https://github.com/YaWK/yawk.io/projects" target="_blank">current open projects</a> 
+<h3><g-emoji class="g-emoji" alias="warning" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/26a0.png">⚠️</g-emoji> Development status - <small>what has been done so far?</small></h3>
+Short answer, a lot! - long answer: take a look at the <a href="https://github.com/YaWK/yawk.io/issues?q=is%3Aissue+is%3Aclosed" target="_blank">latest closed issues</a> and <a href="https://github.com/YaWK/yawk.io/milestones?state=closed" target="_blank">milestones</a> 
 to 
 see what's going on and what has been done over the past few days, weeks, months and years.
 <hr>
