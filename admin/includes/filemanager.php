@@ -338,6 +338,22 @@ else
 ?>
 <script src="../system/engines/jquery/dropzone/dropzone.js"></script>
 <link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
+<?php
+$backendSkin = \YAWK\settings::getSetting($db, "backendSkin");
+if ($backendSkin == "skin-wp-dark-style")
+{   // if dark backend skin is active, set dropzone background to dark1
+    echo '
+<style>
+    .dropzone {
+        min-height: 150px;
+        border: 1px dashed #3c8dbc;
+        background: #23282d; !important;
+        padding: 20px 20px;
+    }
+</style>';
+}
+
+?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" id="content-FX">
     <!-- Content Header (Page header) -->

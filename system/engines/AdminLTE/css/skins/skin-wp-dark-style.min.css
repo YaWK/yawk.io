@@ -497,6 +497,14 @@ fieldset[disabled] .btn-default.focus {
   font-weight:bold;
 }
 
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  color: #888;
+  cursor: default;
+  background-color: #23282d;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+}
+
 .panel {
   margin-bottom: 20px;
   color:#fff;
