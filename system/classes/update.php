@@ -387,7 +387,12 @@ namespace YAWK
                 // updateFiles.ini exists
                 // parse updateFiles.ini into array
                 // $this->updateFiles = parse_ini_file($basedir.$this->localUpdateSystemPath . $this->updateFilesFile);
-                $this->updateFiles = parse_ini_file('https://update.yawk.io/filebase.ini');
+                $updateFile = file_get_contents('https://update.yawk.io/filebase.ini');
+                if (!$updateFile) {
+                    die("Failed to fetch filebase.ini from update server!");
+                }
+                $this->updateFiles = parse_ini_string($updateFile, true);
+                // $this->updateFiles = parse_ini_file('https://update.yawk.io/filebase.ini');
                 if (count($this->updateFiles) < 1)
                 {   // unable to read updateFiles.ini from local update folder
                     $response .= "<span class=\"text-warning\"><p><i class=\"fa fa-exclamation-triangle text-warning\"></i> &nbsp;No entries to process in updateFiles.ini - this can happen, if all of your files have the same hash value as the update files, but version number differs.<br><br><b>You may want to fast-forward to latest Version Number.</b><small><i>But think, before you click - and make a <a href=\"index.php?page=settings-update\">Backup!</a></i></small></p>
