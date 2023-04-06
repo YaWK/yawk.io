@@ -41,6 +41,15 @@ $differentFiles = array();  // files with different hash values (those will be u
 $localOnlyFiles = array();  // files only found in local filebase (files that were added by page admin, those will NOT be touched)
 $updateFiles = '';  // files that will be updated
 
+// add files, that are in the update filebase, but not in the local filebase
+foreach($updateFilebase as $key => $value) {
+    if (!array_key_exists($key, $localFilebase)) {
+        // add file to updateFiles string, which will be written to updateFiles.ini
+        $updateFiles .= "$value=\"$key\"\n";
+        $differentFiles[] = $key;
+    }
+}
+
 // loop through local filebase array (parsed from filebase.current.ini)
 foreach ($localFilebase as $filePath => $localHash)
 {   // check if file exists in update filebase
