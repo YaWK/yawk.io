@@ -51,7 +51,12 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
             }
 
             // set sidebar property
-            $this->sidebar = $this->widget->data['sidebar'];
+            if (isset($this->widget->data['sidebar'])){
+                $this->sidebar = $this->widget->data['sidebar'];
+            }
+            else {
+                $this->sidebar = 'false';
+            }
 
             // check if sidebar is set
             if ($this->sidebar === 'true')
