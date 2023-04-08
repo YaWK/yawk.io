@@ -26,9 +26,10 @@ namespace YAWK
          */
         public function __construct()
         {   // include config array
-            if (!is_file('dbconfig.php'))
+            $fullPathToConfigFile = __dir__.'/dbconfig.php';
+            if (!is_file($fullPathToConfigFile))
             {   // db config file not found.
-                die('The Database configuration file is missing. It has been created during the installation process, but it looks like somebody has deleted this file.');
+                die('The Database configuration file is missing. It has been created during the installation process, but it is not reachable.');
             }
             else
             {   // include config file
