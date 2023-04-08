@@ -33,7 +33,7 @@ namespace YAWK
             }
             else
             {   // include config file
-                require_once ("dbconfig.php");
+                require_once ($fullPathToConfigFile);
             }
         }
 
