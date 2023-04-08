@@ -1,29 +1,31 @@
-
 #Options +FollowSymlinks
 Order allow,deny
 Allow from all
+Require all granted
 
 # custom error page
 ErrorDocument 404 http://raspi/web/clone/content/errors/404.html
 
 RewriteEngine on
 RewriteCond %{REQUEST_URI} /(.*).html
-RewriteRule ^(.*).html$ \index.php?include=$1
+RewriteRule ^(.*).html$ index.php?include=$1
 # Rewrite .html - no extension needed e.g. you can use http://www.yoursite/gallery instead of /gallery.html
-RewriteRule ^([^\.]+)$ \index.php?page=$1 [NC,L]
+RewriteRule ^([^\.]+)$ index.php?page=$1 [NC,L]
 
 # off for tinymce
-#RewriteRule ^(.*).htm$ \index.php?include=$1
+#RewriteRule ^(.*).htm$ index.php?include=$1
+
+# If you are running PHP as an Apache module, uncomment the following lines.
+# Otherwise, move these settings to a php.ini or .user.ini file.
 
 # PHP SETTINGS
-
 #set session timeout to 260 minutes
-php_value session.gc_maxlifetime 14400
+#php_value session.gc_maxlifetime 14400
 #cookie lifetime (never expire) timeout
-php_value session.cookie_lifetime 0
+#php_value session.cookie_lifetime 0
 
 # override max post size
-php_value post_max_size 64M
+#php_value post_max_size 64M
 
 # override max upload file size
-php_value upload_max_filesize 64M
+#php_value upload_max_filesize 64M
