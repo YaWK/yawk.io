@@ -15,7 +15,7 @@ RewriteRule ^([^\.]+)$ \index.php?page=$1 [NC,L]
 #RewriteRule ^(.*).htm$ \index.php?include=$1
 
 # override max post size
-php_value post_max_size 64M
+#php_value post_max_size 64M
 
 # override max upload file size
-php_value upload_max_filesize 64M
+#php_value upload_max_filesize 64M

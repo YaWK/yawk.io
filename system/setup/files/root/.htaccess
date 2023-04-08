@@ -119,8 +119,8 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 # END CACHING ############################################
 
 # override max post size
-php_value post_max_size 32M
+#php_value post_max_size 32M
 
 # override max upload file size
-php_value upload_max_filesize 32M
+#php_value upload_max_filesize 32M
 

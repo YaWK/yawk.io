@@ -114,7 +114,7 @@ namespace YAWK\BACKEND {
     <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/css/skins/custom.css\">
 
     <!-- jQuery 2.1.4 -->
-    <script type=\"text/javascript\" src=\"../system/engines/jquery/jquery-2.2.3.min.js\"></script>
+    <script type=\"text/javascript\" src=\"../system/engines/jquery/jquery-3.6.4.min.js\"></script>
     
     <!-- moment.js (used by datetimepicker) --> 
     <script type=\"text/javascript\" src=\"../system/engines/jquery/moment.min.js\"></script>
@@ -1429,8 +1429,6 @@ namespace YAWK\BACKEND {
         <!-- REQUIRED JS SCRIPTS -->
         <!-- color picker -->
 	    <script type=\"text/javascript\" src=\"../system/engines/jquery/jscolor/jscolor.js\"></script>
-        <!-- jQuery 1.11.3
-        <script type=\"text/javascript\" src=\"../system/engines/jquery/jquery-1.11.3.min.js\"></script> -->
         <!-- Bootstrap 3.3.5 -->
         <script type=\"text/javascript\" src=\"../system/engines/bootstrap3/dist/js/bootstrap.min.js\"></script>
         <!-- data table -->

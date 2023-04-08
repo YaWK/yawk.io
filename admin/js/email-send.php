@@ -4,7 +4,7 @@
 <!-- Animate CSS -->
 <link rel="stylesheet" href="../../system/engines/animateCSS/animate.min.css">
 <!-- jQuery 2.1.4 -->
-<script type="text/javascript" src="../../system/engines/jquery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="../../system/engines/jquery/jquery-3.6.4.min.js"></script>
 <script src="../../system/engines/bootstrap3/dist/js/bootstrap.min.js"></script>
 
 <?php

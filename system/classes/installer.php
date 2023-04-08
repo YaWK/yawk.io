@@ -77,7 +77,7 @@ namespace YAWK {
         <!-- Admin LTE -->
         <link rel="stylesheet" href="system/engines/AdminLTE/css/AdminLTE.min.css">
         <!-- jQuery 3.2.1 -->
-        <script type="text/javascript" src="system/engines/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="system/engines/jquery/jquery-3.6.4.min.js"></script>
         <!-- jQuery validation plugin -->
         <script type="text/javascript" src="system/engines/jquery/jquery.validate.min.js"></script>
         <!-- popper.js used by bootstrap to help positioning the tooltips -->

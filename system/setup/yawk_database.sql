@@ -14,7 +14,7 @@ CREATE TABLE `cms_assets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `link`) VALUES
-(1, 1, 'js', 1, 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
+(1, 1, 'js', 1, 'jQuery 3.x', 'system/engines/jquery/jquery-3.6.4.min.js'),
 (2, 1, 'css', 5, 'Bootstrap 4 CSS', 'system/engines/bootstrap4/css/bootstrap.min.css'),
 (3, 1, 'js', 6, 'Bootstrap 4 JS', 'system/engines/bootstrap4/js/bootstrap.min.js'),
 (4, 1, 'css', 6, 'Animate CSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css'),
@@ -36,10 +36,10 @@ CREATE TABLE `cms_assets_types` (
 INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`, `property`, `internal`, `url1`, `url2`, `url3`) VALUES
 (1, 1, 1, 6, 'Bootstrap 3 JS', 'bootstrap3-js', 'system/engines/bootstrap3/dist/js/bootstrap.min.js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js', ''),
 (2, 1, 1, 5, 'Bootstrap 3 CSS', 'bootstrap3-css', 'system/engines/bootstrap3/dist/css/bootstrap.min.css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css', ''),
-(3, 1, 1, 1, 'jQuery 1.x', 'jquery-1', 'system/engines/jquery/jquery-1.12.4.min.js', 'https://code.jquery.com/jquery-1.12.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js', ''),
-(4, 1, 1, 2, 'jQuery 2.x', 'jquery-2', 'system/engines/jquery/jquery-2.2.4.min.js', 'https://code.jquery.com/jquery-2.2.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', ''),
-(5, 1, 1, 3, 'jQuery 3.x', 'jquery-3', 'system/engines/jquery/jquery-3.2.1.min.js', 'https://code.jquery.com/jquery-3.2.1.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js', ''),
-(6, 1, 1, 4, 'jQuery UI 1.12 JS', 'jqueryUI', 'system/engines/jquery/jquery-ui.min.js', 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js', ''),
+(3, 1, 1, 1, 'jQuery 1.x', 'jquery-1', '', 'https://code.jquery.com/jquery-1.12.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js', ''),
+(4, 1, 1, 2, 'jQuery 2.x', 'jquery-2', '', 'https://code.jquery.com/jquery-2.2.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', ''),
+(5, 1, 1, 3, 'jQuery 3.x', 'jquery-3', 'system/engines/jquery/jquery-3.6.4.min.js', 'https://code.jquery.com/jquery-3.6.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js', ''),
+(6, 1, 1, 4, 'jQuery UI 1.8.13 JS', 'jqueryUI', 'system/engines/jquery/jquery-ui.min.js', 'https://code.jquery.com/ui/1.8.13/jquery-ui.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js', ''),
 (7, 1, 2, 8, 'Font Awesome Icons', 'font-awesome', 'system/engines/font-awesome/css/font-awesome.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', '', ''),
 (8, 1, 2, 9, 'Lightbox 2 JS', 'lightbox2-js', 'system/engines/jquery/lightbox2/js/lightbox.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js', '', ''),
 (9, 1, 2, 10, 'Lightbox 2 CSS', 'lightbox2-css', 'system/engines/jquery/lightbox2/css/lightbox.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css', '', ''),
