@@ -26,7 +26,14 @@ namespace YAWK
          */
         public function __construct()
         {   // include config array
-            require_once ("dbconfig.php");
+            if (!is_file('dbconfig.php'))
+            {   // db config file not found.
+                die('The Database configuration file is missing. It has been created during the installation process, but it looks like somebody has deleted this file.');
+            }
+            else
+            {   // include config file
+                require_once ("dbconfig.php");
+            }
         }
 
         /**
