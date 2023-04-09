@@ -66,7 +66,7 @@ $(document).ready(function()    // all functions are loaded after document is re
     // call setSticky function on this elements to make them sticky on scroll:
     // you can add / remove / change them to any element you like
     setSticky('navbar', '#intro', 0);
-    setSticky('subMenu', '#intro', 100);
+    setSticky('MySidebar', '#intro', 100);
 
     // smooth scrolling to any element on the page, if it got an anchor link
     // this adds smooth scrolling to the subMenu.
