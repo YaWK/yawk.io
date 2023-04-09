@@ -34,12 +34,7 @@ $(document).ready(function()
     // check if openBtn has been clicked
     openBtn.click(function()
     {   // if clicked, open the sidebar
-        if (sidebarOpen) {
-            closeNav();
-        }
-        if (!sidebarOpen) {
-            openNav();
-        }
+        openNav();
     });
 
     // Initially hide the button
