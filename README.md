@@ -1,19 +1,19 @@
 <h1>Attention: work in progress! <br><small>It's done when it's done. <small>(release: soon)</small></small></h1>
 
-<!-- Official Website: <b>https://yawk.io</b><br> -->
+Official Website: <b>https://yawk.io</b><br>
 Documentation: <b><a href="https://docs.yawk.io/namespaceYAWK.html" target="_blank">https://docs.yawk.io</a></b>
 <h1>What is YaWK?</h1>
 <b>YaWK</b> = <b>Y</b>et <b>a</b>nother <b>W</b>eb<b>K</b>it<br> 
 <b>YaWK is a free, open-source-bundle solution</b> CMS to build, design and operate any modern webpage or web-app. Designed to be slick, fast and reliable. Steady in development. It brings together, what belongs together. YaWK uses HTML, CSS, MySQL, PHP and JavaScript to bundle Bootstrap, jQuery, AdminLTE, FontAwesome and much more of your favourite daily use web open source tools and combines them into a new base for your daily work.
 <hr>
-<h3><g-emoji class="g-emoji" alias="warning" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/26a0.png">⚠️</g-emoji> Development status - <small>what has been done so far?</small></h3>
-Short answer, a lot! - long answer: take a look at the <a href="https://github.com/YaWK/yawk.io/issues?q=is%3Aissue+is%3Aclosed" target="_blank">latest closed issues</a> and <a href="https://github.com/YaWK/yawk.io/milestones?state=closed" target="_blank">milestones</a> 
+<h3><g-emoji class="g-emoji" alias="warning" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/26a0.png">🚀</g-emoji> Development status - <small>what has been done so far?</small></h3>
+Short answer, a lot! - long answer: take a look at <a href="https://yawk.io/features.html" target="_blank" title="YaWK Feature List">FEATURE LIST</a>, <a href="https://github.com/YaWK/yawk.io/issues?q=is%3Aissue+is%3Aclosed" target="_blank">latest closed issues</a> and <a href="https://github.com/YaWK/yawk.io/milestones?state=closed" target="_blank">milestones</a> 
 to 
 see what's going on and what has been done over the past few days, weeks, months and years.
 <hr>
 <h3><u>R O A D M A P for 2023: <small></small></u></h3>
 <b><i></i></b>
-<h3>Currently on the ToDo list:</h3>
+<h3>🧾 Currently on the ToDo list:</h3>
 <ul>
 <li>Implement <b>Chat GPT-4 API</b></li>
 <li>Brand new official website <a href="https://yawk.io" target="_blank">https://yawk.io/</a> <i>(in progress!)</i></li>
@@ -22,7 +22,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <li>Add templates and demo pages <i><small>(scheduled until end of 2023)</small></i></li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
-<h3>Latest improvements / closed milestones </h3>
+<h3>🥇 Latest improvements / closed milestones </h3>
 <ul>
 <li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/80" target="_blank"> ✓ YaWK Update Feature</a></li>
 <li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/11?closed=1" target="_blank"> ✓ Installer / Improve Setup process</a></li>
@@ -31,7 +31,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <li>[done] <a href="https://github.com/YaWK/yawk.io/issues/376" target="_blank"> ✓ Codebase update to ensure PHP 8 compatibility</a></li>
 </ul>
 
-<h3><u>ALSO PLANNED FOR 2023:</u></h3>
+<h3>📅 <u>ALSO PLANNED FOR 2023:</u></h3>
 <ul>
 <li>Add feature showcase</li>
 <li>Update CSS Framework to completely support Bootstrap 5.x</li>
@@ -44,7 +44,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <li>YouTube HowTo videos</li>
 </ul>
 <hr>
-<h3>Download Notes:</h3>
+<h3>💻 Download Notes:</h3>
 <u><b>Please remember:</b></u> before you download this pre-release version: YaWK is currently in active development and <b>NOT YET RELEASED</b>.
 If you like, you can get a sneak peek - feel free to download the latest current development version from GitHub: <br>
 <br><b>https://github.com/YaWK/yawk.io/archive/refs/heads/master.zip</b>
@@ -53,7 +53,7 @@ But please consider - YaWK is in constant development and underlies <i>nearly da
 <br><br>
 Before YaWK will be officially released, you will always get the current development version. After the first version is officially released, there will be a seperate development branch. You should wait for the official first release before you use YaWK in productive environment. I'm happy about comments, stars, followers and / or code contributions. Thank You!
 <hr>
-<h3>Setup / Installation</h3>
+<h3>🔧 Setup / Installation</h3>
 There are two ways to load YaWK on your webserver:<br><br>
 <ol>
 <li><u>If you have root/shell access:</u> <b>git clone https://github.com/YaWK/yawk.io</b>
@@ -80,13 +80,13 @@ ATTENTION: Files must be accessible by webserver user & group. Make sure to chec
 
 <h3>Installation / Setup HowTo</h3>
 When YaWK is uploaded to your webserver, simply call www.yourwebsite.tld in your browser. If the server is correctly configured, you will see step 1/5 of the setup process. The installation guide you through 5 steps and is pretty self-explanatory.<br>
-
-<h3>Why all this? - there are so many CMS around...</h3>
+<hr>
+<h3>🐣 But why?! - there are so many good CMS around...</h3>
 YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>no big business company or foundation behind it - (yet!)</i> At the moment it is still <i>(mainly)</i> a one man show, - exclusively developed for my own, personal purpose. I started this project because I was not satisfied with all other solutions. So I took the challenge and started developing an overall tool that fits my personal needs. Originally it was not meant to public. But the bigger the project growed, the more people told me to make it accessable to the public crowd.
 After spending a lot of my lifetime on this project, I decided to follow my friends - I've uploaded it to GitHub and kept the repository private until the status of the project has got to a level where others can make use out of it. Though all efforts of "getting it to the point", this project is not finished yet - and never will be. It will stay in development, as long as I or somebody else take care about it.
 <hr>
-<h3>Do you want to be  part of this project?</h3>
-You're welcome! Found a bug? Do you want to request a feature? Feel free to contact me, open an issue or pull request. Any input is welcome.</i>
+<h3>YOU can be part of this project! 😎</h3>
+You're welcome! You have found a bug? Please let us know! Do you want to request a feature? Feel free to get in contact - open an issue or pull request. Any input is welcome!</i>
 <hr>
 <h4><i>Check back again soon and stay tuned for upcoming website and project updates!</i></h4>
 <br><br>
