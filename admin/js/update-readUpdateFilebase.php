@@ -30,7 +30,7 @@ $update = new update();
 // get update filebase from server
 $updateFilebase = $update->readUpdateFilebaseFromServer();
 if (!is_array($updateFilebase)){
-    echo 'ERROR READING UPDATE FILEBASE FROM SERVER! This should be reachable: https://www.yawk.io/system/update/filebase.current.ini';
+    echo $lang['UPDATE_ERROR_READING_UPDATE_INI'].' https://'.$_SERVER['HTTP_HOST'].'/system/update/filebase.current.ini';
 }
 // sort arrays by key (file path)
 ksort($localFilebase);
@@ -73,39 +73,52 @@ foreach ($localFilebase as $filePath => $localHash)
 
 // response string, used to echoed to ajax call
 $response = '';
-
 // Write the content to system/update/updateFiles.ini
 file_put_contents($updateFilesPath, $updateFiles);
 // if updateFilesPath is not found, throw error
 if (!file_exists($updateFilesPath))
 {   // if file is not found, throw error
-    $response .= 'ERROR WRITING: '.$updateFilesPath;
+    $response .= $lang['UPDATE_ERROR_WRITING'].' '.$updateFilesPath;
 }
 
 if (empty($differentFiles))
 {   // if no files with different hash values were found
-    $response .= '<p class="text-success"><b class="animated fadeIn slow delay-2s">All files have the same hash values!</b></p>';
+    $response .= '<p class="text-success"><b class="animated fadeIn slow delay-2s">'.$lang['UPDATE_ALL_HASHES_SAME'].'</b></p>';
 }
 else
 {   // if files with different hash values were found
-    $response .= '<p class="animated fadeIn slow delay-3s"><br><b>Files with different hash values:</b></p>';
+    // draw panel
+    $response .= '<div class="panel-group animated fadeIn slow delay-3s" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingUpdateFilebase">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseUpdateFilebase" aria-expanded="true" aria-controls="collapseUpdateFilebase">
+          '.$lang['UPDATE_FILEBASE'].'<br>
+          <small>'.$lang['UPDATE_FILEBASE_SUBTEXT'].'</small>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseUpdateFilebase" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingUpdateFilebase">
+      <div class="panel-body">';
+    $response .= '<p class="animated fadeIn slow"><b>'.$lang['UPDATE_FILES_WITH_DIFFERENT_HASHES'].'</b></p>';
     foreach ($differentFiles as $file) {
-        $response .= '<span class="animated fadeIn slow delay-4s">- '.$file.'</span><br>';
+        $response .= '<span class="animated fadeIn slow delay-1s">- '.$file.'</span><br>';
     }
+    echo '</div></div></div></div>';
 }
 
 if (empty($localOnlyFiles)){
-    $response .= '<p><b class="animated fadeIn slow delay-2s">No files found that are not in the update filebase.</b></p>';
+    $response .= '<p><b class="animated fadeIn slow delay-3s">'.$lang['UPDATE_NO_FILES_TO_UPDATE'].'</b></p>';
 }
 else
 {   // if files with different hash values were found
-    $response .= '<br><br><div class="panel-group animated fadeIn slow delay-3s" id="accordion" role="tablist" aria-multiselectable="true">
+    $response .= '<br><br><div class="panel-group animated fadeIn slow delay-3s" id="accordion2" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Files that are not in the update filebase:<br>
-          <small>(those files will <u>not</u> be touched during update)</small>
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          '.$lang['UPDATE_FILES_NOT_IN_UPDATE_FILEBASE'].'<br>
+          <small>'.$lang['UPDATE_FILES_WILL_NOT_BE_TOUCHED'].'</small>
         </a>
       </h4>
     </div>
