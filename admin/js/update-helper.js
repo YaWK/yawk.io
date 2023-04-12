@@ -175,7 +175,7 @@ $(document).ready(function() {  // wait until document is ready
                                 successMsg = '<h3 class="text-primary animated fadeIn"><b><i class="fa fa-globe animated bounce slow"></i></b> &nbsp;' + updateAvailable + '<br><small>'+updateAvailableSubtext+'</small></h3>';
                                 statusBarNode.html(successMsg).fadeIn(1000);
 
-                                let extendedInfo = '<ul class="animated fadeIn slow delay-2s"><li><span class="text-primary"><b>' + latestAvailableVersion + '</b> build <b>' + '<span id="updateVersion">'+updateVersion+'</span></b></span></li><li>' + updateCurrentInstalledVersion + ' build <b class="text-muted">' + '<span id="currentVersion">'+installedVersion + '</span></b></li>' +  '<li>'+updateChanges+': <b>'+ buildMessage + '</b></li>'+githubRelatedIssues+githubRelatedMilestone+'<li>'+released+': ' + buildTime + '</li></ul>';
+                                let extendedInfo = '<ul class="animated fadeIn slow delay-1s"><li><span class="text-primary"><b>' + latestAvailableVersion + '</b> build <b>' + '<span id="updateVersion">'+updateVersion+'</span></b></span></li><li>' + updateCurrentInstalledVersion + ' build <b class="text-muted">' + '<span id="currentVersion">'+installedVersion + '</span></b></li>' +  '<li>'+updateChanges+': <b>'+ buildMessage + '</b></li>'+githubRelatedIssues+githubRelatedMilestone+'<li>'+released+': ' + buildTime + '</li></ul>';
                                 extendedInfoNode.html(extendedInfo).fadeIn(1000);
                                 console.log(statusBarMessage);
 
@@ -234,11 +234,11 @@ $(document).ready(function() {  // wait until document is ready
     /**
      * @brief read update filebase from remote update server
      * @details Read the filebase from local installation and generate a filebase.ini file to compare with the latest update filebase
-     * @param upateInstall string language tag to display on update button
+     * @param updateInstall string language tag to display on update button
      */
     // Wrap the AJAX request in a Promise
-    function generateLocalFileBase(upateInstall) {
-        var updateBtnText = upateInstall;
+    function generateLocalFileBase(updateInstall) {
+        var updateBtnText = updateInstall;
         return new Promise((resolve, reject) => {
             $.ajax({
                 type: 'POST',
