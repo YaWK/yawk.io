@@ -190,7 +190,7 @@ namespace YAWK
          * @details If update.ini contains migration files between the current version and the update version, this function will be called
          * @param $db object the database object
          * @param $lang array the language array
-         * @return bool true|false if migrations were successful or not
+         * @return void true|false if migrations were successful or not
          */
         function runMigrations(object $db, array $lang): void
         {
@@ -222,6 +222,18 @@ namespace YAWK
                 $startIndex = (int)$currentVersionParts[2] + 1;
                 // End at the minor version of the update version
                 $endIndex = (int)$updateVersionParts[2];
+                $output .= '<br><br><div class="panel-group animated fadeIn slow delay-2s" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingMigration">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseMigration" aria-expanded="true" aria-controls="collapseMigration">
+          Migrations<br>
+          <small>(database updates)</small>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseMigration" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMigration">
+      <div class="panel-body">';
 
                 // Loop through the migration files
                 for ($i = $startIndex; $i <= $endIndex; $i++)
@@ -266,7 +278,6 @@ namespace YAWK
                         $successfulMigrationVersions[] = $migrationVersion;
                     }
 
-                    // todo: add accordion, default closed
                     $output .= "Multi-query SQL: " . $migrationSql . "<br>";
 
                     // explode the migration file into individual queries (array)
@@ -296,23 +307,6 @@ namespace YAWK
                             }
                         }
                     }
-//                    // MULTI QUERY INSTEAD OF SINGLE QUERIES - can be deleted after update feature is tested and done.
-//                    // Execute the migration SQL
-//                    if ($db->multi_query($migrationSql))
-//                    {
-//                        // Clear any active results sets before moving to the next query
-//                        $db->clearResults();
-//                        $output .= "<span style=\"text-success\"><b>Executed migration</b> for version $migrationVersion</span><br>";
-//                        sys::setSyslog($db, 53, 0, "init multi_query for $migrationUrlBase$migrationVersion.sql ", 0, 0, 0, 0);
-//                    }
-//                    else
-//                    {
-//                        // migration failed
-//                        $output .= "<b>Error executing migration for version</b> $migrationVersion: " . $db->error . "<br>";
-//                        sys::setSyslog($db, 56, 2, "Error executing migration for version (multi_query failed) $migrationVersion: " . $db->error . " ", 0, 0, 0, 0);
-//                        $db->rollback(); // Rollback the transaction
-//                        return;
-//                    }
                 } // end loop through migration files
 
                 // Commit the transaction if all migrations executed successfully
@@ -329,18 +323,23 @@ namespace YAWK
                 sys::setSyslog($db, 54, 0, "<b>Migration complete</b> All migrations executed successfully.", 0, 0, 0, 0);
                 $this->migrationSuccessful = true;
             }
+            // TRANSACTION FAILED - ROLLBACK
             catch (\Exception $e)
             {   // An exception was thrown, rollback the transaction
-                if ($db->rollback() === true){
+                if ($db->rollback() === true)
+                {   // rollback successful
                     sys::setSyslog($db, 56, 2, "<b>Rolled back transaction</b> because there was an error executing migrations: " . $e->getMessage() ." ", 0, 0, 0, 0);
                     $output .= "<b>Rolled back transaction</b> because there was an error executing migrations: " . $e->getMessage() . "\n";
                 }
-                else {
+                else
+                {   // rollback failed
                     sys::setSyslog($db, 56, 2, "<b>Rollback FAILED!</b>, additionally there was an error during migrations: " . $e->getMessage() ." ", 0, 0, 0, 0);
                     $output .= "<b>ROLLBACK FAILED!</b> there was an error during migrations: " . $e->getMessage() . "\n";
                 }
                 $this->migrationSuccessful = false;
             }
+            // close migration panel body+panel
+            $output .= '</div></div></div>';
 
             // ajax response
             if (!empty($output))
@@ -348,12 +347,12 @@ namespace YAWK
                 echo $output;
             }
             else
-            {
+            {   // no output was generated - this should not happen
                 sys::setSyslog($db, 56, 2, "No migrations were executed. Output is empty. output was not filled with any value during runMigrations(). (this is not possible?!)", 0, 0, 0, 0);
                 echo "No migrations were executed. Output is empty.";
             }
-        }
 
+        }
 
         /**
          * @brief read system/update/updateFiles.ini and fetch files from remote (GitHub) server
@@ -426,46 +425,40 @@ namespace YAWK
                             if (!file_put_contents($basedir.$value, $file))
                             {   // unable to write file to local system
                                 $failedFiles++; // count failed files
-                                $response .= "<b> class=\"text-danger\">Error: Unable to write file to local system: " .$basedir.$value . "</b><br>";
+                                $response .= "<b> class=\"text-danger\">Error: Unable to write file to local system:</b> " .$basedir.$value . "<br>";
                             }
                             else
                             {   // file written successfully
                                 $successFiles++; // count successful written files
-                                $response .= "<b class=\"text-success animated fadeIn slow\">File written successfully: " . $basedir.$value . "</b><br>";
+                                $response .= "<b class=\"text-success animated fadeIn slow\">File written successfully:</b> " . $basedir.$value . "<br>";
                             }
                         }
                     }
                     // check if all files were fetched successfully
                     if ($fetchFailed > 0)
-                    {
-                        // at least one file could not be fetched
+                    {   // at least one file could not be fetched
                         $response .= "<b class=\"text-danger\">Error: Unable to fetch $fetchFailed files from remote server.</b><br>";
                     }
                     else if ($fetchSucceed === $totalUpdateFiles)
-                    {
-                        // all files fetched successfully
+                    {   // all files fetched successfully
                         $response .= "<b class=\"text-success\">All $fetchSucceed files fetched successfully from remote server.</b><br>";
                     }
                     // check if all files were written successfully
                     if ($failedFiles > 0)
-                    {
-                        // at least one file could not be written
+                    {   // at least one file could not be written
                         $response .= "<b class=\"text-danger\">Error: Unable to write $failedFiles files to local system.</b><br>";
                     }
                     else if ($successFiles === $totalUpdateFiles)
-                    {
-                        // all files written successfully
+                    {   // all files written successfully
                         $response .= "<b class=\"text-success\">All $successFiles files written successfully to local system.</b><br>";
                     }
                     // check if all files were processed
                     if ($processedFiles === $totalUpdateFiles)
-                    {
-                        // all files processed
+                    {   // all files processed
                         $response .= "<b class=\"text-success\">All $processedFiles files processed.</b><br>";
                     }
                     else
-                    {
-                        // not all files processed
+                    {   // not all files processed
                         $response .= "<b class=\"text-danger\">Error: Not all files processed. $processedFiles of $totalUpdateFiles files processed.</b><br>";
                     }
                     // check if update was successful
@@ -492,17 +485,17 @@ namespace YAWK
                 // get version from database to check if it was updated correctly
                 $version = settings::getSetting($db, "yawkversion");
                 if ($version == $updateVersion && $updateSucceed === true)
-                {
+                {   // system version was updated successfully
                     $response .= "<h3 class=\"text-success\">Update to $updateVersion completed successfully.</b><h3>";
                     sys::setSyslog($db, 54, 0, "<b>UPDATE COMPLETE</b> Migration and Files updated to $updateVersion.", 0, 0, 0, 0);
                 }
                 else
-                {
+                {   // failed to update version in database
                     $response .= "<h3 class=\"text-danger\">Failed writing new Version number $updateVersion to database</h3>";
                 }
             }
             else
-            {
+            {   // update failed
                 $response .= "<h3 class=\"text-danger\">Failed to update from $this->currentVersion to $updateVersion.</h3>";
             }
             // return xhr response
@@ -578,14 +571,14 @@ namespace YAWK
             $output_handle = fopen($output_file, 'w');
             if (!$output_handle) {
                 // handle the error (e.g. show an error message or log the error)
-                die("Failed to open file");
+                die("Failed to open file for writing: $output_file");
             }
 
             // Get the full path of the input folder
             $input_folder = realpath($input_folder);
 
             // Loop through all files in the input folder and its subfolders
-            echo "<p>Building filebase of: <i><small>$input_folder</small></i></p>";
+            echo "<p>".$lang['UPDATE_BUILDING_LOCAL_FILEBASE']." <i><small>$input_folder</small></i></p>";
             $root_files = array();
             $subfolder_files = array();
             foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($input_folder)) as $file_path)
@@ -652,15 +645,15 @@ namespace YAWK
             }
 
             // Close the output file
-            echo '<p class="animated fadeIn slow delay-1s">Indexing <b>'.$totalFiles.'</b> files. Verified <b>'.$totalFilesVerified.'</b> files. Failed <b>'.$totalFilesFailed.'</b> files.</p>';
+            echo '<p class="animated fadeIn slow delay-1s">'.$lang['UPDATE_INDEXING'].' <b>'.$totalFiles.'</b> '.$lang['FILES'].'. '.$lang['VERIFIED'].' <b>'.$totalFilesVerified.'</b> '.$lang['FILES'].'. '.$lang['FAILED'].' <b>'.$totalFilesFailed.'</b> '.$lang['FILES'].'.</p>';
 
             if (!is_file($output_file))
             {   // unable to write ini file
-                $iniFileWritten = "<h4 class=\"text-danger\">".$iniFileName." could not be written</h4>";
+                $iniFileWritten = "<h4 class=\"text-danger\">".$iniFileName." ".$lang['COULD_NOT_BE_WRITTEN']."</h4>";
             }
             else
             {   // ini file written successfully
-                $iniFileWritten = "<p class=\"animated fadeIn slow delay-5s\">Hash values written to: <b><a href=\"$updatePath$iniFileName\" target=\"_blank\">$updatePath$iniFileName</a></b></p>";
+                $iniFileWritten = "<p class=\"animated fadeIn slow delay-5s\">".$lang['UPDATE_HASH_VALUES_WRITTEN_TO']." <b><a href=\"$updatePath$iniFileName\" target=\"_blank\">$updatePath$iniFileName</a></b></p>";
             }
 
             // check if all files were verified
@@ -681,17 +674,22 @@ namespace YAWK
             }
 
             echo "
-<p class=\"animated fadeIn slow delay-2s$successColor\">$icon &nbsp;Generated hash values: <b>$totalFilesVerified / $totalFiles</b></p>
-<h4 class=\"animated fadeIn slow delay-3s\">$done</h4>
-<p class=\"animated fadeIn slow delay-4s$failedColor\">$iconFalse &nbsp;Failed to verify: <b>$totalFilesFailed</b></p>
-$iniFileWritten";
+            <p class=\"animated fadeIn slow delay-2s$successColor\">$icon &nbsp;".$lang['UPDATE_GENERATED_HASH_VALUES']." <b>$totalFilesVerified / $totalFiles</b></p>";
+            echo"<h4 class=\"animated fadeIn slow delay-4s\">$done</h4>
+            $iniFileWritten";
+
+            // check if any files failed
+            if ($totalFilesFailed > 0)
+            {   // show amount of failed files
+                echo"<p class=\"animated fadeIn slow delay-3s$failedColor\">$iconFalse &nbsp;".$lang['UPDATE_FAILED_TO_VERIFY']." <b>$totalFilesFailed</b></p>";
+            }
 
             // Close the output file
-            if (!fclose($output_handle)){
+            if (!fclose($output_handle))
+            {   // unable to close ini file
                 echo '<p class="animated fadeIn slow delay-5s">failed to close: '.$updateFolder.$iniFileName.'</p>';
             }
         }
-
 
         /**
          * @brief read filebase.ini from update server (https://update.yawk.io/filebase.ini) and return array|false
@@ -725,7 +723,7 @@ $iniFileWritten";
             }
             // return array or false
             return $updateFilebase ?? false;
-
         }
+
     } // EOF class update
 } // EOF namespace
