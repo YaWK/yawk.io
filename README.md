@@ -90,4 +90,3 @@ You're welcome! You have found a bug? Please let us know! Do you want to request
 <hr>
 <h4><i>Check back again soon and stay tuned for upcoming website and project updates!</i></h4>
 <br><br>
-![counter](https://[yawk].m.pipedream.net)
