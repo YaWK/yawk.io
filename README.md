@@ -89,4 +89,5 @@ After spending a lot of my lifetime on this project, I decided to follow my frie
 You're welcome! You have found a bug? Please let us know! Do you want to request a feature? Feel free to get in contact - open an issue or pull request. Any input is welcome!</i>
 <hr>
 <h4><i>Check back again soon and stay tuned for upcoming website and project updates!</i></h4>
-<br><br>
+
+<img src="https://komarev.com/ghpvc/?username=YaWK&style=flat-square&color=blue&label=Repository+Hit+COUNTER:" alt="Profile Hit Counter"/>
