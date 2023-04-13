@@ -820,6 +820,7 @@ namespace YAWK {
 #Options +FollowSymlinks
 Order allow,deny
 Allow from all
+Require all granted
 
 # custom error page
 ErrorDocument 404 $host/content/errors/404.html
