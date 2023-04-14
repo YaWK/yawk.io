@@ -5,6 +5,15 @@ Documentation: <b><a href="https://docs.yawk.io/namespaceYAWK.html" target="_bla
 <h1>What is YaWK?</h1>
 <b>YaWK</b> = <b>Y</b>et <b>a</b>nother <b>W</b>eb<b>K</b>it<br> 
 <b>YaWK is a free, open-source-bundle solution</b> CMS to build, design and operate any modern webpage or web-app. Designed to be slick, fast and reliable. Steady in development. It brings together, what belongs together. YaWK uses HTML, CSS, MySQL, PHP and JavaScript to bundle Bootstrap, jQuery, AdminLTE, FontAwesome and much more of your favourite daily use web open source tools and combines them into a new base for your daily work.
+<div style="text-align: center;">
+  <img src="https://github.com/devicons/devicon/blob/master/icons/php/php-plain.svg" title="PHP" alt="PHP" width="25" height="25"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" title="JavaScript" alt="JavaScript" width="25" height="25"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/mysql/mysql-original-wordmark.svg" title="MySQL"  alt="MySQL" width="25" height="25"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/bootstrap/boostrap-original-wordmark.svg" title="Bootstrap" alt="Bootstrap" width="25" height="25"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/jquery/jquery-original-wordmark.svg.svg"  title="jQuery" alt="jQuery" width="25" height="25"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-plain-wordmark.svg"  title="CSS3" alt="CSS" width="25" height="25"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" title="HTML5" alt="HTML" width="25" height="25"/>&nbsp;
+</div>
 <hr>
 <h3><g-emoji class="g-emoji" alias="warning" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/26a0.png">🚀</g-emoji> Development status - <small>what has been done so far?</small></h3>
 Short answer, a lot! - long answer: take a look at <a href="https://yawk.io/features.html" target="_blank" title="YaWK Feature List">FEATURE LIST</a>, <a href="https://github.com/YaWK/yawk.io/issues?q=is%3Aissue+is%3Aclosed" target="_blank">latest closed issues</a> and <a href="https://github.com/YaWK/yawk.io/milestones?state=closed" target="_blank">milestones</a> 
