@@ -322,6 +322,16 @@ namespace YAWK {
                       <input type=\"hidden\" name=\"resetPasswordRequest\" id=\"resetPasswordRequest\" value=\"true\">
                     </div>
                     <div class=\"modal-footer\">
+                        <div class=\"form-group col-md-12\"><h3 class=\"pull-left\">Please solve this captcha:</h3></div>
+                        <div class =\"form-group col-md-4\">
+                          <input type=\"text\" size=\"1\" maxlength=\"2\" name=\"number1\" id=\"number1\" value=\"".rand(1,12)."\"> 
+                        </div> 
+                        <div class=\"form-group col-md-4\">
+                          <label for=\"number2\"> + </label> <input type=\"text\" size=\"1\" maxlength=\"2\" name=\"number2\" id=\"number2\" value=\"".rand(1,12)."\"> 
+                        </div>
+                        <div class=\"form-group col-md-4\">                  
+                          <label for=\"number2\"> = </label> <input type=\"text\" size=\"2\" maxlength=\"2\" name=\"captcha\" id=\"captcha\">
+                        </div>
                       <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-check\"></i> &nbsp;$lang[PASSWORD_RESET]</button>
                       <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\"><i class=\"fa fa-times\"></i>&nbsp; $lang[CANCEL]</button>
                       <hr>";

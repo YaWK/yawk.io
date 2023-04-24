@@ -188,15 +188,27 @@ if (!isset($AdminLTE))
 
       // reset password email request
       if (isset($_POST['resetPasswordRequest']) && ($_POST['resetPasswordRequest'] == "true"))
-      {   // send reset email
-          if ($user::sendResetEmail($db, $_POST['username'], $_POST['email'], $lang) == true)
-          {   // email sent
-              alert::draw("success", "$lang[EMAIL_SENT]", "$lang[PLEASE_CHECK_YOUR_INBOX]", "", 2400);
+      {
+          if (!empty($_POST['number1'] && (!empty($_POST['number2']) && (!empty($_POST['captcha'])))))
+                $number1 = $_POST['number1'];
+                $number2 = $_POST['number2'];
+                $captcha = $_POST['captcha'];
+                if ($captcha != ($number1 + $number2))
+                {   // error: captcha failed
+                    alert::draw("danger", $lang['ERROR'], $lang['CAPTCHA_FAILED'], "", 3800);
+                }
+                else
+                {   // captcha solved, send reset email
+                    if ($user::sendResetEmail($db, $_POST['username'], $_POST['email'], $lang) == true)
+                    {   // email sent
+                        alert::draw("success", "$lang[EMAIL_SENT]", "$lang[PLEASE_CHECK_YOUR_INBOX]", "", 2400);
+                    }
+                    else
+                    {   // error: sending reset email failed
+                        alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_FAILED'], "", 3800);
+                    }
+                }
           }
-          else
-              {   // error: sending reset email failed
-                  alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_FAILED'], "", 3800);
-              }
       }
 
       // reset password requested
