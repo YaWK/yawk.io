@@ -236,7 +236,6 @@ if (!isset($AdminLTE))
                       alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_TOKEN_INVALID'], "", 3800);
                   }
           }
-      }
 
         // draw login box
        // echo \YAWK\backend::drawLoginBox($db, $lang);
