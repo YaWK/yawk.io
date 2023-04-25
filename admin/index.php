@@ -144,52 +144,15 @@ if (!isset($AdminLTE))
     else
     {
       // user is not logged in - set a basic body markup and display login box
-
-
       // body markup
       echo "<body style=\"background-color: #ecf0f5\">
 ";
 
-        // check if the current user is logged in
-        if (backend::checkLogin($db) === false)
+        // reset password email request
+        if (isset($_POST['resetPasswordRequest']))
         {
-            // USER BAN (client side)
-            // if the user has failed to login more than 5 times, ban them for 60 minutes
-            if (!isset($_SESSION['failed']))
-            {   // prepare session var
-                $_SESSION['failed'] = 0;
-            }
-            if (!isset($_SESSION['lockout_until']))
-            {   // reset lockout time
-                $_SESSION['lockout_until'] = 0;
-            }
-
-            if (isset($_POST['user']) && (!empty($_POST['user']))){
-                $user->currentuser = $_POST['user'];
-            }
-
-            // do not allow login attempts if the user is currently banned
-            if (time() < $_SESSION['lockout_until'])
-            {   // inform the user that he is banned
-                alert::draw("danger", "ACCESS DENIED", "You have reached the maximum number of login attempts. You have been banned for 60 minutes.<br>Your IP ".$_SERVER['REMOTE_ADDR']." / ".$_SERVER['REMOTE_HOST']." has been logged.", "", 0);
-                // add syslog entry
-                sys::setSyslog($db, 12, 2, "Possible brute force client ".$_SERVER['REMOTE_ADDR']." ".$_SERVER['REMOTE_HOST']." banned.", 0, 0, 0, 0);
-            }
-            else
-            {   // draw login box
-                echo backend::drawLoginBox($db, $lang);
-            }
-
-        }
-        else {
-            // add syslog entry for successful login
-            alert::draw("success", $lang['SUCCESS'], $lang['LOGIN']." ".$lang['SUCCESSFUL'], "index.php", 1200);
-        }
-
-      // reset password email request
-      if (isset($_POST['resetPasswordRequest']) && ($_POST['resetPasswordRequest'] == "true"))
-      {
-          if (!empty($_POST['number1'] && (!empty($_POST['number2']) && (!empty($_POST['captcha'])))))
+            if (!empty($_POST['number1'] && (!empty($_POST['number2']) && (!empty($_POST['captcha'])))))
+            {
                 $number1 = $_POST['number1'];
                 $number2 = $_POST['number2'];
                 $captcha = $_POST['captcha'];
@@ -208,47 +171,91 @@ if (!isset($AdminLTE))
                         alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_FAILED'], "", 3800);
                     }
                 }
-          }
-      }
+            }
+        }
 
-      // reset password requested
-      if (isset($_GET['resetPassword']) && (!empty($_GET['resetPassword']) && ($_GET['resetPassword'] === true)))
-      {
-          // check if reset token is set
-          if (isset($_GET['token']) && (!empty($_GET['token']) && (is_string($_GET['token']))))
-          {
-              // check if sent token is equal to saved token
-              if ($user::checkResetToken($db, $_GET['token']) === true)
-              {
-                  // draw reset password form
-                  echo $_GET['token'];
-                  // echo \YAWK\backend::drawPasswordResetForm($db, $lang);
-                  // end section markup
-                  echo "<br><br></section></div>";
-                  // output js includes at bottom of page
-                  echo $AdminLTE->drawHtmlJSIncludes();
-                  // html output end
-                  echo $AdminLTE->drawHtmlEnd($db);
-                  exit;
-              }
-              else
-                  {   // ERROR: token does not match with database - throw error
-                      alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_TOKEN_INVALID'], "", 3800);
-                  }
-          }
+        // reset password requested (from email link)
+        if (isset($_GET['resetPassword'])) {
+            // check if reset token is set
+            if (!empty($_GET['token']) && (is_string($_GET['token']))) {
+                // check if sent token is equal to saved token
+                if ($user::checkResetToken($db, $_GET['token']) === true) {
+                    // draw reset password form
+                    echo $_GET['token'];
+                    // echo \YAWK\backend::drawPasswordResetForm($db, $lang);
+                    // end section markup
+                    echo "<br><br></section></div>";
+                    // output js includes at bottom of page
+                    echo $AdminLTE->drawHtmlJSIncludes();
+                    // html output end
+                    echo $AdminLTE->drawHtmlEnd($db);
+                    exit;
+                }
+                else {   // ERROR: token does not match with database - throw error
+                    alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_TOKEN_INVALID'], "", 3800);
+                }
+            }
+        }
+
+            // check if the current user is logged in
+            if (backend::checkLogin($db) === false)
+            {
+                // USER BAN (client side)
+                // if the user has failed to login more than 5 times, ban them for 60 minutes
+                if (!isset($_SESSION['failed']))
+                {   // prepare session var
+                    $_SESSION['failed'] = 0;
+                }
+                if (!isset($_SESSION['lockout_until']))
+                {   // reset lockout time
+                    $_SESSION['lockout_until'] = 0;
+                }
+
+                if (isset($_POST['user']) && (!empty($_POST['user']))){
+                    $user->currentuser = $_POST['user'];
+                }
+
+                // do not allow login attempts if the user is currently banned
+                if (time() < $_SESSION['lockout_until'])
+                {   // inform the user that he is banned
+                    alert::draw("danger", "ACCESS DENIED", "You have reached the maximum number of login attempts. You have been banned for 60 minutes.<br>Your IP ".$_SERVER['REMOTE_ADDR']." / ".$_SERVER['REMOTE_HOST']." has been logged.", "", 0);
+                    // add syslog entry
+                    sys::setSyslog($db, 12, 2, "Possible brute force client ".$_SERVER['REMOTE_ADDR']." ".$_SERVER['REMOTE_HOST']." banned.", 0, 0, 0, 0);
+                }
+                else
+                {   // draw login box
+                    echo backend::drawLoginBox($db, $lang);
+                }
+                // end section markup
+                echo "<br><br></section></div>";
+
+                // output js includes at bottom of page
+                echo $AdminLTE->drawHtmlJSIncludes();
+
+                // html output end
+                echo $AdminLTE->drawHtmlEnd($db);
+                exit;
+            }
+            else {
+                // add syslog entry for successful login
+                alert::draw("success", $lang['SUCCESS'], $lang['LOGIN']." ".$lang['SUCCESSFUL'], "index.php", 1200);
+            }
+    }
+
+
+
 
         // draw login box
        // echo \YAWK\backend::drawLoginBox($db, $lang);
+// end section markup
+//    echo "<br><br></section></div>";
+//
+//// output js includes at bottom of page
+//    echo $AdminLTE->drawHtmlJSIncludes();
+//
+//// html output end
+//    echo $AdminLTE->drawHtmlEnd($db);
+//    exit;
 
-      // end section markup
-      echo "<br><br></section></div>";
-
-      // output js includes at bottom of page
-      echo $AdminLTE->drawHtmlJSIncludes();
-
-      // html output end
-      echo $AdminLTE->drawHtmlEnd($db);
-      exit;
-    }
 }
 /* END /admin index controller */

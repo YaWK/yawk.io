@@ -1909,12 +1909,12 @@ namespace YAWK {
                                         clearInterval(counter);
                                         //counter ended, do something here
                                         $('div *').prop('disabled', false);
-                                        $(timer).empty();
-                                        $(timer).append(\"a few\").fadeIn();
+                                        // $(timer).empty();
+                                        // $(timer).append(\"a few\").fadeIn();
                                         return null;
                                     }
                                     //Do code for showing the number of seconds here
-                                    document.getElementById(\"timer\").innerHTML=count; // watch for spelling
+                                    // document.getElementById(\"timer\").innerHTML=count; // watch for spelling
                                 }
                        
                             </script>";

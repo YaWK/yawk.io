@@ -92,6 +92,8 @@ namespace YAWK\BACKEND {
     <!-- windows tiles -->
     <meta name=\"msapplication-TileColor\" content=\"#ff6600\">
     <meta name=\"msapplication-TileImage\" content=\"mstile-144x144.png\">
+    <!-- jQuery 2.1.4 -->
+    <script type=\"text/javascript\" src=\"../system/engines/jquery/jquery-3.6.4.min.js\"></script>
     
     ".$this->paceLoader."
         
@@ -112,9 +114,6 @@ namespace YAWK\BACKEND {
 
     <!-- include custom css -->
     <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/css/skins/custom.css\">
-
-    <!-- jQuery 2.1.4 -->
-    <script type=\"text/javascript\" src=\"../system/engines/jquery/jquery-3.6.4.min.js\"></script>
     
     <!-- moment.js (used by datetimepicker) --> 
     <script type=\"text/javascript\" src=\"../system/engines/jquery/moment.min.js\"></script>
@@ -124,10 +123,7 @@ namespace YAWK\BACKEND {
 
     <!-- Notify JS -->
     <script src=\"../system/engines/jquery/notify/bootstrap-notify.min.js\"></script>
-    
-    <!-- YaWK Backend JS Functions -->
-    <script type=\"text/javascript\" src=\"js/yawk-backend.js\"></script>
-    
+        
     <!-- favicons -->
     <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"apple-touch-icon.png\">
     <link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"favicon-32x32.png\">
@@ -1434,7 +1430,9 @@ namespace YAWK\BACKEND {
         <!-- data table -->
         <script type=\"text/javascript\" src=\"../system/engines/jquery/jquery.dataTables.min.js\"></script>
         <!-- AdminLTE App -->
-        <script type=\"text/javascript\" src=\"../system/engines/AdminLTE/js/app.min.js\"></script>";
+        <script type=\"text/javascript\" src=\"../system/engines/AdminLTE/js/app.min.js\"></script>
+        <!-- YaWK Backend JS Functions -->
+        <script type=\"text/javascript\" src=\"js/yawk-backend.js\"></script>";
             return null;
         }
 

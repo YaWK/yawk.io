@@ -162,10 +162,7 @@ namespace YAWK {
         static function checkLogin(object $db): bool
         {   /** @var $db \YAWK\db */
             /* check user login */
-            if (!isset($_POST['user'])){
-                echo "<script>disableButtons(60000);</script>";
-                return false;
-            }
+
             // cut off any blank spaces
             if (isset($_POST['user'])){
                 $_POST['user']=trim($_POST['user']);
@@ -199,7 +196,7 @@ namespace YAWK {
             else
             {   // username or password not set
                 // alert: no username was set - please enter a qualified username
-                \YAWK\alert::draw("warning", "Username", "Please enter a qualified username", "", 2400);
+                // \YAWK\alert::draw("warning", "Username", "Please enter a qualified username", "", 2400);
 
                 return false;
             }
@@ -330,14 +327,23 @@ namespace YAWK {
                           <label for=\"number2\"> + </label> <input type=\"text\" size=\"1\" maxlength=\"2\" name=\"number2\" id=\"number2\" value=\"".rand(1,12)."\"> 
                         </div>
                         <div class=\"form-group col-md-4\">                  
-                          <label for=\"number2\"> = </label> <input type=\"text\" size=\"2\" maxlength=\"2\" name=\"captcha\" id=\"captcha\">
+                          <label for=\"captcha\"> = </label> <input type=\"text\" size=\"2\" maxlength=\"2\" name=\"captcha\" id=\"captcha\">
                         </div>
                       <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-check\"></i> &nbsp;$lang[PASSWORD_RESET]</button>
                       <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\"><i class=\"fa fa-times\"></i>&nbsp; $lang[CANCEL]</button>
+                      <input type=\"hidden\" name=\"resetPasswordRequest\" id=\"resetPasswordRequest\" value=\"true\">
                       <hr>";
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $hostname = gethostname();
-            $network = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            if (!empty($_SERVER['REMOTE_ADDR'])){
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $hostname = gethostname();
+                $network = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            }
+            else {
+                $ip = "unknown";
+                $hostname = "unknown";
+                $network = "";
+            }
+
             $modalWindow .= "<div class=\"text-left small\"><i><small>Access from IP: $ip @ $hostname from network: $network will be logged.</small></i></div>
                     </div>
                   </div>

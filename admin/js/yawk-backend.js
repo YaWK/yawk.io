@@ -101,7 +101,6 @@ $(document).ready(function() {
         }
     });
 
-
     // BLOCKED USER BUTTON (user-edit.php)
     $("#blockedBtn").hover(function()
     {
