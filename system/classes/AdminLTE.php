@@ -203,6 +203,9 @@ namespace YAWK\BACKEND {
         .show > .btn-dark.dropdown-toggle:focus {
           box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
         }
+        .content-wrapper {
+            min-height: 1400px;
+        }
     </style>
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
