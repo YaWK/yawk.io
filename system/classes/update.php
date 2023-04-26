@@ -227,7 +227,7 @@ namespace YAWK
     <div class="panel-heading" role="tab" id="headingMigration">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseMigration" aria-expanded="true" aria-controls="collapseMigration">
-          Migrations<br>
+          '.$lang['UPDATE_MIGRATIONS'].'<br>
           <small>(database updates)</small>
         </a>
       </h4>
@@ -250,7 +250,7 @@ namespace YAWK
                     // check if migration was already executed
                     if ($migrationRecord !== null)
                     {   // migration was already executed
-                        $output .= "Migration for build $migrationVersion was already executed.<br>";
+                        $output .= "$migrationVersion : ".$lang['UPDATE_MIGRATION_ALREADY_EXEC']."<br>";
                         sys::setSyslog($db, 53, 1, "Migration for build $migrationVersion was already executed.", 0, 0, 0, 0);
                         $failedMigrations++;
                         continue;
@@ -265,14 +265,14 @@ namespace YAWK
                     // Check if the migration file was fetched successfully
                     if ($migrationSql === false)
                     {   // Unable to fetch migration file
-                        $output .= "No migration required for build $migrationVersion<br>";
+                        $output .= $lang["UPDATE_NO_MIGRATION_REQUIRED_FOR_BUILD"]." ".$migrationVersion."<br>";
                         sys::setSyslog($db, 53, 0, "No migration required for build $migrationVersion", 0, 0, 0, 0);
                         $failedMigrations++;
                         continue;
                     }
                     else
                     {   // Fetched migration file successfully
-                        $output .= "<span style=\"text-success\"><b>Fetched migration file</b> from $migrationUrl</span><br>";
+                        $output .= "<span style=\"text-success\"><b>".$lang['UPDATE_FETCHED_MIGRATION_FILE_FROM']."</b>".$migrationUrl."</span><br>";
                         sys::setSyslog($db, 54, 0, "<b>Fetched migration file</b> from $migrationUrl", 0, 0, 0, 0);
                         $successfulMigrations++;
                         $successfulMigrationVersions[] = $migrationVersion;
@@ -295,14 +295,14 @@ namespace YAWK
                         {   // execute the sql statement
                             if (!$db->query($sqlStatement))
                             {   // migration failed
-                                $output .= "$migrationVersion <b>Error executing migration</b> statement #$statementCounter" . $db->error . "<br>";
+                                $output .= $migrationVersion." ".$lang['UPDATE_ERROR_EXEC_FAILED']." ".$statementCounter . $db->error . "<br>";
                                 sys::setSyslog($db, 56, 2, "Error executing migration statement #$statementCounter for version (query failed) $migrationVersion: " . $db->error . " ", 0, 0, 0, 0);
                                 $db->rollback(); // Rollback the transaction
                                 return;
                             }
                             else
                             {   // migration successful
-                                $output .= "<span style=\"text-success\">$migrationVersion <b>Executed migration</b> statement #$statementCounter</span><br>";
+                                $output .= "<span style=\"text-success\">$migrationVersion ".$lang['UPDATE_ERROR_EXEC_SUCCESS']." $statementCounter</span><br>";
                                 sys::setSyslog($db, 53, 0, "executed migration statement #$statementCounter : $migrationUrlBase$migrationVersion.sql ", 0, 0, 0, 0);
                             }
                         }
@@ -316,12 +316,15 @@ namespace YAWK
                 if ($successfulMigrations > 0)
                 {   // store migration version in database
                     $this->recordMigration($db, $successfulMigrationVersions);
+                    foreach ($successfulMigrationVersions as $successfulMigrationVersion)
+                    {   // output successful migration version
+                        $output .= "<span style=\"text-success\">$successfulMigrationVersion ".$lang['UPDATE_MIGRATION_RECORDED']."</span><br>";
+                    }
+                    // log successful migration
+                    sys::setSyslog($db, 54, 0, "<b>Migration complete</b>Migrations executed successfully.", 0, 0, 0, 0);
+                    $this->migrationSuccessful = true;
                 }
-
-                // all migrations executed successfully
-                $output .= "<h3 class=\"text-success\">All migrations executed successfully.</h3>";
-                sys::setSyslog($db, 54, 0, "<b>Migration complete</b> All migrations executed successfully.", 0, 0, 0, 0);
-                $this->migrationSuccessful = true;
+                // END migrations executed successfully
             }
             // TRANSACTION FAILED - ROLLBACK
             catch (\Exception $e)
@@ -329,19 +332,19 @@ namespace YAWK
                 if ($db->rollback() === true)
                 {   // rollback successful
                     sys::setSyslog($db, 56, 2, "<b>Rolled back transaction</b> because there was an error executing migrations: " . $e->getMessage() ." ", 0, 0, 0, 0);
-                    $output .= "<b>Rolled back transaction</b> because there was an error executing migrations: " . $e->getMessage() . "\n";
+                    $output .= $lang['UPDATE_MIGRATION_ROLLED_BACK'] . $e->getMessage() . "\n";
                 }
                 else
                 {   // rollback failed
                     sys::setSyslog($db, 56, 2, "<b>Rollback FAILED!</b>, additionally there was an error during migrations: " . $e->getMessage() ." ", 0, 0, 0, 0);
-                    $output .= "<b>ROLLBACK FAILED!</b> there was an error during migrations: " . $e->getMessage() . "\n";
+                    $output .= $lang['UPDATE_MIGRATION_ROLLBACK_FAILED']  . $e->getMessage() . "\n";
                 }
                 $this->migrationSuccessful = false;
             }
             // close migration panel body+panel
-            $output .= '</div></div></div>';
+            $output .= "</div></div></div>";
 
-            // ajax response
+            // output ajax response
             if (!empty($output))
             {   // will be returned to ajax request
                 echo $output;
@@ -349,9 +352,8 @@ namespace YAWK
             else
             {   // no output was generated - this should not happen
                 sys::setSyslog($db, 56, 2, "No migrations were executed. Output is empty. output was not filled with any value during runMigrations(). (this is not possible?!)", 0, 0, 0, 0);
-                echo "No migrations were executed. Output is empty.";
+                echo $lang['UPDATE_NO_MIGRATION_EXECUTED'];
             }
-
         }
 
         /**
@@ -388,8 +390,8 @@ namespace YAWK
                 $this->updateFiles = parse_ini_file($basedir.$this->localUpdateSystemPath . $this->updateFilesFile);
                 if (count($this->updateFiles) < 1)
                 {   // unable to read updateFiles.ini from local update folder
-                    $response .= "<span class=\"text-warning\"><p><i class=\"fa fa-exclamation-triangle text-warning\"></i> &nbsp;No entries to process in updateFiles.ini - this can happen, if all of your files have the same hash value as the update files, but version number differs.<br><br><b>You may want to fast-forward to latest Version Number.</b><small><i>But think, before you click - and make a <a href=\"index.php?page=settings-update\">Backup!</a></i></small></p>
-                                  <a href=\"#fastForwardUpdate\" id=\"fastForwardUpdateBtn\" class=\"btn btn-warning\">Fast Forward to latest Version &nbsp;<i class=\"fa fa-fast-forward\"></i></a></span><br>";
+                    $response .= "<span class=\"text-warning\"><p><i class=\"fa fa-exclamation-triangle text-warning\"></i>".$lang['UPDATE_FAST_FORWARD_INFO']."
+                    <a href=\"#fastForwardUpdate\" id=\"fastForwardUpdateBtn\" class=\"btn btn-warning\">".$lang['UPDATE_FAST_FORWARD_BTN']." &nbsp;<i class=\"fa fa-fast-forward\"></i></a></span><br>";
                 }
                 else
                 {   // count elements of updateFiles array
@@ -409,12 +411,12 @@ namespace YAWK
 
                         // build file url
                         $fileUrl = $this->updateServer . $value;
-                        // fetch file
+                        // fetch next file to update
                         $file = file_get_contents($fileUrl);
                         if ($file === false)
                         {
                             // unable to fetch file
-                            $response .= "Error: Unable to fetch file from $fileUrl<br>";
+                            $response .= $lang['UPDATE_FETCH_FILE_FAILED'].$fileUrl."<br>";
                             $fetchFailed++;
                         }
                         else
@@ -425,41 +427,41 @@ namespace YAWK
                             if (!file_put_contents($basedir.$value, $file))
                             {   // unable to write file to local system
                                 $failedFiles++; // count failed files
-                                $response .= "<b> class=\"text-danger\">Error: Unable to write file to local system:</b> " .$basedir.$value . "<br>";
+                                $response .= "<b> class=\"text-danger\">".$lang['UPDATE_UNABLE_TO_WRITE_FILE']."</b> " .$basedir.$value . "<br>";
                             }
                             else
                             {   // file written successfully
                                 $successFiles++; // count successful written files
-                                $response .= "<b class=\"text-success animated fadeIn slow\">File written successfully:</b> " . $basedir.$value . "<br>";
+                                $response .= "<b class=\"text-success animated fadeIn slow\">".$lang['UPDATE_FILE_WRITTEN']."</b> " . $basedir.$value . "<br>";
                             }
                         }
                     }
                     // check if all files were fetched successfully
                     if ($fetchFailed > 0)
                     {   // at least one file could not be fetched
-                        $response .= "<b class=\"text-danger\">Error: Unable to fetch $fetchFailed files from remote server.</b><br>";
+                        $response .= "<b class=\"text-danger\">".$lang['UNABLE_TO_FETCH_FILES_FROM_REMOTE_SERVER']." $fetchFailed</b><br>";
                     }
                     else if ($fetchSucceed === $totalUpdateFiles)
                     {   // all files fetched successfully
-                        $response .= "<b class=\"text-success\">All $fetchSucceed files fetched successfully from remote server.</b><br>";
+                        $response .= "<b class=\"text-success\">$fetchSucceed ".$lang['UPDATE_SUCCESSFULLY_FETCHED']."</b><br>";
                     }
                     // check if all files were written successfully
                     if ($failedFiles > 0)
                     {   // at least one file could not be written
-                        $response .= "<b class=\"text-danger\">Error: Unable to write $failedFiles files to local system.</b><br>";
+                        $response .= "<b class=\"text-danger\">$failedFiles ".$lang['UPDATE_FAILED_FILES']."</b><br>";
                     }
                     else if ($successFiles === $totalUpdateFiles)
                     {   // all files written successfully
-                        $response .= "<b class=\"text-success\">All $successFiles files written successfully to local system.</b><br>";
+                        $response .= "<b class=\"text-success\">".$lang['ALL']." ".$successFiles." ".$lang['UPDATE_ALL_FILES_SUCCESS']."</b><br>";
                     }
                     // check if all files were processed
                     if ($processedFiles === $totalUpdateFiles)
                     {   // all files processed
-                        $response .= "<b class=\"text-success\">All $processedFiles files processed.</b><br>";
+                        $response .= "<b class=\"text-success\">".$lang['ALL']." ".$processedFiles." ".$lang['UPDATE_FILES_PROCESSED']."</b><br>";
                     }
                     else
                     {   // not all files processed
-                        $response .= "<b class=\"text-danger\">Error: Not all files processed. $processedFiles of $totalUpdateFiles files processed.</b><br>";
+                        $response .= "<b class=\"text-danger\">".$lang['UPDATE_NOT_ALL_FILES_PROCESSED']." ".$processedFiles." ".$lang['OF']." ".$totalUpdateFiles." ".$lang['UPDATE_FILES_PROCESSED'].".</b><br>";
                     }
                     // check if update was successful
                     if ($successFiles === $totalUpdateFiles)
@@ -468,13 +470,13 @@ namespace YAWK
                     }
                     else
                     {   // update failed
-                        $response .= "<h3 class=\"text-danger\">Update failed.</h3>";
+                        $response .= "<h3 class=\"text-danger\">".$lang['UPDATE_FAILED']."</h3>";
                     }
                 }
             }
             else
             {   // updateFiles.ini does not exist
-                $response .= "<span class=\"text-danger\"><b>Error:</b> updateFiles.ini does not exist. Check if this file exists: " .$basedir.$this->localUpdateSystemPath . $this->updateFilesFile . "</span>";
+                $response .= "<span class=\"text-danger\"><b>".$lang['ERROR'].":</b> ".$lang['UPDATE_FILES_INI_MISSING']." " .$basedir.$this->localUpdateSystemPath . $this->updateFilesFile . "</span>";
             }
 
             // check if update was successful
@@ -486,17 +488,17 @@ namespace YAWK
                 $version = settings::getSetting($db, "yawkversion");
                 if ($version == $updateVersion && $updateSucceed === true)
                 {   // system version was updated successfully
-                    $response .= "<h3 class=\"text-success\">Update to $updateVersion completed successfully.</b><h3>";
+                    $response .= "<h3 class=\"text-success\">".$lang['UPDATE_TO']." $updateVersion ".$lang['COMPLETED_SUCCESSFULLY']."</b><h3>";
                     sys::setSyslog($db, 54, 0, "<b>UPDATE COMPLETE</b> Migration and Files updated to $updateVersion.", 0, 0, 0, 0);
                 }
                 else
                 {   // failed to update version in database
-                    $response .= "<h3 class=\"text-danger\">Failed writing new Version number $updateVersion to database</h3>";
+                    $response .= "<h3 class=\"text-danger\">".$lang['UPDATE_FAILED_TO_WRITE_VERSION_NUMBER']." ($updateVersion)</h3>";
                 }
             }
             else
             {   // update failed
-                $response .= "<h3 class=\"text-danger\">Failed to update from $this->currentVersion to $updateVersion.</h3>";
+                $response .= "<h3 class=\"text-danger\">".$lang['UPDATE_FAILED_FROM']." $this->currentVersion ".$lang['TO']." $updateVersion.</h3>";
             }
             // return xhr response
             echo $response;
