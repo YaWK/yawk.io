@@ -846,17 +846,11 @@ namespace YAWK {
             echo "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css\" />";
 
             // draw offline message
-            echo "<div class=\"container-fluid\">";
             echo "<div class=\"row\">";
-            echo "<div class=\"col-md-2\"></div>";
-            echo "<div class=\"col-md-8 text-center\">
-                        <br><br>
-                        <img src=\"".$offlineimg."\" class=\"img-responsive img-fluid mx-auto animated flipInX\" title=\"This website is under construction. Come back again later.\">
-                        <br><br>
+            echo "<div class=\"col-md-12 text-center\">
+                        <img src=\"".$offlineimg."\" class=\"img-responsive img-fluid mx-auto mt-5 mb-5 animated flipInX\" title=\"This website is under construction. Come back again later.\">
                         <div class=\"animated fadeIn\">".$offlinemsg."</div>
-                      </div>";
-            echo "<div class=\"col-md-2\"></div>";
-            echo "</div>";
+                  </div>";
             echo "</div>";
             exit;
         }
