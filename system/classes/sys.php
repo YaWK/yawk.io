@@ -851,7 +851,7 @@ namespace YAWK {
             echo "<div class=\"col-md-2\"></div>";
             echo "<div class=\"col-md-8 text-center\">
                         <br><br>
-                        <img src=\"".$offlineimg."\" class=\"img-responsive mx-auto d-block animated flipInX\" title=\"This website is under construction. Come back again later.\">
+                        <img src=\"".$offlineimg."\" class=\"img-responsive img-fluid mx-auto animated flipInX\" title=\"This website is under construction. Come back again later.\">
                         <br><br>
                         <div class=\"animated fadeIn\">".$offlinemsg."</div>
                       </div>";
