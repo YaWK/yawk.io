@@ -242,7 +242,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                         
                         foreach ($getPreviewImages as $property => $image)
                         {   // display preview images
-                            for ($i = 0; $i < count($property); $i++)
+                            for ($i = 0; $i < mb_strlen($property); $i++)
                             {
                                 $this->itemID = $image['id'];
                                 $this->sort = $image['sort'];
