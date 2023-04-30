@@ -910,6 +910,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 # CACHE + THREAD SETTINGS
  <ifModule mod_headers.c>
     Header set Connection keep-alive
+    Header set Access-Control-Allow-Origin "*"
  </ifModule>
 
 # CACHE - STATIC CONTENT CACHING starts here
