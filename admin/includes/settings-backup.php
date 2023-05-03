@@ -375,16 +375,15 @@ if (isset($_POST))
                         // create new directory in archive
                         if (!is_dir(dirname($backup->archiveBackupSubFolder)))
                         {
-
-                        }
-                        if (mkdir($backup->archiveBackupSubFolder))
-                        {   // all good, new archive subfolder created
-                            alert::draw("success", $_POST['file'], "$backup->archiveBackupSubFolder $lang[CREATED]", "", 2600);
-                        }
-                        else
-                        {   // failed to create new archive subfolder
-                            sys::setSyslog($db, 51, 2, "failed to create new archive subfolder $backup->archiveBackupSubFolder", 0, 0, 0, 0);
-                            alert::draw("danger", $_POST['file'], "$backup->archiveBackupSubFolder $lang[WAS_NOT_CREATED]", "", 6400);
+                            if (mkdir($backup->archiveBackupSubFolder))
+                            {   // all good, new archive subfolder created
+                                alert::draw("success", $_POST['file'], "$backup->archiveBackupSubFolder $lang[CREATED]", "", 2600);
+                            }
+                            else
+                            {   // failed to create new archive subfolder
+                                sys::setSyslog($db, 51, 2, "failed to create new archive subfolder $backup->archiveBackupSubFolder", 0, 0, 0, 0);
+                                alert::draw("danger", $_POST['file'], "$backup->archiveBackupSubFolder $lang[WAS_NOT_CREATED]", "", 6400);
+                            }
                         }
                     }
                     // check if existing folder was selected by user
