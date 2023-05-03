@@ -26,6 +26,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <h3>🧾 Currently on the ToDo list:</h3>
 <ul>
 <li>Implement <b>Chat GPT-4 API</b></li>
+<li>Add Content Builder <b>(Improve WYSIWYG Editor)</b></li>
 <li>Update official website <a href="https://yawk.io" target="_blank">https://yawk.io/</a> <i>(in progress!)</i></li>
 <li>Migrate all doc blocks to doxygen <i><small>(nearly done)</small></i></li>
 <li>Major Updates of all Assets and Social / Facebook Widgets </li>
