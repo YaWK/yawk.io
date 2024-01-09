@@ -21,7 +21,7 @@ Short answer, a lot! - long answer: take a look at <a href="https://yawk.io/feat
 to 
 see what's going on and what has been done over the past few days, weeks, months and years.
 <hr>
-<h3><u>R O A D M A P for 2023: <small></small></u></h3>
+<h3><u>R O A D M A P for 2024: <small></small></u></h3>
 <b><i></i></b>
 <h3>🧾 Currently on the ToDo list:</h3>
 <ul>
@@ -30,7 +30,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <li>Update official website <a href="https://yawk.io" target="_blank">https://yawk.io/</a> <i>(in progress!)</i></li>
 <li>Migrate all doc blocks to doxygen <i><small>(nearly done)</small></i></li>
 <li>Major Updates of all Assets and Social / Facebook Widgets </li>
-<li>Add templates and demo pages <i><small>(scheduled until end of 2023)</small></i></li>
+<li>Add templates and demo pages <i><small>(scheduled 1st Quarter 2024)</small></i></li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
 <h3>🥇 Latest improvements / closed milestones </h3>
@@ -42,7 +42,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <li>[done] <a href="https://github.com/YaWK/yawk.io/issues/376" target="_blank"> ✓ Codebase update to ensure PHP 8 compatibility</a></li>
 </ul>
 
-<h3>📅 <u>ALSO PLANNED FOR 2023:</u></h3>
+<h3>📅 <u>ALSO PLANNED FOR 2024:</u></h3>
 <ul>
 <li>Add feature showcase</li>
 <li>Update CSS Framework to completely support Bootstrap 5.x</li>
@@ -83,7 +83,7 @@ ATTENTION: Files must be accessible by webserver user & group. Make sure to chec
 </ol>
 <h4>Minimum Server / Web-hosting Requirements:</h4>
 <ul>
-<li>PHP 8.x is recommended</li>
+<li>PHP 8.x is required</li>
 <li>MySQL 5.x or higher (MariaDB works also)</li>
 <li>Apache 2.x or nginx Webserver</li>
 <li>MOD_REWRITE enabled</li>
