@@ -1325,11 +1325,9 @@ namespace YAWK {
                 if ($res = $db->query("SELECT username FROM {users} WHERE username='" . $username . "'"))
                 {
                     $row = mysqli_fetch_row($res); // username is already taken
-                    if (!is_null($row[0]))
-                    {
-                        if ($row[0] === $username)
-                        {
-                            \YAWK\alert::draw("warning","Warning!","Please choose another username!","","4800");
+                    if (is_array($row) && !is_null($row[0])) {
+                        if ($row[0] === $username) {
+                            \YAWK\alert::draw("warning", "Warning!", "Please choose another username!", "", "4800");
                             // exit;
                             return false;
                         }
