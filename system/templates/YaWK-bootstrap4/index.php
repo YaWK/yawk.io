@@ -54,6 +54,12 @@
     <?php
     // get current host
     $host = sys::addTrailingSlash(settings::getSetting($db, "host"));
+    $dirprefix = settings::getSetting($db, "dirprefix");
+    // if dirprefix is set, add it to host
+    if (!empty($dirprefix))
+    {   // this ensures that the templates will work, if yawk is installed in a subdirectory
+        $host = $host.$dirprefix = sys::addTrailingSlash($dirprefix);
+    }
     // include additional html header stuff & local meta tags
     sys::includeHeader($db, $host);
     // load active google font code
