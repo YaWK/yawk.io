@@ -873,7 +873,7 @@ RewriteRule ^([^\\.]+)$ \\index.php?page=$1 [NC,L]
             $host = $this->url;
             // filename
             $file = '.htaccess';
-            $data = "
+            $data = '
 # SEO settings
 # to work correctly, you need +FollowSymLinks or at least +SymLinksIfOwnerMatch enabled.
 # if you get an ERROR 500, try ifownermatch (slower) and/or ask you webhoster to enable mod_rewrite + symlinks
@@ -885,11 +885,11 @@ Order allow,deny
 Allow from all
 
 # custom error page
-ErrorDocument 404 $host/content/errors/404.html
+ErrorDocument 404 '.$host.'/content/errors/404.html
 
 # SEO settings
 RewriteEngine On
-RewriteBase $this->rootPath
+RewriteBase '.$this->rootPath.'
 RewriteCond %{REQUEST_URI} /(.*).html
 # rewrite all .html files to index.php?include={filename}
 RewriteRule ^(.*).html$ \index.php?include=$1 [NC,L]
@@ -949,35 +949,35 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
     ExpiresByType application/pdf A2592000
     ExpiresByType text/html A86400
     # Add a far future Expires header for fonts
-    ExpiresByType application/vnd.ms-fontobject \"access plus 1 year\"
-    ExpiresByType application/x-font-ttf \"access plus 1 year\"
-    ExpiresByType application/x-font-opentype \"access plus 1 year\"
-    ExpiresByType application/x-font-woff \"access plus 1 year\"
-    ExpiresByType image/svg+xml \"access plus 1 year\"
+    ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+    ExpiresByType application/x-font-ttf "access plus 1 year"
+    ExpiresByType application/x-font-opentype "access plus 1 year"
+    ExpiresByType application/x-font-woff "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
 
 ## Set up caching on media files for 1 month
-<FilesMatch \"\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav|swf)$\">
+<FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav|swf)$">
   ExpiresDefault A2592000
-  Header append Cache-Control \"public\"
+  Header append Cache-Control "public"
 </FilesMatch>
 
 ## Set up caching on images css and js files for 2 weeks
-<FilesMatch \"\.(gif|jpg|jpeg|png|js|css)$\">
+<FilesMatch "\.(gif|jpg|jpeg|png|js|css)$">
   ExpiresDefault A1209600
-  Header append Cache-Control \"public\"
+  Header append Cache-Control "public"
 </FilesMatch>
 
 ## Set up 1 day caching on commonly updated files
-<FilesMatch \"\.(xml|txt|htm|html)$\">
+<FilesMatch "\.(xml|txt|htm|html)$">
   ExpiresDefault A86400
-  Header append Cache-Control \"private, must-revalidate\"
+  Header append Cache-Control "private, must-revalidate"
 </FilesMatch>
 
 ## Force no caching for dynamic files
-<FilesMatch \"\.(php|cgi|pl)$\">
+<FilesMatch "\.(php|cgi|pl)$">
   ExpiresDefault A0
-  Header set Cache-Control \"no-store, no-cache, must-revalidate, max-age=0\"
-  Header set Pragma \"no-cache\"
+  Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  Header set Pragma "no-cache"
 </FilesMatch>
 </IfModule>
 
@@ -1017,7 +1017,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 # override max upload file size
 # php_value upload_max_filesize 32M
 
-            ";
+            ';
             // write to file
             // using the flag LOCK_EX, to ensure safe writing on file
             if (is_writable($file))
