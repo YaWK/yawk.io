@@ -282,7 +282,7 @@ namespace YAWK\BACKEND {
                 $logoText .= settings::getSetting($db, "backendLogoSubText");
             }
             echo "<!-- Logo -->
-            <a href=\"../index.html\" class=\"logo\" title=\"$lang[GOTO_WEBSITE]\" target=\"_blank\">
+            <a href=\"../\" class=\"logo\" title=\"$lang[GOTO_WEBSITE]\" target=\"_blank\">
               <!-- mini logo for sidebar mini 50x50 pixels -->
               <span class=\"logo-mini\"><b class=\"fa fa-globe\"></b></span>
               <!-- logo for regular state and mobile devices -->
