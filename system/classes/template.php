@@ -2556,6 +2556,7 @@ namespace YAWK {
             if (!empty($googleFontFamilyString)) {
                 // remove last | because its not needed
                 $googleFontFamilyString = rtrim($googleFontFamilyString, "|");
+                echo "<link rel=\"dns-prefetch\" href=\"//fonts.googleapis.com\">";
                 echo "<link href=\"https://fonts.googleapis.com/css?family=$googleFontFamilyString\" rel=\"stylesheet\">";
             }
 
