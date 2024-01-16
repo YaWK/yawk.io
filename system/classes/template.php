@@ -61,10 +61,9 @@ namespace YAWK {
         /** * @param string template's license */
         public $license;
         /** * @param int which template is currently set to active? */
-        public $selectedTemplate;
-        /** * @param string path to own true type fonts */
-        public $ttfPath = '../system/fonts';
-
+        public int $selectedTemplate;
+        /** * @param string path to custom fonts (ttf|otf|woff) */
+        public string $ttfPath = '../system/fonts/';
 
         /**
          * @brief return ID of current (active) template
@@ -1871,54 +1870,57 @@ namespace YAWK {
             // directory iterator walks trough system/fonts
             // and build up 3 arrays: ttf fonts, otf fonts and woff fonts
             // afterwards they get processed and drawn
-            $dir = new \DirectoryIterator($this->ttfPath);
-            $ttfFonts = array();    // all .ttf files
-            $otfFonts = array();    // all .otf files
-            $woffFonts = array();   // all .woff files
+            if (is_dir($this->ttfPath)) // only if directory exists, otherwise skip
+            {
+                $dir = new \DirectoryIterator($this->ttfPath);
+                $ttfFonts = array();    // all .ttf files
+                $otfFonts = array();    // all .otf files
+                $woffFonts = array();   // all .woff files
 
-            foreach ($dir as $item) {
-                if (!$item->isDot()
-                    && (!$item->isDir())
-                ) {
-                    // workaround: todo what about filenames with spaces?
-                    // check if it is a true type file
-                    if (strtolower(substr($item, -3)) === "ttf") {
-                        // workaround: if dots are in there, the form does not work.
-                        // so lets change the dots to '-' and let option pass trough
-                        $item = str_replace(".", "-", $item);
-                        // add ttf font to array
-                        $ttfFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
+                foreach ($dir as $item) {
+                    if (!$item->isDot()
+                        && (!$item->isDir())
+                    ) {
+                        // workaround: todo what about filenames with spaces?
+                        // check if it is a true type file
+                        if (strtolower(substr($item, -3)) === "ttf") {
+                            // workaround: if dots are in there, the form does not work.
+                            // so lets change the dots to '-' and let option pass trough
+                            $item = str_replace(".", "-", $item);
+                            // add ttf font to array
+                            $ttfFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
+                        }
+                        // check if it is a otf file
+                        if (strtolower(substr($item, -3)) === "otf") {
+                            $item = str_replace(".", "-", $item);
+                            // add option to select field
+                            $otfFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
+                        }
+                        // check if it is a woff file
+                        if (strtolower(substr($item, -4)) === "woff") {
+                            // workaround: change dots to '-' to let option pass trough
+                            $item = str_replace(".", "-", $item);
+                            // add option to select field
+                            $woffFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
+                        }
                     }
-                    // check if it is a otf file
-                    if (strtolower(substr($item, -3)) === "otf") {
-                        $item = str_replace(".", "-", $item);
-                        // add option to select field
-                        $otfFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
-                    }
-                    // check if it is a woff file
-                    if (strtolower(substr($item, -4)) === "woff") {
-                        // workaround: change dots to '-' to let option pass trough
-                        $item = str_replace(".", "-", $item);
-                        // add option to select field
-                        $woffFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
-                    }
+                } // end if is_dir
+
+                // add .ttf fonts to select option
+                $selectField .= "<optgroup label=\"True Type Fonts (system/fonts/*.ttf)\"></optgroup>";
+                foreach ($ttfFonts as $ttfFont) {   // add ttf option to select field
+                    $selectField .= $ttfFont;
                 }
-            }
-
-            // add .ttf fonts to select option
-            $selectField .= "<optgroup label=\"True Type Fonts (system/fonts/*.ttf)\"></optgroup>";
-            foreach ($ttfFonts as $ttfFont) {   // add ttf option to select field
-                $selectField .= $ttfFont;
-            }
-            // add .otf fonts to select option
-            $selectField .= "<optgroup label=\"Open Type Fonts (system/fonts/*.otf)\"></optgroup>";
-            foreach ($otfFonts as $otfFont) {   // add ttf option to select field
-                $selectField .= $otfFont;
-            }
-            // add .woff fonts to select option
-            $selectField .= "<optgroup label=\"Web Open Font Format (system/fonts/*.woff)\"></optgroup>";
-            foreach ($woffFonts as $woffFont) {   // add ttf option to select field
-                $selectField .= $woffFont;
+                // add .otf fonts to select option
+                $selectField .= "<optgroup label=\"Open Type Fonts (system/fonts/*.otf)\"></optgroup>";
+                foreach ($otfFonts as $otfFont) {   // add ttf option to select field
+                    $selectField .= $otfFont;
+                }
+                // add .woff fonts to select option
+                $selectField .= "<optgroup label=\"Web Open Font Format (system/fonts/*.woff)\"></optgroup>";
+                foreach ($woffFonts as $woffFont) {   // add ttf option to select field
+                    $selectField .= $woffFont;
+                }
             }
 
 
