@@ -1871,9 +1871,11 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1072, 1, 'toggle-menubgcolor', 'F8F8F8', 'F8F8F8', '', 11, 1, 5, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', '', '', '', '', ''),
 (1073, 1, 'frontendSwitch', '0',  '0',  '', 10, 1, 12, 'TPL_FRONTEND_SWITCH',  'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (1074, 1, 'darkThemeID',  '', 'none', '', 10, 1, 13, 'TPL_DARKTHEME_LABEL',  'form-control', 'select template', '', '', 'TPL_DARKTHEME_DESC', '', '', ''),
-(1075, 1, 'lightThemeID', '', 'none', '', 10, 1, 14, 'TPL_LIGHTTHEME_LABEL', 'form-control', 'select template', '', '', 'TPL_LIGHTTHEME_DESC', '', '', ''),
+(1075, 1, 'lightThemeID', '', 'none', '', 10, 1, 15, 'TPL_LIGHTTHEME_LABEL', 'form-control', 'select template', '', '', 'TPL_LIGHTTHEME_DESC', '', '', ''),
 (1076, 1, 'body-overflow-y',	'scroll',	'scroll',	'',	54,	1,	1,	'TPL_BODY_OVERFLOW_Y',	'form-control',	'',	'',	'TPL_BODY_OVERFLOW_Y_PH',	'TPL_BODY_OVERFLOW_Y_DESC',	'',	'',	''),
-(1077, 1, 'body-overflow-x',	'hidden',	'hidden',	'',	54,	1,	1,	'TPL_BODY_OVERFLOW_X',	'form-control',	'',	'',	'TPL_BODY_OVERFLOW_X_PH',	'TPL_BODY_OVERFLOW_X_DESC',	'',	'',	'');
+(1077, 1, 'body-overflow-x',	'hidden',	'hidden',	'',	54,	1,	1,	'TPL_BODY_OVERFLOW_X',	'form-control',	'',	'',	'TPL_BODY_OVERFLOW_X_PH',	'TPL_BODY_OVERFLOW_X_DESC',	'',	'',	''),
+(1078, 1, 'darkThemeIcon',  'fa fa-moon-o', 'fa fa-moon-o', '', 10, 1, 14, 'TPL_DARKTHEME_ICON_LABEL',  'form-control', '', '', '', 'TPL_DARKTHEME_ICON_DESC', '', '', ''),
+(1079, 1, 'lightThemeIcon', 'fa fa-moon-o', 'fa fa-moon-o', '', 10, 1, 16, 'TPL_LIGHTTHEME_ICON_LABEL', 'form-control', '', '', '', 'TPL_LIGHTTHEME_ICON_DESC', '', '', '');
 
 
 CREATE TABLE `cms_template_settings_types` (
