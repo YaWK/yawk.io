@@ -30,12 +30,12 @@ see what's going on and what has been done over the past few days, weeks, months
 <li>Update official website <a href="https://yawk.io" target="_blank">https://yawk.io/</a> <i>(in progress!)</i></li>
 <li>Migrate all doc blocks to doxygen <i><small>(nearly done)</small></i></li>
 <li>Major Updates of all Assets and Social / Facebook Widgets </li>
-<li>Add templates and demo pages <i><small>(scheduled 1st Quarter 2024)</small></i></li>
+<li>Add templates and demo pages <i><small>(scheduled until 4th Quarter 2024)</small></i></li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
 <h3>🥇 Latest improvements / closed milestones </h3>
 <ul>
-<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/80" target="_blank"> ✓ YaWK Update Feature</a></li>
+<li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/80?closed=1" target="_blank"> ✓ YaWK Update Feature</a></li>
 <li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/11?closed=1" target="_blank"> ✓ Installer / Improve Setup process</a></li>
 <li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/78?closed=1" target="_blank"> ✓ Add support for multilingual FrontEnd (Content) Pages and Menus</a></li>
 <li>[done] <a href="https://github.com/YaWK/yawk.io/milestone/65?closed=1" target="_blank"> ✓ Improved SubMenu Widget</a></li>
