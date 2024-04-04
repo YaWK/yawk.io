@@ -1875,7 +1875,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1076, 1, 'body-overflow-y',	'scroll',	'scroll',	'',	54,	1,	1,	'TPL_BODY_OVERFLOW_Y',	'form-control',	'',	'',	'TPL_BODY_OVERFLOW_Y_PH',	'TPL_BODY_OVERFLOW_Y_DESC',	'',	'',	''),
 (1077, 1, 'body-overflow-x',	'hidden',	'hidden',	'',	54,	1,	1,	'TPL_BODY_OVERFLOW_X',	'form-control',	'',	'',	'TPL_BODY_OVERFLOW_X_PH',	'TPL_BODY_OVERFLOW_X_DESC',	'',	'',	''),
 (1078, 1, 'darkThemeIcon',  'fa fa-moon-o', 'fa fa-moon-o', '', 10, 1, 14, 'TPL_DARKTHEME_ICON_LABEL',  'form-control', '', '', '', 'TPL_DARKTHEME_ICON_DESC', '', '', ''),
-(1079, 1, 'lightThemeIcon', 'fa fa-moon-o', 'fa fa-moon-o', '', 10, 1, 16, 'TPL_LIGHTTHEME_ICON_LABEL', 'form-control', '', '', '', 'TPL_LIGHTTHEME_ICON_DESC', '', '', '');
+(1079, 1, 'lightThemeIcon', 'fa fa-sun-o', 'fa fa-sun-o', '', 10, 1, 16, 'TPL_LIGHTTHEME_ICON_LABEL', 'form-control', '', '', '', 'TPL_LIGHTTHEME_ICON_DESC', '', '', '');
 
 
 CREATE TABLE `cms_template_settings_types` (
