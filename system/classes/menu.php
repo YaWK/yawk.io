@@ -775,12 +775,19 @@ namespace YAWK {
                     // get template IDs for light/dark theme (will be set on admin/template-redesign)
                     $darkThemeID = template::getTemplateSetting($db, "value", "darkThemeID", $user, $template);
                     $lightThemeID = template::getTemplateSetting($db, "value", "lightThemeID", $user, $template);
+                    // get custom icons for dark/light theme switch
+                    $darkThemeIcon = template::getTemplateSetting($db, "value", "darkThemeIcon", $user, $template);
+                    $lightThemeIcon = template::getTemplateSetting($db, "value", "lightThemeIcon", $user, $template);
+                    // if no custom icons are set, use default icons
+                    if (!$darkThemeIcon || empty($darkThemeIcon)){ $darkThemeIcon = "fa fa-moon-o"; }
+                    if (!$lightThemeIcon || empty($lightThemeIcon)){ $lightThemeIcon = "fa fa-sun-o"; }
+
                     if (!empty($darkThemeID) && !empty($lightThemeID))
                     {   // html markup that draws our darkmode switch
                         $templateSwitchMarkup = "<div id=\"frontendSwitch\" class=\"pull-right\">
-                        <a href=\"index.php?templateID=".$darkThemeID."\" class=\"text-muted\"><i id=\"darkMode\" data-id=\"".$darkThemeID."\" class=\"fa fa-moon-o\"></i></a> 
+                        <a href=\"index.php?templateID=".$darkThemeID."\" class=\"text-muted\"><i id=\"darkMode\" data-id=\"".$darkThemeID."\" class=\"".$darkThemeIcon."\"></i></a> 
                             <span style=\"color:#ccc; margin-left:5px; margin-right:5px;\">|</span> 
-                        <a href=\"index.php?templateID=".$lightThemeID."\" class=\"text-muted\"><i id=\"lightMode\" data-id=\"".$lightThemeID."\" class=\"fa fa-sun-o\"></i></a></div>";
+                        <a href=\"index.php?templateID=".$lightThemeID."\" class=\"text-muted\"><i id=\"lightMode\" data-id=\"".$lightThemeID."\" class=\"".$lightThemeIcon."\"></i></a></div>";
                     }
                     else {
                         sys::setSyslog($db, '47', '1', "frontendSwitch enabled, but no dark/light theme ID found darkThemeID: $darkThemeID / lightThemeID: $lightThemeID", 0, 0, 0, 0);
