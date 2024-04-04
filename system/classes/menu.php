@@ -99,21 +99,21 @@ namespace YAWK {
                 {   // get MAXid
                     $row = mysqli_fetch_row($res);
                     $menuID = $row[0] + 1;
-                    $name = \YAWK\sys::encodeChars($name);
+                    $name = sys::encodeChars($name);
                     if ($res = $db->query("INSERT INTO {menu_names} (id, name) VALUES ('" . $menuID . "', '" . $name . "')"))
                     {   // data inserted
-                        \YAWK\sys::setSyslog($db, 21, 0, "created menu $lang[ID]: $menuID <b>$name</b>", 0, 0, 0, 0);
+                        sys::setSyslog($db, 21, 0, "created menu $lang[ID]: $menuID <b>$name</b>", 0, 0, 0, 0);
                         return true;
                     }
                     else {
                         // q insert failed
-                        \YAWK\sys::setSyslog($db, 24, 1, "failed to create menu: <b>$name</b>", 0, 0, 0, 0);
+                        sys::setSyslog($db, 24, 1, "failed to create menu: <b>$name</b>", 0, 0, 0, 0);
                         return false;
                     }
                 }
                 else {
                     // q get maxID failed
-                    \YAWK\sys::setSyslog($db, 24, 1, "unable to retrieve max ID of menu <b>$name</b>", 0, 0, 0, 0);
+                    sys::setSyslog($db, 24, 1, "unable to retrieve max ID of menu <b>$name</b>", 0, 0, 0, 0);
                     return false;
                 }
             }
@@ -136,12 +136,12 @@ namespace YAWK {
                                         name = '" . $menutitle . "'
                                         WHERE id = '" . $menu . "'"))
             {
-                \YAWK\sys::setSyslog($db, 21, 0,"updated menu title <b>$menutitle</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 21, 0,"updated menu title <b>$menutitle</b>", 0, 0, 0, 0);
                 return true;
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 24, 1,"failed to update menu title <b>$menutitle</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 24, 1,"failed to update menu title <b>$menutitle</b>", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -172,12 +172,12 @@ namespace YAWK {
                                         WHERE menuID = '" . $menu . "'")))
 
             {
-                \YAWK\sys::setSyslog($db, 21, 0,"updated menu language of menu ID $menu to <b>$menuLanguage</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 21, 0,"updated menu language of menu ID $menu to <b>$menuLanguage</b>", 0, 0, 0, 0);
                 return true;
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 24, 1,"failed to update menu language of menu ID $menu to <b>$menuLanguage</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 24, 1,"failed to update menu language of menu ID $menu to <b>$menuLanguage</b>", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -257,13 +257,13 @@ namespace YAWK {
                                         '" . $text . "',
                                         '" . $href . "')"))
             {   // menu entry added
-                \YAWK\sys::setSyslog($db, 21, 0, "added menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 21, 0, "added menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);
                 return true;
             }
             else
             {
                 // add menu entry failed
-                \YAWK\sys::setSyslog($db, 23, 1, "failed to add menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 23, 1, "failed to add menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -289,7 +289,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 23, 1, "failed to get menu status of menu <b>ID: $menuid</b> (menu::getMenuStatus)", 0, 0, 0, 0);
+                sys::setSyslog($db, 23, 1, "failed to get menu status of menu <b>ID: $menuid</b> (menu::getMenuStatus)", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -313,7 +313,7 @@ namespace YAWK {
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 23, 1, "failed to get status of menu entry <b>ID: $menuid</b> (menu::getMenuEntryStatus)", 0, 0, 0, 0);
+                sys::setSyslog($db, 23, 1, "failed to get status of menu entry <b>ID: $menuid</b> (menu::getMenuEntryStatus)", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -335,19 +335,19 @@ namespace YAWK {
 
             // get name and status string
             $menuName = \YAWK\menu::getMenuNameByID($db, $id);
-            $status = \YAWK\sys::iStatusToString($published, "online", "offline");
+            $status = sys::iStatusToString($published, "online", "offline");
 
             // TOGGLE PAGE STATUS
             if ($res = $db->query("UPDATE {menu_names}
               SET published = '" . $published . "'
               WHERE id = '" . $id . "'"))
             {
-                \YAWK\sys::setSyslog($db, 21, 0, "toggled <b>$menuName</b> to <b>$status</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 21, 0, "toggled <b>$menuName</b> to <b>$status</b>", 0, 0, 0, 0);
                 return true;
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 23, 1, "failed toggle <b>$menuName</b> to <b>$status</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 23, 1, "failed toggle <b>$menuName</b> to <b>$status</b>", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -369,20 +369,20 @@ namespace YAWK {
 
             // get name and status string
             $menuItem = \YAWK\menu::getMenuItemTitleByID($db, $id, $menuID);
-            $status = \YAWK\sys::iStatusToString($published, "online", "offline");
+            $status = sys::iStatusToString($published, "online", "offline");
 
             // TOGGLE PAGE STATUS
             if (!$res = $db->query("UPDATE {menu}
                                     SET published = '" . $published . "'
                                     WHERE id = '" . $id . "'"))
             {   // throw error
-                \YAWK\sys::setSyslog($db, 23, 1, "failed to toggle <b>$menuItem</b> to <b>$status</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 23, 1, "failed to toggle <b>$menuItem</b> to <b>$status</b>", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Menu status could not be toggled.", "","4200");
                 return false;
             }
             else {
                 // all ok
-                \YAWK\sys::setSyslog($db, 21, 0, "toggled menu <b>$menuItem</b> to <b>$status</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 21, 0, "toggled menu <b>$menuItem</b> to <b>$status</b>", 0, 0, 0, 0);
                 return true;
             }
         }
@@ -424,12 +424,12 @@ namespace YAWK {
                                   WHERE id = '" . $id . "'
                                   AND menuID = '" . $menu . "'"))
             {
-                \YAWK\sys::setSyslog($db, 21, 0, "edited <b>$title</b> in <b>$menuName</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 21, 0, "edited <b>$title</b> in <b>$menuName</b>", 0, 0, 0, 0);
                 return true;
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 23, 1, "failed to edit <b>$title</b> in <b>$menuName</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 23, 1, "failed to edit <b>$title</b> in <b>$menuName</b>", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -450,19 +450,19 @@ namespace YAWK {
             $menuItem = \YAWK\menu::getMenuItemTitleByID($db, $id, $menu);
             if (!$res = $db->query("DELETE FROM {menu} WHERE menuID = '" . $menu . "' AND id = '" . $id . "'"))
             {   // throw error
-                \YAWK\sys::setSyslog($db, 24, 1, "failed to delete <b>$menuItem</b> in <b>$menuName</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 24, 1, "failed to delete <b>$menuItem</b> in <b>$menuName</b>", 0, 0, 0, 0);
                 return false;
             }
             else
             {   // menu deleted
                 if (!$res = $db->query("UPDATE {menu} SET id = id -1 WHERE id > '" . $id . "'"))
                 {   // menu del not worked
-                    \YAWK\sys::setSyslog($db, 23, 1, "failed to reset ID of menu <b>$menuName</b>", 0, 0, 0, 0);
+                    sys::setSyslog($db, 23, 1, "failed to reset ID of menu <b>$menuName</b>", 0, 0, 0, 0);
                     return false;
                 }
                 else {
                     // all good, menu entry deleted
-                    \YAWK\sys::setSyslog($db, 21, 0, "deleted <b>$menuItem</b> in <b>$menuName</b>", 0, 0, 0, 0);
+                    sys::setSyslog($db, 21, 0, "deleted <b>$menuItem</b> in <b>$menuName</b>", 0, 0, 0, 0);
                     return true;
                 }
             }
@@ -488,19 +488,19 @@ namespace YAWK {
                 if ($res = $db->query("DELETE FROM {menu} WHERE menuID = '" . $id . "'"))
                 {
                     // \YAWK\sys::setSyslog($db, 7, 0, "$lang[SYSLOG_MENU_DEL_ALLENTRIES_OK] <b>$menuName</b>", 0, 0, 0, 0);
-                    \YAWK\sys::setSyslog($db, 21, 0, "deleted <b>$menuName</b> and all corresponding menu entries", 0, 0, 0, 0);
+                    sys::setSyslog($db, 21, 0, "deleted <b>$menuName</b> and all corresponding menu entries", 0, 0, 0, 0);
                     return true;
                 }
                 else
                 {
                     // q failed
-                    \YAWK\sys::setSyslog($db, 24, 1, "failed to delete menu <b>$menuName</b>", 0, 0, 0, 0);
+                    sys::setSyslog($db, 24, 1, "failed to delete menu <b>$menuName</b>", 0, 0, 0, 0);
                     return false;
                 }
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 24, 1, "failed to delete menu <b>$menuName</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 24, 1, "failed to delete menu <b>$menuName</b>", 0, 0, 0, 0);
             }
             return false;
         }
@@ -782,6 +782,9 @@ namespace YAWK {
                             <span style=\"color:#ccc; margin-left:5px; margin-right:5px;\">|</span> 
                         <a href=\"index.php?templateID=".$lightThemeID."\" class=\"text-muted\"><i id=\"lightMode\" data-id=\"".$lightThemeID."\" class=\"fa fa-sun-o\"></i></a></div>";
                     }
+                    else {
+                        sys::setSyslog($db, '47', '1', "frontendSwitch enabled, but no dark/light theme ID found darkThemeID: $darkThemeID / lightThemeID: $lightThemeID", 0, 0, 0, 0);
+                    }
                 }
 
                 // DRAW BOOTSTRAP 4 MENU
@@ -1023,7 +1026,7 @@ namespace YAWK {
                             <ul id=\"logoutMenu\" class=\"nav navbar-nav navbar-collapse navbar-expand float-right pull-right\">
                              <li class=\"dropdown\">&nbsp;&nbsp;
                                 <a id=\"logoutLink\" href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">";
-                    $html .= \YAWK\user::getUserImage($db, "frontend", \YAWK\sys::getCurrentUserName(), 22, 22);
+                    $html .= \YAWK\user::getUserImage($db, "frontend", sys::getCurrentUserName(), 22, 22);
                     $html .= "</a>&nbsp;&nbsp;
                                 <ul id=\"dropdown-menu\" class=\"dropdown-menu\">
                                     <li><a href=\"logout.html\"><i class=\"glyphicon glyphicon-log-out\"></i> &nbsp;Logout</a></li></li>
