@@ -624,7 +624,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('webmail_smtp_sender', '', '', 25, 12, 1, 'LABEL_WEBMAIL_SMTP_SENDER', '', '', '', 'form-control', 'input', '', '', 'DESC_WEBMAIL_SMTP_SENDER'),
 ('webmail_smtp_server', '', '', 25, 1, 1, 'LABEL_WEBMAIL_SMTP_SERVER', 'fa fa-server', 'HEADING_WEBMAIL_SMTP_SERVER', '', 'form-control', 'input', 'PH_WEBMAIL_SMTP_SERVER', 'DESC_WEBMAIL_SMTP_SERVER', ''),
 ('webmail_smtp_username', '', '', 25, 10, 1, 'LABEL_WEBMAIL_SMTP_USERNAME', 'fa fa-user-o', 'HEADING_WEBMAIL_SMTP_USERNAME', '', 'form-control', 'input', 'PH_WEBMAIL_SMTP_USERNAME', '', ''),
-('yawkversion', '23.4.1', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('yawkversion', '24.4.4', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('youtubeChannelUrl', 'https://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
 ('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', ''),
 ('openAIApiKey', '', '', 26, 1, 1, 'OPENAI_APIKEY', 'fa fa-hashtag', 'OPENAI_HEADING', 'OPENAI_SUBTEXT', 'form-control', 'input', 'OPENAI_KEY_PH', 'OPENAI_KEY_DESC', '');
