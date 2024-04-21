@@ -1,4 +1,47 @@
 $(document).ready(function() {
+    // GET / SET CORRECT STATE OF COLLAPSABLE BOXES
+    // this requires collapsable boxes to have a unique id in order to save their state
+    // Check if localStorage is available
+    if (typeof(Storage) === "undefined") {
+        // Sorry! No Web Storage support..
+        console.warn("Sorry! No Web Storage support... - Collapsable boxes state won't be saved.");
+    }
+    else {
+        // Web Storage is available
+        // console.log("Web Storage is available... - Collapsable boxes state will be saved.");
+        $('.btn-box-tool[data-widget="collapse"]').each(function() {
+            var $thisButton = $(this);
+            var $box = $thisButton.closest('.box');
+            var $boxBody = $box.find('.box-body');
+            var id = $thisButton.attr('id');
+            var state = localStorage.getItem(id);
+
+            // Immediately apply the initial state without animation
+            if (state === 'collapsed') {
+                $box.addClass('collapsed-box');
+                $boxBody.hide();
+                $thisButton.find('i').removeClass('fa-minus').addClass('fa-plus');
+            } else {
+                $box.removeClass('collapsed-box');
+                $boxBody.show();
+                $thisButton.find('i').removeClass('fa-plus').addClass('fa-minus');
+            }
+
+            // Properly toggle visibility based on current state
+            $thisButton.off('click').on('click', function() {
+                if ($boxBody.is(':visible')) {
+                    $boxBody.slideUp();
+                    localStorage.setItem(id, 'collapsed');
+                    $thisButton.find('i').removeClass('fa-minus').addClass('fa-plus');
+                } else {
+                    $boxBody.slideDown();
+                    localStorage.setItem(id, 'expanded');
+                    $thisButton.find('i').removeClass('fa-plus').addClass('fa-minus');
+                }
+            });
+        });
+    }
+
 
     //  modal dialog data-confirm
     $('a[data-confirm]').click(function(ev) {
