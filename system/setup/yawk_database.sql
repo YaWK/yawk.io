@@ -660,7 +660,7 @@ INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
 (23, 'webmail-server'),
 (24, 'webmail-settings'),
 (25, 'webmail-smtp'),
-(26, 'openAI');
+(26, 'apiKeys');
 
 CREATE TABLE `cms_stats` (
 `id` int(11) NOT NULL,
