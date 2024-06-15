@@ -561,49 +561,49 @@ if ($backendSkin == "skin-wp-dark-style")
 <div id="myTabContent" class="tab-content">
     <!-- images folder -->
     <div class="tab-pane fade in active" id="images">
-        <br>
+        <br><i style="margin-left:10px;">/media/images/</i>
         <?php YAWK\filemanager::drawTableHeader($lang, 5); ?>
         <?php YAWK\filemanager::getFilesFromFolder("../media/images", $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- audio folder -->
     <div class="tab-pane fade in" id="audio">
-        <br>
+        <br><i style="margin-left:10px;">/media/audio/</i>
         <?php YAWK\filemanager::drawTableHeader($lang, 1); ?>
         <?php YAWK\filemanager::getFilesFromFolder("../media/audio", $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- video folder -->
     <div class="tab-pane fade in" id="video">
-        <br>
+        <br><i style="margin-left:10px;">/media/video/</i>
         <?php YAWK\filemanager::drawTableHeader($lang, 7); ?>
         <?php YAWK\filemanager::getFilesFromFolder("../media/video", $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- documents folder -->
     <div class="tab-pane fade in" id="documents">
-        <br>
+        <br><i style="margin-left:10px;">/media/documents/</i>
         <?php YAWK\filemanager::drawTableHeader($lang, 3); ?>
         <?php YAWK\filemanager::getFilesFromFolder("../media/documents", $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- downloads folder -->
     <div class="tab-pane fade in" id="downloads">
-        <br>
+        <br><i style="margin-left:10px;">/media/downloads/</i>
         <?php YAWK\filemanager::drawTableHeader($lang, 4); ?>
         <?php YAWK\filemanager::getFilesFromFolder("../media/downloads", $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- upload folder -->
     <div class="tab-pane fade in" id="uploads">
-        <br>
+        <br><i style="margin-left:10px;">/media/uploads/</i>
         <?php YAWK\filemanager::drawTableHeader($lang, 6); ?>
         <?php YAWK\filemanager::getFilesFromFolder("../media/uploads", $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- backup folder -->
     <div class="tab-pane fade in" id="backup">
-        <br>
+        <br><i style="margin-left:10px;">/media/backup/</i>
         <?php YAWK\filemanager::drawTableHeader($lang, 2); ?>
         <?php YAWK\filemanager::getFilesFromFolder("../media/backup", $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
