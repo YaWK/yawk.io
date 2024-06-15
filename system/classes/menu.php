@@ -790,8 +790,13 @@ namespace YAWK {
                         <a href=\"index.php?templateID=".$lightThemeID."\" class=\"text-muted\"><i id=\"lightMode\" data-id=\"".$lightThemeID."\" class=\"".$lightThemeIcon."\"></i></a></div>";
                     }
                     else {
+            			$templateSwitchMarkup = '';
                         sys::setSyslog($db, '47', '1', "frontendSwitch enabled, but no dark/light theme ID found darkThemeID: $darkThemeID / lightThemeID: $lightThemeID", 0, 0, 0, 0);
                     }
+                }
+                else
+                {
+                    $templateSwitchMarkup = '';
                 }
 
                 // DRAW BOOTSTRAP 4 MENU
