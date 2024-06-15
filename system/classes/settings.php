@@ -459,6 +459,33 @@ namespace YAWK {
         }
 
         /**
+         * @brief Get all settings of a given type and return them as array.
+         * @param object $db Database Object
+         * @param string $type Type of settings to get
+         * @return array|bool
+         */
+        public static function getSettingsOfTypeIntoArray($db, $type) {
+            if (!$type) {
+                // get all settings
+                $settingsArray = self::getAllSettingsIntoArray();
+                return $settingsArray;
+            }
+            else {
+                // get settings of type
+                if ($res= $db->query("SELECT * FROM {settings} WHERE type = '".$type."' ORDER by sortation")) {
+                    $settingsArray = array();
+                    while ($row = $res->fetch_assoc()) {
+                        $settingsArray[] = $row;
+                    }
+                } else {
+                    \YAWK\sys::setSyslog($db, 35, 1, "failed to get settings from database ", 0, 0, 0, 0);
+                    return false;
+                }
+                return $settingsArray;
+            }
+        }
+
+        /**
          * @brief Get and return value for property from settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
