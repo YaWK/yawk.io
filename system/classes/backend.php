@@ -559,12 +559,13 @@ namespace YAWK {
                       <h3 class="box-title"><i class="fa fa-tags"></i>&nbsp;&nbsp;'.$lang["WIDGETS"].' <small>'.$lang["WIDGETS_ON_THIS_PAGE"].'</small></h3>
                       <!-- box-tools -->
                       <div class="box-tools pull-right">
-                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse" id="collapse-widgets"><i class="fa fa-minus"></i>
                           </button>
                       </div>
                   <!-- /.box-tools -->
                   </div>
                   <div class="box-body" style="display: block;">';
+
             if (isset($widgetList) && (is_array($widgetList)))
             {
                 // loop through all found widgets
