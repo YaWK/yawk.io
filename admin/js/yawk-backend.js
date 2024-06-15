@@ -42,6 +42,19 @@ $(document).ready(function() {
         });
     }
 
+    // TAB HANDLING
+    // ensure that the active tab is saved in localStorage
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var activeTab = $(e.target).attr('href'); // Get the current active tab href
+        localStorage.setItem('activeTab', activeTab); // Store it in localStorage
+    });
+
+    // load the last active tab from localStorage
+    var activeTab = localStorage.getItem('activeTab'); // Get the active tab from localStorage
+    if (activeTab) {
+        $('a[href="' + activeTab + '"]').tab('show'); // Show the active tab stored in localStorage
+    }
+
 
     //  modal dialog data-confirm
     $('a[data-confirm]').click(function(ev) {
