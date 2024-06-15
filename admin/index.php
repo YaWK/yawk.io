@@ -3,6 +3,7 @@
 use YAWK\alert;
 use YAWK\backend;
 use YAWK\sys;
+use YAWK\settings;
 
 session_start();
 header('Cache-control: private');             // OLD IE (6+) FIX
@@ -145,8 +146,20 @@ if (!isset($AdminLTE))
     {
       // user is not logged in - set a basic body markup and display login box
       // body markup
-      echo "<body style=\"background-color: #ecf0f5\">
+      $backendSkin = settings::getSetting($db, 'backendSkin');
+      // check if skin is available
+        if (!file_exists("../system/engines/AdminLTE/css/skins/$backendSkin.min.css"))
+        {   // if not, check if no minified version is available
+            if (!file_exists("../system/engines/AdminLTE/css/skins/$backendSkin.css"))
+            {   // if not, set default skin
+                $backendSkin = "skin-wp-style.min.css";
+            }
+        }
+
+        echo "<body>
 ";
+        // apply correct skin
+        echo '<link rel="stylesheet" href="../system/engines/AdminLTE/css/skins/'.$backendSkin.'.min.css">';
 
         // reset password email request
         if (isset($_POST['resetPasswordRequest']))
