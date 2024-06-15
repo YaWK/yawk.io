@@ -2233,7 +2233,7 @@ namespace YAWK
                 <h3 class=\"box-title\">$lang[OPERATING_SYSTEMS] <small>($lang[BETA])</small></h3>
 
                 <div class=\"box-tools pull-right\">
-                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\" id=\"collapse-statsOS\"><i class=\"fa fa-minus\"></i>
                     </button>
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
                 </div>
@@ -2893,7 +2893,7 @@ namespace YAWK
                 <h3 class=\"box-title\">$lang[DAYTIME] <small>$lang[PRIMETIME_QUESTION]</small></h3>
 
                 <div class=\"box-tools pull-right\">
-                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\" id=\"collapse-dayTimeBox\"><i class=\"fa fa-minus\"></i>
                     </button>
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
                 </div>
@@ -3152,7 +3152,7 @@ namespace YAWK
                 <h3 class=\"box-title\">$lang[WEEKDAYS] <small>$lang[WEEKDAY_OVERVIEW] $heading</small></h3>
 
                 <div class=\"box-tools pull-right\">
-                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\" id=\"collapse-dashboardWeekdays\"><i class=\"fa fa-minus\"></i>
                     </button>
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
                 </div>
