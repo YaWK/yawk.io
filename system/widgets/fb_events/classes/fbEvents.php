@@ -67,7 +67,8 @@ namespace YAWK\WIDGETS\FACEBOOK\EVENTS
         /** @var string subtext before widget */
         public $fbEventsSubtext = '';
         /** @var string fields that should be selected from facebook graph */
-        public $fields = 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled';
+        // public $fields = 'id,name,description,start_time,cover,maybe_count,attending_count,is_canceled';
+        public $fields = 'attending_count,start_time,cover,id,guest_list_enabled,is_canceled,maybe_count,description,created_time,name,place';
         /** @var object api result (as object) */
         public $apiObject;
         /** @var array all api result data (multidimensional array) */
@@ -166,13 +167,15 @@ namespace YAWK\WIDGETS\FACEBOOK\EVENTS
             {
                 $this->$property = $value;
             }
+
         }
+
 
         public function display()
         {
             if (isset($this->fbEventsAppId) && (!empty($this->fbEventsAppId)
-                    && (isset($this->fbEventsAccessToken) && (!empty($this->fbEventsAccessToken)
-                            && (isset($this->fbEventsPageId) && (!empty($this->fbEventsPageId)))))))
+            && (isset($this->fbEventsAccessToken) && (!empty($this->fbEventsAccessToken)
+            && (isset($this->fbEventsPageId) && (!empty($this->fbEventsPageId)))))))
             {
                 /*
                 // include facebook SDK JS
@@ -243,9 +246,13 @@ namespace YAWK\WIDGETS\FACEBOOK\EVENTS
                 // $json_link = "https://graph.facebook.com/v2.7/{$this->fbEventsPageId}/events/attending/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
                 // $json_link = "https://graph.facebook.com/v3.1/me/events/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
                 // $json_link = "https://graph.facebook.com/v3.3/me/events/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
-
                 // $json_link = "https://graph.facebook.com/v14.0/me/events?access_token={$this->fbEventsAccessToken}&fields={$this->fields}&created_time={$since_unix_timestamp}";
-                $json_link = "https://graph.facebook.com/v14.0/me/events?access_token={$this->fbEventsAccessToken}&fields={$this->fields}&created_time={$this->since_unix_timestamp}";
+                // $json_link = "https://graph.facebook.com/v19.0/me/events?access_token={$this->fbEventsAccessToken}&fields={$this->fields}&created_time={$this->since_unix_timestamp}";
+
+                // remove https://www.facebook.com/ from page id, if set; to ensure that the page id is correct
+                $this->fbEventsPageId = str_replace("https://www.facebook.com/", "", $this->fbEventsPageId);
+                $json_link = "https://graph.facebook.com/v19.0/{$this->fbEventsPageId}/events?access_token={$this->fbEventsAccessToken}&fields={$this->fields}";
+
                 // get json string
                 // $json = file_get_contents($json_link);
                 // convert json to object
@@ -264,8 +271,12 @@ namespace YAWK\WIDGETS\FACEBOOK\EVENTS
                 echo "<hr>";
                 print_r($obj);
                 echo "</pre>";
-                exit;
                 */
+
+                if (isset($obj) && (is_array($obj) && (empty($obj['data']))))
+                {
+                    echo "Event Objekt ist leer. Vielleicht gibt es gerade einen Fehler bei der Verbindung zur Facebook Graph API.";
+                }
 
                 // if object is set, but array got not data...
                 if (isset($obj) && (is_array($obj) && (is_array($obj['data']) && (empty($obj['data'])))))
