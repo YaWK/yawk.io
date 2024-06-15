@@ -107,7 +107,7 @@ echo"<ol class=\"breadcrumb\">
             <div class="box box-default">
                 <div class="box-body">
                     <div class="box-header with-border"><h3 class="box-title"><?php echo $lang['WIDGET']." ".$lang['OVERVIEW']; ?></h3></div>
-                    <div class="box-body">
+                    <div class="box-body" id="widgetList">
                         <?php
 
                         $widgetTypes = \YAWK\widget::getAllWidgetTypes($db);
@@ -122,7 +122,7 @@ echo"<ol class=\"breadcrumb\">
                                 }
 
                                 // walk through widget list
-                                echo '<div class="box box-default">';
+                                echo '<div class="box box-default widget-description" id="widgetDescription-'.$widget['id'].'">';
                                 echo '<div class="box-header with-border"><h3 class="box-title"><b>'.$widget['name'].'</b></h3>
                             <br><span class="text-muted">'.$widget['description'].'</span>';
                                 if ($widget['status'] != 1) { echo 'WIDGET IS DISABLED'; }
@@ -167,8 +167,27 @@ echo"<ol class=\"breadcrumb\">
             </div>
         </div>
     </div>
+<script>
+    $(document).ready(function() {
+        // Initially hide all widget description boxes
+        // $('.widget-description').hide();
 
+        // Display the initially selected widget description if needed
+        var initialWidgetId = $('#widgetSelector').val();
+        $('#widgetDescription-' + initialWidgetId).show();
 
-<?php
-// DELETE? }
-?>
+        // When the selection changes
+        $('#widgetType').change(function() {
+            // Hide all widget descriptions
+            $('.widget-description').hide();
+
+            // Get the selected widget ID from the dropdown
+            var selectedWidgetId = $(this).val();
+
+            // Show the corresponding widget description box
+            $('#widgetDescription-' + selectedWidgetId).fadeIn();
+
+        });
+    });
+</script>
+
