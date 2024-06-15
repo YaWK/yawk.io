@@ -627,7 +627,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('yawkversion', '24.4.4', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('youtubeChannelUrl', 'https://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
 ('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', ''),
-('openAIApiKey', '', '', 26, 1, 1, 'OPENAI_APIKEY', 'fa fa-hashtag', 'OPENAI_HEADING', 'OPENAI_SUBTEXT', 'form-control', 'input', 'OPENAI_KEY_PH', 'OPENAI_KEY_DESC', '');
+('openAIApiKey', '', '', 26, 1, 1, 'API_KEYS_OPENAI_KEY', 'fa fa-hashtag', 'API_KEYS_HEADING', 'API_KEYS_SUBTEXT', 'form-control', 'input', 'API_KEYS_OPENAI_KEY_PH', 'API_KEYS_OPENAI_KEY_DESC', '');
 
 CREATE TABLE `cms_settings_types` (
 `id` int(11) NOT NULL,
