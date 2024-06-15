@@ -3,7 +3,7 @@
  * ------------
  */
 .skin-wp-dark-style .main-header .navbar {
-  background-color: #191e23;
+  background-color: #23282D;
 }
 .skin-wp-dark-style .main-header .navbar .nav > li > a {
   color: #9ca1a6;
@@ -15,7 +15,7 @@
 .skin-wp-dark-style .main-header .navbar .nav .open > a:hover,
 .skin-wp-dark-style .main-header .navbar .nav .open > a:focus,
 .skin-wp-dark-style .main-header .navbar .nav > .active > a {
- background-color: #32373c;
+ background-color: #1E2124;
   color: #00b9eb;
 }
 .skin-wp-dark-style .main-header .navbar .sidebar-toggle {
@@ -23,7 +23,7 @@
 }
 .skin-wp-dark-style .main-header .navbar .sidebar-toggle:hover {
   color: #00b9eb;
-  background-color: #32373c;
+  background-color: #1E2124;
 }
 @media (max-width: 767px) {
   .skin-wp-dark-style .main-header .navbar .dropdown-menu li.divider {
@@ -33,17 +33,17 @@
     color: #9ca1a6;
   }
   .skin-wp-dark-style .main-header .navbar .dropdown-menu li a:hover {
-    background: #32373c;
+    background: #1E2124;
   }
 }
 .skin-wp-dark-style .main-header .logo {
-  background-color: #191e23;
+  background-color: #23282D;
   color: #9ca1a6;
   border-bottom: 0 solid transparent;
 }
 .skin-wp-dark-style .main-header .logo:hover {
   color: #00b9eb;
-  background-color: #32373c;
+  background-color: #1E2124;
 }
 .skin-wp-dark-style .main-header li.user-header {
    color: #fff;
@@ -80,7 +80,7 @@
 }
 .skin-wp-dark-style .sidebar-menu > li > .treeview-menu {
   margin: 0 1px;
-  background: #32373c;
+  background: #1E2124;
 }
 .skin-wp-dark-style .sidebar a {
   color: #9ca1a6;
@@ -140,7 +140,7 @@
 .right-side {
   color: #9ca1a6;
   min-height: 100%;
-  background-color: #32373c;
+  background-color: #1E2124;
   z-index: 800;
 }
 /* General Links */
@@ -149,11 +149,11 @@ a:active,
 a:focus {
   outline: none;
   text-decoration: none;
-  color: #0073aa
+  color: #328FBB;
 }
 a:hover
 {
-  color: #0096DE
+  color: #fff;
 }
 .menuLink
 {
@@ -167,13 +167,18 @@ a:hover
 {
   color: #9ca1a6;
   background-color: #191e23;
-  border: 1px solid #9ca1a6;
+  border: 1px solid #444;
+}
+.form-control:active{
+  color: #9ca1a6;
+  background-color: #191e23;
+  border: 1px solid #444;
 }
 .form-control:disabled
 {
   color: #9ca1a6;
-  background-color: #32373c;
-  border: 1px solid #9ca1a6;
+  background-color: #191e23;
+  border: 1px solid #333;
 }
 .form-control::placeholder{
   color: #666;
@@ -225,6 +230,7 @@ label
 .control-sidebar-dark + .control-sidebar-bg {
   background: #23282d;
 }
+
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs {
   border-bottom: #23282d;
 }
@@ -245,7 +251,7 @@ label
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a:hover,
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a:focus,
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a:active {
-  background: #32373c;
+  background: #1E2124;
 }
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a:hover {
   color: #00b9eb;
@@ -272,12 +278,21 @@ label
   display: inline-block;
 }
 
+.content-header>.breadcrumb {
+  margin-top: 5px;
+  top: 0;
+  right: 0;
+  float: none;
+  background: #191e23;
+}
+
+
 .table-striped tbody tr:nth-of-type(odd) {
   background-color:#191e23;
 }
 
 .table-hover tbody tr:hover {
-  background-color: #32373C;
+  background-color: #1E2124;
 }
 /* Table Settings */
 .table > thead > tr > th,
@@ -498,17 +513,24 @@ fieldset[disabled] .btn-default.focus {
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-  color: #888;
+  color: #f7f7f7;
   cursor: default;
   background-color: #23282d;
-  border: 1px solid #ddd;
+  border: 1px solid #666;
   border-bottom-color: transparent;
 }
+
+.nav.nav-tabs > li > a:hover {
+  color: #f7f7f7;
+  border: 1px solid #666;
+  background-color: #23282D !important; /* Override any other style */
+}
+
 
 .panel {
   margin-bottom: 20px;
   color:#fff;
-  background-color: #32373C;
+  background-color: #1E2124;
   border: 1px solid transparent;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -516,6 +538,24 @@ fieldset[disabled] .btn-default.focus {
 }
 .panel-default>.panel-heading {
   color: #fff;
-  background-color: #32373C;
+  background-color: #1E2124;
   border-color: #ddd;
+}
+
+.btn-light {
+  color: #ccc !important;
+  background-color: #343a40 !important;
+  border-color: #444 !important;
+}
+.btn-light:hover {
+  color: #fff !important;
+  background-color: #23282D !important;
+  border-color: #666 !important;
+}
+
+.text-danger {
+  color: #ff0000;
+}
+.text-warning {
+  color: #f39c12;
 }
