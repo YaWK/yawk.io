@@ -56,33 +56,42 @@ see what's going on and what has been done over the past few days, weeks, months
 <li>YouTube HowTo videos</li>
 </ul>
 <hr>
-<h3>💻 Download Notes:</h3>
-<u><b>Please remember:</b></u> before you download this pre-release version: YaWK is currently in active development and <b>NOT YET RELEASED</b>.
-If you like, you can get a sneak peek - feel free to download the latest current development version from GitHub: <br>
-<br><b>https://github.com/YaWK/yawk.io/archive/refs/heads/master.zip</b>
+<h2>📥 Download</h2>
+<h3>📦 latest version (24.6.15) from GitHub:</h3>
+
+<b><a href="https://github.com/YaWK/yawk.io/archive/refs/heads/master.zip">https://github.com/YaWK/yawk.io/archive/refs/heads/master.zip</a></b>
+<br>
+
+Please remember: before you download this pre-release version: YaWK is currently in active development and NOT YET RELEASED. If you like, you can get a sneak peek of the current development status. But please consider - YaWK is in open development phase and underlies <i>more or less frequent changes</i>. Due this fact it can not be guaranteed that everything works in this development version as expected. Altough you can do a lot with at at it's current state, you may encounter some major or minor warnings or bugs due the fact that you are using a in-development version.
 <br><br>
-But please consider - YaWK is in constant development and underlies <i>nearly daily changes</i>. Due this fact it can not be guaranteed that everything work in this test version as expected. You may <i>possibly</i> encounter some major or minor warnings or bugs.
-<br><br>
-Before YaWK will be officially released, you will always get the current development version. After the first version is officially released, there will be a seperate development branch. You should wait for the official first release before you use YaWK in productive environment. I'm happy about comments, stars, followers and / or code contributions. Thank You!
+Before YaWK is officially stated as "released", you will <i>always</i> get the current development version. After the first version is officially released, there will be a seperate development/stable branch. <u>You should wait for the official first release before you use YaWK in productive environment.</u>
+<br><br>I put a lot of work, time effort, heart and love in this project - so I will be happy about comments, stars, followers and / or code contributions. If you like this project, please consider to support it. Thank you!
 <hr>
-<h3>🔧 Setup / Installation</h3>
-There are two ways to load YaWK on your webserver:<br><br>
+<h2>🔧 Setup / Installation</h2>
+<i>There are two ways to load YaWK on your webserver:</i>
 <ol>
-<li><u>If you have root/shell access:</u> <b>git clone https://github.com/YaWK/yawk.io</b>
+<li><h3>🖥️ Installation via command line / shell access</h3><u>If you have root/shell access:</u> <b><code>git clone https://github.com/YaWK/yawk.io .</code></b><br>
+this will download the latest version from GitHub to your current directory.
     <br><br>
-    or
-    if you are using composer you can type: <b>composer create yawk/yawk.io -s dev</b>
-    <br><br>
+    <i>or if you are using composer you can type: <b>composer create yawk/yawk.io -s dev</i></b>
+    <br>
     <i>(afterwards move files from yawk.io folder to your project's root directory if necessary.)</i>
-    <br><br>
-ATTENTION: Files must be accessible by webserver user & group. Make sure to check/set correct user/group permissions (example: chown -R www-data:www-data yourfolder)
-<br><br>
 </li>
 <li>
-    <u>If you're using a webhost:</u> Download the .zip package, extract it on your computer and upload the extracted files to your webserver. Use any FTP client and upload the files to the root directory of your webserver.
+    <h3>📁 or Download the .zip + upload the Installation Files using any FTP Client (eg. FileZilla)</h3>
+    <u><b>This is most common for users with "typical" webhosting / webspace:</b></u> Download the .zip package, extract it on your computer and upload the extracted files to your webserver. Use any FTP client and upload the files to the root directory of your webserver.
 </li>
 </ol>
-<h4>Minimum Server / Web-hosting Requirements:</h4>
+<h3>🚨 INSTALLATION REQUIREMENT NOTICE:</h3> Files must be accessible by your webserver's user process. <b>Make sure to set correct user/group permissions eg:</b><br>
+<code>chown -R www-data:www-data yourfolder</code>
+<br><u><i>(This is very important if you are running git clone from the shell with another user than the webserver's process...)</i></u>
+
+Also make sure, that <u>the following files are writeable</u> by your webserver:<br>
+<ul><li>.htaccess</li><li>/admin/.htaccess</li></ul>
+These files need to have at least 755 (writeable for group) or 777 (writeable for all) permissions. 
+If you are not sure, set it to 777. But beware! Don't forget to change it later, (eg. only writeable for owner) after setup is complete to ensure this file cannot be overridden by anybode else.
+
+<h3>Minimum Server / Web Hosting Requirements:</h3>
 <ul>
 <li>PHP 8.x is required</li>
 <li>MySQL 5.x or higher (MariaDB works also)</li>
@@ -90,15 +99,25 @@ ATTENTION: Files must be accessible by webserver user & group. Make sure to chec
 <li>MOD_REWRITE enabled</li>
 </ul>
 
-<h3>Installation / Setup HowTo</h3>
-When YaWK is uploaded to your webserver, simply call www.yourwebsite.tld in your browser. If the server is correctly configured, you will see step 1/5 of the setup process. The installation guide you through 5 steps and is pretty self-explanatory.<br>
+<h3>How to run Installation / Setup</h3>
+After you finished uploading YaWK to your webserver, make sure all rights are set correctly (as explained above) and simply call www.yourwebsite.tld in your browser. If the server is correctly configured, you will see step 1/5 of the setup process where you can select your desired Language. (currently english or german) <br><br>The Installer will guide you through 5 pretty self-explanatory steps.<br>
+<h3>🔑 Admin Login</h3>
+After setup is complete, you can login to the admin area with the credentials you have set during setup. The admin area is located at <b>www.yourwebsite.tld/admin</b>.<br>
+<h3>📚 Documentation</h3>
+For more detailed information, please visit the official documentation at <a href="https://docs.yawk.io" target="_blank">https://docs.yawk.io</a>.<br>
+<h3>🔧 Troubleshooting / ERROR 500 / white page after Installation</h3>
+If you are getting a blank (white) page with no further error message, there might be a problem caused with the default settings defined in .htaccess file. This could be a wrong or false caching configuration of your server, missing modules, or (mostly) wrong file/folder permissions or wrong ownership. Rarely it has to do with something else. Please check your server's error log in that case. Feel free to get in contact if you are not able to solve the error on your own.<br>
 <hr>
-<h3>🐣 But why?! - there are so many good CMS around...</h3>
-YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>no big business company or foundation behind it - (yet!)</i> At the moment it is still <i>(mainly)</i> a one man show, - exclusively developed for my own, personal purpose. I started this project because I was not satisfied with all other solutions. So I took the challenge and started developing an overall tool that fits my personal needs. Originally it was not meant to public. But the bigger the project growed, the more people told me to make it accessable to the public crowd.
-After spending a lot of my lifetime on this project, I decided to follow my friends - I've uploaded it to GitHub and kept the repository private until the status of the project has got to a level where others can make use out of it. Though all efforts of "getting it to the point", this project is not finished yet - and never will be. It will stay in development, as long as I or somebody else take care about it.
+<h3>📝 License</h3>
+YaWK is licensed under the MIT License. Other licenses may apply to third-party libraries and assets. Please check the license files and the documentation for more information. YaWK is free software and can be used by anyone.<br>
+<h3>🐣 But why are you running this?! - there are sooo many CMS around...</h3>
+YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>no big business company or foundation behind it - (yet!)</i> At the moment it is still <i>(mainly)</i> a one man show, - exclusively developed for my own, personal purpose. <i>I started this project because I was not satisfied with all other solutions at that time</i>. So I took the challenge and started developing an overall tool that fits my personal needs. Originally it was not meant to public. But the bigger the project growed, the more people told me to make it accessable to the public crowd.
+After spending a lot of my lifetime on this project, I decided to follow my friends - I've uploaded it to GitHub and kept the repository private until the status of the project has got to a level where others can make use out of it. Though all efforts of <i>"getting it to the point"</i>, this project is not finished yet - and probably never will be. It is free software! and will stay in development, as long as I <i>(or somebody else)</i> take care about it.
 <hr>
 <h3>YOU can be part of this project! 😎</h3>
-You're welcome! You have found a bug? Please let us know! Do you want to request a feature? Feel free to get in contact - open an issue or pull request. Any input is welcome!</i>
+<u></u>You're welcome!</u> You have found a bug? Please let us know! Do you want to request a feature? Feel free to get in contact - open an issue or pull request. <b>Any input is welcome!</b></i>
+<h3>📧 Contact</h3>
+If you have any questions, feel free to contact me via email: <a href="mailto:danielretzl@gmail.com">@DR</a><br>
 <hr>
 <h4><i>Check back again soon and stay tuned for upcoming website and project updates!</i></h4>
 
