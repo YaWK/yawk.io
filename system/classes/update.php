@@ -706,23 +706,45 @@ namespace YAWK
             $url = $this->updateServer.'filebase.ini';
 
             // Get the content of the remote INI file
-            $iniContent = file_get_contents($url);
+            if ($iniContent = file_get_contents($url)){
+                if (!empty($iniContent)){
+                    // Parse the INI content into an associative array
+                    $filebase = parse_ini_string($iniContent);
 
-            // Check if the content was retrieved successfully
-            if ($iniContent !== false)
-            {   // Parse the INI content into an associative array
-                $filebase = parse_ini_string($iniContent);
+                    // debug if ini file is not parsed correctly
+                    /*
+                    echo "<pre>";
+                    print_r($iniContent);
+                    echo "</pre>";
+                    */
 
-                // Print the contents of the array
-                foreach ($filebase as $key => $value)
-                {   // set update array
-                    $updateFilebase[$key] = $value;
+                    if (is_array($filebase) && (count($filebase) > 0))
+                    {   // filebase.ini read successfully
+                        // Print the contents of the array
+                        foreach ($filebase as $key => $value)
+                        {   // set update array
+                            $updateFilebase[$key] = $value;
+                        }
+                    }
+                    else
+                    {   // unable to parse iniContent
+                        echo "Error: filebase is not an array, unable to parse";
+                        return false;
+                    }
                 }
+                else
+                {   // unable to read filebase from remote server
+                    echo "Error: Unable to get content from remote server. Check if this file exists: $url";
+                    return false;
+                }
+
             }
             else
             {   // unable to read filebase from remote server
                 echo "Error: Unable to read filebase from remote server. Check if this file exists: $url";
+                return false;
             }
+
             // return array or false
             return $updateFilebase ?? false;
         }

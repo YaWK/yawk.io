@@ -29,57 +29,60 @@ $updateFilesPath = '../../system/update/updateFiles.ini';
 $update = new update();
 // get update filebase from server
 $updateFilebase = $update->readUpdateFilebaseFromServer();
-if (!is_array($updateFilebase)){
+if (!is_array($updateFilebase) || empty($updateFilebase)){
     echo $lang['UPDATE_ERROR_READING_UPDATE_INI'].' https://'.$_SERVER['HTTP_HOST'].'/system/update/filebase.current.ini';
 }
-// sort arrays by key (file path)
-ksort($localFilebase);
-ksort($updateFilebase, SORT_NATURAL);
+else if (is_array($localFilebase) && is_array($updateFilebase)) {
+    // sort arrays by key (file path)
+    ksort($localFilebase);
+    ksort($updateFilebase, SORT_NATURAL);
 // compare filebase arrays
 // if file hash is different, add file to differentFiles array
-$differentFiles = array();  // files with different hash values (those will be updated)
-$localOnlyFiles = array();  // files only found in local filebase (files that were added by page admin, those will NOT be touched)
-$updateFiles = '';  // files that will be updated
+    $differentFiles = array();  // files with different hash values (those will be updated)
+    $localOnlyFiles = array();  // files only found in local filebase (files that were added by page admin, those will NOT be touched)
+    $updateFiles = '';  // files that will be updated
 
 // add files, that are in the update filebase, but not in the local filebase
-foreach($updateFilebase as $key => $value) {
-    if (!array_key_exists($key, $localFilebase)) {
-        // add file to updateFiles string, which will be written to updateFiles.ini
-        $updateFiles .= "$value=\"$key\"\n";
-        $differentFiles[] = $key;
-    }
-}
-
-// loop through local filebase array (parsed from filebase.current.ini)
-foreach ($localFilebase as $filePath => $localHash)
-{   // check if file exists in update filebase
-    if (isset($updateFilebase[$filePath]))
-    {   // get hash from update filebase
-        $updateHash = $updateFilebase[$filePath];
-        // compare hashes
-        if ($localHash !== $updateHash)
-        {   // if hashes are different, add file to differentFiles array
-            $differentFiles[] = $filePath;
-
+    foreach($updateFilebase as $key => $value) {
+        if (!array_key_exists($key, $localFilebase)) {
             // add file to updateFiles string, which will be written to updateFiles.ini
-            $updateFiles .= "$localHash=\"$filePath\"\n";
+            $updateFiles .= "$value=\"$key\"\n";
+            $differentFiles[] = $key;
         }
     }
-    else
-    {   // if file is not found in update filebase, store file path in localOnlyFiles array
-        $localOnlyFiles[] = $filePath;
+
+// loop through local filebase array (parsed from filebase.current.ini)
+    foreach ($localFilebase as $filePath => $localHash)
+    {   // check if file exists in update filebase
+        if (isset($updateFilebase[$filePath]))
+        {   // get hash from update filebase
+            $updateHash = $updateFilebase[$filePath];
+            // compare hashes
+            if ($localHash !== $updateHash)
+            {   // if hashes are different, add file to differentFiles array
+                $differentFiles[] = $filePath;
+
+                // add file to updateFiles string, which will be written to updateFiles.ini
+                $updateFiles .= "$localHash=\"$filePath\"\n";
+            }
+        }
+        else
+        {   // if file is not found in update filebase, store file path in localOnlyFiles array
+            $localOnlyFiles[] = $filePath;
+        }
+    }
+
+// response string, used to echoed to ajax call
+    $response = '';
+// Write the content to system/update/updateFiles.ini
+    file_put_contents($updateFilesPath, $updateFiles);
+// if updateFilesPath is not found, throw error
+    if (!file_exists($updateFilesPath))
+    {   // if file is not found, throw error
+        $response .= $lang['UPDATE_ERROR_WRITING'].' '.$updateFilesPath;
     }
 }
 
-// response string, used to echoed to ajax call
-$response = '';
-// Write the content to system/update/updateFiles.ini
-file_put_contents($updateFilesPath, $updateFiles);
-// if updateFilesPath is not found, throw error
-if (!file_exists($updateFilesPath))
-{   // if file is not found, throw error
-    $response .= $lang['UPDATE_ERROR_WRITING'].' '.$updateFilesPath;
-}
 
 if (empty($differentFiles))
 {   // if no files with different hash values were found
