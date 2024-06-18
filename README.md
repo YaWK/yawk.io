@@ -18,7 +18,7 @@ Latest Update: <b>24.6.15</b> <a href="https://update.yawk.io/" target="_blank">
 </div>
 <hr>
 <h3><g-emoji class="g-emoji" alias="warning" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/26a0.png">🚀</g-emoji> Development status - <small>what has been done so far?</small></h3>
-Short answer, a lot! - long answer: take a look at <a href="https://yawk.io/features.html" target="_blank" title="YaWK Feature List">FEATURE LIST</a>, <a href="https://github.com/YaWK/yawk.io/issues?q=is%3Aissue+is%3Aclosed" target="_blank">latest closed issues</a> and <a href="https://github.com/YaWK/yawk.io/milestones?state=closed" target="_blank">milestones</a> 
+Short answer, a lot! - long answer: take a look at <a href="https://yawk.io/features.html" target="_blank" title="YaWK Feature List">FEATURE LIST</a>, <a href="https://github.com/YaWK/yawk.io/issues?q=is%3Aissue+is%3Aclosed+sort%3Aupdated-desc" target="_blank">latest closed issues</a> and <a href="https://github.com/YaWK/yawk.io/milestones?state=closed" target="_blank">milestones</a> 
 to 
 see what's going on and what has been done over the past few days, weeks, months and years.
 <hr>
