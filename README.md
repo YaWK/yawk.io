@@ -68,7 +68,7 @@ development phase and underlies <i>more or less frequent changes</i>. Due this f
 at this stage.
 <br><br>
 Before YaWK is officially stated as "released", you will <i>always</i> get the current development version. After the 
-first stable version is officially released, there will be a separate development/stable branch. <u>You should wait for 
+first stable version is released, there will be a separate development/stable branch. <u>You should wait for 
 the official first stable release before you use YaWK in productive environments.</u>
 <br><br>I put a lot of work, time effort, heart and love in this project - so I will be happy about comments, stars, 
 followers and / or code contributions. If you like this project, please consider to support it. Thank you!
