@@ -62,10 +62,16 @@ see what's going on and what has been done over the past few days, weeks, months
 <b><a href="https://github.com/YaWK/yawk.io/archive/refs/heads/master.zip">https://github.com/YaWK/yawk.io/archive/refs/heads/master.zip</a></b>
 <br>
 
-Please remember: before you download this pre-release version: YaWK is currently in active development and NOT YET RELEASED. If you like, you can get a sneak peek of the current development status. But please consider - YaWK is in open development phase and underlies <i>more or less frequent changes</i>. Due this fact it can not be guaranteed that everything works in this development version as expected. Altough you can do a lot with at at it's current state, you may encounter some major or minor warnings or bugs due the fact that you are using a in-development version.
+Please remember: before you download this pre-release version: YaWK is currently in active development and NOT YET RELEASED. 
+If you like, you can use it and get a sneak peek of the current development status. But please consider - YaWK is in open 
+development phase and underlies <i>more or less frequent changes</i>. Due this fact, backward compatibility is not guaranteed 
+at this stage.
 <br><br>
-Before YaWK is officially stated as "released", you will <i>always</i> get the current development version. After the first version is officially released, there will be a seperate development/stable branch. <u>You should wait for the official first release before you use YaWK in productive environment.</u>
-<br><br>I put a lot of work, time effort, heart and love in this project - so I will be happy about comments, stars, followers and / or code contributions. If you like this project, please consider to support it. Thank you!
+Before YaWK is officially stated as "released", you will <i>always</i> get the current development version. After the 
+first version is officially released, there will be a separate development/stable branch. <u>You should wait for the 
+official first release before you use YaWK in productive environment.</u>
+<br><br>I put a lot of work, time effort, heart and love in this project - so I will be happy about comments, stars, 
+followers and / or code contributions. If you like this project, please consider to support it. Thank you!
 <hr>
 <h2>🔧 Setup / Installation</h2>
 <i>There are two ways to load YaWK on your webserver:</i>
