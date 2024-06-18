@@ -68,8 +68,8 @@ development phase and underlies <i>more or less frequent changes</i>. Due this f
 at this stage.
 <br><br>
 Before YaWK is officially stated as "released", you will <i>always</i> get the current development version. After the 
-first version is officially released, there will be a separate development/stable branch. <u>You should wait for the 
-official first release before you use YaWK in productive environment.</u>
+first stable version is officially released, there will be a separate development/stable branch. <u>You should wait for 
+the official first stable release before you use YaWK in productive environments.</u>
 <br><br>I put a lot of work, time effort, heart and love in this project - so I will be happy about comments, stars, 
 followers and / or code contributions. If you like this project, please consider to support it. Thank you!
 <hr>
@@ -84,7 +84,7 @@ this will download the latest version from GitHub to your current directory.
     <i>(afterwards move files from yawk.io folder to your project's root directory if necessary.)</i>
 </li>
 <li>
-    <h3>📁 or Download the .zip + upload the Installation Files using any FTP Client (eg. FileZilla)</h3>
+    <h3>📁 or Download the .zip + upload the Files using any FTP Client (eg. FileZilla)</h3>
     <u><b>This is most common for users with "typical" webhosting / webspace:</b></u> Download the .zip package, extract it on your computer and upload the extracted files to your webserver. Use any FTP client and upload the files to the root directory of your webserver.
 </li>
 </ol>
@@ -128,4 +128,4 @@ If you have any questions, feel free to contact me via email: <a href="mailto:da
 <h4><i>Check back again soon and stay tuned for upcoming website and project updates!</i></h4>
 
 <img src="https://komarev.com/ghpvc/?username=YaWK&style=flat-square&color=blue&label=Repository+Hit+COUNTER:" alt="Profile Hit Counter"/>
-<br><small><i>(counter added 04-13-2023) </i></small>
+<br><small><i>(counting since 2023-04-13) </i></small>
